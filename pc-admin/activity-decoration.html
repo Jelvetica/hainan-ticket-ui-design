@@ -16,6 +16,8 @@ html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
 }
+button { cursor: pointer; border: none; font-family: inherit; }
+a { text-decoration: none; color: inherit; }
 
 /* ========== Sidebar ========== */
 .sidebar {
@@ -233,6 +235,9 @@ html {
 
 /* ========== CSS Variables ========== */
 :root {
+  --deep-blue: #0A1628;
+  --deep-blue-light: #122240;
+  --deep-blue-lighter: #1A2E4A;
   --primary: #0A1628;
   --primary-light: #132240;
   --primary-lighter: #1a2d50;
@@ -255,8 +260,19 @@ html {
   --radius-md: 10px;
   --radius-lg: 16px;
   --sidebar-width: 240px;
-  --header-height: 64px;
+  --topbar-height: 64px;
   --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --white: var(--bg-white, #FFFFFF);
+  --border-gray: var(--border, #e5e7eb);
+  --light-gray: var(--bg-light, #F5F6FA);
+  --coral-orange: var(--accent, #FF6B4A);
+  --coral-orange-light: rgba(255,107,74,0.1);
+  --text-light: #9ca3af;
+  --border-color: #e5e7eb;
+  --bg-content: #F0F2F5;
+  --danger: #EF4444;
+  --coral: var(--accent, #FF6B4A);
+  --card-white: var(--bg-white, #FFFFFF);
 }
 
 /* ========== Reset & Base ========== */
@@ -291,69 +307,149 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #F0F2F5;
+  background: var(--bg-content, #F0F2F5);
 }
 
-/* ========== Top Header ========== */
-.top-header {
-  height: var(--header-height);
-  background: var(--bg-white);
-  border-bottom: 1px solid var(--border);
+
+
+/* ========== Top Bar ========== */
+.topbar {
+  height: var(--topbar-height);
+  background: #fff;
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 32px;
+  padding: 0 28px;
   position: sticky;
   top: 0;
   z-index: 50;
 }
-
 .breadcrumb {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  color: var(--text-secondary);
+  color: var(--text-muted);
+  flex-shrink: 0;
 }
-
-.breadcrumb span { color: var(--text-primary); font-weight: 500; }
-
-.header-actions {
+.breadcrumb a {
+  color: var(--text-secondary);
+  text-decoration: none !important;
+  transition: color 0.2s;
+}
+.breadcrumb a:hover { color: var(--coral); }
+.breadcrumb .current {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+.breadcrumb .sep {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+.topbar-search {
+  margin-left: auto;
+  position: relative;
+}
+.topbar-search input {
+  width: 260px;
+  height: 36px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0 12px 0 36px;
+  font-size: 13px;
+  color: var(--text-primary);
+  background: var(--light-gray);
+  transition: all 0.2s;
+}
+.topbar-search input::placeholder {
+  color: var(--text-muted);
+}
+.topbar-search input:focus {
+  border-color: var(--coral);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(255,107,74,0.1);
+}
+.topbar-search i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 13px;
+}
+.topbar-actions {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 6px;
+  flex-shrink: 0;
 }
-
-.header-actions .icon-btn {
+.topbar-btn {
   width: 36px;
   height: 36px;
-  border-radius: 50%;
-  border: none;
-  background: var(--bg-light);
-  color: var(--text-secondary);
-  cursor: pointer;
+  border: none !important;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: var(--transition);
+  color: var(--text-secondary);
+  background: transparent;
+  transition: all 0.2s;
   position: relative;
+  cursor: pointer;
+  outline: none !important;
 }
-
-.header-actions .icon-btn:hover {
-  background: var(--border);
+.topbar-btn:hover {
+  background: var(--light-gray);
   color: var(--text-primary);
 }
-
-.header-actions .icon-btn .dot {
+.topbar-btn .dot {
   position: absolute;
-  top: 6px;
-  right: 6px;
+  top: 7px;
+  right: 7px;
   width: 7px;
   height: 7px;
-  background: var(--accent);
+  background: var(--coral);
   border-radius: 50%;
-  border: 2px solid var(--bg-white);
+  border: 1.5px solid #fff;
 }
+.topbar-admin {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px 4px 4px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-left: 4px;
+}
+.topbar-admin:hover {
+  background: var(--light-gray);
+}
+.topbar-admin .avatar-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, var(--coral), var(--gold));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 600;
+  font-size: 12px;
+}
+.topbar-admin .admin-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+.topbar-admin .admin-role {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+.topbar-admin span { font-size: 13px; font-weight: 500; color: var(--text-primary); }
 
 /* ========== Page Content ========== */
 .page-content {
@@ -363,6 +459,50 @@ body {
 
 .page { display: none; }
 .page.active { display: block; }
+
+/* ========== Tab Navigation (参考演出管理) ========== */
+.tab-nav {
+  display: flex;
+  gap: 0;
+  background: #fff;
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(10,22,40,0.06);
+  border: 1px solid #f0f0f5;
+}
+.tab-item {
+  padding: 10px 22px;
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-size: 13.5px;
+  font-weight: 500;
+  background: transparent;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+}
+.tab-item:hover {
+  color: var(--text-primary);
+  background: var(--light-gray);
+}
+.tab-item.active {
+  color: #fff;
+  background: linear-gradient(135deg, #FF6B4A, #FF8A65);
+  box-shadow: 0 2px 8px rgba(255,107,74,0.3);
+  font-weight: 600;
+}
+.tab-item i { font-size: 14px; }
+
+/* ========== Page Header ========== */
+.page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.page-title { font-size: 22px; font-weight: 700; color: var(--text-primary); }
+.page-title-sub { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
 
 /* ========== Page Title ========== */
 .page-title-bar {
@@ -409,17 +549,6 @@ body {
   transition: var(--transition);
   font-family: inherit;
   white-space: nowrap;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--accent), #ff8a6a);
-  color: #fff;
-  box-shadow: 0 4px 15px rgba(255,107,74,0.3);
-}
-
-.btn-primary:hover {
-  box-shadow: 0 6px 20px rgba(255,107,74,0.4);
-  transform: translateY(-1px);
 }
 
 .btn-secondary {
@@ -984,6 +1113,76 @@ textarea.form-control {
 .switch-label {
   font-size: 13px;
   color: var(--text-primary);
+}
+
+/* ========== Hot Show Config ========== */
+.hot-show-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.hot-show-item {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #fff;
+  transition: all 0.2s;
+}
+.hot-show-item:hover {
+  border-color: var(--coral-orange);
+}
+.hot-show-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.hot-show-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.hot-show-name i {
+  color: var(--coral-orange);
+  margin-right: 6px;
+  font-size: 12px;
+}
+.hot-show-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hot-show-actions i {
+  font-size: 12px;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.hot-show-actions i:hover {
+  color: var(--coral-orange);
+}
+.hot-show-config .prop-field {
+  margin-bottom: 10px;
+}
+.hot-show-config .prop-field:last-child {
+  margin-bottom: 0;
+}
+.color-picker-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.color-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+.color-dot.active {
+  border-color: var(--text-primary);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--text-primary);
 }
 
 /* ========== Multi-select chips ========== */
@@ -1671,6 +1870,7 @@ textarea.form-control {
   font-weight: 600;
 }
 
+
 .empty-preview {
   height: 100%;
   display: flex;
@@ -2006,6 +2206,8 @@ textarea.form-control {
 }
 
 @media screen and (max-width: 768px) {
+  .topbar { padding: 0 12px; }
+  .topbar .topbar-search { display: none; }
   .sidebar {
     position: fixed;
     left: 0;
@@ -2306,12 +2508,6 @@ textarea.form-control {
   .stat-label {
     font-size: 11px !important;
   }
-  .topbar-title {
-    font-size: 14px !important;
-  }
-  .topbar-admin-name {
-    font-size: 12px !important;
-  }
   .badge {
     font-size: 9px !important;
     padding: 1px 6px !important;
@@ -2343,7 +2539,9 @@ textarea.form-control {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     gap: 0;
-    padding: 0 12px;
+    padding: 4px;
+    margin-left: 12px;
+    margin-right: 12px;
   }
   .tab-nav::-webkit-scrollbar {
     display: none;
@@ -2460,9 +2658,6 @@ textarea.form-control {
   .btn {
     font-size: 13px !important;
     padding: 8px 14px !important;
-  }
-  .btn-primary, .btn-outline {
-    font-size: 13px !important;
   }
   .btn-sm {
     font-size: 12px !important;
@@ -2750,7 +2945,738 @@ textarea.form-control {
   }
 }
 
+
+/* ========== Unified Action Buttons ========== */
+/* Text action buttons */
+.action-btn-text {
+  padding: 5px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.action-btn-text:hover {
+  background: var(--light-gray);
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-1px);
+}
+/* Review action buttons */
+.review-action-btn {
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+.review-action-btn.approve {
+  background: rgba(0,201,167,0.1);
+  color: #00A88A;
+}
+.review-action-btn.approve:hover {
+  background: rgba(0,201,167,0.2);
+  transform: translateY(-1px);
+}
+.review-action-btn.reject {
+  background: rgba(239,68,68,0.1);
+  color: #EF4444;
+}
+.review-action-btn.reject:hover {
+  background: rgba(239,68,68,0.2);
+  transform: translateY(-1px);
+}
+/* Hall action buttons */
+.hall-action-btn {
+  background: none;
+  border: none;
+  color: var(--coral);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+.hall-action-btn:hover {
+  background: rgba(255,107,74,0.1);
+  transform: translateY(-1px);
+}
+.hall-action-btn.set-default {
+  color: var(--gold);
+}
+.hall-action-btn.set-default:hover {
+  background: rgba(212,168,83,0.1);
+}
+/* VSC action buttons */
+.vsc-toolbar .vsc-action-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+.vsc-toolbar .vsc-action-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-1px);
+}
+.vsc-toolbar .vsc-action-btn.vsc-save-btn {
+  background: var(--coral);
+  color: #fff;
+  border-color: var(--coral);
+}
+.vsc-toolbar .vsc-action-btn.vsc-save-btn:hover {
+  background: #E85A3A;
+  transform: translateY(-1px);
+}
+/* Batch dropdown buttons */
+.ss-batch-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+.ss-batch-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-1px);
+}
+
+/* ========== Unified Form Select ========== */
+.form-select,
+.st-form-select,
+.filter-select,
+.order-form-select,
+.page-size-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FF6B4A' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+  cursor: pointer;
+  height: 38px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0 32px 0 14px;
+  font-size: 13px;
+  color: var(--text-primary);
+  background-color: #fff;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.form-select:focus,
+.st-form-select:focus,
+.filter-select:focus,
+.order-form-select:focus,
+.page-size-select:focus {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px rgba(255,107,74,0.1);
+  outline: none;
+}
+.form-select:hover,
+.st-form-select:hover,
+.filter-select:hover,
+.order-form-select:hover,
+.page-size-select:hover {
+  border-color: var(--coral-orange);
+}
+/* Filter dropdowns in tables */
+.filter-dropdowns .form-select {
+  padding: 6px 28px 6px 10px;
+  font-size: 13px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-color);
+  background: var(--card-white);
+  color: var(--text-secondary);
+  height: 34px;
+}
+.filter-dropdowns .form-select:focus {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px rgba(255,107,74,0.1);
+}
+/* Small selects */
+select.form-select-sm,
+.form-select.form-select-sm {
+  height: 32px;
+  padding: 0 28px 0 10px;
+  font-size: 12px;
+  border-radius: 8px;
+}
+
+/* ========== Unified Custom Dropdowns ========== */
+.filter-dropdown-wrap { position: relative; z-index: 100; }
+.filter-dropdown {
+  display: none; position: absolute; top: 100%; left: 0;
+  margin-top: 6px; background: #fff;
+  border: 1px solid var(--border-color); border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12); padding: 16px;
+  min-width: 280px; z-index: 200;
+}
+.filter-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Theater select dropdown */
+.theater-select-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  padding: 8px 0;
+  min-width: 200px;
+  display: none;
+  z-index: 200;
+}
+.theater-select-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
+.theater-option {
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.15s;
+}
+.theater-option:hover { background: var(--light-gray); }
+.theater-option.active { color: var(--coral); background: rgba(255,107,74,0.06); }
+.theater-group-label {
+  padding: 4px 14px;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+/* Session select dropdown */
+.session-select-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  padding: 8px 0;
+  min-width: 200px;
+  display: none;
+  z-index: 200;
+}
+.session-select-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
+/* Banner link dropdown */
+.banner-link-dropdown {
+  max-height: 160px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  margin-top: 4px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.banner-link-option {
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.15s;
+}
+.banner-link-option:hover { background: var(--light-gray); }
+.banner-link-option:last-child { border-bottom: none; }
+/* VSC assign dropdown */
+.vsc-assign-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  padding: 8px 0;
+  min-width: 160px;
+  display: none;
+  z-index: 200;
+}
+.vsc-assign-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
+/* SS batch dropdown */
+.ss-batch-dropdown { position: relative; }
+.ss-batch-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  padding: 6px 0;
+  min-width: 140px;
+  z-index: 200;
+}
+.ss-batch-menu.open { display: block; animation: dropIn 0.2s ease-out; }
+.ss-batch-menu button {
+  display: block;
+  width: 100%;
+  padding: 8px 14px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.ss-batch-menu button:hover { background: var(--light-gray); color: var(--coral); }
+
+
+/* ========== Unified Dropdown Layer Styles ========== */
+
+/* Base dropdown layer - all dropdowns share this foundation */
+.dropdown-layer,
+.filter-dropdown,
+.theater-select-dropdown,
+.session-select-dropdown,
+.banner-link-dropdown,
+.vsc-assign-dropdown,
+.ss-batch-menu,
+.date-picker-popup,
+.dropdown-menu,
+.dropdown-content {
+  background: #fff;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+  overflow: hidden;
+}
+
+/* Filter dropdown panel */
+.filter-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  margin-top: 0;
+  padding: 20px;
+  min-width: 300px;
+  z-index: 200;
+}
+.filter-dropdown.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Theater select dropdown */
+.theater-select-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  padding: 8px 0;
+  min-width: 220px;
+  z-index: 200;
+}
+.theater-select-dropdown.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.theater-option {
+  padding: 10px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.15s ease;
+  color: var(--text-primary);
+}
+.theater-option:hover {
+  background: linear-gradient(90deg, rgba(255, 107, 74, 0.06), transparent);
+  color: var(--coral);
+}
+.theater-option.active {
+  color: var(--coral);
+  background: linear-gradient(90deg, rgba(255, 107, 74, 0.08), transparent);
+  font-weight: 500;
+}
+.theater-option i {
+  width: 16px;
+  text-align: center;
+  color: var(--text-muted);
+  transition: color 0.15s;
+}
+.theater-option:hover i,
+.theater-option.active i {
+  color: var(--coral);
+}
+.theater-group-label {
+  padding: 6px 16px 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* Session select dropdown */
+.session-select-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  padding: 8px 0;
+  min-width: 220px;
+  z-index: 200;
+}
+.session-select-dropdown.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Banner link dropdown */
+.banner-link-dropdown {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 6px;
+  padding: 4px 0;
+}
+.banner-link-option {
+  padding: 10px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(241, 245, 249, 0.6);
+  transition: all 0.15s ease;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.banner-link-option:hover {
+  background: linear-gradient(90deg, rgba(255, 107, 74, 0.06), transparent);
+  color: var(--coral);
+}
+.banner-link-option:last-child {
+  border-bottom: none;
+}
+
+/* VSC assign dropdown */
+.vsc-assign-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  padding: 8px 0;
+  min-width: 180px;
+  z-index: 200;
+}
+.vsc-assign-dropdown.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* SS batch menu */
+.ss-batch-dropdown { position: relative; }
+.ss-batch-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  padding: 6px 0;
+  min-width: 160px;
+  z-index: 200;
+}
+.ss-batch-menu.open {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ss-batch-menu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 13px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.ss-batch-menu button:hover {
+  background: linear-gradient(90deg, rgba(255, 107, 74, 0.06), transparent);
+  color: var(--coral);
+}
+
+/* Date picker popup */
+.date-picker-popup {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 440px;
+  padding: 0;
+  z-index: 200;
+}
+.date-picker-popup.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dropdown animation */
+@keyframes dropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Dropdown trigger buttons */
+.dropdown-trigger,
+.filter-dropdown-btn,
+.theater-select-trigger,
+.ss-batch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+.dropdown-trigger:hover,
+.filter-dropdown-btn:hover,
+.theater-select-trigger:hover,
+.ss-batch-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 107, 74, 0.1);
+}
+.dropdown-trigger.active,
+.filter-dropdown-btn.active,
+.theater-select-trigger.active {
+  border-color: var(--coral);
+  color: var(--coral);
+  background: rgba(255, 107, 74, 0.04);
+}
+
+/* ========== Unified Table Action Buttons ========== */
+
+/* Action buttons container */
+.action-btns {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Table action button (text + icon) */
+.table-action-btn {
+  padding: 6px 14px;
+  border: 1.5px solid var(--border-color);
+  background: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-secondary);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
+  white-space: nowrap;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.table-action-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.1);
+}
+.table-action-btn:active {
+  transform: translateY(0);
+}
+.table-action-btn.primary {
+  background: var(--coral);
+  color: #fff;
+  border-color: var(--coral);
+}
+.table-action-btn.primary:hover {
+  background: #E85A3A;
+  border-color: #E85A3A;
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.25);
+}
+.table-action-btn.success {
+  background: var(--emerald);
+  color: #fff;
+  border-color: var(--emerald);
+}
+.table-action-btn.success:hover {
+  background: #00b396;
+  border-color: #00b396;
+  box-shadow: 0 4px 12px rgba(0, 201, 167, 0.25);
+}
+.table-action-btn.danger-outline {
+  color: #ef4444;
+  border-color: #fca5a5;
+}
+.table-action-btn.danger-outline:hover {
+  background: #fef2f2;
+  border-color: #ef4444;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+}
+
+/* Review action button */
+.review-action-btn {
+  height: 34px;
+  padding: 0 18px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+  cursor: pointer;
+}
+.review-action-btn.approve {
+  background: rgba(0, 201, 167, 0.1);
+  color: #00A88A;
+}
+.review-action-btn.approve:hover {
+  background: #00C9A7;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 201, 167, 0.2);
+}
+.review-action-btn.reject {
+  background: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+}
+.review-action-btn.reject:hover {
+  background: #EF4444;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+/* Hall action button */
+.hall-action-btn {
+  background: none;
+  border: none;
+  color: var(--coral);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 8px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 500;
+}
+.hall-action-btn:hover {
+  background: rgba(255, 107, 74, 0.1);
+  transform: translateY(-2px);
+}
+.hall-action-btn.set-default {
+  color: var(--gold);
+}
+.hall-action-btn.set-default:hover {
+  background: rgba(212, 168, 83, 0.1);
+}
+
+/* VSC action button */
+.vsc-toolbar .vsc-action-btn {
+  padding: 7px 16px;
+  border-radius: 10px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1.5px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 500;
+}
+.vsc-toolbar .vsc-action-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.1);
+}
+.vsc-toolbar .vsc-action-btn.vsc-save-btn {
+  background: var(--coral);
+  color: #fff;
+  border-color: var(--coral);
+}
+.vsc-toolbar .vsc-action-btn.vsc-save-btn:hover {
+  background: #E85A3A;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.25);
+}
+
+/* Batch dropdown button */
+.ss-batch-btn {
+  padding: 7px 16px;
+  border-radius: 10px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1.5px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 500;
+}
+.ss-batch-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.1);
+}
+
 </style>
+<link href="admin-components.css" rel="stylesheet">
 </head>
 <body>
 
@@ -2758,14 +3684,12 @@ textarea.form-control {
   <!-- ==================== Sidebar ==================== -->
 <aside class="sidebar">
   <div class="sidebar-logo">
-    <div class="logo-icon">
-      <i class="fas fa-masks-theater"></i>
+      <img src="assets/logo.png" alt="海南省演艺集团" style="width:36px; height:auto; flex-shrink:0;">
+      <div class="logo-text">
+        <span class="logo-title">海南省演艺集团</span>
+        <span class="logo-sub">艺术演出院线数字服务系统</span>
+      </div>
     </div>
-    <div class="logo-text">
-      <span class="logo-title">海南演艺票务</span>
-      <span class="logo-sub">管理后台</span>
-    </div>
-  </div>
   <nav class="sidebar-nav">
     <div class="nav-group">
       <div class="nav-group-label">核心功能</div>
@@ -2799,12 +3723,7 @@ textarea.form-control {
       <a class="nav-item" href="ai-marketing.html">
         <i class="fas fa-robot"></i>
         <span>AI智能营销</span>
-      </a>
-      <a class="nav-item" href="banner-management.html">
-        <i class="fas fa-images"></i>
-        <span>轮播图管理</span>
-      </a>
-      <a class="nav-item" href="product-service.html">
+      </a>      <a class="nav-item" href="product-service.html">
         <i class="fas fa-store"></i>
         <span>商品管理</span>
       </a>
@@ -2821,46 +3740,45 @@ textarea.form-control {
         <span>报表中心</span>
       </a>
     </div>
-    <div class="nav-group">
-      <div class="nav-group-label">系统设置</div>
-      <a class="nav-item" href="activity-decoration.html#decoration">
-        <i class="fas fa-palette"></i>
-        <span>首页装修</span>
-      </a>
-    </div>
+
   </nav>
-  <div class="sidebar-footer">
-    <div class="admin-avatar">陈</div>
-    <div class="admin-info">
-      <div class="admin-name">陈思远</div>
-      <div class="admin-role">超级管理员</div>
-    </div>
-    <button class="logout-btn" title="退出登录">
-      <i class="fas fa-sign-out-alt"></i>
-    </button>
-  </div>
 </aside>
 
   <!-- ==================== Main Content ==================== -->
   <div class="main-content">
-    <!-- Top Header -->
-    <header class="top-header">
+    
+        <header class="topbar">
       <div class="breadcrumb">
-        <i class="fas fa-home" style="font-size:13px;"></i>
-        /
-        <span id="breadcrumb-text">运营中心</span>
-        /
-        <span id="breadcrumb-page">运营活动管理</span>
+        <a href="#">首页</a>
+        <span class="sep"><i class="fas fa-chevron-right"></i></span>
+        <span class="current" id="breadcrumb-page">运营活动</span>
       </div>
-      <div class="header-actions">
-        <button class="icon-btn" title="全局搜索"><i class="fas fa-search"></i></button>
-        <button class="icon-btn" title="消息通知">
+
+      <div class="topbar-search">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="搜索活动名称、类型...">
+      </div>
+
+      <div class="topbar-actions">
+        <button class="topbar-btn" title="消息" onclick="showToast('info','您有3条未读消息')">
           <i class="fas fa-bell"></i>
           <span class="dot"></span>
         </button>
-        <button class="icon-btn" title="帮助文档"><i class="fas fa-question-circle"></i></button>
+        <button class="topbar-btn" title="帮助">
+          <i class="fas fa-circle-question"></i>
+        </button>
       </div>
-    </header>
+
+      <div class="topbar-admin">
+        <div class="avatar-sm">陈</div>
+        <div>
+          <div class="admin-name">陈思远</div>
+          <div class="admin-role">超级管理员</div>
+        </div>
+        <i class="fas fa-chevron-down" style="color:var(--text-muted);font-size:11px;margin-left:4px;"></i>
+      </div>
+</header> <!-- Top Header -->
+    
 
 <!-- Mobile Menu Button -->
 <button class="mobile-menu-btn" id="mobileMenuBtn" style="display:none;position:fixed;top:16px;left:16px;z-index:150;width:40px;height:40px;border-radius:10px;border:none;background:var(--deep-blue);color:#fff;font-size:18px;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.2);">
@@ -2870,19 +3788,30 @@ textarea.form-control {
 <div class="sidebar-overlay" id="sidebarOverlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:190;opacity:0;pointer-events:none;transition:opacity 0.3s;"></div>
     <div class="page-content">
 
+      <!-- Page Title -->
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">运营活动</h1>
+          <p class="page-title-sub">管理运营活动与首页装修配置</p>
+        </div>
+      </div>
+
+      <!-- Tab Navigation -->
+      <nav class="tab-nav">
+        <a class="tab-item active" data-tab="activity" href="javascript:void(0)">
+          <i class="fas fa-bullhorn"></i>
+          <span>活动管理</span>
+        </a>
+        <a class="tab-item" data-tab="decoration" href="javascript:void(0)">
+          <i class="fas fa-palette"></i>
+          <span>首页装修</span>
+        </a>
+      </nav>
+
       <!-- ============================================================
            PAGE 1: 运营活动管理
            ============================================================ -->
       <div id="page-activity" class="page active">
-        <div class="page-title-bar">
-          <div>
-            <h2>
-              <span class="title-accent"></span>
-              运营活动管理
-            </h2>
-            <p class="subtitle">管理所有营销活动、专题页面和促销方案</p>
-          </div>
-        </div>
 
         <!-- Filter Bar -->
         <div class="filter-bar">
@@ -2952,15 +3881,6 @@ textarea.form-control {
            PAGE 2: 首页装修管理
            ============================================================ -->
       <div id="page-decoration" class="page">
-        <div class="page-title-bar">
-          <div>
-            <h2>
-              <span class="title-accent"></span>
-              首页装修管理
-            </h2>
-            <p class="subtitle">可视化拖拽配置移动端首页布局与组件</p>
-          </div>
-        </div>
 
         <!-- Toolbar -->
         <div class="deco-toolbar">
@@ -2978,9 +3898,6 @@ textarea.form-control {
             </div>
           </div>
           <div class="deco-toolbar-right">
-            <button class="btn btn-secondary" onclick="previewPage()">
-              <i class="fas fa-eye"></i> 预览
-            </button>
             <button class="btn btn-secondary" onclick="saveDesign()">
               <i class="fas fa-save"></i> 保存
             </button>
@@ -3011,14 +3928,6 @@ textarea.form-control {
                 <div class="comp-info">
                   <div class="comp-name">搜索栏</div>
                   <div class="comp-desc">演出搜索入口</div>
-                </div>
-                <i class="fas fa-grip-vertical grip"></i>
-              </div>
-              <div class="component-item" draggable="true" data-type="nav">
-                <div class="comp-icon nav"><i class="fas fa-th-large"></i></div>
-                <div class="comp-info">
-                  <div class="comp-name">功能入口</div>
-                  <div class="comp-desc">快捷功能导航图标</div>
                 </div>
                 <i class="fas fa-grip-vertical grip"></i>
               </div>
@@ -3394,18 +4303,26 @@ const activities = [
 // ==================== Page Switching ====================
 function switchPage(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
 
   document.getElementById('page-' + page).classList.add('active');
-  document.querySelector(`.nav-item[data-page="${page}"]`).classList.add('active');
+  var activeTab = document.querySelector('.tab-item[data-tab="' + page + '"]');
+  if (activeTab) activeTab.classList.add('active');
 
   const titles = {
-    activity: '运营活动管理',
-    decoration: '首页装修管理'
+    activity: '活动管理',
+    decoration: '首页装修'
   };
 
   document.getElementById('breadcrumb-page').textContent = titles[page] || '';
 }
+
+// Tab click binding
+document.querySelectorAll('.tab-item').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    switchPage(this.dataset.tab);
+  });
+});
 
 // ==================== Render Activity Table ====================
 function renderActivityTable(data) {
@@ -3441,14 +4358,14 @@ function renderActivityTable(data) {
         <td><span class="status-badge ${statusClass}"><span class="dot"></span>${a.statusLabel}</span></td>
         <td>
           <div class="actions-cell">
-            <button class="btn-text" onclick="showToast('success','进入编辑模式')"><i class="fas fa-edit"></i> 编辑</button>
+            <button class="action-btn edit" onclick="showToast('success','进入编辑模式')"><i class="fas fa-edit"></i> 编辑</button>
             ${a.status === 'active'
-              ? '<button class="btn-text danger" onclick="showToast(\'warning\',\'活动已下架\')"><i class="fas fa-arrow-down"></i> 下架</button>'
+              ? '<button class="action-btn offline" onclick="showToast(\'warning\',\'活动已下架\')"><i class="fas fa-arrow-down"></i> 下架</button>'
               : a.status === 'ended'
-              ? '<button class="btn-text" onclick="showToast(\'success\',\'活动已重新上架\')"><i class="fas fa-arrow-up"></i> 上架</button>'
-              : '<button class="btn-text" onclick="showToast(\'success\',\'活动已上架\')"><i class="fas fa-arrow-up"></i> 上架</button>'
+              ? '<button class="action-btn toggle" onclick="showToast(\'success\',\'活动已重新上架\')"><i class="fas fa-arrow-up"></i> 上架</button>'
+              : '<button class="action-btn toggle" onclick="showToast(\'success\',\'活动已上架\')"><i class="fas fa-arrow-up"></i> 上架</button>'
             }
-            <button class="btn-text" onclick="openDataModal('${a.name}')"><i class="fas fa-chart-bar"></i> 数据</button>
+            <button class="action-btn view" onclick="openDataModal('${a.name}')"><i class="fas fa-chart-bar"></i> 数据</button>
           </div>
         </td>
       </tr>
@@ -3632,6 +4549,94 @@ function showToast(type, message) {
   }, 2500);
 }
 
+// Banner config toggle - only one expanded at a time
+function toggleBannerConfig(el, index) {
+  var panel = document.getElementById('bannerConfig' + index);
+  var icon = el.querySelector('.fa-chevron-down');
+  if (!panel) return;
+  var isVisible = panel.style.display !== 'none';
+  // Close all other panels first
+  document.querySelectorAll('.banner-config-panel').forEach(function(p) {
+    p.style.display = 'none';
+  });
+  document.querySelectorAll('.prop-img-item .fa-chevron-down').forEach(function(i) {
+    i.style.transform = 'rotate(0deg)';
+  });
+  // Toggle current panel
+  if (!isVisible) {
+    panel.style.display = 'block';
+    if (icon) icon.style.transform = 'rotate(180deg)';
+  }
+}
+
+function updateBannerLinkType(select, index) {
+  var type = select.value;
+  if (type) {
+    showToast('success', '已设置关联类型：' + select.options[select.selectedIndex].text);
+  }
+}
+
+// Toggle banner link select dropdown based on type
+function toggleBannerLinkSelect(select, index) {
+  var type = select.value;
+  var panel = document.getElementById('bannerLinkSelect' + index);
+  var label = document.getElementById('bannerLinkLabel' + index);
+  var dropdown = document.getElementById('bannerLinkDropdown' + index);
+  var typeNames = { show: '选择关联演出', product: '选择关联商品', activity: '选择关联活动', package: '选择关联券包' };
+  var typeItems = {
+    show: ['天涯故事', '海南印象', '椰风海韵', '红色娘子军', '黄道婆'],
+    product: ['演出纪念T恤', '节目单', '文创书签', '海报套装'],
+    activity: ['五一特惠充值', '新用户注册礼', '双倍积分日'],
+    package: ['春日观演套票', '家庭欢乐包', 'VIP尊享包']
+  };
+  if (type && panel) {
+    panel.style.display = '';
+    label.textContent = typeNames[type] || '选择关联项';
+    // Update dropdown items
+    var items = typeItems[type] || [];
+    dropdown.innerHTML = items.map(function(item) {
+      return '<div class="banner-link-option" onclick="selectBannerLink(' + index + ', \'' + item + '\')" style="padding:8px 12px; font-size:12px; cursor:pointer; border-bottom:1px solid #f1f5f9;">' + item + '</div>';
+    }).join('');
+    // Reset search
+    document.getElementById('bannerLinkSearch' + index).value = '';
+  } else if (panel) {
+    panel.style.display = 'none';
+  }
+}
+
+// Filter banner link dropdown options
+function filterBannerLinkOptions(index) {
+  var search = document.getElementById('bannerLinkSearch' + index).value.toLowerCase();
+  var dropdown = document.getElementById('bannerLinkDropdown' + index);
+  var options = dropdown.querySelectorAll('.banner-link-option');
+  options.forEach(function(opt) {
+    opt.style.display = opt.textContent.toLowerCase().indexOf(search) !== -1 ? '' : 'none';
+  });
+}
+
+// Select a banner link item
+function selectBannerLink(index, name) {
+  var searchInput = document.getElementById('bannerLinkSearch' + index);
+  searchInput.value = name;
+  document.getElementById('bannerLinkDropdown' + index).style.display = 'none';
+  showToast('success', '已关联：' + name);
+}
+
+// Add hot search word
+function addHotSearchWord() {
+  var input = document.getElementById('newHotSearchInput');
+  var word = input.value.trim();
+  if (!word) { showToast('warning', '请输入搜索词'); return; }
+  var container = document.getElementById('hotSearchWords');
+  var chip = document.createElement('span');
+  chip.className = 'chip selected';
+  chip.style.cssText = 'display:inline-flex; align-items:center; gap:6px; padding:6px 12px; background:linear-gradient(135deg,#f0f9ff,#e0f2fe); border:1px solid #bae6fd; border-radius:20px; font-size:12px; color:#0369a1; cursor:default;';
+  chip.innerHTML = word + ' <i class="fas fa-times" style="font-size:10px; cursor:pointer; opacity:0.6;" onclick="this.parentElement.remove()"></i>';
+  container.appendChild(chip);
+  input.value = '';
+  showToast('success', '已添加搜索词：' + word);
+}
+
 // ==================== Decoration Page Logic ====================
 let previewComponents = [];
 let selectedComponentIndex = -1;
@@ -3656,25 +4661,7 @@ const componentTemplates = {
         搜索演出、场馆、演员...
       </div>
     </div>`,
-  nav: () => `
-    <div class="prev-nav-icons">
-      <div class="prev-nav-icon">
-        <div class="icon-circle" style="background:rgba(255,107,74,0.1);color:var(--accent);"><i class="fas fa-ticket"></i></div>
-        <span>演出购票</span>
-      </div>
-      <div class="prev-nav-icon">
-        <div class="icon-circle" style="background:rgba(0,201,167,0.1);color:var(--green);"><i class="fas fa-building"></i></div>
-        <span>剧院导航</span>
-      </div>
-      <div class="prev-nav-icon">
-        <div class="icon-circle" style="background:rgba(212,168,83,0.1);color:var(--gold);"><i class="fas fa-shopping-bag"></i></div>
-        <span>周边商城</span>
-      </div>
-      <div class="prev-nav-icon">
-        <div class="icon-circle" style="background:rgba(99,102,241,0.1);color:#6366f1;"><i class="fas fa-star"></i></div>
-        <span>会员中心</span>
-      </div>
-    </div>`,
+
   hot: () => `
     <div class="prev-hot">
       <div class="section-title">
@@ -3750,13 +4737,33 @@ const componentTemplates = {
       <div class="activity-banner">
         <i class="fas fa-fire" style="margin-right:8px;"></i> 春季演出季·早鸟5折
       </div>
+    </div>`,
+  nav: () => `
+    <div class="prev-nav">
+      <div class="nav-grid">
+        <div class="nav-item">
+          <div class="nav-icon" style="background:linear-gradient(135deg,#FF6B4A,#ff8a6a);"><i class="fas fa-calendar-alt"></i></div>
+          <span>演出日历</span>
+        </div>
+        <div class="nav-item">
+          <div class="nav-icon" style="background:linear-gradient(135deg,#6366f1,#818cf8);"><i class="fas fa-ticket-alt"></i></div>
+          <span>快速购票</span>
+        </div>
+        <div class="nav-item">
+          <div class="nav-icon" style="background:linear-gradient(135deg,#00C9A7,#33d4b5);"><i class="fas fa-map-marker-alt"></i></div>
+          <span>附近场馆</span>
+        </div>
+        <div class="nav-item">
+          <div class="nav-icon" style="background:linear-gradient(135deg,#D4A853,#e8c468);"><i class="fas fa-user-tag"></i></div>
+          <span>会员中心</span>
+        </div>
+      </div>
     </div>`
 };
 
 const componentNames = {
   carousel: '轮播图',
   search: '搜索栏',
-  nav: '功能入口',
   hot: '热门推荐',
   theater: '剧院导航',
   shop: '周边商品',
@@ -3776,22 +4783,25 @@ function renderPreview() {
     return;
   }
 
-  container.innerHTML = previewComponents.map((comp, i) => `
-    <div class="preview-component ${i === selectedComponentIndex ? 'selected' : ''}"
+  container.innerHTML = previewComponents.map((comp, i) => {
+    var isSearch = comp.type === 'search';
+    var actionsHtml = isSearch ? '' : `<div class="comp-actions">
+        <button class="btn-up" onclick="event.stopPropagation();moveComponent(${i},-1)" title="上移"><i class="fas fa-chevron-up"></i> 上移</button>
+        <button class="btn-down" onclick="event.stopPropagation();moveComponent(${i},1)" title="下移"><i class="fas fa-chevron-down"></i> 下移</button>
+        <button class="btn-del" onclick="event.stopPropagation();removeComponent(${i})" title="删除"><i class="fas fa-trash"></i> 删除</button>
+      </div>`;
+    return `
+    <div class="preview-component ${i === selectedComponentIndex ? 'selected' : ''} ${isSearch ? 'search-fixed' : ''}"
          data-index="${i}"
-         draggable="true"
+         ${isSearch ? '' : 'draggable="true"'}
          onclick="selectComponent(${i})"
-         ondragstart="onPreviewDragStart(event, ${i})"
-         ondragover="onPreviewDragOver(event)"
-         ondrop="onPreviewDrop(event, ${i})">
-      <div class="comp-actions">
-        <button class="btn-up" onclick="event.stopPropagation();moveComponent(${i},-1)" title="上移"><i class="fas fa-chevron-up"></i></button>
-        <button class="btn-down" onclick="event.stopPropagation();moveComponent(${i},1)" title="下移"><i class="fas fa-chevron-down"></i></button>
-        <button class="btn-del" onclick="event.stopPropagation();removeComponent(${i})" title="删除"><i class="fas fa-trash"></i></button>
-      </div>
+         ${isSearch ? '' : 'ondragstart="onPreviewDragStart(event, ' + i + ')"'}
+         ${isSearch ? '' : 'ondragover="onPreviewDragOver(event)"'}
+         ${isSearch ? '' : 'ondrop="onPreviewDrop(event, ' + i + ')"'}>
+      ${actionsHtml}
       ${componentTemplates[comp.type]()}
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
 // Select component
@@ -3905,28 +4915,147 @@ function renderPropertyPanel() {
       </div>
     </div>`;
 
+
+
   switch (comp.type) {
     case 'carousel':
       html += `
         <div class="prop-section">
           <div class="prop-section-title"><i class="fas fa-image"></i> 轮播图片</div>
           <div class="prop-field">
-            <label>图片列表</label>
+            <label>图片列表（点击图片展开配置）</label>
             <div class="prop-img-list">
-              <div class="prop-img-item">
+              <div class="prop-img-item" onclick="toggleBannerConfig(this, 0)" style="cursor:pointer;">
                 <div class="img-thumb"></div>
                 <div class="img-info">banner-1.jpg<br><span style="color:var(--text-muted);">750x420</span></div>
-                <span class="img-remove" onclick="showToast('warning','图片已移除')"><i class="fas fa-times"></i></span>
+                <span class="img-remove" onclick="event.stopPropagation();showToast('warning','图片已移除')"><i class="fas fa-times"></i></span>
+                <i class="fas fa-chevron-down" style="margin-left:auto;color:var(--text-muted);font-size:11px;transition:transform 0.2s;"></i>
               </div>
-              <div class="prop-img-item">
+              <!-- 图片1配置面板 -->
+              <div class="banner-config-panel" id="bannerConfig0" style="display:none;width:100%;padding:12px;background:#F8FAFC;border-radius:8px;margin-top:4px;">
+                <div class="prop-field">
+                  <label>关联类型</label>
+                  <select class="form-select" id="bannerLinkType0" onchange="toggleBannerLinkSelect(this, 0)">
+                    <option value="">请选择</option>
+                    <option value="show">演出</option>
+                    <option value="product">商品</option>
+                    <option value="activity">活动</option>
+                    <option value="package">券包</option>
+                  </select>
+                </div>
+                <div class="prop-field" id="bannerLinkSelect0" style="display:none;">
+                  <label id="bannerLinkLabel0">选择关联项</label>
+                  <div style="position:relative;">
+                    <input type="text" class="form-control" placeholder="输入关键词搜索..." id="bannerLinkSearch0" oninput="filterBannerLinkOptions(0)" style="padding-right:32px;">
+                    <i class="fas fa-search" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:12px;"></i>
+                  </div>
+                  <div class="banner-link-dropdown" id="bannerLinkDropdown0" style="max-height:160px; overflow-y:auto; border:1px solid #e2e8f0; border-radius:8px; margin-top:4px; background:#fff;">
+                    <div class="banner-link-option" onclick="selectBannerLink(0, '天涯故事')" style="padding:8px 12px; font-size:12px; cursor:pointer; border-bottom:1px solid #f1f5f9;">天涯故事</div>
+                    <div class="banner-link-option" onclick="selectBannerLink(0, '海南印象')" style="padding:8px 12px; font-size:12px; cursor:pointer; border-bottom:1px solid #f1f5f9;">海南印象</div>
+                    <div class="banner-link-option" onclick="selectBannerLink(0, '椰风海韵')" style="padding:8px 12px; font-size:12px; cursor:pointer;">椰风海韵</div>
+                  </div>
+                </div>
+                <div class="prop-field">
+                  <label>标题</label>
+                  <input type="text" class="form-control" placeholder="输入标题" id="bannerTitle0">
+                </div>
+                <div class="prop-field">
+                  <label>副标题</label>
+                  <input type="text" class="form-control" placeholder="输入副标题" id="bannerSubtitle0">
+                </div>
+
+                <div class="prop-field">
+                  <label>标签</label>
+                  <input type="text" class="form-control" placeholder="输入标签，如：限时特惠" id="bannerTag0">
+                </div>
+              </div>
+              <div class="prop-img-item" onclick="toggleBannerConfig(this, 1)" style="cursor:pointer;">
                 <div class="img-thumb" style="background:linear-gradient(135deg,var(--accent),var(--gold));"></div>
                 <div class="img-info">banner-2.jpg<br><span style="color:var(--text-muted);">750x420</span></div>
-                <span class="img-remove" onclick="showToast('warning','图片已移除')"><i class="fas fa-times"></i></span>
+                <span class="img-remove" onclick="event.stopPropagation();showToast('warning','图片已移除')"><i class="fas fa-times"></i></span>
+                <i class="fas fa-chevron-down" style="margin-left:auto;color:var(--text-muted);font-size:11px;transition:transform 0.2s;"></i>
               </div>
-              <div class="prop-img-item">
+              <!-- 图片2配置面板 -->
+              <div class="banner-config-panel" id="bannerConfig1" style="display:none;width:100%;padding:12px;background:#F8FAFC;border-radius:8px;margin-top:4px;">
+                <div class="prop-field">
+                  <label>关联类型</label>
+                  <select class="form-select" id="bannerLinkType1" onchange="toggleBannerLinkSelect(this, 1)">
+                    <option value="">请选择</option>
+                    <option value="show">演出</option>
+                    <option value="product">商品</option>
+                    <option value="activity">活动</option>
+                    <option value="package">券包</option>
+                  </select>
+                </div>
+                <div class="prop-field" id="bannerLinkSelect1" style="display:none;">
+                  <label id="bannerLinkLabel1">选择关联项</label>
+                  <div style="position:relative;">
+                    <input type="text" class="form-control" placeholder="输入关键词搜索..." id="bannerLinkSearch1" oninput="filterBannerLinkOptions(1)" style="padding-right:32px;">
+                    <i class="fas fa-search" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:12px;"></i>
+                  </div>
+                  <div class="banner-link-dropdown" id="bannerLinkDropdown1" style="max-height:160px; overflow-y:auto; border:1px solid #e2e8f0; border-radius:8px; margin-top:4px; background:#fff;">
+                    <div class="banner-link-option" onclick="selectBannerLink(1, '天涯故事')" style="padding:8px 12px; font-size:12px; cursor:pointer; border-bottom:1px solid #f1f5f9;">天涯故事</div>
+                    <div class="banner-link-option" onclick="selectBannerLink(1, '海南印象')" style="padding:8px 12px; font-size:12px; cursor:pointer; border-bottom:1px solid #f1f5f9;">海南印象</div>
+                    <div class="banner-link-option" onclick="selectBannerLink(1, '椰风海韵')" style="padding:8px 12px; font-size:12px; cursor:pointer;">椰风海韵</div>
+                  </div>
+                </div>
+                <div class="prop-field">
+                  <label>标题</label>
+                  <input type="text" class="form-control" placeholder="输入标题" id="bannerTitle1">
+                </div>
+                <div class="prop-field">
+                  <label>副标题</label>
+                  <input type="text" class="form-control" placeholder="输入副标题" id="bannerSubtitle1">
+                </div>
+
+                <div class="prop-field">
+                  <label>标签</label>
+                  <input type="text" class="form-control" placeholder="输入标签，如：限时特惠" id="bannerTag1">
+                </div>
+              </div>
+              <div class="prop-img-item" onclick="toggleBannerConfig(this, 2)" style="cursor:pointer;">
                 <div class="img-thumb" style="background:linear-gradient(135deg,var(--green),#33d4b5);"></div>
                 <div class="img-info">banner-3.jpg<br><span style="color:var(--text-muted);">750x420</span></div>
-                <span class="img-remove" onclick="showToast('warning','图片已移除')"><i class="fas fa-times"></i></span>
+                <span class="img-remove" onclick="event.stopPropagation();showToast('warning','图片已移除')"><i class="fas fa-times"></i></span>
+                <i class="fas fa-chevron-down" style="margin-left:auto;color:var(--text-muted);font-size:11px;transition:transform 0.2s;"></i>
+              </div>
+              <!-- 图片3配置面板 -->
+              <div class="banner-config-panel" id="bannerConfig2" style="display:none;width:100%;padding:12px;background:#F8FAFC;border-radius:8px;margin-top:4px;">
+                <div class="prop-field">
+                  <label>关联类型</label>
+                  <select class="form-select" id="bannerLinkType2" onchange="toggleBannerLinkSelect(this, 2)">
+                    <option value="">请选择</option>
+                    <option value="show">演出</option>
+                    <option value="product">商品</option>
+                    <option value="activity">活动</option>
+                    <option value="package">券包</option>
+                  </select>
+                </div>
+                <div class="prop-field" id="bannerLinkSelect2" style="display:none;">
+                  <label id="bannerLinkLabel2">选择关联项</label>
+                  <div style="position:relative;">
+                    <input type="text" class="form-control" placeholder="输入关键词搜索..." id="bannerLinkSearch2" oninput="filterBannerLinkOptions(2)" style="padding-right:32px;">
+                    <i class="fas fa-search" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:12px;"></i>
+                  </div>
+                  <div class="banner-link-dropdown" id="bannerLinkDropdown2" style="max-height:160px; overflow-y:auto; border:1px solid #e2e8f0; border-radius:8px; margin-top:4px; background:#fff;">
+                    <div class="banner-link-option" onclick="selectBannerLink(2, '天涯故事')" style="padding:8px 12px; font-size:12px; cursor:pointer; border-bottom:1px solid #f1f5f9;">天涯故事</div>
+                    <div class="banner-link-option" onclick="selectBannerLink(2, '海南印象')" style="padding:8px 12px; font-size:12px; cursor:pointer; border-bottom:1px solid #f1f5f9;">海南印象</div>
+                    <div class="banner-link-option" onclick="selectBannerLink(2, '椰风海韵')" style="padding:8px 12px; font-size:12px; cursor:pointer;">椰风海韵</div>
+                  </div>
+                </div>
+                <div class="prop-field">
+                  <label>标题</label>
+                  <input type="text" class="form-control" placeholder="输入标题" id="bannerTitle2">
+                </div>
+                <div class="prop-field">
+                  <label>副标题</label>
+                  <input type="text" class="form-control" placeholder="输入副标题" id="bannerSubtitle2">
+                </div>
+
+                <div class="prop-field">
+                  <label>标签</label>
+                  <input type="text" class="form-control" placeholder="输入标签，如：限时特惠" id="bannerTag2">
+                </div>
               </div>
             </div>
             <div class="prop-upload" style="margin-top:10px;" onclick="showToast('success','图片上传成功')">
@@ -3943,12 +5072,6 @@ function renderPropertyPanel() {
               <option>10</option>
             </select>
           </div>
-          <div class="prop-field">
-            <div class="switch-wrap">
-              <div class="switch on" onclick="this.classList.toggle('on')"></div>
-              <span class="switch-label">显示指示器</span>
-            </div>
-          </div>
         </div>`;
       break;
 
@@ -3961,56 +5084,22 @@ function renderPropertyPanel() {
             <input type="text" class="form-control" value="搜索演出、场馆、演员...">
           </div>
           <div class="prop-field">
-            <label>热门搜索词</label>
-            <div class="chip-group">
-              <span class="chip selected"><i class="fas fa-check"></i> 天涯故事</span>
-              <span class="chip selected"><i class="fas fa-check"></i> 海南印象</span>
-              <span class="chip"><i class="fas fa-plus"></i> 椰风海韵</span>
+            <label>热门搜索词（自定义添加）</label>
+            <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px;" id="hotSearchWords">
+              <span class="chip selected" style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; background:linear-gradient(135deg,#f0f9ff,#e0f2fe); border:1px solid #bae6fd; border-radius:20px; font-size:12px; color:#0369a1; cursor:default;">
+                天涯故事 <i class="fas fa-times" style="font-size:10px; cursor:pointer; opacity:0.6;" onclick="this.parentElement.remove()"></i>
+              </span>
+              <span class="chip selected" style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; background:linear-gradient(135deg,#f0f9ff,#e0f2fe); border:1px solid #bae6fd; border-radius:20px; font-size:12px; color:#0369a1; cursor:default;">
+                海南印象 <i class="fas fa-times" style="font-size:10px; cursor:pointer; opacity:0.6;" onclick="this.parentElement.remove()"></i>
+              </span>
+              <span class="chip selected" style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; background:linear-gradient(135deg,#f0f9ff,#e0f2fe); border:1px solid #bae6fd; border-radius:20px; font-size:12px; color:#0369a1; cursor:default;">
+                椰风海韵 <i class="fas fa-times" style="font-size:10px; cursor:pointer; opacity:0.6;" onclick="this.parentElement.remove()"></i>
+              </span>
             </div>
-          </div>
-          <div class="prop-field">
-            <label>搜索框样式</label>
-            <select class="form-select">
-              <option selected>圆角矩形</option>
-              <option>直角矩形</option>
-              <option>胶囊形</option>
-            </select>
-          </div>
-        </div>`;
-      break;
-
-    case 'nav':
-      html += `
-        <div class="prop-section">
-          <div class="prop-section-title"><i class="fas fa-th-large"></i> 功能入口配置</div>
-          <div class="prop-field">
-            <label>显示功能</label>
-            <div class="chip-group">
-              <span class="chip selected"><i class="fas fa-check"></i> 演出购票</span>
-              <span class="chip selected"><i class="fas fa-check"></i> 剧院导航</span>
-              <span class="chip selected"><i class="fas fa-check"></i> 周边商城</span>
-              <span class="chip selected"><i class="fas fa-check"></i> 会员中心</span>
-              <span class="chip"><i class="fas fa-plus"></i> 优惠券</span>
-              <span class="chip"><i class="fas fa-plus"></i> 订单查询</span>
-              <span class="chip"><i class="fas fa-plus"></i> 在线客服</span>
-              <span class="chip"><i class="fas fa-plus"></i> 关于我们</span>
+            <div style="display:flex; gap:8px;">
+              <input type="text" class="form-control" placeholder="输入搜索词..." id="newHotSearchInput" style="flex:1; height:34px; font-size:12px;">
+              <button class="btn btn-secondary" onclick="addHotSearchWord()" style="padding:6px 14px; font-size:12px; white-space:nowrap;"><i class="fas fa-plus"></i> 添加</button>
             </div>
-          </div>
-          <div class="prop-field">
-            <label>每行显示数量</label>
-            <select class="form-select">
-              <option>3个</option>
-              <option selected>4个</option>
-              <option>5个</option>
-            </select>
-          </div>
-          <div class="prop-field">
-            <label>图标样式</label>
-            <select class="form-select">
-              <option selected>圆角方形</option>
-              <option>圆形</option>
-              <option>无背景</option>
-            </select>
           </div>
         </div>`;
       break;
@@ -4020,33 +5109,115 @@ function renderPropertyPanel() {
         <div class="prop-section">
           <div class="prop-section-title"><i class="fas fa-fire"></i> 热门推荐配置</div>
           <div class="prop-field">
-            <label>推荐演出</label>
-            <div class="chip-group">
-              <span class="chip selected"><i class="fas fa-check"></i> 天涯故事</span>
-              <span class="chip selected"><i class="fas fa-check"></i> 海南印象</span>
-              <span class="chip selected"><i class="fas fa-check"></i> 椰风海韵</span>
-              <span class="chip"><i class="fas fa-plus"></i> 黎族风情</span>
-              <span class="chip"><i class="fas fa-plus"></i> 南海丝路</span>
-              <span class="chip"><i class="fas fa-plus"></i> 琼剧经典</span>
+            <label>推荐方式</label>
+            <select class="form-select" id="hotRecMode" onchange="toggleHotMode(this)">
+              <option value="auto" selected>智能推荐</option>
+              <option value="custom">自定义推荐</option>
+            </select>
+            <div class="hint" id="hotRecHint">自动推荐当前正在演出、票房最热的演出</div>
+          </div>
+          <div id="hotCustomPanel" style="display:none;">
+            <div class="prop-field">
+              <label>搜索添加推荐演出（最多6条）</label>
+              <div class="prop-search-box" style="display:flex;gap:8px;margin-bottom:10px;">
+                <input type="text" class="form-control" placeholder="搜索演出名称..." style="flex:1;" id="hotSearchInput">
+                <button class="btn btn-secondary" onclick="addHotShow()" style="padding:6px 14px;font-size:12px;"><i class="fas fa-plus"></i> 添加</button>
+              </div>
             </div>
-            <div class="hint">点击选择要推荐的演出</div>
+            <div class="prop-field">
+              <label>已选推荐</label>
+              <div class="hot-show-list" id="hotShowList">
+                <div class="hot-show-item" data-idx="0">
+                  <div class="hot-show-header" onclick="toggleHotShowConfig(this)">
+                    <span class="hot-show-name"><i class="fas fa-film"></i> 天涯故事 <span style="display:inline-block; padding:2px 8px; border-radius:10px; font-size:10px; font-weight:600; color:#fff; background:#FF6B4A; margin-left:6px;">热卖</span></span>
+                    <div class="hot-show-actions">
+                      <i class="fas fa-chevron-down" style="transition:transform 0.2s;"></i>
+                      <i class="fas fa-edit" onclick="event.stopPropagation();editHotShow(0)" title="更换"></i>
+                      <i class="fas fa-trash" onclick="event.stopPropagation();removeHotShow(0)" title="删除"></i>
+                    </div>
+                  </div>
+                  <div class="hot-show-config" style="display:none;padding:12px;background:#F8FAFC;border-radius:6px;margin-top:6px;">
+                    <div class="prop-field">
+                      <label>标签文字</label>
+                      <input type="text" class="form-control" value="热卖" placeholder="如：热卖、限时">
+                    </div>
+                    <div class="prop-field">
+                      <label>标签颜色</label>
+                      <div class="color-picker-row">
+                        <span class="color-dot active" style="background:#FF6B4A;" onclick="selectColor(this)"></span>
+                        <span class="color-dot" style="background:#EC4899;" onclick="selectColor(this)"></span>
+                        <span class="color-dot" style="background:#8B5CF6;" onclick="selectColor(this)"></span>
+                        <span class="color-dot" style="background:#10B981;" onclick="selectColor(this)"></span>
+                        <span class="color-dot" style="background:#F59E0B;" onclick="selectColor(this)"></span>
+                        <span class="color-dot" style="background:#3B82F6;" onclick="selectColor(this)"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hot-show-item" data-idx="1">
+                  <div class="hot-show-header" onclick="toggleHotShowConfig(this)">
+                    <span class="hot-show-name"><i class="fas fa-film"></i> 海南印象 <span style="display:inline-block; padding:2px 8px; border-radius:10px; font-size:10px; font-weight:600; color:#fff; background:#EC4899; margin-left:6px;">爆款</span></span>
+                    <div class="hot-show-actions">
+                      <i class="fas fa-chevron-down" style="transition:transform 0.2s;"></i>
+                      <i class="fas fa-edit" onclick="event.stopPropagation();editHotShow(1)" title="更换"></i>
+                      <i class="fas fa-trash" onclick="event.stopPropagation();removeHotShow(1)" title="删除"></i>
+                    </div>
+                  </div>
+                  <div class="hot-show-config" style="display:none;padding:12px;background:#F8FAFC;border-radius:6px;margin-top:6px;">
+                    <div class="prop-field">
+                      <label>标签文字</label>
+                      <input type="text" class="form-control" value="爆款" placeholder="如：热卖、限时">
+                    </div>
+                    <div class="prop-field">
+                      <label>标签颜色</label>
+                      <div class="color-picker-row">
+                        <span class="color-dot active" style="background:#FF6B4A;" onclick="selectColor(this)"></span>
+                        <span class="color-dot" style="background:#EC4899;" onclick="selectColor(this)"></span>
+                        <span class="color-dot" style="background:#8B5CF6;" onclick="selectColor(this)"></span>
+                        <span class="color-dot" style="background:#10B981;" onclick="selectColor(this)"></span>
+                        <span class="color-dot" style="background:#F59E0B;" onclick="selectColor(this)"></span>
+                        <span class="color-dot" style="background:#3B82F6;" onclick="selectColor(this)"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hot-show-item" data-idx="2">
+                  <div class="hot-show-header" onclick="toggleHotShowConfig(this)">
+                    <span class="hot-show-name"><i class="fas fa-film"></i> 椰风海韵 <span style="display:inline-block; padding:2px 8px; border-radius:10px; font-size:10px; font-weight:600; color:#fff; background:#10B981; margin-left:6px;">新品</span></span>
+                    <div class="hot-show-actions">
+                      <i class="fas fa-chevron-down" style="transition:transform 0.2s;"></i>
+                      <i class="fas fa-edit" onclick="event.stopPropagation();editHotShow(2)" title="更换"></i>
+                      <i class="fas fa-trash" onclick="event.stopPropagation();removeHotShow(2)" title="删除"></i>
+                    </div>
+                  </div>
+                  <div class="hot-show-config" style="display:none;padding:12px;background:#F8FAFC;border-radius:6px;margin-top:6px;">
+                    <div class="prop-field">
+                      <label>标签文字</label>
+                      <input type="text" class="form-control" value="新品" placeholder="如：热卖、限时">
+                    </div>
+                    <div class="prop-field">
+                      <label>标签颜色</label>
+                      <div class="color-picker-row">
+                        <span class="color-dot active" style="background:#FF6B4A;" onclick="selectColor(this)"></span>
+                        <span class="color-dot" style="background:#EC4899;" onclick="selectColor(this)"></span>
+                        <span class="color-dot" style="background:#8B5CF6;" onclick="selectColor(this)"></span>
+                        <span class="color-dot" style="background:#10B981;" onclick="selectColor(this)"></span>
+                        <span class="color-dot" style="background:#F59E0B;" onclick="selectColor(this)"></span>
+                        <span class="color-dot" style="background:#3B82F6;" onclick="selectColor(this)"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="prop-field">
             <label>展示数量</label>
             <div class="prop-number-input">
               <button onclick="this.nextElementSibling.value=Math.max(1,+this.nextElementSibling.value-1)">-</button>
-              <input type="number" value="3" min="1" max="10">
-              <button onclick="this.previousElementSibling.value=Math.min(10,+this.previousElementSibling.value+1)">+</button>
+              <input type="number" value="3" min="1" max="6">
+              <button onclick="this.previousElementSibling.value=Math.min(6,+this.previousElementSibling.value+1)">+</button>
             </div>
-          </div>
-          <div class="prop-field">
-            <label>排序方式</label>
-            <select class="form-select">
-              <option selected>综合热度</option>
-              <option>销量优先</option>
-              <option>最新上架</option>
-              <option>价格从低到高</option>
-            </select>
           </div>
           <div class="prop-field">
             <div class="switch-wrap">
@@ -4062,28 +5233,13 @@ function renderPropertyPanel() {
         <div class="prop-section">
           <div class="prop-section-title"><i class="fas fa-building"></i> 剧院导航配置</div>
           <div class="prop-field">
-            <label>展示剧院</label>
-            <div class="chip-group">
-              <span class="chip selected"><i class="fas fa-check"></i> 海南省歌舞剧院</span>
-              <span class="chip selected"><i class="fas fa-check"></i> 三亚保利剧院</span>
-              <span class="chip selected"><i class="fas fa-check"></i> 海口湾演艺中心</span>
-              <span class="chip"><i class="fas fa-plus"></i> 儋州市文化馆</span>
-              <span class="chip"><i class="fas fa-plus"></i> 琼海市大剧院</span>
+            <label>最多展示数量</label>
+            <div class="prop-number-input">
+              <button onclick="this.nextElementSibling.value=Math.max(1,+this.nextElementSibling.value-1)">-</button>
+              <input type="number" value="6" min="1" max="6">
+              <button onclick="this.previousElementSibling.value=Math.min(6,+this.previousElementSibling.value+1)">+</button>
             </div>
-          </div>
-          <div class="prop-field">
-            <label>每行显示数量</label>
-            <select class="form-select">
-              <option selected>3个</option>
-              <option>4个</option>
-            </select>
-          </div>
-          <div class="prop-field">
-            <label>布局样式</label>
-            <select class="form-select">
-              <option selected>网格布局</option>
-              <option>横向滚动</option>
-            </select>
+            <div class="hint">设置首页剧院导航最多展示的剧院数量（1-6个）</div>
           </div>
         </div>`;
       break;
@@ -4151,22 +5307,13 @@ function renderPropertyPanel() {
       break;
   }
 
-  // Common: spacing & visibility
+  // Hidden toggle - at the bottom for all components
   html += `
-    <div class="prop-section">
-      <div class="prop-section-title"><i class="fas fa-ruler-combined"></i> 间距与显示</div>
-      <div class="prop-field">
-        <label>上边距 (px)</label>
-        <input type="number" class="form-control" value="0" min="0" max="40">
-      </div>
-      <div class="prop-field">
-        <label>下边距 (px)</label>
-        <input type="number" class="form-control" value="0" min="0" max="40">
-      </div>
+    <div class="prop-section" style="margin-top:16px;padding-top:12px;border-top:1px dashed var(--border);">
       <div class="prop-field">
         <div class="switch-wrap">
           <div class="switch on" onclick="this.classList.toggle('on')"></div>
-          <span class="switch-label">显示组件</span>
+          <span class="switch-label">隐藏组件</span>
         </div>
       </div>
     </div>`;
@@ -4203,12 +5350,52 @@ function redoAction() {
   showToast('warning', '暂无可重做操作');
 }
 
-function previewPage() {
-  if (previewComponents.length === 0) {
-    showToast('warning', '请先添加组件再预览');
+// ==================== Hot Show Functions ====================
+function toggleHotMode(select) {
+  var customPanel = document.getElementById('hotCustomPanel');
+  var hint = document.getElementById('hotRecHint');
+  if (select.value === 'custom') {
+    customPanel.style.display = 'block';
+    if (hint) hint.style.display = 'none';
+  } else {
+    customPanel.style.display = 'none';
+    if (hint) hint.style.display = 'block';
+  }
+}
+
+function toggleHotShowConfig(header) {
+  var config = header.nextElementSibling;
+  var arrow = header.querySelector('.fa-chevron-down');
+  if (config.style.display === 'none') {
+    config.style.display = 'block';
+    arrow.style.transform = 'rotate(180deg)';
+  } else {
+    config.style.display = 'none';
+    arrow.style.transform = 'rotate(0deg)';
+  }
+}
+
+function addHotShow() {
+  var input = document.getElementById('hotSearchInput');
+  if (!input.value.trim()) {
+    showToast('warning', '请输入演出名称');
     return;
   }
-  showToast('success', '预览已生成，可在手机端扫码查看');
+  showToast('success', '已添加：' + input.value);
+  input.value = '';
+}
+
+function removeHotShow(idx) {
+  showToast('warning', '推荐演出已删除');
+}
+
+function editHotShow(idx) {
+  showToast('info', '请搜索并选择新的推荐演出');
+}
+
+function selectColor(dot) {
+  dot.parentElement.querySelectorAll('.color-dot').forEach(function(d) { d.classList.remove('active'); });
+  dot.classList.add('active');
 }
 
 function saveDesign() {
@@ -4232,9 +5419,8 @@ renderActivityTable();
 
 // Pre-populate decoration with some components for demo
 previewComponents = [
-  { type: 'carousel' },
   { type: 'search' },
-  { type: 'nav' },
+  { type: 'carousel' },
   { type: 'hot' },
   { type: 'theater' },
   { type: 'shop' },

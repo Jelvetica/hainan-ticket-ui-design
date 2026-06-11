@@ -174,6 +174,471 @@ html {
   border-radius: 10px;
 }
 
+/* ========== Base Badge Styles ========== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.badge-qrcode {
+  background: rgba(99,102,241,0.1);
+  color: #6366f1;
+}
+.badge-ic {
+  background: rgba(0,201,167,0.1);
+  color: var(--emerald);
+}
+.badge-none {
+  background: var(--bg-light);
+  color: var(--text-muted);
+}
+
+/* ========== Batch Card List Styles ========== */
+.batch-no {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 13px;
+}
+.batch-card-rule {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.batch-name {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.batch-count {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.batch-params {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+}
+.param-money {
+  font-weight: 700;
+  color: var(--coral);
+  font-size: 14px;
+}
+.param-points {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 400;
+}
+.param-growth {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+/* ========== Password Mask ========== */
+.password-mask {
+  font-family: monospace;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+}
+
+/* ========== Form Section ========== */
+.form-section {
+  margin-bottom: 20px;
+}
+.form-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ========== Input with Icon / Prefix ========== */
+/* ========== Input with Prefix Icon ========== */
+.input-prefix-wrap {
+  position: relative;
+}
+.input-prefix-wrap .input-prefix-icon,
+.input-prefix-wrap .input-prefix-text {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 2;
+}
+.input-prefix-wrap .input-prefix-pad {
+  padding-left: 36px;
+}
+
+/* ========== Filter Input ========== */
+.filter-input {
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0 12px;
+  font-size: 13px;
+  color: var(--text-primary);
+  outline: none;
+  transition: var(--transition);
+}
+.filter-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+/* ========== Batch Overview (Modal) ========== */
+.batch-overview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 20px 24px;
+  background: var(--bg-light);
+  border-bottom: 1px solid var(--border-light);
+}
+.batch-overview-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.overview-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.overview-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ========== Detail Tabs ========== */
+.detail-tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--border-light);
+  background: var(--white);
+}
+.detail-tab {
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.detail-tab:hover {
+  color: var(--accent);
+}
+.detail-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ========== Detail Panel ========== */
+.detail-panel {
+  display: none;
+  padding: 20px 24px;
+}
+.detail-panel.active {
+  display: block;
+}
+
+/* ========== Detail Toolbar ========== */
+.detail-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.detail-toolbar .toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.detail-toolbar .toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ========== Usage Stats ========== */
+.usage-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.usage-stat-item {
+  background: var(--bg-light);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+}
+.usage-stat-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.usage-stat-unit {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin-left: 2px;
+}
+.usage-stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.usage-stat-bar {
+  height: 6px;
+  background: var(--border-light);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.usage-stat-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+/* ========== Usage Records ========== */
+.usage-records {
+  margin-top: 20px;
+}
+.usage-records-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.usage-record-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.usage-record-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--bg-light);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+}
+.record-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.record-card {
+  font-family: monospace;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.record-user {
+  color: var(--text-secondary);
+}
+.record-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.record-time {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.record-amount {
+  font-weight: 600;
+  color: var(--coral);
+}
+
+/* ========== Make Options (制卡方式) ========== */
+.make-option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.make-option-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  background: var(--white);
+}
+.make-option-item:hover {
+  border-color: var(--accent);
+}
+.make-option-item.active {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+.make-option-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.make-option-icon i {
+  color: inherit;
+}
+.make-option-info {
+  flex: 1;
+}
+.make-option-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+.make-option-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ========== Export Preview ========== */
+.export-preview {
+  background: var(--bg-light);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.export-file-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.export-file-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.export-file-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+.export-file-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ========== IC Reader / Bind ========== */
+.ic-reader-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 40px 20px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-light);
+}
+.reader-status {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.reader-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.result-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.result-uid {
+  font-family: monospace;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.ic-bind-current {
+  background: var(--bg-light);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+.current-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.current-number {
+  font-family: monospace;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.current-card-info {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+.current-card-no {
+  font-family: monospace;
+  color: var(--text-primary);
+}
+
+/* ========== Auto Next Toggle ========== */
+.auto-next-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* ========== Sub Panel ========== */
+.sub-panel {
+  background: var(--bg-light);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-top: 12px;
+}
+
+/* ========== Avatar Small ========== */
+.avatar-sm {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 /* Sidebar Footer */
 .sidebar-footer {
   padding: 16px 20px;
@@ -245,6 +710,7 @@ html {
       --green: #00C9A7;
       --green-light: rgba(0, 201, 167, 0.1);
       --bg: #F5F6FA;
+      --bg-light: #F5F6FA;
       --white: #FFFFFF;
       --text-primary: #1a1a2e;
       --text-secondary: #6b7280;
@@ -371,14 +837,11 @@ html {
       font-size: 22px;
       font-weight: 700;
       color: var(--text-primary);
-      display: flex; align-items: center; gap: 10px;
     }
-    .page-title .icon-circle {
-      width: 38px; height: 38px;
-      border-radius: var(--radius-md);
-      background: linear-gradient(135deg, var(--accent), #ff8a6a);
-      display: flex; align-items: center; justify-content: center;
-      color: #fff; font-size: 16px;
+    .page-title-sub {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 4px;
     }
 
     /* ========== Tab Navigation ========== */
@@ -392,36 +855,43 @@ html {
       margin-bottom: 24px;
       border: 1px solid var(--border-light);
     }
+    .tab-nav {
+      display: flex;
+      gap: 0;
+      background: #fff;
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(10,22,40,0.06);
+      border: 1px solid #f0f0f5;
+    }
     .tab-btn {
-      flex: 1;
-      padding: 12px 16px;
-      border-radius: var(--radius-md);
+      padding: 10px 22px;
+      border-radius: 6px;
+      color: var(--text-secondary);
       font-size: 13.5px;
       font-weight: 500;
-      color: var(--text-secondary);
       background: transparent;
-      transition: var(--transition);
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      position: relative;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      white-space: nowrap;
+      cursor: pointer;
+      border: none;
     }
-    .tab-btn:hover { color: var(--text-primary); background: var(--bg); }
+    .tab-btn:hover {
+      color: var(--text-primary);
+      background: var(--light-gray);
+    }
     .tab-btn.active {
       color: #fff;
-      background: var(--primary);
-      box-shadow: 0 4px 12px rgba(10, 22, 40, 0.25);
+      background: linear-gradient(135deg, #FF6B4A, #FF8A65);
+      box-shadow: 0 2px 8px rgba(255,107,74,0.3);
+      font-weight: 600;
     }
     .tab-btn i { font-size: 14px; }
-    .tab-btn .tab-badge {
-      font-size: 11px;
-      padding: 1px 6px;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.15);
-      color: rgba(255,255,255,0.7);
-    }
-    .tab-btn:not(.active) .tab-badge {
-      background: var(--accent-light);
-      color: var(--accent);
-    }
 
     /* ========== Tab Panels ========== */
     .tab-panel { display: none; animation: fadeIn 0.3s ease; }
@@ -512,11 +982,7 @@ html {
       transition: var(--transition);
       white-space: nowrap;
     }
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-    }
-    .btn-primary:hover { background: var(--accent-hover); box-shadow: 0 4px 12px rgba(255, 107, 74, 0.3); }
+
     .btn-secondary {
       background: var(--bg);
       color: var(--text-secondary);
@@ -593,6 +1059,272 @@ html {
     .value-tag.money { background: var(--gold-light); color: #b8860b; }
     .value-tag.points { background: var(--green-light); color: #059669; }
     .value-tag.growth { background: #e0e7ff; color: #4f46e5; }
+    .value-tag.discount { background: #fce7f3; color: #db2777; }
+
+    /* ========== Toggle Switch ========== */
+    .toggle-switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      background: #d1d5db;
+      border-radius: 11px;
+      cursor: pointer;
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+    .toggle-switch.active { background: var(--accent); }
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 18px;
+      height: 18px;
+      background: #fff;
+      border-radius: 50%;
+      transition: var(--transition);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .toggle-switch.active::after { left: 20px; }
+
+    /* ========== Multi-select Tags ========== */
+    .multi-select-area {
+      width: 100%;
+      min-height: 80px;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--white);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: flex-start;
+      cursor: text;
+      transition: var(--transition);
+    }
+    .multi-select-area:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-light);
+    }
+    .multi-select-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .multi-select-tag .tag-remove {
+      cursor: pointer;
+      font-size: 10px;
+      opacity: 0.7;
+      transition: var(--transition);
+    }
+    .multi-select-tag .tag-remove:hover { opacity: 1; }
+    .multi-select-input {
+      border: none;
+      outline: none;
+      font-size: 13px;
+      min-width: 120px;
+      flex: 1;
+      padding: 2px 0;
+    }
+    .multi-select-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-md);
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 10;
+      display: none;
+    }
+    .multi-select-dropdown.show { display: block; }
+    .multi-select-option {
+      padding: 8px 12px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .multi-select-option:hover { background: var(--bg-light); }
+    .multi-select-option.selected { color: var(--accent); font-weight: 500; }
+    .multi-select-option .check-icon { font-size: 12px; }
+
+    /* ========== Stack Settings ========== */
+    .stack-settings {
+      padding: 16px;
+      background: var(--bg-light);
+      border-radius: var(--radius-md);
+    }
+    .stack-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+    }
+    .stack-item + .stack-item { border-top: 1px solid var(--border-light); }
+    .stack-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-primary);
+    }
+    .stack-label i { color: var(--text-muted); width: 16px; text-align: center; }
+    .stack-desc { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+    /* ========== Edit State Hint ========== */
+    .edit-state-hint {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      margin-bottom: 16px;
+    }
+    .edit-state-hint.warning {
+      background: var(--warning-light);
+      color: #92400e;
+      border: 1px solid rgba(245,158,11,0.2);
+    }
+    .edit-state-hint.info {
+      background: var(--info-light);
+      color: #1e40af;
+      border: 1px solid rgba(59,130,246,0.2);
+    }
+    .edit-state-hint.danger {
+      background: var(--danger-light);
+      color: #991b1b;
+      border: 1px solid rgba(239,68,68,0.2);
+    }
+    .edit-state-hint i { font-size: 14px; }
+
+    /* ========== Disabled Form ========== */
+    .form-group.disabled { opacity: 0.5; pointer-events: none; }
+    .form-group.disabled .form-input,
+    .form-group.disabled .form-select,
+    .form-group.disabled .form-textarea { background: #f9fafb; }
+
+    /* ========== QR Modal ========== */
+    .qr-modal-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 0;
+    }
+    .qr-modal-box {
+      width: 200px;
+      height: 200px;
+      background: var(--white);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--text-muted);
+    }
+    .qr-modal-box i { font-size: 48px; }
+    .qr-modal-box span { font-size: 12px; }
+    .qr-modal-info {
+      text-align: center;
+    }
+    .qr-modal-info h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .qr-modal-info p { font-size: 12px; color: var(--text-secondary); }
+    .qr-modal-actions { display: flex; gap: 10px; }
+
+    /* ========== Show-Session List ========== */
+    .show-session-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .show-session-item {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .show-session-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: var(--bg-light);
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .show-session-name { color: var(--text-primary); }
+    .show-session-count {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+    .show-session-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 10px 14px;
+      background: var(--white);
+    }
+    .session-checkbox {
+      padding: 4px 10px;
+      background: var(--bg-light);
+      border-radius: 4px;
+      font-size: 12px;
+      border: 1px solid transparent;
+      transition: var(--transition);
+    }
+    .session-checkbox:hover { background: var(--accent-light); border-color: var(--accent); }
+    .session-checkbox input[type="checkbox"] { margin-right: 4px; accent-color: var(--accent); }
+
+    /* ========== Data Stats Modal ========== */
+    .data-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .data-stat-card {
+      padding: 14px;
+      background: var(--bg-light);
+      border-radius: var(--radius-sm);
+      text-align: center;
+    }
+    .data-stat-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+    .data-stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .data-chart-placeholder {
+      width: 100%;
+      height: 160px;
+      background: var(--bg-light);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      gap: 8px;
+    }
 
     /* ========== Modal ========== */
     .modal-overlay {
@@ -613,11 +1345,12 @@ html {
       border-radius: var(--radius-lg);
       width: 580px;
       max-height: 85vh;
-      overflow-y: auto;
+      overflow: hidden;
       box-shadow: var(--shadow-xl);
       animation: modalSlideIn 0.3s ease;
     }
     .modal-lg { width: 720px; }
+    .modal-xl { width: 960px; }
     @keyframes modalSlideIn { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
     .modal-header {
       display: flex; align-items: center; justify-content: space-between;
@@ -626,19 +1359,31 @@ html {
     }
     .modal-title { font-size: 16px; font-weight: 600; color: var(--text-primary); }
     .modal-close {
-      width: 32px; height: 32px;
-      border-radius: var(--radius-sm);
+      width: 34px; height: 34px;
+      border: none;
+      border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      color: var(--text-muted);
-      background: var(--bg);
+      color: var(--text-secondary);
+      background: var(--bg-light);
+      cursor: pointer;
       transition: var(--transition);
+      font-size: 14px;
     }
-    .modal-close:hover { color: var(--accent); background: var(--accent-light); }
-    .modal-body { padding: 24px; }
+    .modal-close:hover { background: var(--accent); color: #fff; }
+    .modal-body {
+      padding: 24px;
+      overflow-y: auto;
+      max-height: calc(85vh - 140px);
+    }
+    .modal-body::-webkit-scrollbar { width: 5px; }
+    .modal-body::-webkit-scrollbar-track { background: transparent; }
+    .modal-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    .modal-body::-webkit-scrollbar-thumb:hover { background: var(--text-light); }
     .modal-footer {
       display: flex; align-items: center; justify-content: flex-end; gap: 10px;
       padding: 16px 24px;
       border-top: 1px solid var(--border-light);
+      background: var(--bg-light);
     }
 
     /* ========== Form ========== */
@@ -673,6 +1418,175 @@ html {
       border: none;
       border-top: 1px dashed var(--border);
       margin: 20px 0;
+    }
+
+    /* ========== Session Select (Custom Dropdown) ========== */
+    .session-select-wrapper {
+      position: relative;
+    }
+    .session-select-trigger {
+      display: flex;
+      align-items: center;
+      padding: 9px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--white);
+      color: var(--text-secondary);
+      font-size: 14px;
+      cursor: pointer;
+      transition: var(--transition);
+      min-height: 40px;
+    }
+    .session-select-trigger:hover {
+      border-color: var(--accent);
+    }
+    .session-select-trigger.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-light);
+    }
+    .session-select-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin-top: 4px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-lg);
+      z-index: 100;
+      max-height: 240px;
+      overflow-y: auto;
+      padding: 8px 0;
+    }
+    .session-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      font-size: 13px;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .session-option:hover {
+      background: var(--bg-light);
+    }
+    .session-option input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .session-select-text-placeholder {
+      color: var(--text-muted);
+    }
+
+    /* ========== Discount Type Option ========== */
+    .discount-type-option {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 20px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: var(--white);
+      transition: var(--transition);
+    }
+    .discount-type-option:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .discount-type-option.active {
+      border-color: var(--accent);
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    /* ========== Trend Chart ========== */
+    .trend-chart-container {
+      width: 100%;
+      height: 160px;
+      position: relative;
+      background: var(--bg-light);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+    }
+    .trend-chart-svg {
+      width: 100%;
+      height: 100%;
+    }
+    .trend-chart-grid {
+      stroke: var(--border-light);
+      stroke-width: 1;
+      stroke-dasharray: 4 4;
+    }
+    .trend-chart-axis {
+      stroke: var(--border);
+      stroke-width: 1;
+    }
+    .trend-chart-axis-text {
+      fill: var(--text-muted);
+      font-size: 11px;
+    }
+    .trend-chart-area {
+      fill: url(#trendAreaGrad);
+    }
+    .trend-chart-line {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .trend-chart-dot {
+      fill: var(--accent);
+      r: 4;
+      stroke: var(--white);
+      stroke-width: 2;
+    }
+    .trend-chart-tooltip {
+      position: absolute;
+      background: var(--primary);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 10;
+    }
+
+    /* ========== Table Small ========== */
+    .table-sm {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .table-sm th,
+    .table-sm td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .table-sm th {
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-size: 12px;
+      background: var(--bg-light);
+    }
+    .table-sm td {
+      color: var(--text-primary);
+    }
+    .table-sm tbody tr:hover {
+      background: var(--bg-light);
     }
 
     /* ========== Toolbar ========== */
@@ -1048,6 +1962,7 @@ html {
     width: 100% !important;
     max-width: 100% !important;
     max-height: 85vh;
+    overflow: hidden;
     border-radius: 16px 16px 0 0;
     margin: 0;
     animation: slideUp 0.3s ease;
@@ -1066,13 +1981,13 @@ html {
   }
   .modal-footer {
     padding: 12px 20px;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid var(--border-light);
     position: sticky;
     bottom: 0;
     background: #fff;
     border-radius: 0 0 16px 16px;
   }
-  .modal-lg, .modal-md, .modal-sm {
+  .modal-lg, .modal-md, .modal-sm, .modal-xl {
     width: 100% !important;
   }
   /* Form elements */
@@ -1343,9 +2258,7 @@ html {
     font-size: 13px !important;
     padding: 8px 14px !important;
   }
-  .btn-primary, .btn-outline {
-    font-size: 13px !important;
-  }
+
   .btn-sm {
     font-size: 12px !important;
     padding: 5px 10px !important;
@@ -1635,7 +2548,765 @@ html {
   }
 }
 
+
+/* ========== Unified Action Buttons ========== */
+/* Text action buttons */
+.action-btn-text {
+  padding: 5px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.action-btn-text:hover {
+  background: var(--light-gray);
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-1px);
+}
+/* Review action buttons */
+.review-action-btn {
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+.review-action-btn.approve {
+  background: rgba(0,201,167,0.1);
+  color: #00A88A;
+}
+.review-action-btn.approve:hover {
+  background: rgba(0,201,167,0.2);
+  transform: translateY(-1px);
+}
+.review-action-btn.reject {
+  background: rgba(239,68,68,0.1);
+  color: #EF4444;
+}
+.review-action-btn.reject:hover {
+  background: rgba(239,68,68,0.2);
+  transform: translateY(-1px);
+}
+/* Hall action buttons */
+.hall-action-btn {
+  background: none;
+  border: none;
+  color: var(--coral);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+.hall-action-btn:hover {
+  background: rgba(255,107,74,0.1);
+  transform: translateY(-1px);
+}
+.hall-action-btn.set-default {
+  color: var(--gold);
+}
+.hall-action-btn.set-default:hover {
+  background: rgba(212,168,83,0.1);
+}
+/* VSC action buttons */
+.vsc-toolbar .vsc-action-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+.vsc-toolbar .vsc-action-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-1px);
+}
+.vsc-toolbar .vsc-action-btn.vsc-save-btn {
+  background: var(--coral);
+  color: #fff;
+  border-color: var(--coral);
+}
+.vsc-toolbar .vsc-action-btn.vsc-save-btn:hover {
+  background: #E85A3A;
+  transform: translateY(-1px);
+}
+/* Batch dropdown buttons */
+.ss-batch-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+.ss-batch-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-1px);
+}
+
+/* ========== Unified Form Select ========== */
+.form-select,
+.st-form-select,
+.filter-select,
+.order-form-select,
+.page-size-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FF6B4A' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+  cursor: pointer;
+  height: 38px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0 32px 0 14px;
+  font-size: 13px;
+  color: var(--text-primary);
+  background-color: #fff;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.form-select:focus,
+.st-form-select:focus,
+.filter-select:focus,
+.order-form-select:focus,
+.page-size-select:focus {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px rgba(255,107,74,0.1);
+  outline: none;
+}
+.form-select:hover,
+.st-form-select:hover,
+.filter-select:hover,
+.order-form-select:hover,
+.page-size-select:hover {
+  border-color: var(--coral-orange);
+}
+/* Filter dropdowns in tables */
+.filter-dropdowns .form-select {
+  padding: 6px 28px 6px 10px;
+  font-size: 13px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-color);
+  background: var(--card-white);
+  color: var(--text-secondary);
+  height: 34px;
+}
+.filter-dropdowns .form-select:focus {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px rgba(255,107,74,0.1);
+}
+/* Small selects */
+select.form-select-sm,
+.form-select.form-select-sm {
+  height: 32px;
+  padding: 0 28px 0 10px;
+  font-size: 12px;
+  border-radius: 8px;
+}
+
+/* ========== Unified Custom Dropdowns ========== */
+.filter-dropdown-wrap { position: relative; z-index: 100; }
+.filter-dropdown {
+  display: none; position: absolute; top: 100%; left: 0;
+  margin-top: 6px; background: #fff;
+  border: 1px solid var(--border-color); border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12); padding: 16px;
+  min-width: 280px; z-index: 200;
+}
+.filter-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Theater select dropdown */
+.theater-select-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  padding: 8px 0;
+  min-width: 200px;
+  display: none;
+  z-index: 200;
+}
+.theater-select-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
+.theater-option {
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.15s;
+}
+.theater-option:hover { background: var(--light-gray); }
+.theater-option.active { color: var(--coral); background: rgba(255,107,74,0.06); }
+.theater-group-label {
+  padding: 4px 14px;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+/* Session select dropdown */
+.session-select-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  padding: 8px 0;
+  min-width: 200px;
+  display: none;
+  z-index: 200;
+}
+.session-select-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
+/* Banner link dropdown */
+.banner-link-dropdown {
+  max-height: 160px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  margin-top: 4px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.banner-link-option {
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.15s;
+}
+.banner-link-option:hover { background: var(--light-gray); }
+.banner-link-option:last-child { border-bottom: none; }
+/* VSC assign dropdown */
+.vsc-assign-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  padding: 8px 0;
+  min-width: 160px;
+  display: none;
+  z-index: 200;
+}
+.vsc-assign-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
+/* SS batch dropdown */
+.ss-batch-dropdown { position: relative; }
+.ss-batch-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  padding: 6px 0;
+  min-width: 140px;
+  z-index: 200;
+}
+.ss-batch-menu.open { display: block; animation: dropIn 0.2s ease-out; }
+.ss-batch-menu button {
+  display: block;
+  width: 100%;
+  padding: 8px 14px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.ss-batch-menu button:hover { background: var(--light-gray); color: var(--coral); }
+
+
+/* ========== Unified Dropdown Layer Styles ========== */
+
+/* Base dropdown layer - all dropdowns share this foundation */
+.dropdown-layer,
+.filter-dropdown,
+.theater-select-dropdown,
+.session-select-dropdown,
+.banner-link-dropdown,
+.vsc-assign-dropdown,
+.ss-batch-menu,
+.date-picker-popup,
+.dropdown-menu,
+.dropdown-content {
+  background: #fff;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+  overflow: hidden;
+}
+
+/* Filter dropdown panel */
+.filter-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  margin-top: 0;
+  padding: 20px;
+  min-width: 300px;
+  z-index: 200;
+}
+.filter-dropdown.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Theater select dropdown */
+.theater-select-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  padding: 8px 0;
+  min-width: 220px;
+  z-index: 200;
+}
+.theater-select-dropdown.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.theater-option {
+  padding: 10px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.15s ease;
+  color: var(--text-primary);
+}
+.theater-option:hover {
+  background: linear-gradient(90deg, rgba(255, 107, 74, 0.06), transparent);
+  color: var(--coral);
+}
+.theater-option.active {
+  color: var(--coral);
+  background: linear-gradient(90deg, rgba(255, 107, 74, 0.08), transparent);
+  font-weight: 500;
+}
+.theater-option i {
+  width: 16px;
+  text-align: center;
+  color: var(--text-muted);
+  transition: color 0.15s;
+}
+.theater-option:hover i,
+.theater-option.active i {
+  color: var(--coral);
+}
+.theater-group-label {
+  padding: 6px 16px 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* Session select dropdown */
+.session-select-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  padding: 8px 0;
+  min-width: 220px;
+  z-index: 200;
+}
+.session-select-dropdown.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Banner link dropdown */
+.banner-link-dropdown {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 6px;
+  padding: 4px 0;
+}
+.banner-link-option {
+  padding: 10px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(241, 245, 249, 0.6);
+  transition: all 0.15s ease;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.banner-link-option:hover {
+  background: linear-gradient(90deg, rgba(255, 107, 74, 0.06), transparent);
+  color: var(--coral);
+}
+.banner-link-option:last-child {
+  border-bottom: none;
+}
+
+/* VSC assign dropdown */
+.vsc-assign-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  padding: 8px 0;
+  min-width: 180px;
+  z-index: 200;
+}
+.vsc-assign-dropdown.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* SS batch menu */
+.ss-batch-dropdown { position: relative; }
+.ss-batch-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  padding: 6px 0;
+  min-width: 160px;
+  z-index: 200;
+}
+.ss-batch-menu.open {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ss-batch-menu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 13px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.ss-batch-menu button:hover {
+  background: linear-gradient(90deg, rgba(255, 107, 74, 0.06), transparent);
+  color: var(--coral);
+}
+
+/* Date picker popup */
+.date-picker-popup {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 440px;
+  padding: 0;
+  z-index: 200;
+}
+.date-picker-popup.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dropdown animation */
+@keyframes dropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Dropdown trigger buttons */
+.dropdown-trigger,
+.filter-dropdown-btn,
+.theater-select-trigger,
+.ss-batch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+.dropdown-trigger:hover,
+.filter-dropdown-btn:hover,
+.theater-select-trigger:hover,
+.ss-batch-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 107, 74, 0.1);
+}
+.dropdown-trigger.active,
+.filter-dropdown-btn.active,
+.theater-select-trigger.active {
+  border-color: var(--coral);
+  color: var(--coral);
+  background: rgba(255, 107, 74, 0.04);
+}
+
+/* ========== Unified Table Action Buttons ========== */
+
+/* Action buttons container */
+.action-btns {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Text action button */
+.action-btn-text {
+  padding: 6px 14px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.action-btn-text:hover {
+  background: var(--light-gray);
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.1);
+}
+.action-btn-text:active {
+  transform: translateY(0);
+}
+
+/* Table action button (text + icon) */
+.table-action-btn {
+  padding: 6px 14px;
+  border: 1.5px solid var(--border-color);
+  background: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-secondary);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
+  white-space: nowrap;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.table-action-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.1);
+}
+.table-action-btn:active {
+  transform: translateY(0);
+}
+.table-action-btn.primary {
+  background: var(--coral);
+  color: #fff;
+  border-color: var(--coral);
+}
+.table-action-btn.primary:hover {
+  background: #E85A3A;
+  border-color: #E85A3A;
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.25);
+}
+.table-action-btn.success {
+  background: var(--emerald);
+  color: #fff;
+  border-color: var(--emerald);
+}
+.table-action-btn.success:hover {
+  background: #00b396;
+  border-color: #00b396;
+  box-shadow: 0 4px 12px rgba(0, 201, 167, 0.25);
+}
+.table-action-btn.danger-outline {
+  color: #ef4444;
+  border-color: #fca5a5;
+}
+.table-action-btn.danger-outline:hover {
+  background: #fef2f2;
+  border-color: #ef4444;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+}
+
+/* Review action button */
+.review-action-btn {
+  height: 34px;
+  padding: 0 18px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+  cursor: pointer;
+}
+.review-action-btn.approve {
+  background: rgba(0, 201, 167, 0.1);
+  color: #00A88A;
+}
+.review-action-btn.approve:hover {
+  background: #00C9A7;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 201, 167, 0.2);
+}
+.review-action-btn.reject {
+  background: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+}
+.review-action-btn.reject:hover {
+  background: #EF4444;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+/* Hall action button */
+.hall-action-btn {
+  background: none;
+  border: none;
+  color: var(--coral);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 8px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 500;
+}
+.hall-action-btn:hover {
+  background: rgba(255, 107, 74, 0.1);
+  transform: translateY(-2px);
+}
+.hall-action-btn.set-default {
+  color: var(--gold);
+}
+.hall-action-btn.set-default:hover {
+  background: rgba(212, 168, 83, 0.1);
+}
+
+/* VSC action button */
+.vsc-toolbar .vsc-action-btn {
+  padding: 7px 16px;
+  border-radius: 10px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1.5px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 500;
+}
+.vsc-toolbar .vsc-action-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.1);
+}
+.vsc-toolbar .vsc-action-btn.vsc-save-btn {
+  background: var(--coral);
+  color: #fff;
+  border-color: var(--coral);
+}
+.vsc-toolbar .vsc-action-btn.vsc-save-btn:hover {
+  background: #E85A3A;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.25);
+}
+
+/* Batch dropdown button */
+.ss-batch-btn {
+  padding: 7px 16px;
+  border-radius: 10px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1.5px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 500;
+}
+.ss-batch-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.1);
+}
+
 </style>
+<link href="admin-components.css" rel="stylesheet">
 </head>
 <body>
 
@@ -1643,14 +3314,12 @@ html {
   <!-- ==================== Sidebar ==================== -->
 <aside class="sidebar">
   <div class="sidebar-logo">
-    <div class="logo-icon">
-      <i class="fas fa-masks-theater"></i>
+      <img src="assets/logo.png" alt="海南省演艺集团" style="width:36px; height:auto; flex-shrink:0;">
+      <div class="logo-text">
+        <span class="logo-title">海南省演艺集团</span>
+        <span class="logo-sub">艺术演出院线数字服务系统</span>
+      </div>
     </div>
-    <div class="logo-text">
-      <span class="logo-title">海南演艺票务</span>
-      <span class="logo-sub">管理后台</span>
-    </div>
-  </div>
   <nav class="sidebar-nav">
     <div class="nav-group">
       <div class="nav-group-label">核心功能</div>
@@ -1684,12 +3353,7 @@ html {
       <a class="nav-item" href="ai-marketing.html">
         <i class="fas fa-robot"></i>
         <span>AI智能营销</span>
-      </a>
-      <a class="nav-item" href="banner-management.html">
-        <i class="fas fa-images"></i>
-        <span>轮播图管理</span>
-      </a>
-      <a class="nav-item" href="product-service.html">
+      </a>      <a class="nav-item" href="product-service.html">
         <i class="fas fa-store"></i>
         <span>商品管理</span>
       </a>
@@ -1706,59 +3370,39 @@ html {
         <span>报表中心</span>
       </a>
     </div>
-    <div class="nav-group">
-      <div class="nav-group-label">系统设置</div>
-      <a class="nav-item" href="activity-decoration.html#decoration">
-        <i class="fas fa-palette"></i>
-        <span>首页装修</span>
-      </a>
-    </div>
+
   </nav>
-  <div class="sidebar-footer">
-    <div class="admin-avatar">陈</div>
-    <div class="admin-info">
-      <div class="admin-name">陈思远</div>
-      <div class="admin-role">超级管理员</div>
-    </div>
-    <button class="logout-btn" title="退出登录">
-      <i class="fas fa-sign-out-alt"></i>
-    </button>
-  </div>
 </aside>
 
   <!-- ========== Main Content ========== -->
   <main class="main-content">
-    <!-- Top Header -->
-    <header class="top-header">
-      <div class="breadcrumb">
-        <a href="#">首页</a>
-        <span class="sep"><i class="fas fa-chevron-right" style="font-size:10px"></i></span>
-        <a href="#">运营管理</a>
-        <span class="sep"><i class="fas fa-chevron-right" style="font-size:10px"></i></span>
-        <span class="current">营销中心</span>
-      </div>
-      <div class="header-actions">
-        <div class="search-box">
-          <i class="fas fa-search"></i>
-          <input type="text" placeholder="搜索活动、卡号、优惠券...">
-        </div>
-        <button class="header-icon-btn">
-          <i class="fas fa-bell"></i>
-          <span class="dot"></span>
-        </button>
-        <button class="header-icon-btn">
-          <i class="fas fa-expand"></i>
-        </button>
-        <div class="admin-profile">
-          <div class="admin-avatar">陈</div>
-          <div class="admin-info">
-            <span class="admin-name">陈思远</span>
-            <span class="admin-role">超级管理员</span>
-          </div>
-          <i class="fas fa-chevron-down" style="font-size:10px; color:var(--text-muted); margin-left:4px"></i>
-        </div>
-      </div>
-    </header>
+    
+            <header class="top-header">
+                <div class="breadcrumb">
+                    <a href="#">首页</a>
+                    <span class="sep"><i class="fas fa-chevron-right"></i></span>
+                    <span class="current">营销中心</span>
+                </div>
+                <div class="header-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="搜索活动名称、类型...">
+                    </div>
+                    <button class="header-icon-btn" title="通知" onclick="showToast('info','您有3条未读消息')">
+                        <i class="fas fa-bell"></i>
+                        <span class="dot"></span>
+                    </button>
+                    <button class="header-icon-btn" title="设置">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    <div class="admin-profile">
+                        <div class="avatar-sm">陈</div>
+                        <span>陈思远</span>
+                        <i class="fas fa-chevron-down" style="font-size:10px;color:var(--text-muted);"></i>
+                    </div>
+                </div>
+            </header>
+    
 
     <!-- Page Content -->
 <!-- Mobile Menu Button -->
@@ -1770,13 +3414,9 @@ html {
     <div class="page-content">
       <!-- Page Title -->
       <div class="page-title-row">
-        <h1 class="page-title">
-          <span class="icon-circle"><i class="fas fa-bullhorn"></i></span>
-          营销中心
-        </h1>
-        <div style="display:flex; gap:10px;">
-          <button class="btn btn-secondary"><i class="fas fa-download"></i> 导出报表</button>
-          <button class="btn btn-primary" onclick="openModal('modal-recharge-new')"><i class="fas fa-plus"></i> 新建活动</button>
+        <div>
+          <h1 class="page-title">营销中心</h1>
+          <p class="page-title-sub">充值卡、优惠券、抽奖与券包管理</p>
         </div>
       </div>
 
@@ -1784,43 +3424,38 @@ html {
       <div class="tab-nav">
         <button class="tab-btn active" data-tab="recharge" onclick="switchTab(this, 'recharge')">
           <i class="fas fa-credit-card"></i> 充值卡
-          <span class="tab-badge">1,280</span>
         </button>
         <button class="tab-btn" data-tab="discount" onclick="switchTab(this, 'discount')">
           <i class="fas fa-percent"></i> 票品折扣
-          <span class="tab-badge">8</span>
         </button>
         <button class="tab-btn" data-tab="coupon" onclick="switchTab(this, 'coupon')">
           <i class="fas fa-tags"></i> 优惠券
-          <span class="tab-badge">24</span>
         </button>
         <button class="tab-btn" data-tab="lottery" onclick="switchTab(this, 'lottery')">
           <i class="fas fa-gift"></i> 抽奖管理
-          <span class="tab-badge">3</span>
         </button>
         <button class="tab-btn" data-tab="package" onclick="switchTab(this, 'package')">
           <i class="fas fa-box-open"></i> 演出券包
-          <span class="tab-badge">6</span>
         </button>
       </div>
 
-      <!-- ==================== TAB 1: 充值卡 ==================== -->
+      <!-- ==================== TAB 1: 充值卡批次 ==================== -->
       <div class="tab-panel active" id="panel-recharge">
         <!-- Stats -->
         <div class="stats-grid">
           <div class="stat-card">
-            <div class="stat-icon orange"><i class="fas fa-id-card"></i></div>
+            <div class="stat-icon orange"><i class="fas fa-layer-group"></i></div>
             <div class="stat-info">
-              <span class="stat-label">已发放充值卡</span>
-              <span class="stat-value">1,280<span class="unit">张</span></span>
-              <span class="stat-change up"><i class="fas fa-arrow-up"></i> 较上月增长 12.5%</span>
+              <span class="stat-label">充值卡批次</span>
+              <span class="stat-value">42<span class="unit">批</span></span>
+              <span class="stat-change up"><i class="fas fa-arrow-up"></i> 较上月增长 8</span>
             </div>
           </div>
           <div class="stat-card">
-            <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+            <div class="stat-icon green"><i class="fas fa-id-card"></i></div>
             <div class="stat-info">
-              <span class="stat-label">已激活</span>
-              <span class="stat-value">856<span class="unit">张</span></span>
+              <span class="stat-label">总卡数量</span>
+              <span class="stat-value">1,280<span class="unit">张</span></span>
               <span class="stat-change up"><i class="fas fa-arrow-up"></i> 激活率 66.9%</span>
             </div>
           </div>
@@ -1834,14 +3469,15 @@ html {
           </div>
         </div>
 
-        <!-- Table -->
+        <!-- Batch List -->
         <div class="card">
           <div class="toolbar">
             <div class="toolbar-left">
               <select class="filter-select">
                 <option>全部状态</option>
-                <option>未激活</option>
-                <option>已激活</option>
+                <option>待制作</option>
+                <option>已制作</option>
+                <option>已发放</option>
                 <option>已冻结</option>
               </select>
               <select class="filter-select">
@@ -1860,7 +3496,7 @@ html {
             </div>
             <div class="toolbar-right">
               <button class="btn btn-secondary btn-sm"><i class="fas fa-file-export"></i> 批量导出</button>
-              <button class="btn btn-primary btn-sm" onclick="openModal('modal-recharge-new')"><i class="fas fa-plus"></i> 新建充值卡</button>
+              <button class="btn btn-primary btn-sm" onclick="openModal('modal-recharge-type')"><i class="fas fa-plus"></i> 新建批次</button>
             </div>
           </div>
           <div class="table-wrapper">
@@ -1868,93 +3504,148 @@ html {
               <thead>
                 <tr>
                   <th><input type="checkbox"></th>
-                  <th>卡号</th>
-                  <th>面值</th>
-                  <th>积分</th>
-                  <th>成长值</th>
+                  <th>批次号</th>
+                  <th>批次名称</th>
+                  <th>卡数量</th>
+                  <th>面值参数</th>
+                  <th>制作方式</th>
                   <th>状态</th>
                   <th>创建时间</th>
                   <th>操作</th>
                 </tr>
               </thead>
               <tbody>
+                <!-- 已制作：查看详情 + 确认发放 + 制卡（导出） -->
                 <tr>
                   <td><input type="checkbox"></td>
-                  <td style="font-family:monospace; font-weight:500; letter-spacing:0.5px;">RC20260410001</td>
-                  <td><span class="value-tag money"><i class="fas fa-yen-sign"></i> 500</span></td>
-                  <td><span class="value-tag points"><i class="fas fa-star"></i> 500</span></td>
-                  <td><span class="value-tag growth"><i class="fas fa-arrow-trend-up"></i> 50</span></td>
-                  <td><span class="status status-active">已激活</span></td>
-                  <td style="color:var(--text-secondary)">2026-04-10 09:23</td>
+                  <td>
+                    <div class="batch-no">B20260410001</div>
+                    <div class="batch-card-rule">卡号：B20260410001****</div>
+                  </td>
+                  <td><span class="batch-name">五一特惠充值卡</span></td>
+                  <td><span class="batch-count">100 张</span></td>
+                  <td>
+                    <div class="batch-params">
+                      <span class="param-money">¥500</span>
+                      <span class="param-points">500积分</span>
+                      <span class="param-growth">50成长值</span>
+                    </div>
+                  </td>
+                  <td><span class="badge badge-qrcode"><i class="fas fa-qrcode"></i> 二维码</span></td>
+                  <td><span class="status status-active">已制作</span></td>
+                  <td style="color:var(--text-secondary); font-size:12px;">2026-04-10 09:23</td>
                   <td>
                     <div class="actions-cell">
-                      <button class="btn btn-ghost btn-sm" title="查看"><i class="fas fa-eye"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="导出"><i class="fas fa-file-export"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="冻结" style="color:#d97706"><i class="fas fa-snowflake"></i></button>
+                      <button class="btn btn-ghost btn-sm btn-icon-text" onclick="openModal('modal-recharge-batch-detail')"><i class="fas fa-eye"></i> 详情</button>
+                      <button class="btn btn-ghost btn-sm btn-icon-text" onclick="confirmBatchIssue(this)"><i class="fas fa-check-circle"></i> 发放</button>
+                      <button class="btn btn-ghost btn-sm btn-icon-text" onclick="openModal('modal-recharge-export')"><i class="fas fa-print"></i> 制卡</button>
                     </div>
                   </td>
                 </tr>
+                <!-- 待制作 + 未制卡：查看详情 + 制卡（导出） -->
                 <tr>
                   <td><input type="checkbox"></td>
-                  <td style="font-family:monospace; font-weight:500; letter-spacing:0.5px;">RC20260410002</td>
-                  <td><span class="value-tag money"><i class="fas fa-yen-sign"></i> 1,000</span></td>
-                  <td><span class="value-tag points"><i class="fas fa-star"></i> 1,200</span></td>
-                  <td><span class="value-tag growth"><i class="fas fa-arrow-trend-up"></i> 120</span></td>
-                  <td><span class="status status-inactive">未激活</span></td>
-                  <td style="color:var(--text-secondary)">2026-04-10 09:23</td>
+                  <td>
+                    <div class="batch-no">B20260409002</div>
+                    <div class="batch-card-rule">卡号：B20260409002****</div>
+                  </td>
+                  <td><span class="batch-name">VIP会员专享卡</span></td>
+                  <td><span class="batch-count">50 张</span></td>
+                  <td>
+                    <div class="batch-params">
+                      <span class="param-money">¥1,000</span>
+                      <span class="param-points">1,200积分</span>
+                      <span class="param-growth">120成长值</span>
+                    </div>
+                  </td>
+                  <td><span class="badge badge-none"><i class="fas fa-minus-circle"></i> 未制卡</span></td>
+                  <td><span class="status status-inactive">待制作</span></td>
+                  <td style="color:var(--text-secondary); font-size:12px;">2026-04-09 14:10</td>
                   <td>
                     <div class="actions-cell">
-                      <button class="btn btn-ghost btn-sm" title="查看"><i class="fas fa-eye"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="导出"><i class="fas fa-file-export"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="冻结" style="color:#d97706"><i class="fas fa-snowflake"></i></button>
+                      <button class="btn btn-ghost btn-sm btn-icon-text" onclick="openModal('modal-recharge-batch-detail')"><i class="fas fa-eye"></i> 详情</button>
+                      <button class="btn btn-ghost btn-sm btn-icon-text" onclick="openModal('modal-recharge-export')"><i class="fas fa-print"></i> 制卡</button>
                     </div>
                   </td>
                 </tr>
+                <!-- 已发放 + 二维码：查看详情 + 冻结 + 制卡（导出） -->
                 <tr>
                   <td><input type="checkbox"></td>
-                  <td style="font-family:monospace; font-weight:500; letter-spacing:0.5px;">RC20260409015</td>
-                  <td><span class="value-tag money"><i class="fas fa-yen-sign"></i> 200</span></td>
-                  <td><span class="value-tag points"><i class="fas fa-star"></i> 200</span></td>
-                  <td><span class="value-tag growth"><i class="fas fa-arrow-trend-up"></i> 20</span></td>
-                  <td><span class="status status-active">已激活</span></td>
-                  <td style="color:var(--text-secondary)">2026-04-09 14:10</td>
+                  <td>
+                    <div class="batch-no">B20260408003</div>
+                    <div class="batch-card-rule">卡号：B20260408003****</div>
+                  </td>
+                  <td><span class="batch-name">周年庆纪念卡</span></td>
+                  <td><span class="batch-count">200 张</span></td>
+                  <td>
+                    <div class="batch-params">
+                      <span class="param-money">¥200</span>
+                      <span class="param-points">200积分</span>
+                      <span class="param-growth">20成长值</span>
+                    </div>
+                  </td>
+                  <td><span class="badge badge-qrcode"><i class="fas fa-qrcode"></i> 二维码</span></td>
+                  <td><span class="status status-active">已发放</span></td>
+                  <td style="color:var(--text-secondary); font-size:12px;">2026-04-08 16:45</td>
                   <td>
                     <div class="actions-cell">
-                      <button class="btn btn-ghost btn-sm" title="查看"><i class="fas fa-eye"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="导出"><i class="fas fa-file-export"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="冻结" style="color:#d97706"><i class="fas fa-snowflake"></i></button>
+                      <button class="btn btn-ghost btn-sm btn-icon-text" onclick="openModal('modal-recharge-batch-detail')"><i class="fas fa-eye"></i> 详情</button>
+                      <button class="btn btn-ghost btn-sm btn-icon-text" onclick="openModal('modal-freeze-confirm')"><i class="fas fa-snowflake"></i> 冻结</button>
+                      <button class="btn btn-ghost btn-sm btn-icon-text" onclick="openModal('modal-recharge-export')"><i class="fas fa-print"></i> 制卡</button>
                     </div>
                   </td>
                 </tr>
+                <!-- 已冻结 + IC卡：查看详情 + 解冻 + 制卡（IC绑定） -->
                 <tr>
                   <td><input type="checkbox"></td>
-                  <td style="font-family:monospace; font-weight:500; letter-spacing:0.5px;">RC20260408032</td>
-                  <td><span class="value-tag money"><i class="fas fa-yen-sign"></i> 500</span></td>
-                  <td><span class="value-tag points"><i class="fas fa-star"></i> 500</span></td>
-                  <td><span class="value-tag growth"><i class="fas fa-arrow-trend-up"></i> 50</span></td>
+                  <td>
+                    <div class="batch-no">B20260407004</div>
+                    <div class="batch-card-rule">卡号：B20260407004****</div>
+                  </td>
+                  <td><span class="batch-name">新春福袋卡</span></td>
+                  <td><span class="batch-count">500 张</span></td>
+                  <td>
+                    <div class="batch-params">
+                      <span class="param-money">¥100</span>
+                      <span class="param-points">100积分</span>
+                      <span class="param-growth">10成长值</span>
+                    </div>
+                  </td>
+                  <td><span class="badge badge-ic"><i class="fas fa-microchip"></i> IC卡</span></td>
                   <td><span class="status status-frozen">已冻结</span></td>
-                  <td style="color:var(--text-secondary)">2026-04-08 16:45</td>
+                  <td style="color:var(--text-secondary); font-size:12px;">2026-04-07 11:30</td>
                   <td>
                     <div class="actions-cell">
-                      <button class="btn btn-ghost btn-sm" title="查看"><i class="fas fa-eye"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="导出"><i class="fas fa-file-export"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="解冻" style="color:var(--green)"><i class="fas fa-fire"></i></button>
+                      <button class="btn btn-ghost btn-sm btn-icon-text" onclick="openModal('modal-recharge-batch-detail')"><i class="fas fa-eye"></i> 详情</button>
+                      <button class="btn btn-ghost btn-sm btn-icon-text" onclick="openModal('modal-unfreeze-confirm')"><i class="fas fa-check-circle"></i> 解冻</button>
+                      <button class="btn btn-ghost btn-sm btn-icon-text" onclick="openModal('modal-recharge-ic-bind')"><i class="fas fa-microchip"></i> 制卡</button>
                     </div>
                   </td>
                 </tr>
+                <!-- 已发放 + IC卡：查看详情 + 冻结 + 制卡（IC绑定） -->
                 <tr>
                   <td><input type="checkbox"></td>
-                  <td style="font-family:monospace; font-weight:500; letter-spacing:0.5px;">RC20260407018</td>
-                  <td><span class="value-tag money"><i class="fas fa-yen-sign"></i> 100</span></td>
-                  <td><span class="value-tag points"><i class="fas fa-star"></i> 100</span></td>
-                  <td><span class="value-tag growth"><i class="fas fa-arrow-trend-up"></i> 10</span></td>
-                  <td><span class="status status-active">已激活</span></td>
-                  <td style="color:var(--text-secondary)">2026-04-07 11:30</td>
+                  <td>
+                    <div class="batch-no">B20260406005</div>
+                    <div class="batch-card-rule">卡号：B20260406005****</div>
+                  </td>
+                  <td><span class="batch-name">演示批次-10张IC卡</span></td>
+                  <td><span class="batch-count">10 张</span></td>
+                  <td>
+                    <div class="batch-params">
+                      <span class="param-money">¥300</span>
+                      <span class="param-points">300积分</span>
+                      <span class="param-growth">30成长值</span>
+                    </div>
+                  </td>
+                  <td><span class="badge badge-ic"><i class="fas fa-microchip"></i> IC卡</span></td>
+                  <td><span class="status status-active">已发放</span></td>
+                  <td style="color:var(--text-secondary); font-size:12px;">2026-04-06 10:00</td>
                   <td>
                     <div class="actions-cell">
-                      <button class="btn btn-ghost btn-sm" title="查看"><i class="fas fa-eye"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="导出"><i class="fas fa-file-export"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="冻结" style="color:#d97706"><i class="fas fa-snowflake"></i></button>
+                      <button class="btn btn-ghost btn-sm btn-icon-text" onclick="openModal('modal-recharge-batch-detail')"><i class="fas fa-eye"></i> 详情</button>
+                      <button class="btn btn-ghost btn-sm btn-icon-text" onclick="openModal('modal-freeze-confirm')"><i class="fas fa-snowflake"></i> 冻结</button>
+                      <button class="btn btn-ghost btn-sm btn-icon-text" onclick="openModal('modal-recharge-ic-bind')"><i class="fas fa-microchip"></i> 制卡</button>
                     </div>
                   </td>
                 </tr>
@@ -2039,9 +3730,9 @@ html {
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr data-discount-id="1">
                   <td style="font-weight:500">五一特惠 早鸟8折</td>
-                  <td style="color:var(--text-secondary)">《天涯故事》歌舞剧</td>
+                  <td style="color:var(--text-secondary)">《天涯故事》歌舞剧<br><small style="color:#9ca3af;">4月15日 19:30场</small></td>
                   <td><span class="value-tag money"><i class="fas fa-percent"></i> 折扣</span></td>
                   <td style="font-weight:600; color:var(--accent)">8折</td>
                   <td style="color:var(--text-secondary); font-size:12px">2026-04-15 ~ 2026-04-30</td>
@@ -2049,15 +3740,15 @@ html {
                   <td><span class="status status-active">进行中</span></td>
                   <td>
                     <div class="actions-cell">
-                      <button class="btn btn-ghost btn-sm" title="编辑"><i class="fas fa-pen"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="数据"><i class="fas fa-chart-bar"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="停止" style="color:#dc2626"><i class="fas fa-stop-circle"></i></button>
+                      <button class="action-btn edit" onclick="openDiscountEdit(1)"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn view" onclick="openDiscountData(1)"><i class="fas fa-chart-bar"></i> 数据</button>
+                      <button class="action-btn offline" style="color:#dc2626" onclick="stopDiscountActivity(this)"><i class="fas fa-stop-circle"></i> 停止</button>
                     </div>
                   </td>
                 </tr>
-                <tr>
+                <tr data-discount-id="2">
                   <td style="font-weight:500">满300减50</td>
-                  <td style="color:var(--text-secondary)">《海南记忆》音乐会</td>
+                  <td style="color:var(--text-secondary)">《海南记忆》音乐会<br><small style="color:#9ca3af;">全部场次</small></td>
                   <td><span class="value-tag points"><i class="fas fa-minus-circle"></i> 满减</span></td>
                   <td style="font-weight:600; color:var(--accent)">满300减50</td>
                   <td style="color:var(--text-secondary); font-size:12px">2026-04-01 ~ 2026-05-01</td>
@@ -2065,13 +3756,13 @@ html {
                   <td><span class="status status-active">进行中</span></td>
                   <td>
                     <div class="actions-cell">
-                      <button class="btn btn-ghost btn-sm" title="编辑"><i class="fas fa-pen"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="数据"><i class="fas fa-chart-bar"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="停止" style="color:#dc2626"><i class="fas fa-stop-circle"></i></button>
+                      <button class="action-btn edit" onclick="openDiscountEdit(2)"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn view" onclick="openDiscountData(2)"><i class="fas fa-chart-bar"></i> 数据</button>
+                      <button class="action-btn offline" style="color:#dc2626" onclick="stopDiscountActivity(this)"><i class="fas fa-stop-circle"></i> 停止</button>
                     </div>
                   </td>
                 </tr>
-                <tr>
+                <tr data-discount-id="3">
                   <td style="font-weight:500">开季狂欢 7折起</td>
                   <td style="color:var(--text-secondary)">全部演出</td>
                   <td><span class="value-tag money"><i class="fas fa-percent"></i> 折扣</span></td>
@@ -2081,13 +3772,13 @@ html {
                   <td><span class="status status-expired">已结束</span></td>
                   <td>
                     <div class="actions-cell">
-                      <button class="btn btn-ghost btn-sm" title="查看"><i class="fas fa-eye"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="数据"><i class="fas fa-chart-bar"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="复制"><i class="fas fa-copy"></i></button>
+                      <button class="action-btn view" onclick="openDiscountData(3)"><i class="fas fa-eye"></i> 查看</button>
+                      <button class="action-btn view" onclick="openDiscountData(3)"><i class="fas fa-chart-bar"></i> 数据</button>
+                      <button class="action-btn edit" onclick="copyDiscountActivity(3)"><i class="fas fa-copy"></i> 复制</button>
                     </div>
                   </td>
                 </tr>
-                <tr>
+                <tr data-discount-id="4">
                   <td style="font-weight:500">新人首单立减30</td>
                   <td style="color:var(--text-secondary)">全部演出</td>
                   <td><span class="value-tag points"><i class="fas fa-minus-circle"></i> 满减</span></td>
@@ -2097,9 +3788,9 @@ html {
                   <td><span class="status status-active">进行中</span></td>
                   <td>
                     <div class="actions-cell">
-                      <button class="btn btn-ghost btn-sm" title="编辑"><i class="fas fa-pen"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="数据"><i class="fas fa-chart-bar"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="停止" style="color:#dc2626"><i class="fas fa-stop-circle"></i></button>
+                      <button class="action-btn edit" onclick="openDiscountEdit(4)"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn view" onclick="openDiscountData(4)"><i class="fas fa-chart-bar"></i> 数据</button>
+                      <button class="action-btn offline" style="color:#dc2626" onclick="stopDiscountActivity(this)"><i class="fas fa-stop-circle"></i> 停止</button>
                     </div>
                   </td>
                 </tr>
@@ -2152,17 +3843,17 @@ html {
               <select class="filter-select">
                 <option>全部类型</option>
                 <option>现金券</option>
-                <option>抵扣券</option>
+                <option>折扣券</option>
               </select>
               <select class="filter-select">
                 <option>全部状态</option>
+                <option>未开始</option>
                 <option>进行中</option>
                 <option>已过期</option>
                 <option>已停用</option>
               </select>
             </div>
             <div class="toolbar-right">
-              <button class="btn btn-secondary btn-sm"><i class="fas fa-qrcode"></i> 领券二维码</button>
               <button class="btn btn-primary btn-sm" onclick="openModal('modal-coupon-new')"><i class="fas fa-plus"></i> 新建优惠券</button>
             </div>
           </div>
@@ -2172,8 +3863,9 @@ html {
                 <tr>
                   <th>券名称</th>
                   <th>类型</th>
-                  <th>面值</th>
+                  <th>面值/折扣</th>
                   <th>使用条件</th>
+                  <th>适用范围</th>
                   <th>已发放/已使用</th>
                   <th>有效期</th>
                   <th>状态</th>
@@ -2191,6 +3883,9 @@ html {
                   <td><span class="value-tag money">现金券</span></td>
                   <td style="font-weight:700; color:var(--accent); font-size:15px;">¥50</td>
                   <td style="color:var(--text-secondary); font-size:12px">满200可用</td>
+                  <td style="color:var(--text-secondary); font-size:12px">
+                    <span style="display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-theater-masks" style="font-size:11px;"></i>指定3场演出</span>
+                  </td>
                   <td>
                     <div>
                       <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
@@ -2204,9 +3899,10 @@ html {
                   <td><span class="status status-pending">未开始</span></td>
                   <td>
                     <div class="actions-cell">
-                      <button class="btn btn-ghost btn-sm" title="编辑"><i class="fas fa-pen"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="二维码"><i class="fas fa-qrcode"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="停用" style="color:#dc2626"><i class="fas fa-ban"></i></button>
+                      <button class="action-btn edit" title="编辑" onclick="openModal('modal-coupon-edit')"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn view" title="数据" onclick="openModal('modal-coupon-data')"><i class="fas fa-chart-bar"></i> 数据</button>
+                      <button class="action-btn view" title="二维码" onclick="openModal('modal-coupon-qrcode')"><i class="fas fa-qrcode"></i> 二维码</button>
+                      <button class="action-btn danger" title="停用" style="color:#dc2626"><i class="fas fa-ban"></i> 停用</button>
                     </div>
                   </td>
                 </tr>
@@ -2217,9 +3913,12 @@ html {
                       新会员欢迎券
                     </div>
                   </td>
-                  <td><span class="value-tag points">抵扣券</span></td>
+                  <td><span class="value-tag money">现金券</span></td>
                   <td style="font-weight:700; color:var(--accent); font-size:15px;">¥30</td>
                   <td style="color:var(--text-secondary); font-size:12px">无门槛</td>
+                  <td style="color:var(--text-secondary); font-size:12px">
+                    <span style="display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-globe" style="font-size:11px;"></i>全部演出</span>
+                  </td>
                   <td>
                     <div>
                       <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
@@ -2233,9 +3932,10 @@ html {
                   <td><span class="status status-active">进行中</span></td>
                   <td>
                     <div class="actions-cell">
-                      <button class="btn btn-ghost btn-sm" title="编辑"><i class="fas fa-pen"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="二维码"><i class="fas fa-qrcode"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="停用" style="color:#dc2626"><i class="fas fa-ban"></i></button>
+                      <button class="action-btn edit" title="编辑" onclick="openModal('modal-coupon-edit')"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn view" title="数据" onclick="openModal('modal-coupon-data')"><i class="fas fa-chart-bar"></i> 数据</button>
+                      <button class="action-btn view" title="二维码" onclick="openModal('modal-coupon-qrcode')"><i class="fas fa-qrcode"></i> 二维码</button>
+                      <button class="action-btn danger" title="停用" style="color:#dc2626"><i class="fas fa-ban"></i> 停用</button>
                     </div>
                   </td>
                 </tr>
@@ -2243,12 +3943,15 @@ html {
                   <td style="font-weight:500">
                     <div style="display:flex; align-items:center; gap:8px;">
                       <span style="width:4px; height:28px; background:var(--gold); border-radius:2px; display:inline-block;"></span>
-                      歌舞剧满减券
+                      歌舞剧8折券
                     </div>
                   </td>
-                  <td><span class="value-tag money">现金券</span></td>
-                  <td style="font-weight:700; color:var(--accent); font-size:15px;">¥100</td>
+                  <td><span class="value-tag discount">折扣券</span></td>
+                  <td style="font-weight:700; color:#db2777; font-size:15px;">8折</td>
                   <td style="color:var(--text-secondary); font-size:12px">满500可用</td>
+                  <td style="color:var(--text-secondary); font-size:12px">
+                    <span style="display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-theater-masks" style="font-size:11px;"></i>指定5场演出</span>
+                  </td>
                   <td>
                     <div>
                       <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
@@ -2262,9 +3965,10 @@ html {
                   <td><span class="status status-active">进行中</span></td>
                   <td>
                     <div class="actions-cell">
-                      <button class="btn btn-ghost btn-sm" title="编辑"><i class="fas fa-pen"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="二维码"><i class="fas fa-qrcode"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="停用" style="color:#dc2626"><i class="fas fa-ban"></i></button>
+                      <button class="action-btn edit" title="编辑" onclick="openModal('modal-coupon-edit')"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn view" title="数据" onclick="openModal('modal-coupon-data')"><i class="fas fa-chart-bar"></i> 数据</button>
+                      <button class="action-btn view" title="二维码" onclick="openModal('modal-coupon-qrcode')"><i class="fas fa-qrcode"></i> 二维码</button>
+                      <button class="action-btn danger" title="停用" style="color:#dc2626"><i class="fas fa-ban"></i> 停用</button>
                     </div>
                   </td>
                 </tr>
@@ -2272,12 +3976,15 @@ html {
                   <td style="font-weight:500">
                     <div style="display:flex; align-items:center; gap:8px;">
                       <span style="width:4px; height:28px; background:#9ca3af; border-radius:2px; display:inline-block;"></span>
-                      春节特惠券
+                      春节特惠折扣券
                     </div>
                   </td>
-                  <td><span class="value-tag points">抵扣券</span></td>
-                  <td style="font-weight:700; color:var(--accent); font-size:15px;">¥80</td>
+                  <td><span class="value-tag discount">折扣券</span></td>
+                  <td style="font-weight:700; color:#db2777; font-size:15px;">7折</td>
                   <td style="color:var(--text-secondary); font-size:12px">满300可用</td>
+                  <td style="color:var(--text-secondary); font-size:12px">
+                    <span style="display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-globe" style="font-size:11px;"></i>全部演出</span>
+                  </td>
                   <td>
                     <div>
                       <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
@@ -2291,9 +3998,8 @@ html {
                   <td><span class="status status-expired">已过期</span></td>
                   <td>
                     <div class="actions-cell">
-                      <button class="btn btn-ghost btn-sm" title="查看"><i class="fas fa-eye"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="数据"><i class="fas fa-chart-bar"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="复制"><i class="fas fa-copy"></i></button>
+                      <button class="action-btn view" title="查看" onclick="openModal('modal-coupon-view')"><i class="fas fa-eye"></i> 查看</button>
+                      <button class="action-btn view" title="数据" onclick="openModal('modal-coupon-data')"><i class="fas fa-chart-bar"></i> 数据</button>
                     </div>
                   </td>
                 </tr>
@@ -2308,32 +4014,6 @@ html {
               <button class="page-btn">2</button>
               <button class="page-btn">3</button>
               <button class="page-btn disabled"><i class="fas fa-chevron-right"></i></button>
-            </div>
-          </div>
-        </div>
-
-        <!-- QR Code Section -->
-        <div class="card" style="margin-top:20px;">
-          <div class="card-header">
-            <span class="card-title"><i class="fas fa-qrcode"></i> 二维码领券入口</span>
-            <button class="btn btn-secondary btn-sm"><i class="fas fa-download"></i> 下载二维码</button>
-          </div>
-          <div class="card-body padded">
-            <div class="qr-section">
-              <div class="qr-placeholder">
-                <i class="fas fa-qrcode"></i>
-                <span>二维码</span>
-              </div>
-              <div class="qr-info">
-                <h4>扫码领券 - 海南演艺专属优惠</h4>
-                <p>用户扫描二维码可直接进入领券页面，领取当前可用的优惠券。支持微信扫一扫、支付宝扫码等多种方式。</p>
-                <p style="margin-top:6px;"><strong>链接地址：</strong><span style="color:var(--accent); font-family:monospace;">https://hn.show/coupon/claim/mkt2026</span></p>
-                <div style="margin-top:10px; display:flex; gap:8px;">
-                  <button class="btn btn-sm btn-secondary"><i class="fas fa-copy"></i> 复制链接</button>
-                  <button class="btn btn-sm btn-secondary"><i class="fas fa-share-nodes"></i> 分享</button>
-                  <button class="btn btn-sm btn-primary"><i class="fas fa-pen"></i> 自定义页面</button>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -2390,9 +4070,9 @@ html {
                     <td><span class="status status-pending">未开始</span></td>
                     <td>
                       <div class="actions-cell">
-                        <button class="btn btn-ghost btn-sm" title="编辑"><i class="fas fa-pen"></i></button>
-                        <button class="btn btn-ghost btn-sm" title="奖品配置"><i class="fas fa-gift"></i></button>
-                        <button class="btn btn-ghost btn-sm" title="预览"><i class="fas fa-eye"></i></button>
+                        <button class="action-btn edit" title="编辑"><i class="fas fa-pen"></i> 编辑</button>
+                        <button class="action-btn edit" title="奖品配置"><i class="fas fa-gift"></i> 奖品配置</button>
+                        <button class="action-btn view" title="预览"><i class="fas fa-eye"></i> 预览</button>
                       </div>
                     </td>
                   </tr>
@@ -2409,9 +4089,9 @@ html {
                     <td><span class="status status-active">进行中</span></td>
                     <td>
                       <div class="actions-cell">
-                        <button class="btn btn-ghost btn-sm" title="查看"><i class="fas fa-eye"></i></button>
-                        <button class="btn btn-ghost btn-sm" title="奖品配置"><i class="fas fa-gift"></i></button>
-                        <button class="btn btn-ghost btn-sm" title="停止" style="color:#dc2626"><i class="fas fa-stop-circle"></i></button>
+                        <button class="action-btn view" title="查看"><i class="fas fa-eye"></i> 查看</button>
+                        <button class="action-btn edit" title="奖品配置"><i class="fas fa-gift"></i> 奖品配置</button>
+                        <button class="action-btn danger" title="停止" style="color:#dc2626"><i class="fas fa-stop-circle"></i> 停止</button>
                       </div>
                     </td>
                   </tr>
@@ -2428,9 +4108,9 @@ html {
                     <td><span class="status status-expired">已结束</span></td>
                     <td>
                       <div class="actions-cell">
-                        <button class="btn btn-ghost btn-sm" title="查看"><i class="fas fa-eye"></i></button>
-                        <button class="btn btn-ghost btn-sm" title="数据"><i class="fas fa-chart-bar"></i></button>
-                        <button class="btn btn-ghost btn-sm" title="复制"><i class="fas fa-copy"></i></button>
+                        <button class="action-btn view" title="查看"><i class="fas fa-eye"></i> 查看</button>
+                        <button class="action-btn edit" title="数据"><i class="fas fa-chart-bar"></i> 数据</button>
+                        <button class="action-btn edit" title="复制"><i class="fas fa-copy"></i> 复制</button>
                       </div>
                     </td>
                   </tr>
@@ -2569,7 +4249,7 @@ html {
                     <td><span class="value-tag points">积分</span></td>
                     <td style="color:var(--text-secondary); font-size:12px">2026-04-05 14:23</td>
                     <td><span class="status status-active">已领取</span></td>
-                    <td><button class="btn btn-ghost btn-sm" title="查看"><i class="fas fa-eye"></i></button></td>
+                    <td><button class="action-btn view" title="查看"><i class="fas fa-eye"></i> 查看</button></td>
                   </tr>
                   <tr>
                     <td style="font-weight:500">王芳芳</td>
@@ -2579,7 +4259,7 @@ html {
                     <td><span class="value-tag money">实物</span></td>
                     <td style="color:var(--text-secondary); font-size:12px">2026-04-04 10:15</td>
                     <td><span class="status status-inactive">未领取</span></td>
-                    <td><button class="btn btn-ghost btn-sm" title="提醒"><i class="fas fa-bell"></i></button></td>
+                    <td><button class="action-btn toggle" title="提醒"><i class="fas fa-bell"></i> 提醒</button></td>
                   </tr>
                   <tr>
                     <td style="font-weight:500">陈大海</td>
@@ -2589,7 +4269,7 @@ html {
                     <td><span class="value-tag growth">优惠券</span></td>
                     <td style="color:var(--text-secondary); font-size:12px">2026-04-03 16:42</td>
                     <td><span class="status status-active">已领取</span></td>
-                    <td><button class="btn btn-ghost btn-sm" title="查看"><i class="fas fa-eye"></i></button></td>
+                    <td><button class="action-btn view" title="查看"><i class="fas fa-eye"></i> 查看</button></td>
                   </tr>
                   <tr>
                     <td style="font-weight:500">赵小雨</td>
@@ -2599,7 +4279,7 @@ html {
                     <td><span class="value-tag money">门票</span></td>
                     <td style="color:var(--text-secondary); font-size:12px">2026-03-08 09:30</td>
                     <td><span class="status status-active">已领取</span></td>
-                    <td><button class="btn btn-ghost btn-sm" title="查看"><i class="fas fa-eye"></i></button></td>
+                    <td><button class="action-btn view" title="查看"><i class="fas fa-eye"></i> 查看</button></td>
                   </tr>
                 </tbody>
               </table>
@@ -2711,9 +4391,9 @@ html {
                   <td><span class="status status-active">在售</span></td>
                   <td>
                     <div class="actions-cell">
-                      <button class="btn btn-ghost btn-sm" title="编辑"><i class="fas fa-pen"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="数据"><i class="fas fa-chart-bar"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="下架" style="color:#d97706"><i class="fas fa-arrow-down"></i></button>
+                      <button class="action-btn edit" title="编辑"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn edit" title="数据"><i class="fas fa-chart-bar"></i> 数据</button>
+                      <button class="action-btn danger" title="下架" style="color:#d97706"><i class="fas fa-arrow-down"></i> 下架</button>
                     </div>
                   </td>
                 </tr>
@@ -2750,9 +4430,9 @@ html {
                   <td><span class="status status-active">在售</span></td>
                   <td>
                     <div class="actions-cell">
-                      <button class="btn btn-ghost btn-sm" title="编辑"><i class="fas fa-pen"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="数据"><i class="fas fa-chart-bar"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="下架" style="color:#d97706"><i class="fas fa-arrow-down"></i></button>
+                      <button class="action-btn edit" title="编辑"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn edit" title="数据"><i class="fas fa-chart-bar"></i> 数据</button>
+                      <button class="action-btn danger" title="下架" style="color:#d97706"><i class="fas fa-arrow-down"></i> 下架</button>
                     </div>
                   </td>
                 </tr>
@@ -2789,8 +4469,8 @@ html {
                   <td><span class="status status-expired">已售罄</span></td>
                   <td>
                     <div class="actions-cell">
-                      <button class="btn btn-ghost btn-sm" title="查看"><i class="fas fa-eye"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="补货"><i class="fas fa-plus"></i></button>
+                      <button class="action-btn view" title="查看"><i class="fas fa-eye"></i> 查看</button>
+                      <button class="action-btn edit" title="补货"><i class="fas fa-plus"></i> 补货</button>
                     </div>
                   </td>
                 </tr>
@@ -2827,9 +4507,9 @@ html {
                   <td><span class="status status-active">在售</span></td>
                   <td>
                     <div class="actions-cell">
-                      <button class="btn btn-ghost btn-sm" title="编辑"><i class="fas fa-pen"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="数据"><i class="fas fa-chart-bar"></i></button>
-                      <button class="btn btn-ghost btn-sm" title="下架" style="color:#d97706"><i class="fas fa-arrow-down"></i></button>
+                      <button class="action-btn edit" title="编辑"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn edit" title="数据"><i class="fas fa-chart-bar"></i> 数据</button>
+                      <button class="action-btn danger" title="下架" style="color:#d97706"><i class="fas fa-arrow-down"></i> 下架</button>
                     </div>
                   </td>
                 </tr>
@@ -2853,108 +4533,524 @@ html {
 
 <!-- ==================== MODALS ==================== -->
 
-<!-- Modal: 新建充值卡 -->
+<!-- Modal: 新建充值卡批次 -->
 <div class="modal-overlay" id="modal-recharge-new">
-  <div class="modal">
+  <div class="modal modal-lg">
     <div class="modal-header">
-      <span class="modal-title">新建充值卡</span>
+      <span class="modal-title">新建充值卡批次</span>
       <button class="modal-close" onclick="closeModal('modal-recharge-new')"><i class="fas fa-xmark"></i></button>
     </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label">充值卡名称<span class="required">*</span></label>
-        <input type="text" class="form-input" placeholder="例如：五一特惠充值卡">
-      </div>
-      <hr class="form-divider">
-      <h4 style="font-size:14px; font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
-        <i class="fas fa-sliders" style="color:var(--accent);"></i> 面值参数设置
-      </h4>
-      <div class="form-row">
+    <div class="modal-body modal-scrollable">
+      <!-- 基本信息 -->
+      <div class="form-section">
+        <h4 class="form-section-title"><i class="fas fa-info-circle" style="color:var(--accent);"></i> 基本信息</h4>
         <div class="form-group">
-          <label class="form-label">充值金额 (元)<span class="required">*</span></label>
-          <input type="number" class="form-input" placeholder="请输入金额" value="500">
-          <div class="form-hint">用户充值后账户增加的金额</div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">赠送积分<span class="required">*</span></label>
-          <input type="number" class="form-input" placeholder="请输入积分" value="500">
-          <div class="form-hint">充值时额外赠送的积分数量</div>
+          <label class="form-label">批次名称<span class="required">*</span></label>
+          <input type="text" class="form-input" placeholder="例如：五一特惠充值卡">
         </div>
       </div>
-      <div class="form-group">
-        <label class="form-label">成长值</label>
-        <input type="number" class="form-input" placeholder="请输入成长值" value="50" style="max-width:240px;">
-        <div class="form-hint">充值后会员等级增加的成长值</div>
+
+      <!-- 面值参数 -->
+      <div class="form-section">
+        <h4 class="form-section-title"><i class="fas fa-sliders" style="color:var(--accent);"></i> 面值参数（批次内所有卡相同）</h4>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">充值金额 (元)<span class="required">*</span></label>
+            <div class="input-prefix-wrap">
+              <span class="input-prefix-text">¥</span>
+              <input type="number" class="form-input input-prefix-pad" placeholder="请输入金额" value="500">
+            </div>
+            <div class="form-hint">用户充值后账户增加的金额</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">赠送积分<span class="required">*</span></label>
+            <div class="input-prefix-wrap">
+              <i class="fas fa-star input-prefix-icon"></i>
+              <input type="number" class="form-input input-prefix-pad" placeholder="请输入积分" value="500">
+            </div>
+            <div class="form-hint">充值时额外赠送的积分数量</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">成长值</label>
+            <div class="input-prefix-wrap">
+              <i class="fas fa-arrow-trend-up input-prefix-icon"></i>
+              <input type="number" class="form-input input-prefix-pad" placeholder="请输入成长值" value="50">
+            </div>
+            <div class="form-hint">充值后会员等级增加的成长值</div>
+          </div>
+        </div>
       </div>
-      <hr class="form-divider">
-      <h4 style="font-size:14px; font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
-        <i class="fas fa-layer-group" style="color:var(--accent);"></i> 批量生成
-      </h4>
-      <div class="form-group">
-        <label class="form-label">生成数量<span class="required">*</span></label>
-        <input type="number" class="form-input" placeholder="请输入数量" value="100" style="max-width:240px;">
-        <div class="form-hint">单次最多生成 500 张</div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">卡号前缀</label>
-        <input type="text" class="form-input" placeholder="例如：RC" value="RC" style="max-width:240px;">
-        <div class="form-hint">系统将自动在卡号后追加时间戳和序号</div>
-      </div>
-      <div class="form-group">
-        <label class="checkbox-label">
-          <input type="checkbox" checked> 批量生成后自动导出为 Excel 文件
-        </label>
+
+      <!-- 批次生成 -->
+      <div class="form-section">
+        <h4 class="form-section-title"><i class="fas fa-layer-group" style="color:var(--accent);"></i> 批次生成</h4>
+        <div class="form-group">
+          <label class="form-label">生成数量<span class="required">*</span></label>
+          <input type="number" class="form-input" placeholder="请输入数量" value="100" style="max-width:200px;">
+          <div class="form-hint">单次最多生成 500 张，卡号自动包含批次号</div>
+        </div>
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal('modal-recharge-new')">取消</button>
-      <button class="btn btn-primary" onclick="closeModal('modal-recharge-new')"><i class="fas fa-check"></i> 确认生成</button>
+      <button class="btn btn-primary" onclick="closeModal('modal-recharge-new'); showToast('success', '批次创建成功，共生成100张充值卡')"><i class="fas fa-check"></i> 确认创建批次</button>
     </div>
   </div>
 </div>
 
-<!-- Modal: 新建折扣活动 -->
+<!-- Modal: 批次详情 -->
+<div class="modal-overlay" id="modal-recharge-batch-detail">
+  <div class="modal modal-xl">
+    <div class="modal-header">
+      <span class="modal-title">批次详情</span>
+      <button class="modal-close" onclick="closeModal('modal-recharge-batch-detail')"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" style="padding:0;">
+      <!-- 批次概览 -->
+      <div class="batch-overview">
+        <div class="batch-overview-item">
+          <div class="overview-label">批次号</div>
+          <div class="overview-value">B20260410001</div>
+        </div>
+        <div class="batch-overview-item">
+          <div class="overview-label">批次名称</div>
+          <div class="overview-value">五一特惠充值卡</div>
+        </div>
+        <div class="batch-overview-item">
+          <div class="overview-label">卡数量</div>
+          <div class="overview-value">100 张</div>
+        </div>
+        <div class="batch-overview-item">
+          <div class="overview-label">面值参数</div>
+          <div class="overview-value">¥500 / 500积分 / 50成长值</div>
+        </div>
+        <div class="batch-overview-item">
+          <div class="overview-label">制作方式</div>
+          <div class="overview-value"><span class="badge badge-qrcode"><i class="fas fa-qrcode"></i> 二维码</span></div>
+        </div>
+        <div class="batch-overview-item">
+          <div class="overview-label">创建时间</div>
+          <div class="overview-value">2026-04-10 09:23</div>
+        </div>
+      </div>
+
+      <!-- 标签页切换 -->
+      <div class="detail-tabs">
+        <button class="detail-tab active" onclick="switchDetailTab(this, 'cards')">
+          <i class="fas fa-list"></i> 充值卡明细
+        </button>
+        <button class="detail-tab" onclick="switchDetailTab(this, 'usage')">
+          <i class="fas fa-chart-pie"></i> 使用情况
+        </button>
+      </div>
+
+      <!-- 充值卡明细 -->
+      <div class="detail-panel active" id="detail-panel-cards">
+        <div class="detail-toolbar">
+          <div class="toolbar-left">
+            <select class="filter-select">
+              <option>全部状态</option>
+              <option>未激活</option>
+              <option>已激活</option>
+            </select>
+            <input type="text" class="filter-input" placeholder="搜索卡号...">
+          </div>
+          <div class="toolbar-right">
+            <button class="btn btn-secondary btn-sm"><i class="fas fa-file-export"></i> 导出本批次</button>
+          </div>
+        </div>
+        <div class="table-wrapper" style="max-height:380px; overflow:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>序号</th>
+                <th>卡号</th>
+                <th>密码</th>
+                <th>状态</th>
+                <th>激活时间</th>
+                <th>激活会员</th>
+                <th>充值金额</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td style="font-family:monospace;">B202604100010001</td>
+                <td><span class="password-mask">******</span> <button class="btn btn-ghost btn-xs" onclick="togglePassword(this)"><i class="fas fa-eye"></i></button></td>
+                <td><span class="status status-active">已激活</span></td>
+                <td>2026-04-10 10:30</td>
+                <td>张三 138****1234</td>
+                <td style="font-weight:600; color:var(--coral);">¥500</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td style="font-family:monospace;">B202604100010002</td>
+                <td><span class="password-mask">******</span> <button class="btn btn-ghost btn-xs" onclick="togglePassword(this)"><i class="fas fa-eye"></i></button></td>
+                <td><span class="status status-inactive">未激活</span></td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td style="font-family:monospace;">B202604100010003</td>
+                <td><span class="password-mask">******</span> <button class="btn btn-ghost btn-xs" onclick="togglePassword(this)"><i class="fas fa-eye"></i></button></td>
+                <td><span class="status status-inactive">未激活</span></td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td style="font-family:monospace;">B202604100010004</td>
+                <td><span class="password-mask">******</span> <button class="btn btn-ghost btn-xs" onclick="togglePassword(this)"><i class="fas fa-eye"></i></button></td>
+                <td><span class="status status-active">已激活</span></td>
+                <td>2026-04-10 11:15</td>
+                <td>李四 139****5678</td>
+                <td style="font-weight:600; color:var(--coral);">¥500</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td style="font-family:monospace;">B202604100010005</td>
+                <td><span class="password-mask">******</span> <button class="btn btn-ghost btn-xs" onclick="togglePassword(this)"><i class="fas fa-eye"></i></button></td>
+                <td><span class="status status-inactive">未激活</span></td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 使用情况 -->
+      <div class="detail-panel" id="detail-panel-usage">
+        <div class="usage-stats">
+          <div class="usage-stat-item">
+            <div class="usage-stat-value">67<span class="usage-stat-unit">张</span></div>
+            <div class="usage-stat-label">已激活</div>
+            <div class="usage-stat-bar"><div class="usage-stat-fill" style="width:67%; background:var(--green);"></div></div>
+          </div>
+          <div class="usage-stat-item">
+            <div class="usage-stat-value">33<span class="usage-stat-unit">张</span></div>
+            <div class="usage-stat-label">未激活</div>
+            <div class="usage-stat-bar"><div class="usage-stat-fill" style="width:33%; background:var(--text-muted);"></div></div>
+          </div>
+          <div class="usage-stat-item">
+            <div class="usage-stat-value">¥33,500</div>
+            <div class="usage-stat-label">已充值金额</div>
+            <div class="usage-stat-bar"><div class="usage-stat-fill" style="width:67%; background:var(--coral);"></div></div>
+          </div>
+          <div class="usage-stat-item">
+            <div class="usage-stat-value">33,500<span class="usage-stat-unit">积分</span></div>
+            <div class="usage-stat-label">已赠送积分</div>
+            <div class="usage-stat-bar"><div class="usage-stat-fill" style="width:67%; background:var(--accent);"></div></div>
+          </div>
+        </div>
+        <div class="usage-records">
+          <h5 class="usage-records-title"><i class="fas fa-clock-rotate-left"></i> 最近使用记录</h5>
+          <div class="usage-record-list">
+            <div class="usage-record-item">
+              <div class="record-main">
+                <span class="record-card">B202604100010067</span>
+                <span class="record-user">王五 137****9012</span>
+              </div>
+              <div class="record-info">
+                <span class="record-time">2026-04-12 14:30</span>
+                <span class="record-amount">¥500</span>
+              </div>
+            </div>
+            <div class="usage-record-item">
+              <div class="record-main">
+                <span class="record-card">B202604100010066</span>
+                <span class="record-user">赵六 136****3456</span>
+              </div>
+              <div class="record-info">
+                <span class="record-time">2026-04-12 13:45</span>
+                <span class="record-amount">¥500</span>
+              </div>
+            </div>
+            <div class="usage-record-item">
+              <div class="record-main">
+                <span class="record-card">B202604100010065</span>
+                <span class="record-user">孙七 135****7890</span>
+              </div>
+              <div class="record-info">
+                <span class="record-time">2026-04-11 16:20</span>
+                <span class="record-amount">¥500</span>
+              </div>
+            </div>
+            <div class="usage-record-item">
+              <div class="record-main">
+                <span class="record-card">B202604100010064</span>
+                <span class="record-user">周八 134****2345</span>
+              </div>
+              <div class="record-info">
+                <span class="record-time">2026-04-11 10:15</span>
+                <span class="record-amount">¥500</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-recharge-batch-detail')">关闭</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: 选择制卡方式 -->
+<div class="modal-overlay" id="modal-recharge-type">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">选择制卡方式</span>
+      <button class="modal-close" onclick="closeModal('modal-recharge-type')"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="make-option-list">
+        <div class="make-option-item" onclick="closeModal('modal-recharge-type'); openModal('modal-recharge-new')">
+          <div class="make-option-icon" style="background:#e0f2fe; color:#0284c7;">
+            <i class="fas fa-qrcode"></i>
+          </div>
+          <div class="make-option-info">
+            <div class="make-option-title">二维码充值卡</div>
+            <div class="make-option-desc">生成卡号、密码、二维码，用户扫码即可充值</div>
+          </div>
+          <i class="fas fa-chevron-right" style="color:var(--text-muted);"></i>
+        </div>
+        <div class="make-option-item" onclick="closeModal('modal-recharge-type'); openModal('modal-recharge-new')">
+          <div class="make-option-icon" style="background:#dcfce7; color:#16a34a;">
+            <i class="fas fa-microchip"></i>
+          </div>
+          <div class="make-option-info">
+            <div class="make-option-title">IC卡充值卡</div>
+            <div class="make-option-desc">生成卡号并预留IC卡UID绑定，需后续刷IC卡完成绑定</div>
+          </div>
+          <i class="fas fa-chevron-right" style="color:var(--text-muted);"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: 导出二维码卡片 -->
+<div class="modal-overlay" id="modal-recharge-export">
+  <div class="modal" style="max-width:480px;">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fas fa-qrcode" style="color:#0284c7; margin-right:8px;"></i>导出二维码卡片</span>
+      <button class="modal-close" onclick="closeModal('modal-recharge-export')"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <!-- 批次信息卡片 -->
+      <div class="export-preview" style="display:flex; align-items:center; gap:14px; background:linear-gradient(135deg, #f0f9ff, #e0f2fe); border:1px solid #bae6fd;">
+        <div class="export-file-icon" style="width:52px; height:52px; border-radius:12px; background:linear-gradient(135deg, #0284c7, #0369a1); color:#fff; font-size:22px; margin-bottom:0; flex-shrink:0;">
+          <i class="fas fa-qrcode"></i>
+        </div>
+        <div class="export-file-info">
+          <div class="export-file-name" style="font-size:15px;">五一特惠充值卡_100张.zip</div>
+          <div class="export-file-meta">批次号：B20260410001 · 100张 · 二维码</div>
+        </div>
+      </div>
+      <!-- 导出选项 -->
+      <div class="form-group" style="margin-top:20px;">
+        <label class="form-label" style="font-size:13px; font-weight:600; margin-bottom:12px; color:var(--text-primary);">导出内容</label>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <label class="checkbox-label" style="display:flex; align-items:center; gap:12px; padding:12px 14px; background:linear-gradient(135deg, #f0f9ff, #e0f2fe); border-radius:10px; border:1.5px solid #bae6fd; cursor:pointer; transition:all 0.2s;">
+            <input type="checkbox" checked style="width:18px; height:18px; accent-color:#0284c7; flex-shrink:0;">
+            <div>
+              <div style="font-size:13px; font-weight:600; color:#0369a1;">卡号与密码列表</div>
+              <div style="font-size:11px; color:#0ea5e9; margin-top:2px;">Excel格式，包含所有卡号、密码、状态</div>
+            </div>
+          </label>
+          <label class="checkbox-label" style="display:flex; align-items:center; gap:12px; padding:12px 14px; background:linear-gradient(135deg, #f0f9ff, #e0f2fe); border-radius:10px; border:1.5px solid #bae6fd; cursor:pointer; transition:all 0.2s;">
+            <input type="checkbox" checked style="width:18px; height:18px; accent-color:#0284c7; flex-shrink:0;">
+            <div>
+              <div style="font-size:13px; font-weight:600; color:#0369a1;">二维码图片</div>
+              <div style="font-size:11px; color:#0ea5e9; margin-top:2px;">PNG格式，每张独立文件，可直接印刷</div>
+            </div>
+          </label>
+          <label class="checkbox-label" style="display:flex; align-items:center; gap:12px; padding:12px 14px; background:#f8fafc; border-radius:10px; border:1.5px solid #e2e8f0; cursor:pointer; transition:all 0.2s;">
+            <input type="checkbox" style="width:18px; height:18px; accent-color:#0284c7; flex-shrink:0;">
+            <div>
+              <div style="font-size:13px; font-weight:600; color:var(--text-primary);">密码加密保护</div>
+              <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">导出后需密码才能查看卡密信息</div>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" style="justify-content:center; gap:12px; padding:20px 24px;">
+      <button class="btn btn-secondary" onclick="closeModal('modal-recharge-export')" style="min-width:100px; height:40px; border-radius:10px; font-size:13px; font-weight:500;">取消</button>
+      <button class="btn btn-primary" onclick="closeModal('modal-recharge-export'); showToast('success', '导出成功，文件已下载')" style="min-width:140px; height:40px; border-radius:10px; font-size:13px; font-weight:600; background:linear-gradient(135deg, #0284c7, #0369a1); box-shadow:0 4px 12px rgba(2,132,199,0.3);"><i class="fas fa-download"></i> 确认导出</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: IC卡快速绑定 -->
+<div class="modal-overlay" id="modal-recharge-ic-bind">
+  <div class="modal" style="max-width:460px;">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fas fa-microchip" style="color:#16a34a; margin-right:8px;"></i>IC卡快速绑定</span>
+      <button class="modal-close" onclick="closeModal('modal-recharge-ic-bind')"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <!-- 进度信息 -->
+      <div class="ic-bind-current" style="display:flex; align-items:center; justify-content:space-between; background:linear-gradient(135deg, #f0fdf4, #dcfce7); border:1px solid #bbf7d0; margin-bottom:20px;">
+        <div class="current-card-info">
+          <div class="current-label" style="font-size:11px; color:#16a34a; font-weight:500; text-transform:uppercase; letter-spacing:0.5px;">当前绑定进度</div>
+          <div class="current-number" style="margin-top:4px;">第 <strong id="icCurrentNum" style="color:#16a34a;">1</strong> / <strong id="icTotalNum">5</strong> 张</div>
+          <div class="current-card-no" id="icCurrentCardNo" style="margin-top:2px; font-size:12px;">卡号：B202604100010001</div>
+        </div>
+        <div style="width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, #16a34a, #15803d); display:flex; align-items:center; justify-content:center; color:#fff; font-size:18px; flex-shrink:0;">
+          <i class="fas fa-microchip"></i>
+        </div>
+      </div>
+      <!-- 读卡区域 -->
+      <div class="ic-reader-area" style="border:2px dashed #bbf7d0; background:#f0fdf4; border-radius:12px; padding:48px 24px;">
+        <div class="reader-status" id="icReaderStatus" style="text-align:center;">
+          <div style="width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg, #dcfce7, #bbf7d0); display:flex; align-items:center; justify-content:center; margin:0 auto 16px; animation:pulse 2s infinite;">
+            <i class="fas fa-wifi" style="font-size:32px; color:#16a34a;"></i>
+          </div>
+          <div style="font-size:15px; font-weight:600; color:var(--text-primary);">请将IC卡靠近读卡器</div>
+          <div style="font-size:12px; color:var(--text-muted); margin-top:6px;">等待读取UID，读取成功后将自动绑定</div>
+        </div>
+        <div class="reader-result" id="icReaderResult" style="display:none; text-align:center;">
+          <div style="width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg, #dcfce7, #bbf7d0); display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
+            <i class="fas fa-check" style="font-size:32px; color:#16a34a;"></i>
+          </div>
+          <div style="font-size:12px; color:var(--text-muted); margin-bottom:4px;">读取成功</div>
+          <div class="result-uid" id="icUidValue" style="font-family:monospace; font-size:18px; font-weight:700; color:#16a34a; letter-spacing:1px;">UID: A3F2B8D1</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" style="justify-content:space-between; align-items:center; padding:20px 24px;">
+      <label class="auto-next-toggle" style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:13px; color:#15803d; padding:8px 14px; background:linear-gradient(135deg, #f0fdf4, #dcfce7); border-radius:10px; border:1.5px solid #bbf7d0;">
+        <input type="checkbox" id="autoNextToggle" checked style="width:18px; height:18px; accent-color:#16a34a;">
+        <span style="font-weight:500;">读取成功自动下一张</span>
+      </label>
+      <div style="display:flex; gap:10px;">
+        <button class="btn btn-secondary" onclick="closeModal('modal-recharge-ic-bind')" style="height:40px; border-radius:10px; font-size:13px; font-weight:500;">取消</button>
+        <button class="btn btn-primary" id="icBindBtn" onclick="simulateIcBind()" disabled style="height:40px; border-radius:10px; font-size:13px; font-weight:600; background:linear-gradient(135deg, #16a34a, #15803d); box-shadow:0 4px 12px rgba(22,163,74,0.3);"><i class="fas fa-link"></i> 绑定并下一张</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: 冻结确认 -->
+<div class="modal-overlay" id="modal-freeze-confirm">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fas fa-snowflake" style="color:var(--info);"></i> 确认冻结</span>
+      <button class="modal-close" onclick="closeModal('modal-freeze-confirm')"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" style="text-align:center; padding:32px 24px;">
+      <div style="width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg, #e0f2fe, #bae6fd); display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
+        <i class="fas fa-snowflake" style="font-size:28px; color:#0284c7;"></i>
+      </div>
+      <div style="font-size:16px; font-weight:600; color:var(--text-primary); margin-bottom:8px;">确定要冻结该批次吗？</div>
+      <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">冻结后该批次下所有充值卡将不可使用<br>已发放的卡也会被暂停</div>
+    </div>
+    <div class="modal-footer" style="justify-content:center; gap:12px;">
+      <button class="btn btn-secondary" onclick="closeModal('modal-freeze-confirm')" style="min-width:100px;">取消</button>
+      <button class="btn btn-primary" onclick="closeModal('modal-freeze-confirm'); showToast('warning', '批次已冻结，该批次下所有充值卡不可使用')" style="min-width:100px; background:linear-gradient(135deg, #0284c7, #0369a1);"><i class="fas fa-snowflake"></i> 确认冻结</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: 解冻确认 -->
+<div class="modal-overlay" id="modal-unfreeze-confirm">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fas fa-check-circle" style="color:var(--success);"></i> 确认解冻</span>
+      <button class="modal-close" onclick="closeModal('modal-unfreeze-confirm')"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" style="text-align:center; padding:32px 24px;">
+      <div style="width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg, #dcfce7, #bbf7d0); display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
+        <i class="fas fa-check-circle" style="font-size:28px; color:#16a34a;"></i>
+      </div>
+      <div style="font-size:16px; font-weight:600; color:var(--text-primary); margin-bottom:8px;">确定要解冻该批次吗？</div>
+      <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">解冻后该批次下所有充值卡将恢复正常使用</div>
+    </div>
+    <div class="modal-footer" style="justify-content:center; gap:12px;">
+      <button class="btn btn-secondary" onclick="closeModal('modal-unfreeze-confirm')" style="min-width:100px;">取消</button>
+      <button class="btn btn-primary" onclick="closeModal('modal-unfreeze-confirm'); showToast('success', '批次已解冻')" style="min-width:100px; background:linear-gradient(135deg, #16a34a, #15803d);"><i class="fas fa-check-circle"></i> 确认解冻</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: 新建/编辑折扣活动 -->
 <div class="modal-overlay" id="modal-discount-new">
   <div class="modal modal-lg">
     <div class="modal-header">
-      <span class="modal-title">新建折扣活动</span>
+      <span class="modal-title" id="discount-modal-title">新建折扣活动</span>
       <button class="modal-close" onclick="closeModal('modal-discount-new')"><i class="fas fa-xmark"></i></button>
     </div>
     <div class="modal-body">
       <div class="form-group">
         <label class="form-label">活动名称<span class="required">*</span></label>
-        <input type="text" class="form-input" placeholder="请输入活动名称">
+        <input type="text" class="form-input" id="discount-name" placeholder="请输入活动名称">
       </div>
-      <div class="form-group">
-        <label class="form-label">关联演出<span class="required">*</span></label>
-        <select class="form-select">
-          <option value="">请选择关联演出</option>
-          <option>全部演出</option>
-          <option>《天涯故事》歌舞剧</option>
-          <option>《海南记忆》音乐会</option>
-          <option>《椰风海韵》儿童剧</option>
-          <option>《南海之声》交响乐</option>
-        </select>
+      <div class="form-row">
+        <div class="form-group" style="flex:1.2;">
+          <label class="form-label">关联演出<span class="required">*</span></label>
+          <select class="form-select" id="discount-show" onchange="onDiscountShowChange(this)">
+            <option value="">请选择关联演出</option>
+            <option value="all">全部演出</option>
+            <option value="show1">《天涯故事》歌舞剧</option>
+            <option value="show2">《海南记忆》音乐会</option>
+            <option value="show3">《椰风海韵》儿童剧</option>
+            <option value="show4">《南海之声》交响乐</option>
+          </select>
+        </div>
+        <div class="form-group" style="flex:1;" id="discount-session-group">
+          <label class="form-label">关联场次<span class="required">*</span></label>
+          <div class="session-select-wrapper" id="session-select-wrapper">
+            <div class="session-select-trigger" id="session-select-trigger" onclick="toggleSessionDropdown()">
+              <span id="session-select-text">请先选择演出</span>
+              <i class="fas fa-chevron-down" style="margin-left:auto; font-size:12px; transition:transform 0.2s;"></i>
+            </div>
+            <div class="session-select-dropdown" id="session-select-dropdown" style="display:none;">
+              <label class="session-option session-option-all" style="border-bottom:1px solid var(--border); font-weight:500;">
+                <input type="checkbox" id="session-check-all" onchange="toggleAllSessions(this)"> 全部场次
+              </label>
+              <div id="session-options-list"></div>
+            </div>
+          </div>
+          <input type="hidden" id="discount-session" value="">
+        </div>
       </div>
       <div class="form-group">
         <label class="form-label">折扣类型<span class="required">*</span></label>
         <div style="display:flex; gap:12px; margin-top:6px;">
-          <label class="checkbox-label" style="padding:10px 20px; border:1px solid var(--border); border-radius:var(--radius-sm); cursor:pointer; transition:var(--transition);">
-            <input type="radio" name="discount-type" value="percent" checked> 百分比折扣
+          <label class="checkbox-label discount-type-option" id="label-discount-percent" style="padding:10px 20px; border:2px solid var(--accent); border-radius:var(--radius-sm); cursor:pointer; transition:var(--transition); background:rgba(255,107,74,0.05);" onclick="switchDiscountType('percent')">
+            <input type="radio" name="discount-type" value="percent" checked style="display:none;"> <i class="fas fa-percent" style="margin-right:4px;"></i>百分比折扣
           </label>
-          <label class="checkbox-label" style="padding:10px 20px; border:1px solid var(--border); border-radius:var(--radius-sm); cursor:pointer; transition:var(--transition);">
-            <input type="radio" name="discount-type" value="reduce"> 满减优惠
+          <label class="checkbox-label discount-type-option" id="label-discount-reduce" style="padding:10px 20px; border:1px solid var(--border); border-radius:var(--radius-sm); cursor:pointer; transition:var(--transition);" onclick="switchDiscountType('reduce')">
+            <input type="radio" name="discount-type" value="reduce" style="display:none;"> <i class="fas fa-minus-circle" style="margin-right:4px;"></i>满减优惠
           </label>
         </div>
       </div>
+      <!-- 百分比折扣字段 -->
       <div class="form-row" id="discount-percent-fields">
         <div class="form-group">
           <label class="form-label">折扣比例 (折)<span class="required">*</span></label>
-          <input type="number" class="form-input" placeholder="例如：8 表示8折" min="1" max="99" step="0.1">
+          <input type="number" class="form-input" id="discount-percent" placeholder="例如：8 表示8折" min="1" max="99" step="0.1">
         </div>
         <div class="form-group">
           <label class="form-label">最大优惠金额 (元)</label>
-          <input type="number" class="form-input" placeholder="不填则不限制">
+          <input type="number" class="form-input" id="discount-max-amount" placeholder="不填则不限制">
+        </div>
+      </div>
+      <!-- 满减优惠字段 -->
+      <div class="form-row" id="discount-reduce-fields" style="display:none;">
+        <div class="form-group">
+          <label class="form-label">满减门槛 (元)<span class="required">*</span></label>
+          <input type="number" class="form-input" id="discount-threshold" placeholder="例如：300">
+        </div>
+        <div class="form-group">
+          <label class="form-label">减免金额 (元)<span class="required">*</span></label>
+          <input type="number" class="form-input" id="discount-reduce-amount" placeholder="例如：50">
         </div>
       </div>
       <hr class="form-divider">
@@ -2964,21 +5060,167 @@ html {
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">开始时间<span class="required">*</span></label>
-          <input type="datetime-local" class="form-input">
+          <input type="datetime-local" class="form-input" id="discount-start">
         </div>
         <div class="form-group">
           <label class="form-label">结束时间<span class="required">*</span></label>
-          <input type="datetime-local" class="form-input">
+          <input type="datetime-local" class="form-input" id="discount-end">
         </div>
       </div>
       <div class="form-group">
         <label class="form-label">活动说明</label>
-        <textarea class="form-textarea" placeholder="请输入活动说明，将展示给用户"></textarea>
+        <textarea class="form-textarea" id="discount-desc" placeholder="请输入活动说明，将展示给用户"></textarea>
+      </div>
+      <hr class="form-divider">
+      <h4 style="font-size:14px; font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+        <i class="fas fa-store" style="color:var(--accent);"></i> 适用渠道
+      </h4>
+      <div class="form-group">
+        <label class="form-label">售票渠道<span class="required">*</span></label>
+        <div style="display:flex; gap:16px; margin-top:6px;">
+          <label class="checkbox-label" style="display:flex; align-items:center; gap:8px; padding:10px 16px; border:1px solid var(--border); border-radius:var(--radius-sm); cursor:pointer; transition:var(--transition);" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="if(!document.getElementById('channel-miniapp').checked)this.style.borderColor='var(--border)'">
+            <input type="checkbox" id="channel-miniapp" name="discount-channel" value="miniapp" checked style="width:16px; height:16px; accent-color:var(--accent);">
+            <i class="fas fa-mobile-alt" style="color:#4A8EFF;"></i>
+            <span>小程序</span>
+          </label>
+          <label class="checkbox-label" style="display:flex; align-items:center; gap:8px; padding:10px 16px; border:1px solid var(--border); border-radius:var(--radius-sm); cursor:pointer; transition:var(--transition);" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="if(!document.getElementById('channel-window').checked)this.style.borderColor='var(--border)'">
+            <input type="checkbox" id="channel-window" name="discount-channel" value="window" checked style="width:16px; height:16px; accent-color:var(--accent);">
+            <i class="fas fa-desktop" style="color:#00C9A7;"></i>
+            <span>窗口</span>
+          </label>
+        </div>
+        <p style="font-size:12px; color:var(--text-secondary); margin-top:8px;">请至少选择一个售票渠道，未选中的渠道将无法使用该折扣</p>
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal('modal-discount-new')">取消</button>
-      <button class="btn btn-primary" onclick="closeModal('modal-discount-new')"><i class="fas fa-check"></i> 创建活动</button>
+      <button class="btn btn-primary" onclick="saveDiscountActivity()"><i class="fas fa-check"></i> <span id="discount-save-btn-text">创建活动</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: 折扣活动数据 -->
+<div class="modal-overlay" id="modal-discount-data">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <span class="modal-title" id="discount-data-title">活动数据</span>
+      <button class="modal-close" onclick="closeModal('modal-discount-data')"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr); margin-bottom:24px;">
+        <div class="stat-card" style="padding:16px;">
+          <div class="stat-info">
+            <span class="stat-label" style="font-size:12px;">总使用次数</span>
+            <span class="stat-value" style="font-size:22px;" id="data-total-use">0</span>
+          </div>
+        </div>
+        <div class="stat-card" style="padding:16px;">
+          <div class="stat-info">
+            <span class="stat-label" style="font-size:12px;">累计优惠金额</span>
+            <span class="stat-value" style="font-size:22px;" id="data-total-save">¥0</span>
+          </div>
+        </div>
+        <div class="stat-card" style="padding:16px;">
+          <div class="stat-info">
+            <span class="stat-label" style="font-size:12px;">带动订单金额</span>
+            <span class="stat-value" style="font-size:22px;" id="data-total-order">¥0</span>
+          </div>
+        </div>
+        <div class="stat-card" style="padding:16px;">
+          <div class="stat-info">
+            <span class="stat-label" style="font-size:12px;">转化率</span>
+            <span class="stat-value" style="font-size:22px;" id="data-conversion">0%</span>
+          </div>
+        </div>
+      </div>
+      <h4 style="font-size:14px; font-weight:600; margin-bottom:12px;">使用趋势</h4>
+      <div class="trend-chart-container" id="trend-chart-container">
+        <svg class="trend-chart-svg" id="trend-chart-svg" viewBox="0 0 700 140" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="trendAreaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(255,107,74,0.15)"/>
+              <stop offset="100%" stop-color="rgba(255,107,74,0)"/>
+            </linearGradient>
+          </defs>
+          <!-- Grid lines -->
+          <line class="trend-chart-grid" x1="40" y1="20" x2="680" y2="20"/>
+          <line class="trend-chart-grid" x1="40" y1="55" x2="680" y2="55"/>
+          <line class="trend-chart-grid" x1="40" y1="90" x2="680" y2="90"/>
+          <!-- Axis lines -->
+          <line class="trend-chart-axis" x1="40" y1="125" x2="680" y2="125"/>
+          <line class="trend-chart-axis" x1="40" y1="20" x2="40" y2="125"/>
+          <!-- Y-axis labels -->
+          <text class="trend-chart-axis-text" x="30" y="24" text-anchor="end">30</text>
+          <text class="trend-chart-axis-text" x="30" y="59" text-anchor="end">20</text>
+          <text class="trend-chart-axis-text" x="30" y="94" text-anchor="end">10</text>
+          <text class="trend-chart-axis-text" x="30" y="129" text-anchor="end">0</text>
+          <!-- X-axis labels -->
+          <text class="trend-chart-axis-text" x="40" y="140" text-anchor="middle">03/12</text>
+          <text class="trend-chart-axis-text" x="200" y="140" text-anchor="middle">03/19</text>
+          <text class="trend-chart-axis-text" x="360" y="140" text-anchor="middle">03/26</text>
+          <text class="trend-chart-axis-text" x="520" y="140" text-anchor="middle">04/02</text>
+          <text class="trend-chart-axis-text" x="680" y="140" text-anchor="middle">04/09</text>
+          <!-- Area -->
+          <polygon class="trend-chart-area" points="40,125 120,95 200,85 280,105 360,65 440,55 520,75 600,45 680,35 680,125 40,125"/>
+          <!-- Line -->
+          <polyline class="trend-chart-line" points="40,125 120,95 200,85 280,105 360,65 440,55 520,75 600,45 680,35"/>
+          <!-- Dots -->
+          <circle class="trend-chart-dot" cx="40" cy="125"/>
+          <circle class="trend-chart-dot" cx="120" cy="95"/>
+          <circle class="trend-chart-dot" cx="200" cy="85"/>
+          <circle class="trend-chart-dot" cx="280" cy="105"/>
+          <circle class="trend-chart-dot" cx="360" cy="65"/>
+          <circle class="trend-chart-dot" cx="440" cy="55"/>
+          <circle class="trend-chart-dot" cx="520" cy="75"/>
+          <circle class="trend-chart-dot" cx="600" cy="45"/>
+          <circle class="trend-chart-dot" cx="680" cy="35"/>
+        </svg>
+        <div class="trend-chart-tooltip" id="trend-chart-tooltip"></div>
+      </div>
+      <h4 style="font-size:14px; font-weight:600; margin:20px 0 12px;">最近使用记录</h4>
+      <div class="table-wrapper">
+        <table class="table-sm">
+          <thead>
+            <tr>
+              <th>时间</th>
+              <th>用户</th>
+              <th>订单号</th>
+              <th>原金额</th>
+              <th>优惠</th>
+              <th>实付</th>
+            </tr>
+          </thead>
+          <tbody id="discount-data-records">
+            <tr>
+              <td style="font-size:12px;">2026-04-10 14:23</td>
+              <td>138****5678</td>
+              <td style="font-family:monospace; font-size:12px;">O20260410142301</td>
+              <td>¥500</td>
+              <td style="color:var(--accent);">-¥100</td>
+              <td style="font-weight:600;">¥400</td>
+            </tr>
+            <tr>
+              <td style="font-size:12px;">2026-04-10 11:05</td>
+              <td>139****1234</td>
+              <td style="font-family:monospace; font-size:12px;">O20260410110588</td>
+              <td>¥300</td>
+              <td style="color:var(--accent);">-¥50</td>
+              <td style="font-weight:600;">¥250</td>
+            </tr>
+            <tr>
+              <td style="font-size:12px;">2026-04-09 20:18</td>
+              <td>137****9999</td>
+              <td style="font-family:monospace; font-size:12px;">O20260409201833</td>
+              <td>¥500</td>
+              <td style="color:var(--accent);">-¥100</td>
+              <td style="font-weight:600;">¥400</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-discount-data')">关闭</button>
     </div>
   </div>
 </div>
@@ -2998,39 +5240,157 @@ html {
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">券类型<span class="required">*</span></label>
-          <select class="form-select">
+          <select class="form-select" id="coupon-type-select" onchange="toggleCouponTypeFields(this.value)">
             <option value="">请选择券类型</option>
-            <option>现金券</option>
-            <option>抵扣券</option>
+            <option value="cash">现金券 — 固定金额减免</option>
+            <option value="discount">折扣券 — 按比例折扣</option>
           </select>
         </div>
-        <div class="form-group">
-          <label class="form-label">面值 (元)<span class="required">*</span></label>
-          <input type="number" class="form-input" placeholder="请输入面值">
+        <div class="form-group" id="coupon-value-cash">
+          <label class="form-label">减免金额 (元)<span class="required">*</span></label>
+          <div style="position:relative;">
+            <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:14px;">¥</span>
+            <input type="number" class="form-input" style="padding-left:28px;" placeholder="请输入减免金额">
+          </div>
+        </div>
+        <div class="form-group" id="coupon-value-discount" style="display:none;">
+          <label class="form-label">折扣比例<span class="required">*</span></label>
+          <div style="position:relative;">
+            <input type="number" class="form-input" style="padding-right:28px;" placeholder="例如：8 表示8折" min="1" max="99" step="1">
+            <span style="position:absolute; right:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:13px;">折</span>
+          </div>
+          <div class="form-hint">输入 1~99 的整数，如 8 表示打8折（即减免20%）</div>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">使用条件 - 最低消费 (元)</label>
-          <input type="number" class="form-input" placeholder="0 表示无门槛">
-          <div class="form-hint">用户订单金额需满足此条件方可使用</div>
+          <label class="form-label">消费门槛 (元)</label>
+          <div style="position:relative;">
+            <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:14px;">满</span>
+            <input type="number" class="form-input" style="padding-left:32px;" placeholder="0 表示无门槛">
+            <span style="position:absolute; right:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:13px;">元可用</span>
+          </div>
+          <div class="form-hint">用户订单金额需满足此条件方可使用，0 或不填表示无门槛</div>
         </div>
         <div class="form-group">
           <label class="form-label">发放数量<span class="required">*</span></label>
           <input type="number" class="form-input" placeholder="请输入发放数量">
         </div>
       </div>
+
+      <hr class="form-divider">
+      <h4 style="font-size:14px; font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+        <i class="fas fa-theater-masks" style="color:var(--accent);"></i> 适用范围
+      </h4>
       <div class="form-group">
-        <label class="form-label">指定演出</label>
-        <select class="form-select">
-          <option value="">全部演出可用</option>
-          <option>《天涯故事》歌舞剧</option>
-          <option>《海南记忆》音乐会</option>
-          <option>《椰风海韵》儿童剧</option>
-          <option>《南海之声》交响乐</option>
-        </select>
-        <div class="form-hint">不选择则所有演出均可使用</div>
+        <div style="display:flex; gap:16px; margin-bottom:12px;">
+          <label class="checkbox-label">
+            <input type="radio" name="coupon-scope" value="all" checked onchange="toggleScopeFields('all')"> 全部演出可用
+          </label>
+          <label class="checkbox-label">
+            <input type="radio" name="coupon-scope" value="specific" onchange="toggleScopeFields('specific')"> 指定演出/场次
+          </label>
+        </div>
       </div>
+      <div id="scope-specific-fields" style="display:none;">
+        <div class="form-group">
+          <label class="form-label">选择演出<span class="required">*</span></label>
+          <div style="position:relative;">
+            <div class="multi-select-area" onclick="this.querySelector('.multi-select-dropdown').classList.toggle('show')">
+              <span class="multi-select-tag">《天涯故事》歌舞剧 <span class="tag-remove" onclick="event.stopPropagation(); this.parentElement.remove();">×</span></span>
+              <span class="multi-select-tag">《海南记忆》音乐会 <span class="tag-remove" onclick="event.stopPropagation(); this.parentElement.remove();">×</span></span>
+              <input type="text" class="multi-select-input" placeholder="搜索或选择演出...">
+              <div class="multi-select-dropdown">
+                <div class="multi-select-option selected"><span class="check-icon"><i class="fas fa-check"></i></span>《天涯故事》歌舞剧</div>
+                <div class="multi-select-option selected"><span class="check-icon"><i class="fas fa-check"></i></span>《海南记忆》音乐会</div>
+                <div class="multi-select-option"><span class="check-icon"></span>《南海之声》交响乐</div>
+                <div class="multi-select-option"><span class="check-icon"></span>《椰风海韵》儿童剧</div>
+                <div class="multi-select-option"><span class="check-icon"></span>《黎族风情》民族舞</div>
+                <div class="multi-select-option"><span class="check-icon"></span>《海岛之恋》话剧</div>
+              </div>
+            </div>
+            <div class="form-hint">先选择演出，再为每个演出指定可用场次。不选择场次则该演出下所有场次均可使用。</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">指定场次</label>
+          <div class="show-session-list">
+            <div class="show-session-item">
+              <div class="show-session-header">
+                <span class="show-session-name"><i class="fas fa-theater-masks" style="margin-right:6px; color:var(--accent);"></i>《天涯故事》歌舞剧</span>
+                <span class="show-session-count">已选 2 个场次</span>
+              </div>
+              <div class="show-session-options">
+                <label class="checkbox-label session-checkbox">
+                  <input type="checkbox" checked> 6月15日 19:30场
+                </label>
+                <label class="checkbox-label session-checkbox">
+                  <input type="checkbox" checked> 6月16日 14:00场
+                </label>
+                <label class="checkbox-label session-checkbox">
+                  <input type="checkbox"> 6月16日 19:30场
+                </label>
+                <label class="checkbox-label session-checkbox">
+                  <input type="checkbox"> 6月22日 14:00场
+                </label>
+                <label class="checkbox-label session-checkbox">
+                  <input type="checkbox"> 6月22日 19:30场
+                </label>
+              </div>
+            </div>
+            <div class="show-session-item">
+              <div class="show-session-header">
+                <span class="show-session-name"><i class="fas fa-music" style="margin-right:6px; color:var(--accent);"></i>《海南记忆》音乐会</span>
+                <span class="show-session-count">已选 0 个场次（全部可用）</span>
+              </div>
+              <div class="show-session-options">
+                <label class="checkbox-label session-checkbox">
+                  <input type="checkbox"> 6月18日 20:00场
+                </label>
+                <label class="checkbox-label session-checkbox">
+                  <input type="checkbox"> 6月19日 20:00场
+                </label>
+                <label class="checkbox-label session-checkbox">
+                  <input type="checkbox"> 6月25日 15:00场
+                </label>
+                <label class="checkbox-label session-checkbox">
+                  <input type="checkbox"> 6月25日 20:00场
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-hint">不勾选任何场次则该演出下所有场次均可使用。每个演出独立设置场次。</div>
+        </div>
+      </div>
+
+      <hr class="form-divider">
+      <h4 style="font-size:14px; font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+        <i class="fas fa-layer-group" style="color:var(--accent);"></i> 叠加设置
+      </h4>
+      <div class="stack-settings">
+        <div class="stack-item">
+          <div>
+            <div class="stack-label"><i class="fas fa-dove"></i> 可与早鸟票叠加</div>
+            <div class="stack-desc">开启后，用户在使用早鸟价的基础上还可使用此优惠券</div>
+          </div>
+          <div class="toggle-switch" onclick="this.classList.toggle('active')"></div>
+        </div>
+        <div class="stack-item">
+          <div>
+            <div class="stack-label"><i class="fas fa-crown"></i> 可与会员折扣叠加</div>
+            <div class="stack-desc">开启后，用户在享受会员折扣的基础上还可使用此优惠券</div>
+          </div>
+          <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+        </div>
+        <div class="stack-item">
+          <div>
+            <div class="stack-label"><i class="fas fa-ticket"></i> 可与票品折扣叠加</div>
+            <div class="stack-desc">开启后，用户在享受票品本身折扣的基础上还可使用此优惠券</div>
+          </div>
+          <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+        </div>
+      </div>
+
       <hr class="form-divider">
       <h4 style="font-size:14px; font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
         <i class="fas fa-clock" style="color:var(--accent);"></i> 有效期设置
@@ -3063,6 +5423,428 @@ html {
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal('modal-coupon-new')">取消</button>
       <button class="btn btn-primary" onclick="closeModal('modal-coupon-new')"><i class="fas fa-check"></i> 创建优惠券</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: 查看优惠券（已过期/已停用 — 只读） -->
+<div class="modal-overlay" id="modal-coupon-view">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <span class="modal-title">查看优惠券 — 春节特惠折扣券</span>
+      <button class="modal-close" onclick="closeModal('modal-coupon-view')"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <!-- 状态提示 -->
+      <div class="edit-state-hint danger">
+        <i class="fas fa-lock"></i>
+        <div>
+          <strong>当前状态：已过期</strong> — 该优惠券已过期，所有内容均为只读，不可修改。
+        </div>
+      </div>
+
+      <div class="form-group disabled">
+        <label class="form-label">券名称</label>
+        <input type="text" class="form-input" value="春节特惠折扣券" disabled>
+      </div>
+      <div class="form-row">
+        <div class="form-group disabled">
+          <label class="form-label">券类型</label>
+          <select class="form-select" disabled>
+            <option>折扣券 — 按比例折扣</option>
+          </select>
+        </div>
+        <div class="form-group disabled">
+          <label class="form-label">折扣比例</label>
+          <div style="position:relative;">
+            <input type="number" class="form-input" style="padding-right:28px;" value="7" disabled>
+            <span style="position:absolute; right:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:13px;">折</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group disabled">
+          <label class="form-label">消费门槛 (元)</label>
+          <div style="position:relative;">
+            <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:14px;">满</span>
+            <input type="number" class="form-input" style="padding-left:32px;" value="300" disabled>
+            <span style="position:absolute; right:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:13px;">元可用</span>
+          </div>
+        </div>
+        <div class="form-group disabled">
+          <label class="form-label">发放数量</label>
+          <input type="number" class="form-input" value="5600" disabled>
+        </div>
+      </div>
+
+      <hr class="form-divider">
+      <h4 style="font-size:14px; font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+        <i class="fas fa-theater-masks" style="color:var(--text-muted);"></i> 适用范围
+      </h4>
+      <div class="form-group disabled">
+        <label class="form-label">适用范围</label>
+        <div class="multi-select-area" style="opacity:0.6;">
+          <span class="multi-select-tag">全部演出可用</span>
+        </div>
+      </div>
+
+      <hr class="form-divider">
+      <h4 style="font-size:14px; font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+        <i class="fas fa-layer-group" style="color:var(--text-muted);"></i> 叠加设置
+      </h4>
+      <div class="stack-settings" style="opacity:0.6; pointer-events:none;">
+        <div class="stack-item">
+          <div>
+            <div class="stack-label"><i class="fas fa-dove"></i> 可与早鸟票叠加</div>
+            <div class="stack-desc">开启后，用户在使用早鸟价的基础上还可使用此优惠券</div>
+          </div>
+          <div class="toggle-switch active"></div>
+        </div>
+        <div class="stack-item">
+          <div>
+            <div class="stack-label"><i class="fas fa-crown"></i> 可与会员折扣叠加</div>
+            <div class="stack-desc">开启后，用户在享受会员折扣的基础上还可使用此优惠券</div>
+          </div>
+          <div class="toggle-switch active"></div>
+        </div>
+        <div class="stack-item">
+          <div>
+            <div class="stack-label"><i class="fas fa-ticket"></i> 可与票品折扣叠加</div>
+            <div class="stack-desc">开启后，用户在享受票品本身折扣的基础上还可使用此优惠券</div>
+          </div>
+          <div class="toggle-switch"></div>
+        </div>
+      </div>
+
+      <hr class="form-divider">
+      <h4 style="font-size:14px; font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+        <i class="fas fa-clock" style="color:var(--text-muted);"></i> 有效期设置
+      </h4>
+      <div class="form-group disabled">
+        <div style="display:flex; gap:16px; margin-bottom:12px;">
+          <label class="checkbox-label">
+            <input type="radio" name="view-coupon-time" value="fixed" checked disabled> 固定日期
+          </label>
+          <label class="checkbox-label">
+            <input type="radio" name="view-coupon-time" value="relative" disabled> 领取后N天
+          </label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group disabled">
+          <label class="form-label">生效时间</label>
+          <input type="datetime-local" class="form-input" value="2026-01-20T00:00" disabled>
+        </div>
+        <div class="form-group disabled">
+          <label class="form-label">失效时间</label>
+          <input type="datetime-local" class="form-input" value="2026-02-28T23:59" disabled>
+        </div>
+      </div>
+      <div class="form-group disabled">
+        <label class="form-label">使用说明</label>
+        <textarea class="form-textarea" disabled>春节限定特惠，满300元享受7折优惠。每位用户限领一张，不可与其他活动同时使用。</textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-coupon-view')">关闭</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: 编辑优惠券（进行中状态） -->
+<div class="modal-overlay" id="modal-coupon-edit">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <span class="modal-title">编辑优惠券 — 新会员欢迎券</span>
+      <button class="modal-close" onclick="closeModal('modal-coupon-edit')"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <!-- 状态提示 -->
+      <div class="edit-state-hint warning">
+        <i class="fas fa-triangle-exclamation"></i>
+        <div>
+          <strong>当前状态：进行中</strong> — 已有 5,000 张券被领取，3,680 张已使用。
+          <br>以下字段不可修改：<span style="font-weight:600;">券类型、面值/折扣、消费门槛、适用范围、叠加设置</span>。仅可修改有效期和使用说明。
+        </div>
+      </div>
+
+      <!-- 不可编辑区域（灰显） -->
+      <div class="form-group disabled">
+        <label class="form-label">券名称</label>
+        <input type="text" class="form-input" value="新会员欢迎券" disabled>
+      </div>
+      <div class="form-row">
+        <div class="form-group disabled">
+          <label class="form-label">券类型</label>
+          <select class="form-select" disabled>
+            <option>现金券 — 固定金额减免</option>
+          </select>
+        </div>
+        <div class="form-group disabled">
+          <label class="form-label">减免金额 (元)</label>
+          <div style="position:relative;">
+            <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:14px;">¥</span>
+            <input type="number" class="form-input" style="padding-left:28px;" value="30" disabled>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group disabled">
+          <label class="form-label">消费门槛 (元)</label>
+          <div style="position:relative;">
+            <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:14px;">满</span>
+            <input type="number" class="form-input" style="padding-left:32px;" value="0" disabled>
+            <span style="position:absolute; right:12px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:13px;">元可用</span>
+          </div>
+        </div>
+        <div class="form-group disabled">
+          <label class="form-label">发放数量</label>
+          <input type="number" class="form-input" value="5000" disabled>
+        </div>
+      </div>
+
+      <hr class="form-divider">
+      <h4 style="font-size:14px; font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+        <i class="fas fa-theater-masks" style="color:var(--text-muted);"></i> 适用范围
+      </h4>
+      <div class="form-group disabled">
+        <label class="form-label">适用范围</label>
+        <div class="multi-select-area" style="opacity:0.6;">
+          <span class="multi-select-tag">全部演出可用</span>
+        </div>
+      </div>
+
+      <hr class="form-divider">
+      <h4 style="font-size:14px; font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+        <i class="fas fa-layer-group" style="color:var(--text-muted);"></i> 叠加设置
+      </h4>
+      <div class="stack-settings" style="opacity:0.6; pointer-events:none;">
+        <div class="stack-item">
+          <div>
+            <div class="stack-label"><i class="fas fa-dove"></i> 可与早鸟票叠加</div>
+            <div class="stack-desc">开启后，用户在使用早鸟价的基础上还可使用此优惠券</div>
+          </div>
+          <div class="toggle-switch"></div>
+        </div>
+        <div class="stack-item">
+          <div>
+            <div class="stack-label"><i class="fas fa-crown"></i> 可与会员折扣叠加</div>
+            <div class="stack-desc">开启后，用户在享受会员折扣的基础上还可使用此优惠券</div>
+          </div>
+          <div class="toggle-switch active"></div>
+        </div>
+        <div class="stack-item">
+          <div>
+            <div class="stack-label"><i class="fas fa-ticket"></i> 可与票品折扣叠加</div>
+            <div class="stack-desc">开启后，用户在享受票品本身折扣的基础上还可使用此优惠券</div>
+          </div>
+          <div class="toggle-switch active"></div>
+        </div>
+      </div>
+
+      <hr class="form-divider">
+      <h4 style="font-size:14px; font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+        <i class="fas fa-clock" style="color:var(--accent);"></i> 有效期设置
+        <span style="font-size:11px; color:var(--accent); background:var(--accent-light); padding:2px 8px; border-radius:10px; font-weight:500;">可编辑</span>
+      </h4>
+      <div class="form-group">
+        <div style="display:flex; gap:16px; margin-bottom:12px;">
+          <label class="checkbox-label">
+            <input type="radio" name="edit-coupon-time" value="fixed" checked> 固定日期
+          </label>
+          <label class="checkbox-label">
+            <input type="radio" name="edit-coupon-time" value="relative"> 领取后N天
+          </label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">生效时间<span class="required">*</span></label>
+          <input type="datetime-local" class="form-input" value="2026-01-01T00:00">
+        </div>
+        <div class="form-group">
+          <label class="form-label">失效时间<span class="required">*</span></label>
+          <input type="datetime-local" class="form-input" value="2026-12-31T23:59">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">使用说明</label>
+        <textarea class="form-textarea">新注册会员专享，无门槛使用。每个账号限领一张，不可转让。</textarea>
+      </div>
+
+      <div class="edit-state-hint info" style="margin-bottom:0;">
+        <i class="fas fa-info-circle"></i>
+        <div>
+          <strong>编辑规则说明：</strong><br>
+          · <strong>未开始</strong>：所有字段均可编辑<br>
+          · <strong>进行中</strong>：仅可修改有效期和使用说明，核心参数不可变更<br>
+          · <strong>已过期/已停用</strong>：仅可查看，不可编辑
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-coupon-edit')">取消</button>
+      <button class="btn btn-primary" onclick="closeModal('modal-coupon-edit')"><i class="fas fa-check"></i> 保存修改</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: 优惠券二维码 -->
+<div class="modal-overlay" id="modal-coupon-qrcode">
+  <div class="modal" style="width:400px;">
+    <div class="modal-header">
+      <span class="modal-title">领券二维码</span>
+      <button class="modal-close" onclick="closeModal('modal-coupon-qrcode')"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="qr-modal-content">
+        <div class="qr-modal-box">
+          <i class="fas fa-qrcode"></i>
+          <span>微信小程序码</span>
+        </div>
+        <div class="qr-modal-info">
+          <h4>新会员欢迎券</h4>
+          <p>用户使用微信扫描此二维码，可直接打开小程序领取该优惠券。</p>
+        </div>
+        <div class="qr-modal-actions">
+          <button class="btn btn-primary btn-sm"><i class="fas fa-download"></i> 下载二维码</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: 优惠券数据 -->
+<div class="modal-overlay" id="modal-coupon-data">
+  <div class="modal modal-xl">
+    <div class="modal-header">
+      <span class="modal-title">优惠券数据 — 新会员欢迎券</span>
+      <button class="modal-close" onclick="closeModal('modal-coupon-data')"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="data-stats-grid">
+        <div class="data-stat-card">
+          <div class="data-stat-value" style="color:var(--accent);">5,000</div>
+          <div class="data-stat-label">总发放量</div>
+        </div>
+        <div class="data-stat-card">
+          <div class="data-stat-value" style="color:var(--green);">3,680</div>
+          <div class="data-stat-label">已使用</div>
+        </div>
+        <div class="data-stat-card">
+          <div class="data-stat-value" style="color:var(--gold);">73.6%</div>
+          <div class="data-stat-label">使用率</div>
+        </div>
+        <div class="data-stat-card">
+          <div class="data-stat-value">1,320</div>
+          <div class="data-stat-label">未使用</div>
+        </div>
+        <div class="data-stat-card">
+          <div class="data-stat-value" style="color:#db2777;">¥110,400</div>
+          <div class="data-stat-label">核销总金额</div>
+        </div>
+        <div class="data-stat-card">
+          <div class="data-stat-value">¥30</div>
+          <div class="data-stat-label">平均优惠金额</div>
+        </div>
+      </div>
+
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+        <h4 style="font-size:14px; font-weight:600; display:flex; align-items:center; gap:8px; margin:0;">
+          <i class="fas fa-list" style="color:var(--accent);"></i> 领取与使用明细
+        </h4>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <input type="text" class="filter-input" placeholder="搜索用户姓名/手机号" style="width:200px;">
+          <select class="filter-select" style="height:36px;">
+            <option>全部记录</option>
+            <option>已领取未使用</option>
+            <option>已使用</option>
+          </select>
+        </div>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>用户</th>
+              <th>手机号</th>
+              <th>领取时间</th>
+              <th>使用状态</th>
+              <th>订单号</th>
+              <th>订单金额</th>
+              <th>优惠金额</th>
+              <th>使用时间</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:500">林小明</td>
+              <td style="font-family:monospace; color:var(--text-secondary); font-size:12px;">138****6789</td>
+              <td style="color:var(--text-secondary); font-size:12px;">2026-06-01 10:23</td>
+              <td><span class="status status-active">已使用</span></td>
+              <td style="font-family:monospace; font-size:12px; color:var(--text-secondary);">ORD20260608001</td>
+              <td style="font-weight:600;">¥280</td>
+              <td style="font-weight:600; color:var(--accent);">-¥30</td>
+              <td style="color:var(--text-secondary); font-size:12px;">2026-06-08 19:30</td>
+            </tr>
+            <tr>
+              <td style="font-weight:500">王芳芳</td>
+              <td style="font-family:monospace; color:var(--text-secondary); font-size:12px;">159****2345</td>
+              <td style="color:var(--text-secondary); font-size:12px;">2026-06-02 14:15</td>
+              <td><span class="status status-active">已使用</span></td>
+              <td style="font-family:monospace; font-size:12px; color:var(--text-secondary);">ORD20260607002</td>
+              <td style="font-weight:600;">¥350</td>
+              <td style="font-weight:600; color:var(--accent);">-¥30</td>
+              <td style="color:var(--text-secondary); font-size:12px;">2026-06-07 20:00</td>
+            </tr>
+            <tr>
+              <td style="font-weight:500">陈大海</td>
+              <td style="font-family:monospace; color:var(--text-secondary); font-size:12px;">186****8901</td>
+              <td style="color:var(--text-secondary); font-size:12px;">2026-06-03 09:42</td>
+              <td><span class="status status-active">已使用</span></td>
+              <td style="font-family:monospace; font-size:12px; color:var(--text-secondary);">ORD20260606003</td>
+              <td style="font-weight:600;">¥420</td>
+              <td style="font-weight:600; color:var(--accent);">-¥30</td>
+              <td style="color:var(--text-secondary); font-size:12px;">2026-06-06 15:00</td>
+            </tr>
+            <tr>
+              <td style="font-weight:500">赵小雨</td>
+              <td style="font-family:monospace; color:var(--text-secondary); font-size:12px;">177****4567</td>
+              <td style="color:var(--text-secondary); font-size:12px;">2026-06-05 16:30</td>
+              <td><span class="status status-pending">已领取</span></td>
+              <td style="font-size:12px;">—</td>
+              <td style="font-weight:600; color:var(--text-muted);">—</td>
+              <td style="font-weight:600; color:var(--text-muted);">—</td>
+              <td style="color:var(--text-secondary); font-size:12px;">—</td>
+            </tr>
+            <tr>
+              <td style="font-weight:500">刘建国</td>
+              <td style="font-family:monospace; color:var(--text-secondary); font-size:12px;">139****1122</td>
+              <td style="color:var(--text-secondary); font-size:12px;">2026-06-04 11:08</td>
+              <td><span class="status status-pending">已领取</span></td>
+              <td style="font-size:12px;">—</td>
+              <td style="font-weight:600; color:var(--text-muted);">—</td>
+              <td style="font-weight:600; color:var(--text-muted);">—</td>
+              <td style="color:var(--text-secondary); font-size:12px;">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pagination" style="margin-top:16px;">
+        <span class="pagination-info">共 3,680 条记录，第 1/368 页</span>
+        <div class="pagination-btns">
+          <button class="page-btn disabled"><i class="fas fa-chevron-left"></i></button>
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          <button class="page-btn">...</button>
+          <button class="page-btn">368</button>
+          <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-coupon-data')">关闭</button>
     </div>
   </div>
 </div>
@@ -3269,6 +6051,30 @@ html {
     });
   }
 })();
+  // ========== Coupon Type Toggle ==========
+  function toggleCouponTypeFields(type) {
+    const cashField = document.getElementById('coupon-value-cash');
+    const discountField = document.getElementById('coupon-value-discount');
+    if (type === 'cash') {
+      cashField.style.display = '';
+      discountField.style.display = 'none';
+    } else if (type === 'discount') {
+      cashField.style.display = 'none';
+      discountField.style.display = '';
+    } else {
+      cashField.style.display = '';
+      discountField.style.display = 'none';
+    }
+  }
+
+  // ========== Coupon Scope Toggle ==========
+  function toggleScopeFields(scope) {
+    const specificFields = document.getElementById('scope-specific-fields');
+    if (specificFields) {
+      specificFields.style.display = scope === 'specific' ? 'block' : 'none';
+    }
+  }
+
   // ========== Tab Switching ==========
   function switchTab(btn, tabId) {
     // Deactivate all tabs
@@ -3322,6 +6128,404 @@ html {
       document.body.style.overflow = '';
     }
   });
+
+  // ==================== Discount Activity Functions ====================
+  // 演出场次数据
+  const showSessions = {
+    show1: [
+      { value: 'session1', label: '4月15日 19:30' },
+      { value: 'session2', label: '4月16日 14:00' },
+      { value: 'session3', label: '4月16日 19:30' },
+      { value: 'session4', label: '4月17日 19:30' }
+    ],
+    show2: [
+      { value: 'session1', label: '4月20日 20:00' },
+      { value: 'session2', label: '4月21日 20:00' },
+      { value: 'session3', label: '4月22日 15:00' }
+    ],
+    show3: [
+      { value: 'session1', label: '4月25日 10:00' },
+      { value: 'session2', label: '4月25日 14:30' }
+    ],
+    show4: [
+      { value: 'session1', label: '5月1日 19:30' },
+      { value: 'session2', label: '5月2日 19:30' },
+      { value: 'session3', label: '5月3日 14:00' }
+    ]
+  };
+
+  // 折扣活动模拟数据
+  const discountDataMap = {
+    1: { name: '五一特惠 早鸟8折', show: 'show1', session: 'session1', type: 'percent', percent: 8, maxAmount: 200, start: '2026-04-15T00:00', end: '2026-04-30T23:59', desc: '五一期间早鸟特惠', totalUse: 236, totalSave: '¥18,880', totalOrder: '¥94,400', conversion: '12.5%' },
+    2: { name: '满300减50', show: 'show2', session: 'all', type: 'reduce', threshold: 300, reduceAmount: 50, start: '2026-04-01T00:00', end: '2026-05-01T23:59', desc: '满减优惠活动', totalUse: 158, totalSave: '¥7,900', totalOrder: '¥47,400', conversion: '8.3%' },
+    3: { name: '开季狂欢 7折起', show: 'all', session: 'all', type: 'percent', percent: 7, maxAmount: '', start: '2026-03-01T00:00', end: '2026-03-31T23:59', desc: '开季大促', totalUse: 892, totalSave: '¥62,440', totalOrder: '¥249,760', conversion: '15.2%' },
+    4: { name: '新人首单立减30', show: 'all', session: 'all', type: 'reduce', threshold: 0, reduceAmount: 30, start: '2026-01-01T00:00', end: '2026-12-31T23:59', desc: '新用户专享', totalUse: 1245, totalSave: '¥37,350', totalOrder: '¥112,050', conversion: '22.1%' }
+  };
+
+  let currentEditingDiscountId = null;
+
+  function onDiscountShowChange(select) {
+    const showId = select.value;
+    const sessionText = document.getElementById('session-select-text');
+    const optionsList = document.getElementById('session-options-list');
+    const checkAll = document.getElementById('session-check-all');
+    const hiddenInput = document.getElementById('discount-session');
+
+    if (showId === '' || showId === 'all') {
+      sessionText.textContent = showId === 'all' ? '全部场次' : '请先选择演出';
+      sessionText.className = showId === 'all' ? '' : 'session-select-text-placeholder';
+      optionsList.innerHTML = '';
+      checkAll.checked = false;
+      checkAll.disabled = true;
+      hiddenInput.value = showId === 'all' ? 'all' : '';
+    } else {
+      const sessions = showSessions[showId] || [];
+      optionsList.innerHTML = sessions.map((s, i) =>
+        '<label class="session-option">' +
+        '<input type="checkbox" value="' + s.value + '" data-label="' + s.label + '" onchange="updateSessionSelect()"> ' + s.label +
+        '</label>'
+      ).join('');
+      checkAll.disabled = false;
+      checkAll.checked = false;
+      sessionText.textContent = '请选择场次';
+      sessionText.className = 'session-select-text-placeholder';
+      hiddenInput.value = '';
+    }
+  }
+
+  function toggleSessionDropdown() {
+    const dropdown = document.getElementById('session-select-dropdown');
+    const trigger = document.getElementById('session-select-trigger');
+    const isOpen = dropdown.style.display === 'block';
+    dropdown.style.display = isOpen ? 'none' : 'block';
+    trigger.classList.toggle('active', !isOpen);
+  }
+
+  function toggleAllSessions(checkbox) {
+    const options = document.querySelectorAll('#session-options-list input[type="checkbox"]');
+    options.forEach(opt => opt.checked = checkbox.checked);
+    updateSessionSelect();
+  }
+
+  function updateSessionSelect() {
+    const options = document.querySelectorAll('#session-options-list input[type="checkbox"]:checked');
+    const sessionText = document.getElementById('session-select-text');
+    const hiddenInput = document.getElementById('discount-session');
+    const checkAll = document.getElementById('session-check-all');
+    const totalOptions = document.querySelectorAll('#session-options-list input[type="checkbox"]').length;
+
+    if (options.length === 0) {
+      sessionText.textContent = '请选择场次';
+      sessionText.className = 'session-select-text-placeholder';
+      hiddenInput.value = '';
+      checkAll.checked = false;
+    } else if (options.length === totalOptions && totalOptions > 0) {
+      sessionText.textContent = '全部场次 (' + totalOptions + '场)';
+      sessionText.className = '';
+      hiddenInput.value = 'all';
+      checkAll.checked = true;
+    } else {
+      var labels = Array.from(options).map(o => o.getAttribute('data-label'));
+      sessionText.textContent = labels.join('、');
+      sessionText.className = '';
+      hiddenInput.value = Array.from(options).map(o => o.value).join(',');
+      checkAll.checked = false;
+    }
+  }
+
+  // Close session dropdown when clicking outside
+  document.addEventListener('click', function(e) {
+    const wrapper = document.getElementById('session-select-wrapper');
+    if (wrapper && !wrapper.contains(e.target)) {
+      document.getElementById('session-select-dropdown').style.display = 'none';
+      document.getElementById('session-select-trigger').classList.remove('active');
+    }
+  });
+
+  function switchDiscountType(type) {
+    const percentLabel = document.getElementById('label-discount-percent');
+    const reduceLabel = document.getElementById('label-discount-reduce');
+    const percentFields = document.getElementById('discount-percent-fields');
+    const reduceFields = document.getElementById('discount-reduce-fields');
+
+    if (type === 'percent') {
+      percentLabel.style.border = '2px solid var(--accent)';
+      percentLabel.style.background = 'rgba(255,107,74,0.05)';
+      reduceLabel.style.border = '1px solid var(--border)';
+      reduceLabel.style.background = '';
+      percentFields.style.display = 'flex';
+      reduceFields.style.display = 'none';
+      document.querySelector('input[name="discount-type"][value="percent"]').checked = true;
+    } else {
+      reduceLabel.style.border = '2px solid var(--accent)';
+      reduceLabel.style.background = 'rgba(255,107,74,0.05)';
+      percentLabel.style.border = '1px solid var(--border)';
+      percentLabel.style.background = '';
+      percentFields.style.display = 'none';
+      reduceFields.style.display = 'flex';
+      document.querySelector('input[name="discount-type"][value="reduce"]').checked = true;
+    }
+  }
+
+  function openDiscountEdit(id) {
+    currentEditingDiscountId = id;
+    const data = discountDataMap[id];
+    if (!data) return;
+
+    document.getElementById('discount-modal-title').textContent = '编辑折扣活动';
+    document.getElementById('discount-save-btn-text').textContent = '保存修改';
+    document.getElementById('discount-name').value = data.name;
+    document.getElementById('discount-show').value = data.show;
+    onDiscountShowChange(document.getElementById('discount-show'));
+
+    // Handle session multi-select回填
+    if (data.show !== '' && data.show !== 'all') {
+      const sessionVal = data.session;
+      if (sessionVal === 'all') {
+        document.getElementById('session-check-all').checked = true;
+        toggleAllSessions(document.getElementById('session-check-all'));
+      } else {
+        var sessionArr = sessionVal.split(',');
+        sessionArr.forEach(function(sv) {
+          var cb = document.querySelector('#session-options-list input[value="' + sv + '"]');
+          if (cb) cb.checked = true;
+        });
+        updateSessionSelect();
+      }
+    }
+
+    document.getElementById('discount-start').value = data.start;
+    document.getElementById('discount-end').value = data.end;
+    document.getElementById('discount-desc').value = data.desc;
+
+    switchDiscountType(data.type);
+    if (data.type === 'percent') {
+      document.getElementById('discount-percent').value = data.percent;
+      document.getElementById('discount-max-amount').value = data.maxAmount;
+    } else {
+      document.getElementById('discount-threshold').value = data.threshold;
+      document.getElementById('discount-reduce-amount').value = data.reduceAmount;
+    }
+
+    openModal('modal-discount-new');
+  }
+
+  function openDiscountData(id) {
+    const data = discountDataMap[id];
+    if (!data) return;
+    document.getElementById('discount-data-title').textContent = '「' + data.name + '」活动数据';
+    document.getElementById('data-total-use').textContent = data.totalUse;
+    document.getElementById('data-total-save').textContent = data.totalSave;
+    document.getElementById('data-total-order').textContent = data.totalOrder;
+    document.getElementById('data-conversion').textContent = data.conversion;
+    openModal('modal-discount-data');
+  }
+
+  function saveDiscountActivity() {
+    if (currentEditingDiscountId) {
+      showToast('success', '折扣活动已保存');
+    } else {
+      showToast('success', '折扣活动已创建');
+    }
+    currentEditingDiscountId = null;
+    closeModal('modal-discount-new');
+  }
+
+  function stopDiscountActivity(btn) {
+    if (!confirm('确定要停止该折扣活动吗？停止后用户将无法继续使用。')) return;
+    var row = btn.closest('tr');
+    if (!row) return;
+    var statusCell = row.querySelector('td:nth-child(7)');
+    if (statusCell) statusCell.innerHTML = '<span class="status status-inactive">已停止</span>';
+    btn.outerHTML = '<button class="action-btn toggle" onclick="restartDiscountActivity(this)"><i class="fas fa-play-circle"></i> 重启</button>';
+    showToast('warning', '折扣活动已停止');
+  }
+
+  function restartDiscountActivity(btn) {
+    var row = btn.closest('tr');
+    if (!row) return;
+    var statusCell = row.querySelector('td:nth-child(7)');
+    if (statusCell) statusCell.innerHTML = '<span class="status status-active">进行中</span>';
+    btn.outerHTML = '<button class="action-btn offline" style="color:#dc2626" onclick="stopDiscountActivity(this)"><i class="fas fa-stop-circle"></i> 停止</button>';
+    showToast('success', '折扣活动已重启');
+  }
+
+  function copyDiscountActivity(id) {
+    showToast('success', '折扣活动已复制，请修改后保存');
+    currentEditingDiscountId = null;
+    document.getElementById('discount-modal-title').textContent = '复制折扣活动';
+    document.getElementById('discount-save-btn-text').textContent = '创建活动';
+    var data = discountDataMap[id];
+    if (data) {
+      document.getElementById('discount-name').value = data.name + ' (副本)';
+      document.getElementById('discount-show').value = data.show;
+      onDiscountShowChange(document.getElementById('discount-show'));
+      document.getElementById('discount-session').value = data.session;
+      document.getElementById('discount-start').value = data.start;
+      document.getElementById('discount-end').value = data.end;
+      document.getElementById('discount-desc').value = data.desc;
+      switchDiscountType(data.type);
+      if (data.type === 'percent') {
+        document.getElementById('discount-percent').value = data.percent;
+        document.getElementById('discount-max-amount').value = data.maxAmount;
+      } else {
+        document.getElementById('discount-threshold').value = data.threshold;
+        document.getElementById('discount-reduce-amount').value = data.reduceAmount;
+      }
+    }
+    openModal('modal-discount-new');
+  }
+
+// ==================== Recharge Card Functions ====================
+function refreshPasswordExample(btn) {
+  var example = btn.parentElement.querySelector('.password-example');
+  if (example) {
+    example.textContent = Math.floor(100000 + Math.random() * 900000).toString();
+  }
+}
+
+function togglePassword(btn) {
+  var mask = btn.parentElement.querySelector('.password-mask');
+  var icon = btn.querySelector('i');
+  if (mask.textContent === '******') {
+    mask.textContent = Math.floor(100000 + Math.random() * 900000).toString();
+    icon.className = 'fas fa-eye-slash';
+  } else {
+    mask.textContent = '******';
+    icon.className = 'fas fa-eye';
+  }
+}
+
+function switchDetailTab(tabBtn, panelName) {
+  var modal = tabBtn.closest('.modal');
+  if (!modal) return;
+  modal.querySelectorAll('.detail-tab').forEach(function(t) { t.classList.remove('active'); });
+  modal.querySelectorAll('.detail-panel').forEach(function(p) { p.classList.remove('active'); });
+  tabBtn.classList.add('active');
+  var panel = modal.querySelector('#detail-panel-' + panelName);
+  if (panel) panel.classList.add('active');
+}
+
+var icCurrentIndex = 1;
+var icTotalCount = 5;
+
+function confirmBatchIssue(btn) {
+  var row = btn.closest('tr');
+  if (!row) return;
+  var statusCell = row.querySelector('td:nth-child(7)');
+  if (!statusCell) return;
+  statusCell.innerHTML = '<span class="status status-active">已发放</span>';
+  btn.setAttribute('title', '冻结');
+  btn.innerHTML = '<i class="fas fa-snowflake"></i> 冻结';
+  btn.setAttribute('onclick', 'toggleBatchShelf(this, false)');
+  showToast('success', '批次已确认发放');
+}
+
+function toggleBatchShelf(btn, toUnfreeze) {
+  var row = btn.closest('tr');
+  if (!row) return;
+  var statusCell = row.querySelector('td:nth-child(7)');
+  if (!statusCell) return;
+  
+  if (toUnfreeze) {
+    // 解冻
+    statusCell.innerHTML = '<span class="status status-active">已发放</span>';
+    btn.setAttribute('title', '冻结');
+    btn.innerHTML = '<i class="fas fa-snowflake"></i> 冻结';
+    btn.setAttribute('onclick', 'toggleBatchShelf(this, false)');
+    showToast('success', '批次已解冻');
+  } else {
+    // 冻结
+    statusCell.innerHTML = '<span class="status status-frozen">已冻结</span>';
+    btn.setAttribute('title', '解冻');
+    btn.innerHTML = '<i class="fas fa-check-circle"></i> 解冻';
+    btn.setAttribute('onclick', 'toggleBatchShelf(this, true)');
+    showToast('warning', '批次已冻结，该批次下所有充值卡不可使用');
+  }
+}
+
+function simulateIcBind() {
+  var statusEl = document.getElementById('icReaderStatus');
+  var resultEl = document.getElementById('icReaderResult');
+  var bindBtn = document.getElementById('icBindBtn');
+  var currentNumEl = document.getElementById('icCurrentNum');
+  var cardNoEl = document.getElementById('icCurrentCardNo');
+  
+  if (icCurrentIndex >= icTotalCount) {
+    showToast('success', '所有IC卡绑定完成！');
+    closeModal('modal-recharge-ic-bind');
+    icCurrentIndex = 1;
+    return;
+  }
+  
+  icCurrentIndex++;
+  if (currentNumEl) currentNumEl.textContent = icCurrentIndex;
+  if (cardNoEl) cardNoEl.textContent = '卡号：B20260410001' + String(icCurrentIndex).padStart(4, '0');
+  
+  // Update button text for last card
+  if (bindBtn) {
+    if (icCurrentIndex >= icTotalCount) {
+      bindBtn.innerHTML = '<i class="fas fa-check"></i> 完成绑定';
+    } else {
+      bindBtn.innerHTML = '<i class="fas fa-link"></i> 绑定并下一张';
+    }
+  }
+  
+  // Reset to reading state
+  if (statusEl) statusEl.style.display = 'block';
+  if (resultEl) resultEl.style.display = 'none';
+  if (bindBtn) bindBtn.disabled = true;
+  
+  // Simulate reading after 1.5s
+  setTimeout(function() {
+    if (statusEl) statusEl.style.display = 'none';
+    if (resultEl) resultEl.style.display = 'block';
+    var uidEl = document.getElementById('icUidValue');
+    if (uidEl) {
+      var uid = Array.from({length:8}, function() { return '0123456789ABCDEF'[Math.floor(Math.random()*16)]; }).join('');
+      uidEl.textContent = 'UID: ' + uid;
+    }
+    if (bindBtn) bindBtn.disabled = false;
+  }, 1500);
+}
+
+// Simulate IC card reading on modal open
+document.getElementById('modal-recharge-ic-bind').addEventListener('click', function(e) {
+  if (e.target === this) return;
+});
+
+// Auto-start IC reading when modal opens
+var originalOpenModal = openModal;
+openModal = function(id) {
+  originalOpenModal(id);
+  if (id === 'modal-recharge-ic-bind') {
+    icCurrentIndex = 1;
+    var currentNumEl = document.getElementById('icCurrentNum');
+    var cardNoEl = document.getElementById('icCurrentCardNo');
+    var statusEl = document.getElementById('icReaderStatus');
+    var resultEl = document.getElementById('icReaderResult');
+    var bindBtn = document.getElementById('icBindBtn');
+    if (currentNumEl) currentNumEl.textContent = '1';
+    if (cardNoEl) cardNoEl.textContent = '卡号：B202604100010001';
+    if (statusEl) statusEl.style.display = 'block';
+    if (resultEl) resultEl.style.display = 'none';
+    if (bindBtn) bindBtn.disabled = true;
+    setTimeout(function() {
+      if (statusEl) statusEl.style.display = 'none';
+      if (resultEl) resultEl.style.display = 'block';
+      var uidEl = document.getElementById('icUidValue');
+      if (uidEl) uidEl.textContent = 'UID: A3F2B8D1';
+      if (bindBtn) bindBtn.disabled = false;
+      // Auto next if toggle is on
+      var autoNext = document.getElementById('autoNextToggle');
+      if (autoNext && autoNext.checked) {
+        setTimeout(function() {
+          simulateIcBind();
+        }, 800);
+      }
+    }, 1500);
+  }
+};
 
 // ==================== Stat Value Count-Up Animation ====================
 function animateStatValues() {

@@ -264,6 +264,11 @@ html {
   --radius-md: 10px;
   --radius-lg: 16px;
   --transition: all 0.25s ease;
+  --text-muted: #9ca3af;
+  --border-color: #e5e7eb;
+  --bg-content: #F0F2F5;
+  --coral: var(--coral-orange, #FF6B4A);
+  --card-white: var(--white, #FFFFFF);
 }
 html { font-size: 14px; }
 body {
@@ -290,105 +295,146 @@ table { border-collapse: collapse; width: 100%; }
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #F0F2F5;
+  background: var(--bg-content, #F0F2F5);
 }
 
 /* ==================== Top Bar ==================== */
 .topbar {
   height: var(--topbar-height);
-  background: var(--white);
-  border-bottom: 1px solid var(--border-gray);
+  background: #fff;
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 28px;
   position: sticky;
   top: 0;
   z-index: 50;
-  gap: 20px;
 }
 .breadcrumb {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  color: var(--text-light);
+  color: var(--text-muted);
   flex-shrink: 0;
 }
-.breadcrumb a { color: var(--text-secondary); transition: var(--transition); }
-.breadcrumb a:hover { color: var(--coral-orange); }
-.breadcrumb .sep { color: var(--text-light); }
-.breadcrumb .current { color: var(--text-primary); font-weight: 500; }
+.breadcrumb a {
+  color: var(--text-secondary);
+  text-decoration: none !important;
+  transition: color 0.2s;
+}
+.breadcrumb a:hover { color: var(--coral); }
+.breadcrumb .current {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+.breadcrumb .sep {
+  color: var(--text-muted);
+  font-size: 11px;
+}
 .topbar-search {
-  flex: 1;
-  max-width: 400px;
-  margin: 0 auto;
+  margin-left: auto;
   position: relative;
 }
 .topbar-search input {
-  width: 100%;
+  width: 260px;
   height: 36px;
-  border: 1px solid var(--border-gray);
-  border-radius: 18px;
-  padding: 0 16px 0 38px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0 12px 0 36px;
   font-size: 13px;
+  color: var(--text-primary);
   background: var(--light-gray);
-  outline: none;
-  transition: var(--transition);
+  transition: all 0.2s;
+}
+.topbar-search input::placeholder {
+  color: var(--text-muted);
 }
 .topbar-search input:focus {
-  border-color: var(--coral-orange);
-  background: var(--white);
-  box-shadow: 0 0 0 3px var(--coral-orange-light);
+  border-color: var(--coral);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(255,107,74,0.1);
 }
-.topbar-search svg {
+.topbar-search i {
   position: absolute;
-  left: 12px; top: 50%;
+  left: 12px;
+  top: 50%;
   transform: translateY(-50%);
-  width: 16px; height: 16px;
-  color: var(--text-light);
+  color: var(--text-muted);
+  font-size: 13px;
 }
 .topbar-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex-shrink: 0;
 }
 .topbar-btn {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  background: transparent;
+  width: 36px;
+  height: 36px;
+  border: none !important;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--text-secondary);
-  transition: var(--transition);
+  background: transparent;
+  transition: all 0.2s;
   position: relative;
+  cursor: pointer;
+  outline: none !important;
 }
-.topbar-btn:hover { background: var(--light-gray); color: var(--text-primary); }
-.topbar-btn .badge-dot {
+.topbar-btn:hover {
+  background: var(--light-gray);
+  color: var(--text-primary);
+}
+.topbar-btn .dot {
   position: absolute;
-  top: 6px; right: 6px;
-  width: 8px; height: 8px;
-  background: var(--coral-orange);
+  top: 7px;
+  right: 7px;
+  width: 7px;
+  height: 7px;
+  background: var(--coral);
   border-radius: 50%;
-  border: 2px solid var(--white);
+  border: 1.5px solid #fff;
 }
-.topbar-user {
+.topbar-admin {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 4px 12px 4px 4px;
-  border-radius: 20px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: var(--transition);
+  transition: background 0.2s;
+  margin-left: 4px;
 }
-.topbar-user:hover { background: var(--light-gray); }
-.topbar-user .avatar-sm {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--coral-orange), var(--gold));
-  display: flex; align-items: center; justify-content: center;
-  color: white; font-weight: 700; font-size: 12px;
+.topbar-admin:hover {
+  background: var(--light-gray);
 }
-.topbar-user span { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+.topbar-admin .avatar-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, var(--coral), var(--gold));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 600;
+  font-size: 12px;
+}
+.topbar-admin .admin-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+.topbar-admin .admin-role {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.2;
+}
 
 /* ==================== Page Content ==================== */
 .page-content { flex: 1; padding: 24px 28px; }
@@ -598,17 +644,6 @@ table { border-collapse: collapse; width: 100%; }
   white-space: nowrap;
 }
 .btn svg { width: 15px; height: 15px; }
-.btn-primary {
-  background: var(--coral-orange);
-  color: var(--white);
-}
-.btn-primary:hover { background: var(--coral-orange-hover); box-shadow: 0 4px 12px rgba(255,107,74,0.3); }
-.btn-outline {
-  background: var(--white);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-gray);
-}
-.btn-outline:hover { border-color: var(--coral-orange); color: var(--coral-orange); }
 .btn-ghost {
   background: transparent;
   color: var(--text-secondary);
@@ -710,20 +745,6 @@ table { border-collapse: collapse; width: 100%; }
 .status-refunded::before { background: #F97316; }
 .status-completed { background: var(--success-light); color: #047857; }
 .status-completed::before { background: #10B981; }
-.action-btns { display: flex; gap: 4px; }
-.action-btn {
-  padding: 4px 10px;
-  border-radius: var(--radius-sm);
-  font-size: 12px;
-  font-weight: 500;
-  transition: var(--transition);
-  background: transparent;
-  color: var(--text-secondary);
-}
-.action-btn:hover { background: var(--light-gray); }
-.action-btn.view:hover { color: var(--info); background: var(--info-light); }
-.action-btn.verify:hover { color: var(--emerald); background: var(--success-light); }
-.action-btn.refund:hover { color: var(--danger); background: var(--danger-light); }
 .payment-method {
   display: flex;
   align-items: center;
@@ -840,6 +861,33 @@ table { border-collapse: collapse; width: 100%; }
 .detail-section {
   margin-bottom: 24px;
 }
+
+/* ========== Order Detail Tabs ========== */
+.order-detail-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border-gray);
+  margin-bottom: 20px;
+}
+.od-tab {
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-light);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.od-tab:hover { color: var(--text-primary); }
+.od-tab.active { color: var(--coral-orange); border-bottom-color: var(--coral-orange); }
+.od-tab i { font-size: 13px; }
+.od-tab-panel { display: none; }
+.od-tab-panel.active { display: block; }
 .detail-section:last-child { margin-bottom: 0; }
 .detail-section-title {
   font-size: 14px;
@@ -2607,7 +2655,673 @@ table { border-collapse: collapse; width: 100%; }
   box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
 }
 
+
+/* ========== Unified Action Buttons ========== */
+
+/* Review action buttons */
+.review-action-btn {
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+.review-action-btn.approve {
+  background: rgba(0,201,167,0.1);
+  color: #00A88A;
+}
+.review-action-btn.approve:hover {
+  background: rgba(0,201,167,0.2);
+  transform: translateY(-1px);
+}
+.review-action-btn.reject {
+  background: rgba(239,68,68,0.1);
+  color: #EF4444;
+}
+.review-action-btn.reject:hover {
+  background: rgba(239,68,68,0.2);
+  transform: translateY(-1px);
+}
+/* Hall action buttons */
+.hall-action-btn {
+  background: none;
+  border: none;
+  color: var(--coral);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+.hall-action-btn:hover {
+  background: rgba(255,107,74,0.1);
+  transform: translateY(-1px);
+}
+.hall-action-btn.set-default {
+  color: var(--gold);
+}
+.hall-action-btn.set-default:hover {
+  background: rgba(212,168,83,0.1);
+}
+/* VSC action buttons */
+.vsc-toolbar .vsc-action-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+.vsc-toolbar .vsc-action-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-1px);
+}
+.vsc-toolbar .vsc-action-btn.vsc-save-btn {
+  background: var(--coral);
+  color: #fff;
+  border-color: var(--coral);
+}
+.vsc-toolbar .vsc-action-btn.vsc-save-btn:hover {
+  background: #E85A3A;
+  transform: translateY(-1px);
+}
+/* Batch dropdown buttons */
+.ss-batch-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+.ss-batch-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-1px);
+}
+
+/* ========== Unified Form Select ========== */
+.form-select,
+.st-form-select,
+.filter-select,
+.order-form-select,
+.page-size-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FF6B4A' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+  cursor: pointer;
+  height: 38px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0 32px 0 14px;
+  font-size: 13px;
+  color: var(--text-primary);
+  background-color: #fff;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.form-select:focus,
+.st-form-select:focus,
+.filter-select:focus,
+.order-form-select:focus,
+.page-size-select:focus {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px rgba(255,107,74,0.1);
+  outline: none;
+}
+.form-select:hover,
+.st-form-select:hover,
+.filter-select:hover,
+.order-form-select:hover,
+.page-size-select:hover {
+  border-color: var(--coral-orange);
+}
+/* Filter dropdowns in tables */
+.filter-dropdowns .form-select {
+  padding: 6px 28px 6px 10px;
+  font-size: 13px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-color);
+  background: var(--card-white);
+  color: var(--text-secondary);
+  height: 34px;
+}
+.filter-dropdowns .form-select:focus {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px rgba(255,107,74,0.1);
+}
+/* Small selects */
+select.form-select-sm,
+.form-select.form-select-sm {
+  height: 32px;
+  padding: 0 28px 0 10px;
+  font-size: 12px;
+  border-radius: 8px;
+}
+
+/* ========== Unified Custom Dropdowns ========== */
+.filter-dropdown-wrap { position: relative; z-index: 100; }
+.filter-dropdown-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 10px;
+  border: 1.5px solid var(--border-color); background: var(--card-white);
+  color: var(--text-secondary); font-size: 13px; cursor: pointer;
+  transition: all 0.2s ease;
+}
+.filter-dropdown-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-1px);
+}
+.filter-dropdown-btn.active {
+  border-color: var(--coral);
+  color: var(--coral);
+  background: rgba(255,107,74,0.04);
+}
+.filter-dropdown {
+  display: none; position: absolute; top: 100%; left: 0;
+  margin-top: 6px; background: #fff;
+  border: 1px solid var(--border-color); border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12); padding: 16px;
+  min-width: 280px; z-index: 200;
+}
+.filter-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Theater select dropdown */
+.theater-select-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  padding: 8px 0;
+  min-width: 200px;
+  display: none;
+  z-index: 200;
+}
+.theater-select-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
+.theater-option {
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.15s;
+}
+.theater-option:hover { background: var(--light-gray); }
+.theater-option.active { color: var(--coral); background: rgba(255,107,74,0.06); }
+.theater-group-label {
+  padding: 4px 14px;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+/* Session select dropdown */
+.session-select-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  padding: 8px 0;
+  min-width: 200px;
+  display: none;
+  z-index: 200;
+}
+.session-select-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
+/* Banner link dropdown */
+.banner-link-dropdown {
+  max-height: 160px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  margin-top: 4px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.banner-link-option {
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.15s;
+}
+.banner-link-option:hover { background: var(--light-gray); }
+.banner-link-option:last-child { border-bottom: none; }
+/* VSC assign dropdown */
+.vsc-assign-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  padding: 8px 0;
+  min-width: 160px;
+  display: none;
+  z-index: 200;
+}
+.vsc-assign-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
+/* SS batch dropdown */
+.ss-batch-dropdown { position: relative; }
+.ss-batch-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  padding: 6px 0;
+  min-width: 140px;
+  z-index: 200;
+}
+.ss-batch-menu.open { display: block; animation: dropIn 0.2s ease-out; }
+.ss-batch-menu button {
+  display: block;
+  width: 100%;
+  padding: 8px 14px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.ss-batch-menu button:hover { background: var(--light-gray); color: var(--coral); }
+
+
+/* ========== Unified Dropdown Layer Styles ========== */
+
+/* Base dropdown layer - all dropdowns share this foundation */
+.dropdown-layer,
+.filter-dropdown,
+.theater-select-dropdown,
+.session-select-dropdown,
+.banner-link-dropdown,
+.vsc-assign-dropdown,
+.ss-batch-menu,
+.date-picker-popup,
+.dropdown-menu,
+.dropdown-content {
+  background: #fff;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+  overflow: hidden;
+}
+
+/* Filter dropdown panel */
+.filter-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  margin-top: 0;
+  padding: 20px;
+  min-width: 300px;
+  z-index: 200;
+}
+.filter-dropdown.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Theater select dropdown */
+.theater-select-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  padding: 8px 0;
+  min-width: 220px;
+  z-index: 200;
+}
+.theater-select-dropdown.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.theater-option {
+  padding: 10px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.15s ease;
+  color: var(--text-primary);
+}
+.theater-option:hover {
+  background: linear-gradient(90deg, rgba(255, 107, 74, 0.06), transparent);
+  color: var(--coral);
+}
+.theater-option.active {
+  color: var(--coral);
+  background: linear-gradient(90deg, rgba(255, 107, 74, 0.08), transparent);
+  font-weight: 500;
+}
+.theater-option i {
+  width: 16px;
+  text-align: center;
+  color: var(--text-muted);
+  transition: color 0.15s;
+}
+.theater-option:hover i,
+.theater-option.active i {
+  color: var(--coral);
+}
+.theater-group-label {
+  padding: 6px 16px 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* Session select dropdown */
+.session-select-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  padding: 8px 0;
+  min-width: 220px;
+  z-index: 200;
+}
+.session-select-dropdown.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Banner link dropdown */
+.banner-link-dropdown {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 6px;
+  padding: 4px 0;
+}
+.banner-link-option {
+  padding: 10px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(241, 245, 249, 0.6);
+  transition: all 0.15s ease;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.banner-link-option:hover {
+  background: linear-gradient(90deg, rgba(255, 107, 74, 0.06), transparent);
+  color: var(--coral);
+}
+.banner-link-option:last-child {
+  border-bottom: none;
+}
+
+/* VSC assign dropdown */
+.vsc-assign-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  padding: 8px 0;
+  min-width: 180px;
+  z-index: 200;
+}
+.vsc-assign-dropdown.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* SS batch menu */
+.ss-batch-dropdown { position: relative; }
+.ss-batch-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  padding: 6px 0;
+  min-width: 160px;
+  z-index: 200;
+}
+.ss-batch-menu.open {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ss-batch-menu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 13px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.ss-batch-menu button:hover {
+  background: linear-gradient(90deg, rgba(255, 107, 74, 0.06), transparent);
+  color: var(--coral);
+}
+
+/* Date picker popup */
+.date-picker-popup {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 440px;
+  padding: 0;
+  z-index: 200;
+}
+.date-picker-popup.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dropdown animation */
+@keyframes dropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Dropdown trigger buttons */
+.dropdown-trigger,
+.filter-dropdown-btn,
+.theater-select-trigger,
+.ss-batch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+.dropdown-trigger:hover,
+.filter-dropdown-btn:hover,
+.theater-select-trigger:hover,
+.ss-batch-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 107, 74, 0.1);
+}
+.dropdown-trigger.active,
+.filter-dropdown-btn.active,
+.theater-select-trigger.active {
+  border-color: var(--coral);
+  color: var(--coral);
+  background: rgba(255, 107, 74, 0.04);
+}
+
+/* ========== Unified Table Action Buttons ========== */
+
+/* Review action button */
+.review-action-btn {
+  height: 34px;
+  padding: 0 18px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+  cursor: pointer;
+}
+.review-action-btn.approve {
+  background: rgba(0, 201, 167, 0.1);
+  color: #00A88A;
+}
+.review-action-btn.approve:hover {
+  background: #00C9A7;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 201, 167, 0.2);
+}
+.review-action-btn.reject {
+  background: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+}
+.review-action-btn.reject:hover {
+  background: #EF4444;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+/* Hall action button */
+.hall-action-btn {
+  background: none;
+  border: none;
+  color: var(--coral);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 8px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 500;
+}
+.hall-action-btn:hover {
+  background: rgba(255, 107, 74, 0.1);
+  transform: translateY(-2px);
+}
+.hall-action-btn.set-default {
+  color: var(--gold);
+}
+.hall-action-btn.set-default:hover {
+  background: rgba(212, 168, 83, 0.1);
+}
+
+/* VSC action button */
+.vsc-toolbar .vsc-action-btn {
+  padding: 7px 16px;
+  border-radius: 10px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1.5px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 500;
+}
+.vsc-toolbar .vsc-action-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.1);
+}
+.vsc-toolbar .vsc-action-btn.vsc-save-btn {
+  background: var(--coral);
+  color: #fff;
+  border-color: var(--coral);
+}
+.vsc-toolbar .vsc-action-btn.vsc-save-btn:hover {
+  background: #E85A3A;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.25);
+}
+
+/* Batch dropdown button */
+.ss-batch-btn {
+  padding: 7px 16px;
+  border-radius: 10px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1.5px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 500;
+}
+.ss-batch-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.1);
+}
+
 </style>
+<link href="admin-components.css" rel="stylesheet">
 </head>
 <body>
 
@@ -2615,14 +3329,12 @@ table { border-collapse: collapse; width: 100%; }
   <!-- ==================== Sidebar ==================== -->
 <aside class="sidebar">
   <div class="sidebar-logo">
-    <div class="logo-icon">
-      <i class="fas fa-masks-theater"></i>
+      <img src="assets/logo.png" alt="海南省演艺集团" style="width:36px; height:auto; flex-shrink:0;">
+      <div class="logo-text">
+        <span class="logo-title">海南省演艺集团</span>
+        <span class="logo-sub">艺术演出院线数字服务系统</span>
+      </div>
     </div>
-    <div class="logo-text">
-      <span class="logo-title">海南演艺票务</span>
-      <span class="logo-sub">管理后台</span>
-    </div>
-  </div>
   <nav class="sidebar-nav">
     <div class="nav-group">
       <div class="nav-group-label">核心功能</div>
@@ -2656,12 +3368,7 @@ table { border-collapse: collapse; width: 100%; }
       <a class="nav-item" href="ai-marketing.html">
         <i class="fas fa-robot"></i>
         <span>AI智能营销</span>
-      </a>
-      <a class="nav-item" href="banner-management.html">
-        <i class="fas fa-images"></i>
-        <span>轮播图管理</span>
-      </a>
-      <a class="nav-item" href="product-service.html">
+      </a>      <a class="nav-item" href="product-service.html">
         <i class="fas fa-store"></i>
         <span>商品管理</span>
       </a>
@@ -2678,24 +3385,8 @@ table { border-collapse: collapse; width: 100%; }
         <span>报表中心</span>
       </a>
     </div>
-    <div class="nav-group">
-      <div class="nav-group-label">系统设置</div>
-      <a class="nav-item" href="activity-decoration.html#decoration">
-        <i class="fas fa-palette"></i>
-        <span>首页装修</span>
-      </a>
-    </div>
+
   </nav>
-  <div class="sidebar-footer">
-    <div class="admin-avatar">陈</div>
-    <div class="admin-info">
-      <div class="admin-name">陈思远</div>
-      <div class="admin-role">超级管理员</div>
-    </div>
-    <button class="logout-btn" title="退出登录">
-      <i class="fas fa-sign-out-alt"></i>
-    </button>
-  </div>
 </aside>
 
   <!-- ==================== Main Content ==================== -->
@@ -2704,26 +3395,32 @@ table { border-collapse: collapse; width: 100%; }
     <header class="topbar">
       <div class="breadcrumb">
         <a href="#">首页</a>
-        <span class="sep">/</span>
+        <span class="sep"><i class="fas fa-chevron-right"></i></span>
         <span class="current">订单管理</span>
       </div>
+
       <div class="topbar-search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <i class="fas fa-search"></i>
         <input type="text" placeholder="搜索订单号、演出名称、用户手机号...">
       </div>
+
       <div class="topbar-actions">
-        <button class="topbar-btn" title="通知" onclick="showToast('info','您有3条未读消息')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
-          <span class="badge-dot"></span>
+        <button class="topbar-btn" title="消息" onclick="showToast('info','您有3条未读消息')">
+          <i class="fas fa-bell"></i>
+          <span class="dot"></span>
         </button>
-        <button class="topbar-btn" title="设置">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <button class="topbar-btn" title="帮助">
+          <i class="fas fa-circle-question"></i>
         </button>
-        <div class="topbar-user">
-          <div class="avatar-sm">陈</div>
-          <span>陈思远</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </div>
+
+      <div class="topbar-admin">
+        <div class="avatar-sm">陈</div>
+        <div>
+          <div class="admin-name">陈思远</div>
+          <div class="admin-role">超级管理员</div>
         </div>
+        <i class="fas fa-chevron-down" style="color:var(--text-muted);font-size:11px;margin-left:4px;"></i>
       </div>
     </header>
 
@@ -2805,7 +3502,7 @@ table { border-collapse: collapse; width: 100%; }
               <div class="stat-value" style="color: var(--coral-orange);">156</div>
               <div class="stat-trend down">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-                较昨日 -3.2%
+                较去年 -3.2%
               </div>
             </div>
           </div>
@@ -2818,7 +3515,7 @@ table { border-collapse: collapse; width: 100%; }
                 <div class="stat-value" style="color: var(--info);">428</div>
                 <div class="stat-trend up">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
-                  较昨日 +8.1%
+                  较去年 +8.1%
                 </div>
               </div>
             </div>
@@ -2831,7 +3528,7 @@ table { border-collapse: collapse; width: 100%; }
                 <div class="stat-value" style="color: var(--danger);">23</div>
                 <div class="stat-trend down">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-                  较昨日 -15.0%
+                  较去年 -15.0%
                 </div>
               </div>
             </div>
@@ -2933,7 +3630,6 @@ table { border-collapse: collapse; width: 100%; }
                 <tr>
                   <th style="width: 40px;"><div class="checkbox-wrapper"><input type="checkbox" id="selectAll" onchange="toggleSelectAll(this)"></div></th>
                   <th>订单号</th>
-                  <th>渠道订单号</th>
                   <th>演出信息</th>
                   <th>数量</th>
                   <th>应收/实收</th>
@@ -2941,7 +3637,6 @@ table { border-collapse: collapse; width: 100%; }
                   <th>状态</th>
                   <th>出票状态</th>
                   <th>销售渠道</th>
-                  <th>销售员</th>
                   <th>下单时间</th>
                   <th>操作</th>
                 </tr>
@@ -3014,11 +3709,19 @@ table { border-collapse: collapse; width: 100%; }
             </div>
             <div class="stat-card">
               <div class="stat-header">
-                <span class="stat-label">成功率</span>
-                <div class="stat-icon" style="background:rgba(139,92,246,0.1);color:#8B5CF6;"><i class="fas fa-check-circle"></i></div>
+                <span class="stat-label">人均充值</span>
+                <div class="stat-icon" style="background:rgba(139,92,246,0.1);color:#8B5CF6;"><i class="fas fa-user-check"></i></div>
               </div>
-              <div class="stat-value">96.5%</div>
-              <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 1.2% 较上月</div>
+              <div class="stat-value">¥150.2</div>
+              <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 5.3% 较上月</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-label">充值卡笔数</span>
+                <div class="stat-icon" style="background:rgba(236,72,153,0.1);color:#EC4899;"><i class="fas fa-credit-card"></i></div>
+              </div>
+              <div class="stat-value">1,248</div>
+              <div class="stat-trend up"><i class="fas fa-arrow-up"></i> 18.6% 较上月</div>
             </div>
           </div>
           <div class="filter-bar">
@@ -3072,7 +3775,7 @@ table { border-collapse: collapse; width: 100%; }
                     <td>微信支付</td>
                     <td><span class="status-badge status-completed">充值成功</span></td>
                     <td>2026-04-10 15:20</td>
-                    <td><button class="action-btn view" onclick="openRechargeModal(this)">查看</button></td>
+                    <td><button class="action-btn view" onclick="openRechargeModal(this)"><i class="fas fa-eye"></i> 查看</button></td>
                   </tr>
                   <tr>
                     <td><span class="order-id">CZ202604100002</span></td>
@@ -3080,10 +3783,10 @@ table { border-collapse: collapse; width: 100%; }
                     <td>139****2345</td>
                     <td><span class="amount">¥1,000.00</span></td>
                     <td style="color: var(--emerald); font-weight: 500;">+¥150.00</td>
-                    <td>支付宝</td>
+                    <td>充值卡</td>
                     <td><span class="status-badge status-completed">充值成功</span></td>
                     <td>2026-04-10 14:05</td>
-                    <td><button class="action-btn view" onclick="openRechargeModal(this)">查看</button></td>
+                    <td><button class="action-btn view" onclick="openRechargeModal(this)"><i class="fas fa-eye"></i> 查看</button></td>
                   </tr>
                   <tr>
                     <td><span class="order-id">CZ202604100003</span></td>
@@ -3094,7 +3797,7 @@ table { border-collapse: collapse; width: 100%; }
                     <td>微信支付</td>
                     <td><span class="status-badge status-pending">处理中</span></td>
                     <td>2026-04-10 13:50</td>
-                    <td><button class="action-btn view" onclick="openRechargeModal(this)">查看</button></td>
+                    <td><button class="action-btn view" onclick="openRechargeModal(this)"><i class="fas fa-eye"></i> 查看</button></td>
                   </tr>
                   <tr>
                     <td><span class="order-id">CZ202604090015</span></td>
@@ -3102,10 +3805,10 @@ table { border-collapse: collapse; width: 100%; }
                     <td>136****4567</td>
                     <td><span class="amount">¥3,000.00</span></td>
                     <td style="color: var(--emerald); font-weight: 500;">+¥600.00</td>
-                    <td>支付宝</td>
+                    <td>充值卡</td>
                     <td><span class="status-badge status-completed">充值成功</span></td>
                     <td>2026-04-09 21:30</td>
-                    <td><button class="action-btn view" onclick="openRechargeModal(this)">查看</button></td>
+                    <td><button class="action-btn view" onclick="openRechargeModal(this)"><i class="fas fa-eye"></i> 查看</button></td>
                   </tr>
                   <tr>
                     <td><span class="order-id">CZ202604090012</span></td>
@@ -3113,10 +3816,10 @@ table { border-collapse: collapse; width: 100%; }
                     <td>135****7890</td>
                     <td><span class="amount">¥100.00</span></td>
                     <td style="color: var(--text-light);">-</td>
-                    <td>钱包支付</td>
+                    <td>充值卡</td>
                     <td><span class="status-badge status-cancelled">充值失败</span></td>
                     <td>2026-04-09 18:12</td>
-                    <td><button class="action-btn view" onclick="openRechargeModal(this)">查看</button></td>
+                    <td><button class="action-btn view" onclick="openRechargeModal(this)"><i class="fas fa-eye"></i> 查看</button></td>
                   </tr>
                 </tbody>
               </table>
@@ -3226,7 +3929,7 @@ table { border-collapse: collapse; width: 100%; }
                     <td>微信支付</td>
                     <td><span class="status-badge status-paid">已支付</span></td>
                     <td>2026-04-10 11:30</td>
-                    <td><button class="action-btn view" onclick="openCouponModal(this)">查看</button></td>
+                    <td><button class="action-btn view" onclick="openCouponModal(this)"><i class="fas fa-eye"></i> 查看</button></td>
                   </tr>
                   <tr>
                     <td><span class="order-id">QB202604100002</span></td>
@@ -3237,7 +3940,7 @@ table { border-collapse: collapse; width: 100%; }
                     <td>支付宝</td>
                     <td><span class="status-badge status-paid">已支付</span></td>
                     <td>2026-04-10 10:15</td>
-                    <td><button class="action-btn view" onclick="openCouponModal(this)">查看</button></td>
+                    <td><button class="action-btn view" onclick="openCouponModal(this)"><i class="fas fa-eye"></i> 查看</button></td>
                   </tr>
                   <tr>
                     <td><span class="order-id">QB202604090008</span></td>
@@ -3248,7 +3951,7 @@ table { border-collapse: collapse; width: 100%; }
                     <td>微信支付</td>
                     <td><span class="status-badge status-pending">预约</span></td>
                     <td>2026-04-09 22:40</td>
-                    <td><button class="action-btn view" onclick="openCouponModal(this)">查看</button></td>
+                    <td><button class="action-btn view" onclick="openCouponModal(this)"><i class="fas fa-eye"></i> 查看</button></td>
                   </tr>
                   <tr>
                     <td><span class="order-id">QB202604090005</span></td>
@@ -3259,7 +3962,7 @@ table { border-collapse: collapse; width: 100%; }
                     <td>支付宝</td>
                     <td><span class="status-badge status-refunded">已退款</span></td>
                     <td>2026-04-09 16:20</td>
-                    <td><button class="action-btn view" onclick="openCouponModal(this)">查看</button></td>
+                    <td><button class="action-btn view" onclick="openCouponModal(this)"><i class="fas fa-eye"></i> 查看</button></td>
                   </tr>
                 </tbody>
               </table>
@@ -3370,7 +4073,7 @@ table { border-collapse: collapse; width: 100%; }
                     <td>海口市龙华区国兴大道68号</td>
                     <td><span class="status-badge status-pending">待发货</span></td>
                     <td>2026-04-10 09:30</td>
-                    <td><div class="action-btns"><button class="action-btn verify" onclick="openMallModal(this)"><i class="fas fa-truck"></i> 发货</button><button class="action-btn view" onclick="openMallModal(this)">查看</button></div></td>
+                    <td><div class="action-btns"><button class="action-btn verify" onclick="openMallModal(this)"><i class="fas fa-truck"></i> 发货</button><button class="action-btn view" onclick="openMallModal(this)"><i class="fas fa-eye"></i> 查看</button></div></td>
                   </tr>
                   <tr>
                     <td><span class="order-id">SC202604100002</span></td>
@@ -3381,7 +4084,7 @@ table { border-collapse: collapse; width: 100%; }
                     <td>三亚市吉阳区迎宾路360号</td>
                     <td><span class="status-badge status-used">已发货</span></td>
                     <td>2026-04-10 08:45</td>
-                    <td><button class="action-btn view" onclick="openMallModal(this)">查看</button></td>
+                    <td><button class="action-btn view" onclick="openMallModal(this)"><i class="fas fa-eye"></i> 查看</button></td>
                   </tr>
                   <tr>
                     <td><span class="order-id">SC202604090020</span></td>
@@ -3392,7 +4095,7 @@ table { border-collapse: collapse; width: 100%; }
                     <td>儋州市那大镇中兴大道88号</td>
                     <td><span class="status-badge status-completed">已完成</span></td>
                     <td>2026-04-09 20:10</td>
-                    <td><button class="action-btn view" onclick="openMallModal(this)">查看</button></td>
+                    <td><button class="action-btn view" onclick="openMallModal(this)"><i class="fas fa-eye"></i> 查看</button></td>
                   </tr>
                   <tr>
                     <td><span class="order-id">SC202604090018</span></td>
@@ -3403,7 +4106,7 @@ table { border-collapse: collapse; width: 100%; }
                     <td>琼海市嘉积镇金海路168号</td>
                     <td><span class="status-badge status-refund">退款中</span></td>
                     <td>2026-04-09 19:25</td>
-                    <td><div class="action-btns"><button class="action-btn view" onclick="openMallModal(this)">查看</button><button class="action-btn refund" onclick="showToast('success','退款审核通过')">退款</button></div></td>
+                    <td><div class="action-btns"><button class="action-btn view" onclick="openMallModal(this)"><i class="fas fa-eye"></i> 查看</button><button class="action-btn refund" onclick="showToast('success','退款审核通过')"><i class="fas fa-undo"></i> 退款</button></div></td>
                   </tr>
                   <tr>
                     <td><span class="order-id">SC202604090012</span></td>
@@ -3414,7 +4117,7 @@ table { border-collapse: collapse; width: 100%; }
                     <td>文昌市文城镇文建路56号</td>
                     <td><span class="status-badge status-completed">已完成</span></td>
                     <td>2026-04-09 15:40</td>
-                    <td><button class="action-btn view" onclick="openMallModal(this)">查看</button></td>
+                    <td><button class="action-btn view" onclick="openMallModal(this)"><i class="fas fa-eye"></i> 查看</button></td>
                   </tr>
                 </tbody>
               </table>
@@ -4033,22 +4736,21 @@ function renderOrderTable(data) {
     var actions = '';
     if (o.status === '预约') {
       actions = '<button class="action-btn view" style="color:var(--coral-orange);font-weight:600;" onclick="openPaymentModal(\'' + o.id + '\')"><i class="fas fa-cash-register"></i> 收款</button>';
-      actions += '<button class="action-btn view" onclick="openOrderModal(\'' + o.id + '\')">查看</button>';
+      actions += '<button class="action-btn view" onclick="openOrderModal(\'' + o.id + '\')"><i class="fas fa-eye"></i> 查看</button>';
     } else if (o.status === '已支付') {
-      actions = '<button class="action-btn view" onclick="openOrderModal(\'' + o.id + '\')">查看</button>';
+      actions = '<button class="action-btn view" onclick="openOrderModal(\'' + o.id + '\')"><i class="fas fa-eye"></i> 查看</button>';
       actions += '<button class="action-btn verify" onclick="openPrintModal(\'' + o.id + '\')"><i class="fas fa-print"></i> 打印</button>';
     } else if (o.status === '已核销') {
-      actions = '<button class="action-btn view" onclick="openOrderModal(\'' + o.id + '\')">查看</button>';
+      actions = '<button class="action-btn view" onclick="openOrderModal(\'' + o.id + '\')"><i class="fas fa-eye"></i> 查看</button>';
     } else if (o.status === '退款中') {
-      actions = '<button class="action-btn view" onclick="openOrderModal(\'' + o.id + '\')">查看</button>';
+      actions = '<button class="action-btn view" onclick="openOrderModal(\'' + o.id + '\')"><i class="fas fa-eye"></i> 查看</button>';
     } else if (o.status === '已取消') {
-      actions = '<button class="action-btn view" onclick="openOrderModal(\'' + o.id + '\')">查看</button>';
+      actions = '<button class="action-btn view" onclick="openOrderModal(\'' + o.id + '\')"><i class="fas fa-eye"></i> 查看</button>';
     }
 
     html += '<tr>' +
       '<td><div class="checkbox-wrapper"><input type="checkbox" class="row-checkbox"></div></td>' +
       '<td><span class="order-id">' + o.id + '</span></td>' +
-      '<td>' + (o.channelNo ? '<span style="font-size:12px;color:#64748B;">' + o.channelNo + '</span>' : '<span style="color:#CBD5E1;">—</span>') + '</td>' +
       '<td><div class="show-info-cell"><span class="show-name">' + o.show + '</span><span class="show-session">' + o.session + '</span><span class="show-tier">' + o.tier + '</span></div></td>' +
       '<td>' + o.qty + '</td>' +
       '<td><div style="font-size:12px;color:#94A3B8;">应收 ¥' + o.amount.toLocaleString() + '</div><div style="font-size:14px;font-weight:600;color:var(--coral-orange);">实收 ¥' + (o.actualPay || o.amount).toLocaleString() + '</div></td>' +
@@ -4056,7 +4758,6 @@ function renderOrderTable(data) {
       '<td><span class="status-badge ' + o.statusClass + '">' + o.status + '</span></td>' +
       '<td><span class="ticket-status-tag ' + tsCls + '">' + o.ticketStatus + '</span></td>' +
       '<td><span class="channel-tag ' + cc.cls + '"><i class="fas ' + cc.icon + '"></i> ' + o.channel + '</span></td>' +
-      '<td><span class="seller-tag ' + sellerCls + '">' + o.seller + '</span></td>' +
       '<td>' + o.time + '</td>' +
       '<td><div class="action-btns">' + actions + '</div></td>' +
       '</tr>';
@@ -4087,27 +4788,34 @@ function openOrderModal(orderId) {
   var cc = channelConfig[order.channel] || {cls: 'channel-miniapp', icon: 'fa-mobile-screen'};
   var tsCls = ticketStatusConfig[order.ticketStatus] || 'ticket-not-issued';
 
-  var body = '';
-  // Order Info
-  body += '<div class="detail-section"><div class="detail-section-title">订单信息</div><div class="detail-grid">' +
+  // Build tab content
+  var tab1 = ''; // 订单 & 用户
+  var tab2 = ''; // 演出 & 座位
+  var tab3 = ''; // 支付 & 减免
+  var tab4 = ''; // 出票 & 日志
+
+  // === Tab 1: 订单 & 用户 ===
+  tab1 += '<div class="detail-section"><div class="detail-section-title">订单信息</div><div class="detail-grid">' +
     '<div class="detail-item"><span class="detail-label">订单号</span><span class="detail-value mono">' + order.id + '</span></div>' +
+    '<div class="detail-item"><span class="detail-label">渠道订单号</span><span class="detail-value mono">' + (order.channelNo || '-') + '</span></div>' +
     '<div class="detail-item"><span class="detail-label">订单状态</span><span class="detail-value"><span class="status-badge ' + order.statusClass + '">' + order.status + '</span></span></div>' +
     '<div class="detail-item"><span class="detail-label">下单时间</span><span class="detail-value">' + order.time + ':15</span></div>' +
-    '<div class="detail-item"><span class="detail-label">支付时间</span><span class="detail-value">' + order.payTime + '</span></div>' +
+    '<div class="detail-item"><span class="detail-label">支付时间</span><span class="detail-value">' + (order.payTime || '-') + '</span></div>' +
     '<div class="detail-item"><span class="detail-label">销售渠道</span><span class="detail-value"><span class="channel-tag ' + cc.cls + '"><i class="fas ' + cc.icon + '"></i> ' + order.channel + '</span></span></div>' +
     '<div class="detail-item"><span class="detail-label">销售员</span><span class="detail-value">' + order.seller + '</span></div>' +
+    '<div class="detail-item"><span class="detail-label">应收金额</span><span class="detail-value">¥' + order.amount.toLocaleString() + '.00</span></div>' +
+    '<div class="detail-item"><span class="detail-label">实收金额</span><span class="detail-value" style="font-weight:600;color:var(--coral-orange);">¥' + (order.actualPay || order.amount).toLocaleString() + '.00</span></div>' +
     '<div class="detail-item full"><span class="detail-label">备注</span><span class="detail-value">' + (order.remark || '无') + '</span></div>' +
     '</div></div>';
 
-  // User Info
-  body += '<div class="detail-section"><div class="detail-section-title">用户信息</div><div class="detail-grid">' +
+  tab1 += '<div class="detail-section"><div class="detail-section-title">用户信息</div><div class="detail-grid">' +
     '<div class="detail-item"><span class="detail-label">用户姓名</span><span class="detail-value">' + order.user + '</span></div>' +
     '<div class="detail-item"><span class="detail-label">手机号</span><span class="detail-value">' + order.phone + '</span></div>' +
     '<div class="detail-item"><span class="detail-label">会员等级</span><span class="detail-value" style="color:var(--gold);">' + order.member + '</span></div>' +
     '</div></div>';
 
-  // Show Info + Seat Details
-  body += '<div class="detail-section"><div class="detail-section-title">演出信息</div><div class="detail-grid">' +
+  // === Tab 2: 演出 & 座位 ===
+  tab2 += '<div class="detail-section"><div class="detail-section-title">演出信息</div><div class="detail-grid">' +
     '<div class="detail-item full"><span class="detail-label">演出名称</span><span class="detail-value">' + order.show + '</span></div>' +
     '<div class="detail-item"><span class="detail-label">演出场馆</span><span class="detail-value">' + order.venue + '</span></div>' +
     '<div class="detail-item"><span class="detail-label">演出场次</span><span class="detail-value">2026-' + order.session + '</span></div>' +
@@ -4115,17 +4823,16 @@ function openOrderModal(orderId) {
     '<div class="detail-item"><span class="detail-label">购票数量</span><span class="detail-value">' + order.qty + '张</span></div>' +
     '</div>';
 
-  // Seat detail table
-  body += '<div style="margin-top:14px;"><div style="font-size:12px;color:var(--text-light);margin-bottom:6px;">座位明细</div>' +
+  tab2 += '<div style="margin-top:14px;"><div style="font-size:12px;color:var(--text-light);margin-bottom:6px;">座位明细</div>' +
     '<table class="seat-detail-table"><thead><tr><th>座位号</th><th>票档</th><th>单价</th><th>状态</th></tr></thead><tbody>';
   order.seats.forEach(function(s) {
     var sCls = s.status === '已出票' ? 'status-paid' : (s.status === '已核销' ? 'status-used' : (s.status === '已退票' ? 'status-refund' : 'status-cancelled'));
-    body += '<tr><td>' + s.seat + '</td><td>' + s.tier + '</td><td>¥' + s.price + '.00</td><td><span class="status-badge ' + sCls + '">' + s.status + '</span></td></tr>';
+    tab2 += '<tr><td>' + s.seat + '</td><td>' + s.tier + '</td><td>¥' + s.price + '.00</td><td><span class="status-badge ' + sCls + '">' + s.status + '</span></td></tr>';
   });
-  body += '</tbody></table></div></div>';
+  tab2 += '</tbody></table></div></div>';
 
-  // Payment Info
-  body += '<div class="detail-section"><div class="detail-section-title">支付信息</div><div class="detail-grid">' +
+  // === Tab 3: 支付 & 减免 ===
+  tab3 += '<div class="detail-section"><div class="detail-section-title">支付信息</div><div class="detail-grid">' +
     '<div class="detail-item"><span class="detail-label">商品总价</span><span class="detail-value">¥' + order.totalAmount.toLocaleString() + '.00</span></div>' +
     '<div class="detail-item"><span class="detail-label">总优惠减免</span><span class="detail-value" style="color:var(--coral-orange);">-¥' + order.discount.toLocaleString() + '.00</span></div>' +
     '<div class="detail-item"><span class="detail-label">实付金额</span><span class="detail-value amount" style="font-size:18px;color:var(--coral-orange);">¥' + order.actualPay.toLocaleString() + '.00</span></div>' +
@@ -4133,41 +4840,39 @@ function openOrderModal(orderId) {
     '<div class="detail-item"><span class="detail-label">支付订单号</span><span class="detail-value mono">' + (order.transactionId || '-') + '</span></div>' +
     '</div>';
 
-  // 组合支付明细
   if (order.paymentDetails && order.paymentDetails.length > 0) {
     var comboStr = order.paymentDetails.map(function(pd) { return pd.method; }).join(' + ');
-    body += '<div style="margin-top:12px;padding:8px 12px;background:#F8FAFC;border-radius:6px;font-size:12px;color:#64748B;"><i class="fas fa-layer-group" style="margin-right:4px;"></i>组合支付：' + comboStr + '</div>';
-    body += '<div style="margin-top:14px;"><div style="font-size:12px;color:var(--text-light);margin-bottom:6px;">支付明细</div>' +
+    tab3 += '<div style="margin-top:12px;padding:8px 12px;background:#F8FAFC;border-radius:6px;font-size:12px;color:#64748B;"><i class="fas fa-layer-group" style="margin-right:4px;"></i>组合支付：' + comboStr + '</div>';
+    tab3 += '<div style="margin-top:14px;"><div style="font-size:12px;color:var(--text-light);margin-bottom:6px;">支付明细</div>' +
       '<table class="seat-detail-table"><thead><tr><th>支付方式</th><th>支付金额</th><th>支付单号</th></tr></thead><tbody>';
     order.paymentDetails.forEach(function(pd) {
-      body += '<tr><td>' + pd.method + '</td><td>¥' + pd.amount.toLocaleString() + '.00</td><td class="mono">' + (pd.transactionId || '-') + '</td></tr>';
+      tab3 += '<tr><td>' + pd.method + '</td><td>¥' + pd.amount.toLocaleString() + '.00</td><td class="mono">' + (pd.transactionId || '-') + '</td></tr>';
     });
-    body += '</tbody></table></div>';
+    tab3 += '</tbody></table></div>';
   } else {
-    body += '<div class="detail-item" style="margin-top:12px;"><span class="detail-label">支付方式</span><span class="detail-value">' + order.payment + '</span></div>';
+    tab3 += '<div class="detail-item" style="margin-top:12px;"><span class="detail-label">支付方式</span><span class="detail-value">' + order.payment + '</span></div>';
   }
-  body += '</div>';
+  tab3 += '</div>';
 
-  // 减免明细
-  body += '<div class="detail-section"><div class="detail-section-title">减免明细</div>';
+  tab3 += '<div class="detail-section"><div class="detail-section-title">减免明细</div>';
   if (order.discountDetails && order.discountDetails.length > 0) {
-    body += '<table class="seat-detail-table"><thead><tr><th>优惠类型</th><th>优惠名称</th><th>减免金额</th></tr></thead><tbody>';
+    tab3 += '<table class="seat-detail-table"><thead><tr><th>优惠类型</th><th>优惠名称</th><th>减免金额</th></tr></thead><tbody>';
     order.discountDetails.forEach(function(dd) {
-      body += '<tr><td>' + dd.type + '</td><td>' + dd.name + '</td><td style="color:var(--coral-orange);">-¥' + dd.amount.toLocaleString() + '.00</td></tr>';
+      tab3 += '<tr><td>' + dd.type + '</td><td>' + dd.name + '</td><td style="color:var(--coral-orange);">-¥' + dd.amount.toLocaleString() + '.00</td></tr>';
     });
-    body += '</tbody></table>';
+    tab3 += '</tbody></table>';
   } else {
-    body += '<div class="detail-grid">' +
+    tab3 += '<div class="detail-grid">' +
       '<div class="detail-item"><span class="detail-label">票品折扣</span><span class="detail-value" style="color:var(--coral-orange);">-¥' + (order.ticketDiscount || 0).toLocaleString() + '.00</span></div>' +
       '<div class="detail-item"><span class="detail-label">优惠券</span><span class="detail-value" style="color:var(--coral-orange);">-¥' + (order.couponDiscount || 0).toLocaleString() + '.00</span></div>' +
       '<div class="detail-item"><span class="detail-label">券包优惠</span><span class="detail-value" style="color:var(--coral-orange);">-¥' + (order.voucherDiscount || 0).toLocaleString() + '.00</span></div>' +
       '<div class="detail-item"><span class="detail-label">会员折扣</span><span class="detail-value" style="color:var(--coral-orange);">-¥' + (order.memberDiscount || 0).toLocaleString() + '.00</span></div>' +
       '</div>';
   }
-  body += '</div>';
+  tab3 += '</div>';
 
-  // Ticket Info (出票信息)
-  body += '<div class="detail-section"><div class="detail-section-title">出票信息</div>' +
+  // === Tab 4: 出票 & 日志 ===
+  tab4 += '<div class="detail-section"><div class="detail-section-title">出票信息</div>' +
     '<div class="detail-card">' +
     '<div class="detail-card-row"><span class="dcr-label">出票状态</span><span class="dcr-value"><span class="ticket-status-tag ' + tsCls + '">' + order.ticketStatus + '</span></span></div>' +
     '<div class="detail-card-row"><span class="dcr-label">出票方式</span><span class="dcr-value">' + order.ticketMethod + '</span></div>' +
@@ -4176,19 +4881,30 @@ function openOrderModal(orderId) {
     '<div class="detail-card-row"><span class="dcr-label">操作员</span><span class="dcr-value">' + order.operator + '</span></div>';
 
   if (order.printLogs.length > 0) {
-    body += '<div class="print-log-collapse"><div class="print-log-header" onclick="togglePrintLog(this)"><span><i class="fas fa-list-alt" style="margin-right:6px;"></i>打印日志 (' + order.printLogs.length + '次)</span><i class="fas fa-chevron-right"></i></div><div class="print-log-body">';
+    tab4 += '<div class="print-log-collapse"><div class="print-log-header" onclick="togglePrintLog(this)"><span><i class="fas fa-list-alt" style="margin-right:6px;"></i>打印日志 (' + order.printLogs.length + '次)</span><i class="fas fa-chevron-right"></i></div><div class="print-log-body">';
     order.printLogs.forEach(function(log, i) {
-      body += '<div class="print-log-item"><span class="print-log-num">第' + (i+1) + '次</span><span class="print-log-time">' + log.time + '</span><span class="print-log-operator">' + log.operator + '</span><span class="print-log-location">' + log.location + '</span></div>';
+      tab4 += '<div class="print-log-item"><span class="print-log-num">第' + (i+1) + '次</span><span class="print-log-time">' + log.time + '</span><span class="print-log-operator">' + log.operator + '</span><span class="print-log-location">' + log.location + '</span></div>';
     });
-    body += '</div></div>';
+    tab4 += '</div></div>';
   }
-  body += '</div></div>';
+  tab4 += '</div></div>';
 
-  // Operation Log
-  body += '<div class="detail-section"><div class="detail-section-title">操作日志</div><div class="order-timeline">' +
+  tab4 += '<div class="detail-section"><div class="detail-section-title">操作日志</div><div class="order-timeline">' +
     '<div class="timeline-item"><div class="timeline-time">' + order.time + ':48</div><div class="timeline-text">订单状态更新</div><div class="timeline-desc">当前状态：' + order.status + '</div></div>' +
     '<div class="timeline-item"><div class="timeline-time">' + order.time + ':15</div><div class="timeline-text">用户提交订单</div><div class="timeline-desc">购买' + order.show + ' ' + order.tier + ' x' + order.qty + '</div></div>' +
     '</div></div>';
+
+  // Assemble with tabs
+  var body = '<div class="order-detail-tabs">' +
+    '<button class="od-tab active" onclick="switchOrderDetailTab(this, 0)"><i class="fas fa-file-invoice"></i> 订单信息</button>' +
+    '<button class="od-tab" onclick="switchOrderDetailTab(this, 1)"><i class="fas fa-ticket-alt"></i> 演出座位</button>' +
+    '<button class="od-tab" onclick="switchOrderDetailTab(this, 2)"><i class="fas fa-credit-card"></i> 支付减免</button>' +
+    '<button class="od-tab" onclick="switchOrderDetailTab(this, 3)"><i class="fas fa-print"></i> 出票日志</button>' +
+    '</div>' +
+    '<div class="od-tab-panel active" id="odPanel0">' + tab1 + '</div>' +
+    '<div class="od-tab-panel" id="odPanel1">' + tab2 + '</div>' +
+    '<div class="od-tab-panel" id="odPanel2">' + tab3 + '</div>' +
+    '<div class="od-tab-panel" id="odPanel3">' + tab4 + '</div>';
 
   document.getElementById('orderModalBody').innerHTML = body;
 
@@ -4204,6 +4920,15 @@ function openOrderModal(orderId) {
 
   document.getElementById('orderModal').classList.add('show');
   document.body.style.overflow = 'hidden';
+}
+
+function switchOrderDetailTab(btn, idx) {
+  var tabs = btn.parentElement.querySelectorAll('.od-tab');
+  tabs.forEach(function(t) { t.classList.remove('active'); });
+  btn.classList.add('active');
+  var panels = btn.parentElement.parentElement.querySelectorAll('.od-tab-panel');
+  panels.forEach(function(p) { p.classList.remove('active'); });
+  document.getElementById('odPanel' + idx).classList.add('active');
 }
 
 function closeModal() {

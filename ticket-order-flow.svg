@@ -1,0 +1,219 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" width="100%" height="100%">
+  <rect width="1400" height="900" fill="#060B18"/>
+  <rect width="1400" height="900" fill="url(#grid)"/>
+  <circle cx="180" cy="180" r="280" fill="#FF6B4A" opacity="0.035" filter="url(#glow-coral)"/>
+  <circle cx="1220" cy="720" r="280" fill="#4A8EFF" opacity="0.035" filter="url(#glow-coral)"/>
+
+
+  <defs>
+    <marker id="arrow-coral" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#FF6B4A"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4A8EFF"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#00C9A7"/>
+    </marker>
+    <marker id="arrow-gold" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#D4A853"/>
+    </marker>
+    <marker id="arrow-white" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#8892A8"/>
+    </marker>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+    </pattern>
+    <filter id="card-shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <filter id="glow-coral" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <text x="700.0" y="32" text-anchor="middle" fill="#E8ECF4" font-size="20" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="700">售票管理与订单管理完整流程</text>
+  <text x="700.0" y="52" text-anchor="middle" fill="#8892A8" font-size="11" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">从演出发布到验票入场的全链路业务流程</text>
+  <rect x="34" y="72" width="432" height="780" rx="14" fill="#0D1526" stroke="#4A8EFF" stroke-opacity="0.1" stroke-width="1"/>
+  <rect x="34" y="72" width="432" height="28" rx="14" fill="#4A8EFF" fill-opacity="0.08"/>
+  <text x="48" y="91" fill="#4A8EFF" font-size="12" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="700" letter-spacing="1">策略配置层</text>
+  <rect x="50" y="110" width="400" height="44" rx="8" fill="#0D1526" stroke="#4A8EFF" stroke-opacity="0.15" stroke-width="1" filter="url(#card-shadow)"/>
+  <rect x="50" y="110" width="400" height="2.5" rx="8" fill="#4A8EFF" opacity="0.8"/>
+  <text x="250.0" y="131.0" text-anchor="middle" fill="#E8ECF4" font-size="12" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="600">1. 演出发布与票务策略配置</text>
+  <text x="250.0" y="145.0" text-anchor="middle" fill="#8892A8" font-size="9" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">PC管理后台</text>
+  <rect x="56" y="164" width="190" height="28" rx="6" fill="#131D35" stroke="#4A8EFF" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="151.0" y="181.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">创建演出项目</text>
+  <rect x="254" y="164" width="190" height="28" rx="6" fill="#131D35" stroke="#4A8EFF" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="349.0" y="181.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">配置场次和座位图</text>
+  <rect x="56" y="200" width="190" height="28" rx="6" fill="#131D35" stroke="#FF6B4A" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="151.0" y="217.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">早鸟票设置</text>
+  <rect x="254" y="200" width="190" height="28" rx="6" fill="#131D35" stroke="#FF6B4A" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="349.0" y="217.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">会员优先购设置</text>
+  <rect x="155" y="236" width="190" height="28" rx="6" fill="#131D35" stroke="#D4A853" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="250.0" y="253.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">票档定价配置</text>
+  <rect x="50" y="284" width="400" height="44" rx="8" fill="#0D1526" stroke="#4A8EFF" stroke-opacity="0.15" stroke-width="1" filter="url(#card-shadow)"/>
+  <rect x="50" y="284" width="400" height="2.5" rx="8" fill="#4A8EFF" opacity="0.8"/>
+  <text x="250.0" y="305.0" text-anchor="middle" fill="#E8ECF4" font-size="12" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="600">2. 营销中心优惠配置</text>
+  <text x="250.0" y="319.0" text-anchor="middle" fill="#8892A8" font-size="9" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">PC管理后台</text>
+  <rect x="56" y="338" width="190" height="28" rx="6" fill="#131D35" stroke="#A78BFA" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="151.0" y="355.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">优惠券管理</text>
+  <rect x="254" y="338" width="190" height="28" rx="6" fill="#131D35" stroke="#A78BFA" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="349.0" y="355.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">票品满减活动</text>
+  <rect x="56" y="374" width="388" height="28" rx="6" fill="#131D35" stroke="#A78BFA" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="250.0" y="391.5" text-anchor="middle" fill="#E8ECF4" font-size="9" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">会员折扣策略（普通/银卡9.8/金卡9.5/铂金9.2/钻石9折）</text>
+  <rect x="155" y="410" width="190" height="28" rx="6" fill="#131D35" stroke="#D4A853" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="250.0" y="427.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">充值卡 / 券包</text>
+  <rect x="50" y="458" width="400" height="44" rx="8" fill="#0D1526" stroke="#00C9A7" stroke-opacity="0.15" stroke-width="1" filter="url(#card-shadow)"/>
+  <rect x="50" y="458" width="400" height="2.5" rx="8" fill="#00C9A7" opacity="0.8"/>
+  <text x="250.0" y="479.0" text-anchor="middle" fill="#E8ECF4" font-size="12" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="600">3. 会员体系</text>
+  <text x="250.0" y="493.0" text-anchor="middle" fill="#8892A8" font-size="9" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">用户小程序 + PC后台</text>
+  <rect x="56" y="512" width="190" height="28" rx="6" fill="#131D35" stroke="#00C9A7" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="151.0" y="529.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">用户注册成为会员</text>
+  <rect x="254" y="512" width="190" height="28" rx="6" fill="#131D35" stroke="#00C9A7" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="349.0" y="529.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">成长值自动升级</text>
+  <rect x="155" y="548" width="190" height="28" rx="6" fill="#131D35" stroke="#D4A853" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="250.0" y="565.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">享受等级权益</text>
+  <rect x="56" y="584" width="388" height="28" rx="6" fill="#131D35" stroke="#00C9A7" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="250.0" y="601.5" text-anchor="middle" fill="#E8ECF4" font-size="9" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">购票折扣 + 优先购权益 + 积分累积</text>
+  <text x="250.0" y="838" text-anchor="middle" fill="#5A6478" font-size="9" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">策略数据同步至售票流程</text>
+  <rect x="494" y="72" width="432" height="780" rx="14" fill="#0D1526" stroke="#FF6B4A" stroke-opacity="0.1" stroke-width="1"/>
+  <rect x="494" y="72" width="432" height="28" rx="14" fill="#FF6B4A" fill-opacity="0.08"/>
+  <text x="508" y="91" fill="#FF6B4A" font-size="12" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="700" letter-spacing="1">售票流程层</text>
+  <rect x="510" y="110" width="400" height="44" rx="8" fill="#0D1526" stroke="#FF6B4A" stroke-opacity="0.15" stroke-width="1" filter="url(#card-shadow)"/>
+  <rect x="510" y="110" width="400" height="2.5" rx="8" fill="#FF6B4A" opacity="0.8"/>
+  <text x="710.0" y="131.0" text-anchor="middle" fill="#E8ECF4" font-size="12" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="600">4.1 购票入口判断</text>
+  <text x="710.0" y="145.0" text-anchor="middle" fill="#8892A8" font-size="9" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">用户小程序</text>
+  <polygon points="710.0,164.0 738.0,192 710.0,220.0 682.0,192" fill="#0D1526" stroke="#D4A853" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <text x="710.0" y="195" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="500">优先购阶段?</text>
+  <rect x="516" y="228" width="190" height="28" rx="6" fill="#131D35" stroke="#FF6B4A" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="611.0" y="245.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">是指定等级会员?</text>
+  <rect x="714" y="228" width="190" height="28" rx="6" fill="#131D35" stroke="#5A6478" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="809.0" y="245.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">显示"即将开售"</text>
+  <rect x="516" y="264" width="190" height="28" rx="6" fill="#131D35" stroke="#00C9A7" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="611.0" y="281.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">显示"优先购"入口</text>
+  <rect x="714" y="264" width="190" height="28" rx="6" fill="#131D35" stroke="#5A6478" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="809.0" y="281.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">倒计时等待</text>
+  <polygon points="710.0,308.0 738.0,336 710.0,364.0 682.0,336" fill="#0D1526" stroke="#D4A853" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <text x="710.0" y="339" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="500">早鸟票阶段?</text>
+  <rect x="516" y="372" width="190" height="28" rx="6" fill="#131D35" stroke="#FF6B4A" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="611.0" y="389.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">显示"早鸟票"标签</text>
+  <rect x="714" y="372" width="190" height="28" rx="6" fill="#131D35" stroke="#FF6B4A" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="809.0" y="389.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">享受折扣价</text>
+  <rect x="615" y="408" width="190" height="28" rx="6" fill="#131D35" stroke="#4A8EFF" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="710.0" y="425.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">正常售票阶段</text>
+  <rect x="510" y="456" width="400" height="44" rx="8" fill="#0D1526" stroke="#FF6B4A" stroke-opacity="0.15" stroke-width="1" filter="url(#card-shadow)"/>
+  <rect x="510" y="456" width="400" height="2.5" rx="8" fill="#FF6B4A" opacity="0.8"/>
+  <text x="710.0" y="477.0" text-anchor="middle" fill="#E8ECF4" font-size="12" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="600">4.2 选座与价格计算</text>
+  <text x="710.0" y="491.0" text-anchor="middle" fill="#8892A8" font-size="9" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">用户小程序</text>
+  <rect x="516" y="510" width="190" height="28" rx="6" fill="#131D35" stroke="#4A8EFF" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="611.0" y="527.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">选择场次</text>
+  <rect x="714" y="510" width="190" height="28" rx="6" fill="#131D35" stroke="#4A8EFF" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="809.0" y="527.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">进入选座页面</text>
+  <rect x="615" y="546" width="190" height="28" rx="6" fill="#131D35" stroke="#4A8EFF" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="710.0" y="563.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">选择座位</text>
+  <rect x="515" y="585" width="390" height="120" rx="11" fill="none" stroke="#D4A853" stroke-opacity="0.25" stroke-width="1"/>
+  <rect x="516" y="586" width="388" height="118" rx="10" fill="#131D35" stroke="#D4A853" stroke-opacity="0.45" stroke-width="1.5"/>
+  <text x="710.0" y="602" text-anchor="middle" fill="#D4A853" font-size="11" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="700">实时价格计算引擎</text>
+  <text x="526" y="618" fill="#8892A8" font-size="9" font-family="monospace">原始票价 = 座位对应票档价格</text>
+  <text x="526" y="631" fill="#8892A8" font-size="9" font-family="monospace">早鸟折扣 = 原始票价 × 折扣比例</text>
+  <text x="526" y="644" fill="#8892A8" font-size="9" font-family="monospace">会员折扣 = 原始票价 × (1 - 折扣率)</text>
+  <text x="526" y="657" fill="#8892A8" font-size="9" font-family="monospace">票品满减 = 满足条件减免金额</text>
+  <text x="526" y="670" fill="#8892A8" font-size="9" font-family="monospace">优惠券 = 优惠券减免</text>
+  <text x="526" y="683" fill="#8892A8" font-size="9" font-family="monospace">积分抵扣 = 积分抵扣金额</text>
+  <text x="526" y="696" fill="#8892A8" font-size="9" font-family="monospace">应付金额 = 原价 - 各项优惠</text>
+  <rect x="510" y="718" width="400" height="44" rx="8" fill="#0D1526" stroke="#FF6B4A" stroke-opacity="0.15" stroke-width="1" filter="url(#card-shadow)"/>
+  <rect x="510" y="718" width="400" height="2.5" rx="8" fill="#FF6B4A" opacity="0.8"/>
+  <text x="710.0" y="739.0" text-anchor="middle" fill="#E8ECF4" font-size="12" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="600">4.3 订单确认与支付</text>
+  <text x="710.0" y="753.0" text-anchor="middle" fill="#8892A8" font-size="9" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">用户小程序</text>
+  <rect x="516" y="772" width="190" height="28" rx="6" fill="#131D35" stroke="#4A8EFF" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="611.0" y="789.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">显示订单明细</text>
+  <rect x="714" y="772" width="190" height="28" rx="6" fill="#131D35" stroke="#4A8EFF" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="809.0" y="789.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">选择支付方式</text>
+  <rect x="516" y="808" width="190" height="28" rx="6" fill="#131D35" stroke="#00C9A7" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="611.0" y="825.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">微信支付 / 支付宝</text>
+  <rect x="714" y="808" width="190" height="28" rx="6" fill="#131D35" stroke="#00C9A7" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="809.0" y="825.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">钱包支付</text>
+  <rect x="516" y="844" width="190" height="28" rx="6" fill="#131D35" stroke="#00C9A7" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="611.0" y="861.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">支付成功 → 电子票</text>
+  <rect x="714" y="844" width="190" height="28" rx="6" fill="#131D35" stroke="#5A6478" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="809.0" y="861.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">支付失败 → 释放座位</text>
+  <rect x="954" y="72" width="416" height="780" rx="14" fill="#0D1526" stroke="#00C9A7" stroke-opacity="0.1" stroke-width="1"/>
+  <rect x="954" y="72" width="416" height="28" rx="14" fill="#00C9A7" fill-opacity="0.08"/>
+  <text x="968" y="91" fill="#00C9A7" font-size="12" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="700" letter-spacing="1">订单管理层</text>
+  <rect x="970" y="110" width="384" height="44" rx="8" fill="#0D1526" stroke="#00C9A7" stroke-opacity="0.15" stroke-width="1" filter="url(#card-shadow)"/>
+  <rect x="970" y="110" width="384" height="2.5" rx="8" fill="#00C9A7" opacity="0.8"/>
+  <text x="1162.0" y="131.0" text-anchor="middle" fill="#E8ECF4" font-size="12" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="600">5.1 订单生命周期</text>
+  <text x="1162.0" y="145.0" text-anchor="middle" fill="#8892A8" font-size="9" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">PC管理后台</text>
+  <rect x="976" y="164" width="118" height="28" rx="6" fill="#131D35" stroke="#8892A8" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="1035.0" y="181.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">预约</text>
+  <rect x="1102" y="164" width="118" height="28" rx="6" fill="#131D35" stroke="#FF6B4A" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="1161.0" y="181.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">待支付</text>
+  <rect x="1228" y="164" width="118" height="28" rx="6" fill="#131D35" stroke="#00C9A7" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="1287.0" y="181.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">已支付</text>
+  <rect x="1042" y="198" width="118" height="28" rx="6" fill="#131D35" stroke="#4A8EFF" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="1101.0" y="215.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">已出票</text>
+  <rect x="1168" y="198" width="118" height="28" rx="6" fill="#131D35" stroke="#D4A853" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="1227.0" y="215.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">已核销</text>
+  <rect x="1042" y="232" width="118" height="28" rx="6" fill="#131D35" stroke="#A78BFA" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="1101.0" y="249.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">退款中</text>
+  <rect x="1168" y="232" width="118" height="28" rx="6" fill="#131D35" stroke="#5A6478" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="1227.0" y="249.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">已退款</text>
+  <rect x="970" y="280" width="384" height="44" rx="8" fill="#0D1526" stroke="#00C9A7" stroke-opacity="0.15" stroke-width="1" filter="url(#card-shadow)"/>
+  <rect x="970" y="280" width="384" height="2.5" rx="8" fill="#00C9A7" opacity="0.8"/>
+  <text x="1162.0" y="301.0" text-anchor="middle" fill="#E8ECF4" font-size="12" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="600">5.2 订单处理</text>
+  <text x="1162.0" y="315.0" text-anchor="middle" fill="#8892A8" font-size="9" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">PC管理后台</text>
+  <rect x="976" y="334" width="190" height="28" rx="6" fill="#131D35" stroke="#4A8EFF" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="1071.0" y="351.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">线上自助订单</text>
+  <rect x="1174" y="334" width="190" height="28" rx="6" fill="#131D35" stroke="#00C9A7" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="1269.0" y="351.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">系统自动出票</text>
+  <rect x="976" y="370" width="190" height="28" rx="6" fill="#131D35" stroke="#4A8EFF" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="1071.0" y="387.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">线下窗口订单</text>
+  <rect x="1174" y="370" width="190" height="28" rx="6" fill="#131D35" stroke="#00C9A7" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="1269.0" y="387.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">售票员确认出票</text>
+  <rect x="1062" y="406" width="200" height="28" rx="6" fill="#131D35" stroke="#A78BFA" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="1162.0" y="423.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">退款：审核 → 原路退回</text>
+  <rect x="970" y="454" width="384" height="44" rx="8" fill="#0D1526" stroke="#00C9A7" stroke-opacity="0.15" stroke-width="1" filter="url(#card-shadow)"/>
+  <rect x="970" y="454" width="384" height="2.5" rx="8" fill="#00C9A7" opacity="0.8"/>
+  <text x="1162.0" y="475.0" text-anchor="middle" fill="#E8ECF4" font-size="12" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="600">5.3 数据统计</text>
+  <text x="1162.0" y="489.0" text-anchor="middle" fill="#8892A8" font-size="9" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">PC管理后台</text>
+  <rect x="976" y="508" width="190" height="28" rx="6" fill="#131D35" stroke="#4A8EFF" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="1071.0" y="525.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">实时销售数据看板</text>
+  <rect x="1174" y="508" width="190" height="28" rx="6" fill="#131D35" stroke="#4A8EFF" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="1269.0" y="525.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">渠道分析</text>
+  <rect x="1062" y="544" width="200" height="28" rx="6" fill="#131D35" stroke="#A78BFA" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="1162.0" y="561.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">优惠效果分析</text>
+  <rect x="970" y="592" width="384" height="44" rx="8" fill="#0D1526" stroke="#D4A853" stroke-opacity="0.15" stroke-width="1" filter="url(#card-shadow)"/>
+  <rect x="970" y="592" width="384" height="2.5" rx="8" fill="#D4A853" opacity="0.8"/>
+  <text x="1162.0" y="613.0" text-anchor="middle" fill="#E8ECF4" font-size="12" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="600">6. 验票入场</text>
+  <text x="1162.0" y="627.0" text-anchor="middle" fill="#8892A8" font-size="9" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">管理员小程序</text>
+  <rect x="976" y="646" width="190" height="28" rx="6" fill="#131D35" stroke="#D4A853" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="1071.0" y="663.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">现场扫码验票</text>
+  <rect x="1174" y="646" width="190" height="28" rx="6" fill="#131D35" stroke="#D4A853" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="1269.0" y="663.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">核销电子票</text>
+  <rect x="1062" y="682" width="200" height="28" rx="6" fill="#131D35" stroke="#4A8EFF" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="1162.0" y="699.5" text-anchor="middle" fill="#E8ECF4" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">统计入场人数</text>
+  <line x1="458" y1="180" x2="502" y2="180" stroke="#4A8EFF" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+  <text x="480.0" y="172" text-anchor="middle" fill="#4A8EFF" font-size="9" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="600" letter-spacing="0.5">策略数据</text>
+  <line x1="458" y1="340" x2="502" y2="340" stroke="#A78BFA" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+  <text x="480.0" y="332" text-anchor="middle" fill="#A78BFA" font-size="9" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="600" letter-spacing="0.5">优惠规则</text>
+  <line x1="458" y1="500" x2="502" y2="500" stroke="#00C9A7" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+  <text x="480.0" y="492" text-anchor="middle" fill="#00C9A7" font-size="9" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="600" letter-spacing="0.5">会员权益</text>
+  <line x1="918" y1="640" x2="962" y2="640" stroke="#FF6B4A" stroke-width="1.5" marker-end="url(#arrow-coral)"/>
+  <text x="940.0" y="632" text-anchor="middle" fill="#FF6B4A" font-size="9" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="600" letter-spacing="0.5">订单数据</text>
+  <line x1="918" y1="740" x2="962" y2="740" stroke="#00C9A7" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+  <text x="940.0" y="732" text-anchor="middle" fill="#00C9A7" font-size="9" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif" font-weight="600" letter-spacing="0.5">支付结果</text>
+  <line x1="1162" y1="500" x2="1162" y2="530" stroke="#D4A853" stroke-width="1.5" marker-end="url(#arrow-gold)"/>
+  <rect x="60" y="860" width="10" height="10" rx="2" fill="#4A8EFF"/>
+  <text x="76" y="869" fill="#8892A8" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">策略配置</text>
+  <rect x="140" y="860" width="10" height="10" rx="2" fill="#FF6B4A"/>
+  <text x="156" y="869" fill="#8892A8" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">售票流程</text>
+  <rect x="220" y="860" width="10" height="10" rx="2" fill="#00C9A7"/>
+  <text x="236" y="869" fill="#8892A8" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">订单管理</text>
+  <rect x="300" y="860" width="10" height="10" rx="2" fill="#D4A853"/>
+  <text x="316" y="869" fill="#8892A8" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">验票入场</text>
+  <polygon points="390,865 400,860 410,865 400,870" fill="none" stroke="#D4A853" stroke-width="1"/>
+  <text x="416" y="869" fill="#8892A8" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">决策节点</text>
+  <rect x="480" y="860" width="10" height="10" rx="2" fill="#131D35" stroke="#D4A853" stroke-width="1"/>
+  <text x="496" y="869" fill="#8892A8" font-size="10" font-family="-apple-system, PingFang SC, Noto Sans SC, Microsoft YaHei, sans-serif">计算引擎</text>
+</svg>

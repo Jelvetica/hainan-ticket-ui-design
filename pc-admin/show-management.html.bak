@@ -263,16 +263,6 @@ table { border-collapse: collapse; width: 100%; }
   --sidebar-width: 240px;
   --topbar-height: 64px;
   --tab-height: 48px;
-  --white: var(--bg-white, #FFFFFF);
-  --border-gray: var(--border, #e5e7eb);
-  --coral-orange: var(--accent, #FF6B4A);
-  --coral-orange-light: rgba(255,107,74,0.1);
-  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  --text-light: #9ca3af;
-  --border-color: #e5e7eb;
-  --bg-content: #F0F2F5;
-  --danger: #EF4444;
-  --card-white: var(--bg-white, #FFFFFF);
 }
 
 /* ========== Layout ========== */
@@ -286,7 +276,7 @@ table { border-collapse: collapse; width: 100%; }
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--bg-content, #F0F2F5);
+  background: #F0F2F5;
 }
 
 /* ========== Top Bar ========== */
@@ -296,39 +286,47 @@ table { border-collapse: collapse; width: 100%; }
   border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 0 28px;
+  gap: 16px;
   position: sticky;
   top: 0;
   z-index: 50;
 }
+
 .breadcrumb {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 13px;
   color: var(--text-muted);
-  flex-shrink: 0;
 }
+
 .breadcrumb a {
   color: var(--text-secondary);
   transition: color 0.2s;
 }
-.breadcrumb a:hover { color: var(--coral); }
+
+.breadcrumb a:hover {
+  color: var(--coral);
+}
+
 .breadcrumb .current {
   color: var(--text-primary);
   font-weight: 500;
 }
+
 .breadcrumb .sep {
   color: var(--text-muted);
   font-size: 11px;
 }
+
 .topbar-search {
   margin-left: auto;
   position: relative;
 }
+
 .topbar-search input {
-  width: 260px;
+  width: 240px;
   height: 36px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
@@ -338,14 +336,17 @@ table { border-collapse: collapse; width: 100%; }
   background: var(--light-gray);
   transition: all 0.2s;
 }
+
 .topbar-search input::placeholder {
   color: var(--text-muted);
 }
+
 .topbar-search input:focus {
   border-color: var(--coral);
   background: #fff;
   box-shadow: 0 0 0 3px rgba(255,107,74,0.1);
 }
+
 .topbar-search i {
   position: absolute;
   left: 12px;
@@ -354,12 +355,13 @@ table { border-collapse: collapse; width: 100%; }
   color: var(--text-muted);
   font-size: 13px;
 }
+
 .topbar-actions {
   display: flex;
   align-items: center;
-  gap: 6px;
-  flex-shrink: 0;
+  gap: 8px;
 }
+
 .topbar-btn {
   width: 36px;
   height: 36px;
@@ -372,10 +374,12 @@ table { border-collapse: collapse; width: 100%; }
   transition: all 0.2s;
   position: relative;
 }
+
 .topbar-btn:hover {
   background: var(--light-gray);
   color: var(--text-primary);
 }
+
 .topbar-btn .dot {
   position: absolute;
   top: 7px;
@@ -386,6 +390,7 @@ table { border-collapse: collapse; width: 100%; }
   border-radius: 50%;
   border: 1.5px solid #fff;
 }
+
 .topbar-admin {
   display: flex;
   align-items: center;
@@ -394,11 +399,12 @@ table { border-collapse: collapse; width: 100%; }
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s;
-  margin-left: 4px;
 }
+
 .topbar-admin:hover {
   background: var(--light-gray);
 }
+
 .topbar-admin .avatar-sm {
   width: 32px;
   height: 32px;
@@ -410,17 +416,6 @@ table { border-collapse: collapse; width: 100%; }
   color: #fff;
   font-weight: 600;
   font-size: 12px;
-}
-.topbar-admin .admin-name {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-primary);
-  line-height: 1.2;
-}
-.topbar-admin .admin-role {
-  font-size: 11px;
-  color: var(--text-muted);
-  line-height: 1.2;
 }
 
 /* ========== Page Content ========== */
@@ -465,10 +460,9 @@ table { border-collapse: collapse; width: 100%; }
 }
 
 .tab-item.active {
+  background: var(--deep-blue);
   color: #fff;
-  background: linear-gradient(135deg, #FF6B4A, #FF8A65);
-  box-shadow: 0 2px 8px rgba(255,107,74,0.3);
-  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(10,22,40,0.2);
 }
 
 .tab-item i { font-size: 14px; }
@@ -562,6 +556,26 @@ table { border-collapse: collapse; width: 100%; }
 .revenue-section-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
 .revenue-divider { border: none; border-top: 1px solid var(--border-color); margin: 6px 0; }
 
+/* Filter dropdown */
+.filter-dropdown-wrap { position: relative; z-index: 100; }
+.filter-dropdown-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 8px;
+  border: 1px solid var(--border-color); background: var(--card-white);
+  color: var(--text-secondary); font-size: 13px; cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-dropdown-btn:hover { border-color: var(--coral); color: var(--coral); }
+.filter-dropdown-btn.active { border-color: var(--coral); color: var(--coral); background: rgba(255,107,74,0.04); }
+.filter-dropdown {
+  display: none; position: absolute; top: 100%; left: 0;
+  margin-top: 6px; background: #fff;
+  border: 1px solid var(--border-color); border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12); padding: 16px;
+  min-width: 280px; z-index: 200;
+}
+.filter-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
+@keyframes dropIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
 .stat-value-animate {
   display: inline-block;
 }
@@ -572,6 +586,12 @@ table { border-collapse: collapse; width: 100%; }
 .stat-value-animate.animated {
   animation: statCountUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+.filter-dropdown-item { margin-bottom: 14px; }
+.filter-dropdown-item:last-of-type { margin-bottom: 0; }
+.filter-dropdown-item label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; font-weight: 500; }
+.filter-dropdown-item .form-select { width: 100%; height: 34px; }
+.filter-dropdown-footer { padding-top: 10px; border-top: 1px solid var(--border-color); text-align: right; }
+.filter-reset { font-size: 12px; color: var(--coral); text-decoration: none; }
 
 .status-filter-btn {
   padding: 6px 16px;
@@ -623,7 +643,26 @@ table { border-collapse: collapse; width: 100%; }
   font-size: 13px;
 }
 
+.btn-primary {
+  height: 36px;
+  padding: 0 20px;
+  background: var(--coral);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
 
+.btn-primary:hover {
+  background: var(--coral-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255,107,74,0.3);
+}
 
 .btn-primary i {
   font-size: 12px;
@@ -876,11 +915,7 @@ table { border-collapse: collapse; width: 100%; }
 #panel-shows .data-table th:nth-child(4),
 #panel-shows .data-table td:nth-child(4) { width: 100px; min-width: 100px; text-align: center; }
 #panel-shows .data-table th:nth-child(5),
-#panel-shows .data-table td:nth-child(5) { width: auto; min-width: 280px; }
-#panel-shows .data-table td:nth-child(5) .action-btns {
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
+#panel-shows .data-table td:nth-child(5) { width: 150px; min-width: 150px; }
 
 #panel-shows .data-table td:nth-child(4) .status-tag {
   white-space: nowrap;
@@ -922,35 +957,43 @@ table { border-collapse: collapse; width: 100%; }
   background: #9CA3AF;
 }
 
-/* ========== 开票时间标签 ========== */
-.open-time-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 3px 8px;
+/* Action Buttons */
+.action-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.action-btn {
+  width: 32px;
+  height: 32px;
   border-radius: 6px;
-  font-size: 11px;
-  font-weight: 500;
-  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  transition: all 0.2s;
+  background: transparent;
+  color: var(--text-secondary);
 }
-.open-time-tag i {
-  font-size: 10px;
+
+.action-btn:hover {
+  background: var(--light-gray);
+  color: var(--text-primary);
 }
-.open-time-tag.on-sale {
-  background: rgba(0, 201, 167, 0.1);
-  color: #00A88A;
+
+.action-btn.edit:hover {
+  background: rgba(255,107,74,0.1);
+  color: var(--coral);
 }
-.open-time-tag.priority {
-  background: rgba(212, 168, 83, 0.1);
-  color: #B8922F;
+
+.action-btn.toggle:hover {
+  background: rgba(0,201,167,0.1);
+  color: var(--emerald);
 }
-.open-time-tag.not-open {
-  background: rgba(107, 114, 128, 0.1);
-  color: #6B7280;
-}
-.open-time-tag.ended {
-  background: rgba(156, 163, 175, 0.1);
-  color: #9CA3AF;
+
+.action-btn.delete:hover {
+  background: rgba(239,68,68,0.1);
+  color: #EF4444;
 }
 
 /* ========== Pagination ========== */
@@ -1125,7 +1168,25 @@ table { border-collapse: collapse; width: 100%; }
 .map-coord-item label { display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
 .map-coord-item .form-input { height: 32px; font-size: 12px; }
 
+.btn-outline {
+  height: 34px;
+  padding: 0 16px;
+  border: 1px solid var(--coral);
+  color: var(--coral);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+  background: transparent;
+}
 
+.btn-outline:hover {
+  background: var(--coral);
+  color: #fff;
+}
 
 /* New Venue Card */
 .venue-card-new {
@@ -1932,40 +1993,6 @@ table { border-collapse: collapse; width: 100%; }
   padding: 16px 24px;
   border-top: 1px solid var(--border-color);
   flex-shrink: 0;
-}
-
-.modal-footer .btn-cancel {
-  padding: 8px 20px;
-  border-radius: 6px;
-  font-size: 13px;
-  cursor: pointer;
-  border: 1px solid var(--border-color);
-  background: #fff;
-  color: var(--text-secondary);
-  transition: all 0.2s;
-}
-
-.modal-footer .btn-cancel:hover {
-  background: var(--bg-light);
-  border-color: var(--text-muted);
-  color: var(--text-primary);
-}
-
-.modal-footer .btn-confirm {
-  padding: 8px 20px;
-  border-radius: 6px;
-  font-size: 13px;
-  cursor: pointer;
-  border: none;
-  background: var(--coral);
-  color: #fff;
-  font-weight: 500;
-  transition: all 0.2s;
-}
-
-.modal-footer .btn-confirm:hover {
-  background: var(--coral-hover);
-  box-shadow: 0 2px 8px rgba(255,107,74,0.3);
 }
 
 /* Form Styles */
@@ -3563,7 +3590,6 @@ table { border-collapse: collapse; width: 100%; }
 .show-stat-icon.selling { background: rgba(0,201,167,0.1); color: var(--emerald); }
 .show-stat-icon.tickets { background: rgba(59,130,246,0.1); color: #3B82F6; }
 .show-stat-icon.revenue { background: rgba(212,168,83,0.1); color: var(--gold); }
-.show-stat-icon.yearly { background: rgba(0,201,167,0.1); color: var(--emerald); }
 .show-stat-icon.time { background: rgba(107,114,128,0.1); color: #6B7280; }
 .show-stat-info .stat-value {
   font-size: 20px;
@@ -3735,7 +3761,517 @@ table { border-collapse: collapse; width: 100%; }
   margin-right: 4px;
 }
 
+/* ========== Seat Management Fullscreen Modal ========== */
+.seat-manage-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, #0A1628 0%, #162544 50%, #0F1D32 100%);
+  z-index: 2000;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  animation: seatManageIn 0.3s ease;
+}
+.seat-manage-overlay.active {
+  display: flex;
+}
+@keyframes seatManageIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.seat-manage-overlay::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255,107,74,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.seat-manage-overlay::after {
+  content: '';
+  position: absolute;
+  bottom: -10%;
+  left: -5%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(212,168,83,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
 
+.seat-manage-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+}
+.seat-manage-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.seat-manage-header-left h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+.seat-manage-header-left p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+}
+.seat-manage-header-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.seat-manage-floor-switcher {
+  display: flex;
+  background: rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 2px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.seat-manage-floor-switcher .floor-btn {
+  padding: 6px 20px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.seat-manage-floor-switcher .floor-btn.active {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.seat-manage-floor-switcher .floor-btn:hover:not(.active) {
+  color: rgba(255,255,255,0.7);
+}
+.seat-manage-header-right {
+  display: flex;
+  gap: 8px;
+}
+
+.seat-manage-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+/* Left: Seat Map Area */
+.seat-manage-canvas-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px 20px;
+  overflow: hidden;
+}
+.seat-manage-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 16px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+.seat-manage-toolbar .tool-btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: transparent;
+  color: rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.seat-manage-toolbar .tool-btn:hover {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.9);
+}
+.seat-manage-toolbar .tool-btn.active {
+  background: linear-gradient(135deg, #FF6B4A, #D4A853);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(255,107,74,0.3);
+}
+.seat-manage-toolbar .tool-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255,255,255,0.1);
+  margin: 0 4px;
+}
+.seat-manage-toolbar .tool-select {
+  height: 30px;
+  padding: 0 24px 0 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.8);
+  font-size: 12px;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23999' d='M5 7L1 3h8z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+.seat-manage-toolbar .tool-select option {
+  background: #1A2E4A;
+  color: #fff;
+}
+
+.seat-manage-canvas {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+  background: rgba(0,0,0,0.3);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 30px;
+  position: relative;
+}
+.seat-manage-canvas::-webkit-scrollbar { width: 6px; height: 6px; }
+.seat-manage-canvas::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 3px; }
+.seat-manage-canvas::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+.seat-manage-canvas .stage-area {
+  padding: 10px 40px;
+  background: linear-gradient(135deg, rgba(255,107,74,0.15), rgba(212,168,83,0.1));
+  border: 1px solid rgba(255,107,74,0.3);
+  border-radius: 8px;
+  color: rgba(255,255,255,0.6);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.seat-manage-legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  background: rgba(255,255,255,0.03);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.05);
+  margin-top: 12px;
+}
+.seat-manage-legend .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+}
+.seat-manage-legend .legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+.seat-manage-legend .legend-sep {
+  width: 1px;
+  height: 16px;
+  background: rgba(255,255,255,0.08);
+  margin: 0 6px;
+}
+
+/* Right: Info Panel */
+.seat-manage-panel {
+  width: 320px;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(10px);
+  border-left: 1px solid rgba(255,255,255,0.06);
+  overflow-y: auto;
+  padding: 20px;
+  flex-shrink: 0;
+}
+.seat-manage-panel::-webkit-scrollbar { width: 4px; }
+.seat-manage-panel::-webkit-scrollbar-track { background: transparent; }
+.seat-manage-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+.sm-panel-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.sm-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.sm-stat-card {
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: all 0.2s;
+}
+.sm-stat-card:hover {
+  background: rgba(255,255,255,0.06);
+}
+.sm-stat-card .sm-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.sm-stat-card .sm-value {
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 4px;
+  color: #fff;
+}
+.sm-stat-card .sm-value.coral { color: #FF6B4A; }
+.sm-stat-card .sm-value.green { color: #10B981; }
+.sm-stat-card .sm-value.blue { color: #3B82F6; }
+.sm-stat-card .sm-value.yellow { color: #64748B; }
+
+/* Zone detail accordion */
+.sm-zone-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.sm-zone-item {
+  border-radius: 10px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  overflow: hidden;
+  transition: all 0.2s;
+}
+.sm-zone-item:hover {
+  background: rgba(255,255,255,0.05);
+}
+.sm-zone-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+.sm-zone-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sm-zone-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+.sm-zone-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+.sm-zone-seats {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+}
+.sm-zone-bar {
+  height: 4px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 0 14px 8px;
+}
+.sm-zone-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+.sm-zone-body {
+  display: none;
+  padding: 0 14px 10px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+}
+.sm-zone-item.expanded .sm-zone-body {
+  display: block;
+}
+.sm-zone-item.expanded .sm-zone-arrow {
+  transform: rotate(180deg);
+}
+.sm-zone-arrow {
+  color: rgba(255,255,255,0.3);
+  font-size: 10px;
+  transition: transform 0.2s;
+}
+
+/* Channel inventory */
+.sm-channel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.sm-channel-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.sm-channel-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.sm-channel-name { width: 50px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.8); flex-shrink: 0; }
+.sm-channel-bar { flex: 1; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+.sm-channel-fill { height: 100%; border-radius: 2px; }
+.sm-channel-info { font-size: 11px; color: rgba(255,255,255,0.5); white-space: nowrap; }
+
+/* Operation log */
+.sm-op-log {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sm-op-item {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  font-size: 12px;
+}
+.sm-op-time {
+  font-size: 10px;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 2px;
+}
+.sm-op-content {
+  color: rgba(255,255,255,0.6);
+}
+.sm-op-content strong {
+  color: rgba(255,255,255,0.9);
+}
+
+/* Bottom action bar */
+.seat-manage-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+}
+.seat-manage-bottom-left {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+}
+.seat-manage-bottom-left strong {
+  color: #FF6B4A;
+  font-size: 16px;
+}
+.seat-manage-bottom-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.seat-manage-bottom-actions .sm-action-btn {
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: transparent;
+  color: rgba(255,255,255,0.7);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.seat-manage-bottom-actions .sm-action-btn:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.25);
+  color: #fff;
+}
+.seat-manage-bottom-actions .sm-action-btn.primary {
+  background: linear-gradient(135deg, #FF6B4A, #D4A853);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 15px rgba(255,107,74,0.3);
+}
+.seat-manage-bottom-actions .sm-action-btn.primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(255,107,74,0.4);
+}
+.seat-manage-bottom-actions .sm-channel-select {
+  height: 32px;
+  padding: 0 24px 0 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.8);
+  font-size: 12px;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23999' d='M5 7L1 3h8z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+.seat-manage-bottom-actions .sm-channel-select option {
+  background: #1A2E4A;
+  color: #fff;
+}
+
+/* Seat manage tooltip */
+.sm-seat-tooltip {
+  position: fixed;
+  padding: 8px 14px;
+  background: rgba(10,22,40,0.95);
+  color: #fff;
+  font-size: 12px;
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 9999;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  line-height: 1.6;
+}
+.sm-seat-tooltip.visible {
+  opacity: 1;
+}
 
 /* Session data modal chart bars */
 .chart-bar-group {
@@ -3976,16 +4512,6 @@ table { border-collapse: collapse; width: 100%; }
   min-width: 0;
   overflow: hidden;
 }
-
-.vsc-left > .vsc-grid-wrapper {
-  flex: 1;
-  min-height: 0;
-  overflow: auto;
-}
-
-.vsc-left > .vsc-status-bar {
-  flex-shrink: 0;
-}
 .vsc-right {
   flex: 0 0 calc(40% - 20px);
   display: flex;
@@ -4204,13 +4730,13 @@ table { border-collapse: collapse; width: 100%; }
   background: #fff;
   border-radius: 8px;
   border: 1px solid var(--border-color);
-  padding: 16px 32px 32px;
+  padding: 16px;
   overflow: auto;
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  min-height: 0;
+  align-items: center;
+  min-height: 400px;
 }
 .vsc-grid-container {
   display: inline-block;
@@ -4346,34 +4872,19 @@ table { border-collapse: collapse; width: 100%; }
 .vsc-dot.zone-b .vsc-dot-inner { background: #6B7280; }
 .vsc-dot.zone-c .vsc-dot-inner { background: #10B981; }
 .vsc-dot.zone-d .vsc-dot-inner { background: #8B5CF6; }
-/* 中线标识（中间开始编号时显示） */
-.vsc-center-line {
-  width: 2px;
-  background: repeating-linear-gradient(
-    to bottom,
-    var(--primary, #FF6B35) 0px,
-    var(--primary, #FF6B35) 4px,
-    transparent 4px,
-    transparent 8px
-  );
-  flex-shrink: 0;
-  margin: 0 1px;
-  align-self: stretch;
-  min-height: 28px;
-}
 
 /* 框选操作栏 */
 .vsc-selection-bar {
   display: none;
-  position: fixed;
-  bottom: 80px;
+  position: absolute;
+  bottom: 56px;
   left: 50%;
   transform: translateX(-50%);
   background: var(--deep-blue);
   border-radius: 8px;
   padding: 6px 10px;
   gap: 6px;
-  z-index: 100;
+  z-index: 10;
   box-shadow: 0 4px 16px rgba(0,0,0,0.2);
 }
 .vsc-selection-bar.visible {
@@ -4516,6 +5027,8 @@ table { border-collapse: collapse; width: 100%; }
 .vsc-config-card-body {
   padding: 14px 16px;
   font-size: 13px;
+  max-height: 400px;
+  overflow-y: auto;
 }
 .vsc-config-card-body.collapsed {
   display: none;
@@ -4638,15 +5151,6 @@ table { border-collapse: collapse; width: 100%; }
 }
 .vsc-zone-del:hover {
   color: #EF4444;
-}
-.vsc-zone-edit {
-  cursor: pointer;
-  color: var(--text-muted);
-  font-size: 11px;
-  transition: color 0.2s;
-}
-.vsc-zone-edit:hover {
-  color: var(--primary);
 }
 /* 新建分区内联表单 */
 .vsc-zone-add-form {
@@ -5247,1065 +5751,7 @@ table { border-collapse: collapse; width: 100%; }
   display: block;
 }
 
-
-/* Session table scroll */
-.session-table-scroll {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-.session-table-scroll table {
-  width: 100%;
-  table-layout: fixed;
-  box-sizing: border-box;
-}
-.session-table-scroll th,
-.session-table-scroll td {
-  box-sizing: border-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-/* Session table column widths */
-.session-table-scroll th:nth-child(1),
-.session-table-scroll td:nth-child(1) { width: 40px; min-width: 40px; }
-.session-table-scroll th:nth-child(2),
-.session-table-scroll td:nth-child(2) { width: 180px; min-width: 160px; }
-.session-table-scroll th:nth-child(3),
-.session-table-scroll td:nth-child(3) { width: 140px; min-width: 120px; }
-.session-table-scroll th:nth-child(4),
-.session-table-scroll td:nth-child(4) { width: 140px; min-width: 120px; }
-.session-table-scroll th:nth-child(5),
-.session-table-scroll td:nth-child(5) { width: 70px; min-width: 60px; text-align: center; }
-.session-table-scroll th:nth-child(6),
-.session-table-scroll td:nth-child(6) { width: 100px; min-width: 90px; }
-.session-table-scroll th:nth-child(7),
-.session-table-scroll td:nth-child(7) { width: 100px; min-width: 90px; text-align: right; }
-.session-table-scroll th:nth-child(8),
-.session-table-scroll td:nth-child(8) { width: 90px; min-width: 80px; text-align: center; }
-.session-table-scroll th:nth-child(9),
-.session-table-scroll td:nth-child(9) { width: 180px; min-width: 160px; text-align: center; }
-.session-table-scroll::-webkit-scrollbar {
-  height: 6px;
-}
-.session-table-scroll::-webkit-scrollbar-track {
-  background: #F1F5F9;
-  border-radius: 3px;
-}
-.session-table-scroll::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-  border-radius: 3px;
-}
-
-.action-btn-text {
-  padding: 4px 10px;
-  border: 1px solid #E5E7EB;
-  border-radius: 6px;
-  background: #fff;
-  color: #475569;
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-.action-btn-text:hover {
-  background: #F8FAFC;
-  border-color: #CBD5E1;
-  color: #1E293B;
-}
-
-/* Session sale toggle */
-.session-sale-toggle {
-  position: relative;
-  display: inline-block;
-  width: 44px;
-  height: 24px;
-  cursor: pointer;
-}
-.session-sale-toggle input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-.session-sale-toggle .toggle-slider {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: #E5E7EB;
-  border-radius: 24px;
-  transition: .3s;
-}
-.session-sale-toggle .toggle-slider:before {
-  position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background: white;
-  border-radius: 50%;
-  transition: .3s;
-}
-.session-sale-toggle input:checked + .toggle-slider {
-  background: #10B981;
-}
-.session-sale-toggle input:checked + .toggle-slider:before {
-  transform: translateX(20px);
-}
-.session-sale-toggle input:disabled + .toggle-slider {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* ========== Responsive ========== */
-@media screen and (max-width: 1024px) {
-  .sidebar {
-    width: 64px;
-    overflow: hidden;
-  }
-  .sidebar .logo-text,
-  .sidebar .logo-title,
-  .sidebar .logo-sub,
-  .sidebar .nav-group-label,
-  .sidebar .nav-item span,
-  .sidebar .nav-item .badge,
-  .sidebar .admin-info,
-  .sidebar .logout-btn span {
-    display: none;
-  }
-  .sidebar .logo-icon {
-    margin: 0 auto;
-  }
-  .sidebar-logo {
-    justify-content: center;
-    padding: 20px 0;
-  }
-  .sidebar .nav-item {
-    justify-content: center;
-    padding: 12px;
-    margin: 2px 8px;
-  }
-  .sidebar .nav-item i {
-    margin: 0;
-    font-size: 18px;
-  }
-  .sidebar-footer {
-    justify-content: center;
-    padding: 12px 0;
-  }
-  .main-content {
-    margin-left: 64px;
-    width: calc(100% - 64px);
-  }
-  .page-content {
-    padding: 16px;
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  .show-stats-grid,
-  .session-stats-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .topbar { padding: 0 12px; }
-  .topbar .topbar-search { display: none; }
-  .sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 240px;
-    height: 100%;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    z-index: 200;
-  }
-  .sidebar.mobile-open {
-    transform: translateX(0);
-  }
-  .page-content,
-  .kpi-grid,
-  .charts-row,
-  .filter-bar,
-  .pagination-bar,
-  .stats-grid,
-  .venue-grid,
-  .session-grid,
-  .seat-editor-layout {
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-  .data-table-wrapper,
-  .table-wrapper {
-    max-width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-  svg {
-    max-width: 100%;
-    height: auto;
-  }
-  .sidebar.mobile-open .logo-text,
-  .sidebar.mobile-open .logo-title,
-  .sidebar.mobile-open .logo-sub,
-  .sidebar.mobile-open .nav-group-label,
-  .sidebar.mobile-open .nav-item span,
-  .sidebar.mobile-open .nav-item .badge,
-  .sidebar.mobile-open .admin-info {
-    display: flex;
-  }
-  .sidebar.mobile-open .logo-icon {
-    margin: 0;
-  }
-  .sidebar.mobile-open .sidebar-logo {
-    justify-content: flex-start;
-    padding: 24px 20px 20px;
-  }
-  .sidebar.mobile-open .nav-item {
-    justify-content: flex-start;
-    padding: 10px 20px;
-    margin: 2px 12px;
-  }
-  .sidebar.mobile-open .sidebar-footer {
-    justify-content: flex-start;
-    padding: 16px 20px;
-  }
-  .main-content {
-    margin-left: 0;
-  }
-  .page-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-  .page-header .header-actions {
-    width: 100%;
-  }
-  .mobile-menu-btn {
-    display: flex !important;
-    position: fixed;
-    top: 12px;
-    left: 12px;
-    z-index: 150;
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    border: none;
-    background: var(--deep-blue, #0A1628);
-    color: #fff;
-    font-size: 18px;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  }
-  .sidebar-overlay {
-    display: block !important;
-  }
-  .sidebar-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  .page-content {
-    padding: 60px 12px 12px;
-  }
-  .data-table-wrapper,
-  .table-wrapper {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin: 0 -12px;
-    padding: 0 12px;
-  }
-  .data-table {
-    min-width: 600px;
-  }
-  .filter-bar {
-    flex-direction: column;
-    gap: 10px;
-  }
-  .filter-bar .filter-search {
-    width: 100%;
-  }
-  .stats-grid,
-  .show-stats-grid,
-  .session-stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .pagination-bar {
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-  }
-  .modal-overlay {
-    padding: 0 8px;
-    align-items: flex-end;
-  }
-  .modal-overlay .modal {
-    width: 100% !important;
-    max-width: 100% !important;
-    max-height: 85vh;
-    border-radius: 16px 16px 0 0;
-    margin: 0;
-    animation: slideUp 0.3s ease;
-  }
-  @keyframes slideUp {
-    from { transform: translateY(100%); }
-    to { transform: translateY(0); }
-  }
-  .seat-editor-layout {
-    flex-direction: column;
-    height: auto;
-    min-height: auto;
-  }
-  .property-panel {
-    width: 100%;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .stats-grid {
-    grid-template-columns: 1fr;
-  }
-  .page-content {
-    padding: 56px 10px 10px;
-  }
-}
-
-/* ========== Unified Action Buttons ========== */
-.action-btns {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-/* Review action buttons */
-.review-action-btn {
-  height: 32px;
-  padding: 0 16px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s ease;
-  border: none;
-  cursor: pointer;
-}
-.review-action-btn.approve {
-  background: rgba(0,201,167,0.1);
-  color: #00A88A;
-}
-.review-action-btn.approve:hover {
-  background: rgba(0,201,167,0.2);
-  transform: translateY(-1px);
-}
-.review-action-btn.reject {
-  background: rgba(239,68,68,0.1);
-  color: #EF4444;
-}
-.review-action-btn.reject:hover {
-  background: rgba(239,68,68,0.2);
-  transform: translateY(-1px);
-}
-/* Hall action buttons */
-.hall-action-btn {
-  background: none;
-  border: none;
-  color: var(--coral);
-  font-size: 12px;
-  cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-  font-weight: 500;
-}
-.hall-action-btn:hover {
-  background: rgba(255,107,74,0.1);
-  transform: translateY(-1px);
-}
-.hall-action-btn.set-default {
-  color: var(--gold);
-}
-.hall-action-btn.set-default:hover {
-  background: rgba(212,168,83,0.1);
-}
-/* VSC action buttons */
-.vsc-toolbar .vsc-action-btn {
-  padding: 6px 14px;
-  border-radius: 8px;
-  font-size: 12px;
-  cursor: pointer;
-  border: 1px solid var(--border-color);
-  background: #fff;
-  color: var(--text-secondary);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s ease;
-  font-weight: 500;
-}
-.vsc-toolbar .vsc-action-btn:hover {
-  border-color: var(--coral);
-  color: var(--coral);
-  transform: translateY(-1px);
-}
-.vsc-toolbar .vsc-action-btn.vsc-save-btn {
-  background: var(--coral);
-  color: #fff;
-  border-color: var(--coral);
-}
-.vsc-toolbar .vsc-action-btn.vsc-save-btn:hover {
-  background: #E85A3A;
-  transform: translateY(-1px);
-}
-/* Batch dropdown buttons */
-.ss-batch-btn {
-  padding: 6px 14px;
-  border-radius: 8px;
-  font-size: 12px;
-  cursor: pointer;
-  border: 1px solid var(--border-color);
-  background: #fff;
-  color: var(--text-secondary);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s ease;
-  font-weight: 500;
-}
-.ss-batch-btn:hover {
-  border-color: var(--coral);
-  color: var(--coral);
-  transform: translateY(-1px);
-}
-
-/* ========== Unified Form Select ========== */
-.form-select,
-.st-form-select,
-.filter-select,
-.order-form-select,
-.page-size-select {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FF6B4A' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  padding-right: 32px;
-  cursor: pointer;
-  height: 38px;
-  border: 1.5px solid var(--border-color);
-  border-radius: 10px;
-  padding: 0 32px 0 14px;
-  font-size: 13px;
-  color: var(--text-primary);
-  background-color: #fff;
-  transition: all 0.2s ease;
-  font-family: inherit;
-}
-.form-select:focus,
-.st-form-select:focus,
-.filter-select:focus,
-.order-form-select:focus,
-.page-size-select:focus {
-  border-color: var(--coral);
-  box-shadow: 0 0 0 3px rgba(255,107,74,0.1);
-  outline: none;
-}
-.form-select:hover,
-.st-form-select:hover,
-.filter-select:hover,
-.order-form-select:hover,
-.page-size-select:hover {
-  border-color: var(--coral-orange);
-}
-/* Filter dropdowns in tables */
-.filter-dropdowns .form-select {
-  padding: 6px 28px 6px 10px;
-  font-size: 13px;
-  border-radius: 8px;
-  border: 1.5px solid var(--border-color);
-  background: var(--card-white);
-  color: var(--text-secondary);
-  height: 34px;
-}
-.filter-dropdowns .form-select:focus {
-  border-color: var(--coral);
-  box-shadow: 0 0 0 3px rgba(255,107,74,0.1);
-}
-/* Small selects */
-select.form-select-sm,
-.form-select.form-select-sm {
-  height: 32px;
-  padding: 0 28px 0 10px;
-  font-size: 12px;
-  border-radius: 8px;
-}
-
-/* ========== Unified Custom Dropdowns ========== */
-.filter-dropdown-wrap { position: relative; z-index: 100; }
-.filter-dropdown {
-  display: none; position: absolute; top: 100%; left: 0;
-  margin-top: 6px; background: #fff;
-  border: 1px solid var(--border-color); border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.12); padding: 16px;
-  min-width: 280px; z-index: 200;
-}
-.filter-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
-@keyframes dropIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-/* Theater select dropdown */
-.theater-select-dropdown {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  background: #fff;
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-  padding: 8px 0;
-  min-width: 200px;
-  display: none;
-  z-index: 200;
-}
-.theater-select-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
-.theater-option {
-  padding: 8px 14px;
-  font-size: 13px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: background 0.15s;
-}
-.theater-option:hover { background: var(--light-gray); }
-.theater-option.active { color: var(--coral); background: rgba(255,107,74,0.06); }
-.theater-group-label {
-  padding: 4px 14px;
-  font-size: 11px;
-  color: var(--text-muted);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-/* Session select dropdown */
-.session-select-dropdown {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  background: #fff;
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-  padding: 8px 0;
-  min-width: 200px;
-  display: none;
-  z-index: 200;
-}
-.session-select-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
-/* Banner link dropdown */
-.banner-link-dropdown {
-  max-height: 160px;
-  overflow-y: auto;
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  margin-top: 4px;
-  background: #fff;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-}
-.banner-link-option {
-  padding: 8px 12px;
-  font-size: 12px;
-  cursor: pointer;
-  border-bottom: 1px solid #f1f5f9;
-  transition: background 0.15s;
-}
-.banner-link-option:hover { background: var(--light-gray); }
-.banner-link-option:last-child { border-bottom: none; }
-/* VSC assign dropdown */
-.vsc-assign-dropdown {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  background: #fff;
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-  padding: 8px 0;
-  min-width: 160px;
-  display: none;
-  z-index: 200;
-}
-.vsc-assign-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
-/* SS batch dropdown */
-.ss-batch-dropdown { position: relative; }
-.ss-batch-menu {
-  display: none;
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  background: #fff;
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-  padding: 6px 0;
-  min-width: 140px;
-  z-index: 200;
-}
-.ss-batch-menu.open { display: block; animation: dropIn 0.2s ease-out; }
-.ss-batch-menu button {
-  display: block;
-  width: 100%;
-  padding: 8px 14px;
-  border: none;
-  background: none;
-  text-align: left;
-  font-size: 12px;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: background 0.15s;
-}
-.ss-batch-menu button:hover { background: var(--light-gray); color: var(--coral); }
-
-
-/* ========== Unified Dropdown Layer Styles ========== */
-
-/* Base dropdown layer - all dropdowns share this foundation */
-.dropdown-layer,
-.filter-dropdown,
-.theater-select-dropdown,
-.session-select-dropdown,
-.banner-link-dropdown,
-.vsc-assign-dropdown,
-.ss-batch-menu,
-.date-picker-popup,
-.dropdown-menu,
-.dropdown-content {
-  background: #fff;
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
-  overflow: hidden;
-}
-
-/* Filter dropdown panel */
-.filter-dropdown {
-  display: none;
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  margin-top: 0;
-  padding: 20px;
-  min-width: 300px;
-  z-index: 200;
-}
-.filter-dropdown.show {
-  display: block;
-  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Theater select dropdown */
-.theater-select-dropdown {
-  display: none;
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  padding: 8px 0;
-  min-width: 220px;
-  z-index: 200;
-}
-.theater-select-dropdown.show {
-  display: block;
-  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.theater-option {
-  padding: 10px 16px;
-  font-size: 13px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: all 0.15s ease;
-  color: var(--text-primary);
-}
-.theater-option:hover {
-  background: linear-gradient(90deg, rgba(255, 107, 74, 0.06), transparent);
-  color: var(--coral);
-}
-.theater-option.active {
-  color: var(--coral);
-  background: linear-gradient(90deg, rgba(255, 107, 74, 0.08), transparent);
-  font-weight: 500;
-}
-.theater-option i {
-  width: 16px;
-  text-align: center;
-  color: var(--text-muted);
-  transition: color 0.15s;
-}
-.theater-option:hover i,
-.theater-option.active i {
-  color: var(--coral);
-}
-.theater-group-label {
-  padding: 6px 16px 4px;
-  font-size: 11px;
-  color: var(--text-muted);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-}
-
-/* Session select dropdown */
-.session-select-dropdown {
-  display: none;
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  padding: 8px 0;
-  min-width: 220px;
-  z-index: 200;
-}
-.session-select-dropdown.show {
-  display: block;
-  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Banner link dropdown */
-.banner-link-dropdown {
-  max-height: 200px;
-  overflow-y: auto;
-  margin-top: 6px;
-  padding: 4px 0;
-}
-.banner-link-option {
-  padding: 10px 16px;
-  font-size: 13px;
-  cursor: pointer;
-  border-bottom: 1px solid rgba(241, 245, 249, 0.6);
-  transition: all 0.15s ease;
-  color: var(--text-primary);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.banner-link-option:hover {
-  background: linear-gradient(90deg, rgba(255, 107, 74, 0.06), transparent);
-  color: var(--coral);
-}
-.banner-link-option:last-child {
-  border-bottom: none;
-}
-
-/* VSC assign dropdown */
-.vsc-assign-dropdown {
-  display: none;
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  padding: 8px 0;
-  min-width: 180px;
-  z-index: 200;
-}
-.vsc-assign-dropdown.show {
-  display: block;
-  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* SS batch menu */
-.ss-batch-dropdown { position: relative; }
-.ss-batch-menu {
-  display: none;
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  padding: 6px 0;
-  min-width: 160px;
-  z-index: 200;
-}
-.ss-batch-menu.open {
-  display: block;
-  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.ss-batch-menu button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 10px 16px;
-  border: none;
-  background: none;
-  text-align: left;
-  font-size: 13px;
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-.ss-batch-menu button:hover {
-  background: linear-gradient(90deg, rgba(255, 107, 74, 0.06), transparent);
-  color: var(--coral);
-}
-
-/* Date picker popup */
-.date-picker-popup {
-  display: none;
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 0;
-  width: 440px;
-  padding: 0;
-  z-index: 200;
-}
-.date-picker-popup.show {
-  display: block;
-  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Dropdown animation */
-@keyframes dropdownSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-8px) scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* Dropdown trigger buttons */
-.dropdown-trigger,
-.filter-dropdown-btn,
-.theater-select-trigger,
-.ss-batch-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: 10px;
-  border: 1.5px solid var(--border-color);
-  background: #fff;
-  color: var(--text-secondary);
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-}
-.dropdown-trigger:hover,
-.filter-dropdown-btn:hover,
-.theater-select-trigger:hover,
-.ss-batch-btn:hover {
-  border-color: var(--coral);
-  color: var(--coral);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(255, 107, 74, 0.1);
-}
-.dropdown-trigger.active,
-.filter-dropdown-btn.active,
-.theater-select-trigger.active {
-  border-color: var(--coral);
-  color: var(--coral);
-  background: rgba(255, 107, 74, 0.04);
-}
-
-/* ========== Unified Table Action Buttons ========== */
-
-/* Action buttons container */
-.action-btns {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  justify-content: center;
-}
-
-
-.action-btn-text:hover {
-  background: var(--light-gray);
-  border-color: var(--coral);
-  color: var(--coral);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.1);
-}
-.action-btn-text:active {
-  transform: translateY(0);
-}
-
-/* Table action button (text + icon) */
-.table-action-btn {
-  padding: 6px 14px;
-  border: 1.5px solid var(--border-color);
-  background: #fff;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 12px;
-  color: var(--text-secondary);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  font-family: inherit;
-  white-space: nowrap;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.table-action-btn:hover {
-  border-color: var(--coral);
-  color: var(--coral);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.1);
-}
-.table-action-btn:active {
-  transform: translateY(0);
-}
-.table-action-btn.primary {
-  background: var(--coral);
-  color: #fff;
-  border-color: var(--coral);
-}
-.table-action-btn.primary:hover {
-  background: #E85A3A;
-  border-color: #E85A3A;
-  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.25);
-}
-.table-action-btn.success {
-  background: var(--emerald);
-  color: #fff;
-  border-color: var(--emerald);
-}
-.table-action-btn.success:hover {
-  background: #00b396;
-  border-color: #00b396;
-  box-shadow: 0 4px 12px rgba(0, 201, 167, 0.25);
-}
-.table-action-btn.danger-outline {
-  color: #ef4444;
-  border-color: #fca5a5;
-}
-.table-action-btn.danger-outline:hover {
-  background: #fef2f2;
-  border-color: #ef4444;
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
-}
-
-/* Review action button */
-.review-action-btn {
-  height: 34px;
-  padding: 0 18px;
-  border-radius: 10px;
-  font-size: 12px;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  border: none;
-  cursor: pointer;
-}
-.review-action-btn.approve {
-  background: rgba(0, 201, 167, 0.1);
-  color: #00A88A;
-}
-.review-action-btn.approve:hover {
-  background: #00C9A7;
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 201, 167, 0.2);
-}
-.review-action-btn.reject {
-  background: rgba(239, 68, 68, 0.1);
-  color: #EF4444;
-}
-.review-action-btn.reject:hover {
-  background: #EF4444;
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
-}
-
-/* Hall action button */
-.hall-action-btn {
-  background: none;
-  border: none;
-  color: var(--coral);
-  font-size: 12px;
-  cursor: pointer;
-  padding: 5px 10px;
-  border-radius: 8px;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  font-weight: 500;
-}
-.hall-action-btn:hover {
-  background: rgba(255, 107, 74, 0.1);
-  transform: translateY(-2px);
-}
-.hall-action-btn.set-default {
-  color: var(--gold);
-}
-.hall-action-btn.set-default:hover {
-  background: rgba(212, 168, 83, 0.1);
-}
-
-/* VSC action button */
-.vsc-toolbar .vsc-action-btn {
-  padding: 7px 16px;
-  border-radius: 10px;
-  font-size: 12px;
-  cursor: pointer;
-  border: 1.5px solid var(--border-color);
-  background: #fff;
-  color: var(--text-secondary);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  font-weight: 500;
-}
-.vsc-toolbar .vsc-action-btn:hover {
-  border-color: var(--coral);
-  color: var(--coral);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.1);
-}
-.vsc-toolbar .vsc-action-btn.vsc-save-btn {
-  background: var(--coral);
-  color: #fff;
-  border-color: var(--coral);
-}
-.vsc-toolbar .vsc-action-btn.vsc-save-btn:hover {
-  background: #E85A3A;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.25);
-}
-
-/* Batch dropdown button */
-.ss-batch-btn {
-  padding: 7px 16px;
-  border-radius: 10px;
-  font-size: 12px;
-  cursor: pointer;
-  border: 1.5px solid var(--border-color);
-  background: #fff;
-  color: var(--text-secondary);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  font-weight: 500;
-}
-.ss-batch-btn:hover {
-  border-color: var(--coral);
-  color: var(--coral);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.1);
-}
-
 </style>
-<link href="admin-components.css" rel="stylesheet">
 </head>
 <body>
 
@@ -6313,12 +5759,14 @@ select.form-select-sm,
   <!-- ==================== Sidebar ==================== -->
 <aside class="sidebar">
   <div class="sidebar-logo">
-      <img src="assets/logo.png" alt="海南省演艺集团" style="width:36px; height:auto; flex-shrink:0;">
-      <div class="logo-text">
-        <span class="logo-title">海南省演艺集团</span>
-        <span class="logo-sub">艺术演出院线数字服务系统</span>
-      </div>
+    <div class="logo-icon">
+      <i class="fas fa-masks-theater"></i>
     </div>
+    <div class="logo-text">
+      <span class="logo-title">海南演艺票务</span>
+      <span class="logo-sub">管理后台</span>
+    </div>
+  </div>
   <nav class="sidebar-nav">
     <div class="nav-group">
       <div class="nav-group-label">核心功能</div>
@@ -6352,7 +5800,12 @@ select.form-select-sm,
       <a class="nav-item" href="ai-marketing.html">
         <i class="fas fa-robot"></i>
         <span>AI智能营销</span>
-      </a>      <a class="nav-item" href="product-service.html">
+      </a>
+      <a class="nav-item" href="banner-management.html">
+        <i class="fas fa-images"></i>
+        <span>轮播图管理</span>
+      </a>
+      <a class="nav-item" href="product-service.html">
         <i class="fas fa-store"></i>
         <span>商品管理</span>
       </a>
@@ -6389,7 +5842,7 @@ select.form-select-sm,
       </div>
 
       <div class="topbar-actions">
-        <button class="topbar-btn" title="消息" onclick="showToast('info','您有3条未读消息')">
+        <button class="topbar-btn" title="消息">
           <i class="fas fa-bell"></i>
           <span class="dot"></span>
         </button>
@@ -6407,13 +5860,6 @@ select.form-select-sm,
         <i class="fas fa-chevron-down" style="color:var(--text-muted);font-size:11px;margin-left:4px;"></i>
       </div>
     </header>
-
-    <!-- Mobile Menu Button -->
-    <button class="mobile-menu-btn" id="mobileMenuBtn" style="display:none;position:fixed;top:16px;left:16px;z-index:150;width:40px;height:40px;border-radius:10px;border:none;background:var(--deep-blue);color:#fff;font-size:18px;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.2);">
-      <i class="fas fa-bars"></i>
-    </button>
-    <!-- Sidebar Overlay -->
-    <div class="sidebar-overlay" id="sidebarOverlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:190;opacity:0;pointer-events:none;transition:opacity 0.3s;"></div>
 
     <!-- Page Content -->
     <div class="page-content">
@@ -6479,13 +5925,6 @@ select.form-select-sm,
               <div class="stat-label">总票房</div>
             </div>
           </div>
-          <div class="show-stat-card">
-            <div class="show-stat-icon yearly"><i class="fas fa-chart-line"></i></div>
-            <div class="show-stat-info">
-              <div class="stat-value" style="color:var(--emerald);">&yen;1,256,800</div>
-              <div class="stat-label">今年票房</div>
-            </div>
-          </div>
 
         </div>
 
@@ -6497,7 +5936,7 @@ select.form-select-sm,
             <button class="status-filter-btn">已结束</button>
           </div>
           <div class="filter-dropdown-wrap">
-            <button class="filter-dropdown-btn"><i class="fas fa-sliders"></i> 筛选</button>
+            <button class="filter-dropdown-btn"><i class="fas fa-sliders"></i>筛选</button>
             <div class="filter-dropdown" id="filterDropdown">
               <div class="filter-dropdown-item">
                 <label>场馆·演出厅</label>
@@ -6559,7 +5998,9 @@ select.form-select-sm,
             <i class="fas fa-search"></i>
             <input type="text" placeholder="搜索演出名称...">
           </div>
-          <button class="btn btn-primary"><i class="fas fa-plus"></i> 新建演出</button>
+          <button class="btn-primary">
+            <i class="fas fa-plus"></i>新建演出
+          </button>
         </div>
 
         <!-- Data Table -->
@@ -6616,10 +6057,11 @@ select.form-select-sm,
                 <td><span class="status-tag selling"><span class="dot"></span>售票中</span></td>
                 <td>
                   <div class="action-btns">
-                    <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
-                    <button class="action-btn view" onclick="switchToSessions('《天涯故事》大型歌舞秀')"><i class="fas fa-calendar-days"></i> 场次</button>
-                    <button class="action-btn offline" data-sold="180" onclick="toggleShowStatus(this)"><i class="fas fa-toggle-off"></i> 下架</button>
-                    <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
+                    <button class="action-btn edit" title="编辑" onclick="openEditShow(this)"><i class="fas fa-pen"></i></button>
+                    <button class="action-btn" title="场次管理" onclick="switchToSessions('《天涯故事》大型歌舞秀')"><i class="fas fa-calendar-days"></i></button>
+                    <button class="action-btn" title="座位管理" onclick="openSeatManage('show-tianya')"><i class="fas fa-chair"></i></button>
+                    <button class="action-btn toggle" title="下架"><i class="fas fa-eye-slash"></i></button>
+                    <button class="action-btn delete" title="删除"><i class="fas fa-trash"></i></button>
                   </div>
                 </td>
               </tr>
@@ -6663,10 +6105,11 @@ select.form-select-sm,
                 <td><span class="status-tag selling"><span class="dot"></span>售票中</span></td>
                 <td>
                   <div class="action-btns">
-                    <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
-                    <button class="action-btn view" onclick="switchToSessions('椰风海韵·交响音乐会')"><i class="fas fa-calendar-days"></i> 场次</button>
-                    <button class="action-btn offline" data-sold="360" onclick="toggleShowStatus(this)"><i class="fas fa-toggle-off"></i> 下架</button>
-                    <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
+                    <button class="action-btn edit" title="编辑" onclick="openEditShow(this)"><i class="fas fa-pen"></i></button>
+                    <button class="action-btn" title="场次管理" onclick="switchToSessions('椰风海韵·交响音乐会')"><i class="fas fa-calendar-days"></i></button>
+                    <button class="action-btn" title="座位管理" onclick="openSeatManage('show-yefeng')"><i class="fas fa-chair"></i></button>
+                    <button class="action-btn toggle" title="下架"><i class="fas fa-eye-slash"></i></button>
+                    <button class="action-btn delete" title="删除"><i class="fas fa-trash"></i></button>
                   </div>
                 </td>
               </tr>
@@ -6710,10 +6153,11 @@ select.form-select-sm,
                 <td><span class="status-tag ended"><span class="dot"></span>已结束</span></td>
                 <td>
                   <div class="action-btns">
-                    <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
-                    <button class="action-btn view" onclick="switchToSessions('黎苗风情·民族舞蹈专场')"><i class="fas fa-calendar-days"></i> 场次</button>
-                    <button class="action-btn toggle" data-sold="200" onclick="toggleShowStatus(this)"><i class="fas fa-toggle-on"></i> 上架</button>
-                    <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
+                    <button class="action-btn edit" title="编辑" onclick="openEditShow(this)"><i class="fas fa-pen"></i></button>
+                    <button class="action-btn" title="场次管理" onclick="switchToSessions('黎苗风情·民族舞蹈专场')"><i class="fas fa-calendar-days"></i></button>
+                    <button class="action-btn" title="座位管理" onclick="openSeatManage('show-long')"><i class="fas fa-chair"></i></button>
+                    <button class="action-btn toggle" title="上架"><i class="fas fa-eye"></i></button>
+                    <button class="action-btn delete" title="删除"><i class="fas fa-trash"></i></button>
                   </div>
                 </td>
               </tr>
@@ -6759,10 +6203,11 @@ select.form-select-sm,
                 <td><span class="status-tag selling"><span class="dot"></span>售票中</span></td>
                 <td>
                   <div class="action-btns">
-                    <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
-                    <button class="action-btn view" onclick="switchToSessions('爵士之夜·国际爵士音乐节')"><i class="fas fa-calendar-days"></i> 场次</button>
-                    <button class="action-btn offline" data-sold="480" onclick="toggleShowStatus(this)"><i class="fas fa-toggle-off"></i> 下架</button>
-                    <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
+                    <button class="action-btn edit" title="编辑" onclick="openEditShow(this)"><i class="fas fa-pen"></i></button>
+                    <button class="action-btn" title="场次管理" onclick="switchToSessions('爵士之夜·国际爵士音乐节')"><i class="fas fa-calendar-days"></i></button>
+                    <button class="action-btn" title="座位管理" onclick="openSeatManage('show-qindao')"><i class="fas fa-chair"></i></button>
+                    <button class="action-btn toggle" title="下架"><i class="fas fa-eye-slash"></i></button>
+                    <button class="action-btn delete" title="删除"><i class="fas fa-trash"></i></button>
                   </div>
                 </td>
               </tr>
@@ -6807,10 +6252,11 @@ select.form-select-sm,
                 <td><span class="status-tag ended"><span class="dot"></span>已结束</span></td>
                 <td>
                   <div class="action-btns">
-                    <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
-                    <button class="action-btn view" onclick="switchToSessions('《红色娘子军》芭蕾舞剧')"><i class="fas fa-calendar-days"></i> 场次</button>
-                    <button class="action-btn toggle" data-sold="400" onclick="toggleShowStatus(this)"><i class="fas fa-toggle-on"></i> 上架</button>
-                    <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
+                    <button class="action-btn edit" title="编辑" onclick="openEditShow(this)"><i class="fas fa-pen"></i></button>
+                    <button class="action-btn" title="场次管理" onclick="switchToSessions('《红色娘子军》芭蕾舞剧')"><i class="fas fa-calendar-days"></i></button>
+                    <button class="action-btn" title="座位管理" onclick="openSeatManage('show-niangzi')"><i class="fas fa-chair"></i></button>
+                    <button class="action-btn toggle" title="上架"><i class="fas fa-eye"></i></button>
+                    <button class="action-btn delete" title="删除"><i class="fas fa-trash"></i></button>
                   </div>
                 </td>
               </tr>
@@ -6887,7 +6333,7 @@ select.form-select-sm,
             <i class="fas fa-search"></i>
             <input type="text" placeholder="搜索场次..." style="width:180px;">
           </div>
-          <button class="btn btn-primary" onclick="openModal('modalNewSession')"><i class="fas fa-plus"></i> 新建场次</button>
+          <button class="btn-primary" onclick="openModal('modalNewSession')"><i class="fas fa-plus"></i>新建场次</button>
         </div>
 
         <!-- Stats Cards -->
@@ -6911,20 +6357,21 @@ select.form-select-sm,
         </div>
 
         <!-- Session Table -->
-        <div class="data-table session-table-scroll">
+        <div class="data-table">
           <table>
             <thead>
               <tr>
                 <th style="width:40px;"><input type="checkbox"></th>
                 <th>演出名称</th>
                 <th>场次时间</th>
-                <th>开票时间</th>
                 <th>场馆·厅</th>
+                <th>票档数</th>
+                <th>总座位</th>
                 <th>已售</th>
                 <th>上座率</th>
                 <th>票房金额</th>
                 <th>状态</th>
-                <th style="width:200px;">操作</th>
+                <th style="width:160px;">操作</th>
               </tr>
             </thead>
             <tbody>
@@ -6932,8 +6379,9 @@ select.form-select-sm,
                 <td><input type="checkbox"></td>
                 <td><strong style="font-size:13px;">《天涯故事》大型歌舞秀</strong></td>
                 <td>2026-04-20 19:30</td>
-                <td><span class="open-time-tag on-sale"><i class="fas fa-play-circle"></i>已开票</span></td>
                 <td>海南大剧院·主厅</td>
+                <td>4</td>
+                <td>1,600</td>
                 <td>1,152</td>
                 <td>
                   <div class="occupancy-cell">
@@ -6945,8 +6393,9 @@ select.form-select-sm,
                 <td><span class="status-tag on-sale"><span class="dot"></span>售票中</span></td>
                 <td>
                   <div class="action-btns">
-                    <button class="action-btn edit" onclick="openEditSession(this)"><i class="fas fa-edit"></i> 编辑</button>
-                    <button class="action-btn view" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i> 数据</button>
+                    <button class="action-btn edit" title="编辑" onclick="openEditShow(this)"><i class="fas fa-pen"></i></button>
+                    <button class="action-btn" title="座位管理" onclick="openSeatManage('show-tianya')"><i class="fas fa-chair"></i></button>
+                    <button class="action-btn" title="查看数据" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i></button>
                   </div>
                 </td>
               </tr>
@@ -6954,8 +6403,9 @@ select.form-select-sm,
                 <td><input type="checkbox"></td>
                 <td><strong style="font-size:13px;">《天涯故事》大型歌舞秀</strong></td>
                 <td>2026-04-21 14:00</td>
-                <td><span class="open-time-tag on-sale"><i class="fas fa-play-circle"></i>已开票</span></td>
                 <td>海南大剧院·主厅</td>
+                <td>4</td>
+                <td>1,600</td>
                 <td>1,480</td>
                 <td>
                   <div class="occupancy-cell">
@@ -6967,8 +6417,9 @@ select.form-select-sm,
                 <td><span class="status-tag sold-out"><span class="dot"></span>已售罄</span></td>
                 <td>
                   <div class="action-btns">
-                    <button class="action-btn edit" onclick="openEditSession(this)"><i class="fas fa-edit"></i> 编辑</button>
-                    <button class="action-btn view" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i> 数据</button>
+                    <button class="action-btn edit" title="编辑" onclick="openEditShow(this)"><i class="fas fa-pen"></i></button>
+                    <button class="action-btn" title="座位管理" onclick="openSeatManage('show-tianya')"><i class="fas fa-chair"></i></button>
+                    <button class="action-btn" title="查看数据" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i></button>
                   </div>
                 </td>
               </tr>
@@ -6976,8 +6427,9 @@ select.form-select-sm,
                 <td><input type="checkbox"></td>
                 <td><strong style="font-size:13px;">椰风海韵·交响音乐会</strong></td>
                 <td>2026-05-01 19:30</td>
-                <td><span class="open-time-tag priority"><i class="fas fa-clock"></i>会员优先 04-28</span></td>
                 <td>三亚艺术中心·音乐厅</td>
+                <td>3</td>
+                <td>1,200</td>
                 <td>540</td>
                 <td>
                   <div class="occupancy-cell">
@@ -6989,8 +6441,9 @@ select.form-select-sm,
                 <td><span class="status-tag on-sale"><span class="dot"></span>售票中</span></td>
                 <td>
                   <div class="action-btns">
-                    <button class="action-btn edit" onclick="openEditSession(this)"><i class="fas fa-edit"></i> 编辑</button>
-                    <button class="action-btn view" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i> 数据</button>
+                    <button class="action-btn edit" title="编辑" onclick="openEditShow(this)"><i class="fas fa-pen"></i></button>
+                    <button class="action-btn" title="座位管理" onclick="openSeatManage('show-yefeng')"><i class="fas fa-chair"></i></button>
+                    <button class="action-btn" title="查看数据" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i></button>
                   </div>
                 </td>
               </tr>
@@ -6998,8 +6451,9 @@ select.form-select-sm,
                 <td><input type="checkbox"></td>
                 <td><strong style="font-size:13px;">爵士之夜·国际爵士音乐节</strong></td>
                 <td>2026-04-20 20:00</td>
-                <td><span class="open-time-tag on-sale"><i class="fas fa-play-circle"></i>已开票</span></td>
                 <td>万宁海滨剧场·A厅</td>
+                <td>4</td>
+                <td>2,400</td>
                 <td>2,112</td>
                 <td>
                   <div class="occupancy-cell">
@@ -7011,8 +6465,9 @@ select.form-select-sm,
                 <td><span class="status-tag on-sale"><span class="dot"></span>售票中</span></td>
                 <td>
                   <div class="action-btns">
-                    <button class="action-btn edit" onclick="openEditSession(this)"><i class="fas fa-edit"></i> 编辑</button>
-                    <button class="action-btn view" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i> 数据</button>
+                    <button class="action-btn edit" title="编辑" onclick="openEditShow(this)"><i class="fas fa-pen"></i></button>
+                    <button class="action-btn" title="座位管理" onclick="openSeatManage('show-qindao')"><i class="fas fa-chair"></i></button>
+                    <button class="action-btn" title="查看数据" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i></button>
                   </div>
                 </td>
               </tr>
@@ -7020,8 +6475,9 @@ select.form-select-sm,
                 <td><input type="checkbox"></td>
                 <td><strong style="font-size:13px;">黎苗风情·民族舞蹈专场</strong></td>
                 <td>2026-03-15 20:00</td>
-                <td><span class="open-time-tag ended"><i class="fas fa-history"></i>已结束</span></td>
                 <td>海口演艺中心·主厅</td>
+                <td>3</td>
+                <td>800</td>
                 <td>800</td>
                 <td>
                   <div class="occupancy-cell">
@@ -7033,8 +6489,9 @@ select.form-select-sm,
                 <td><span class="status-tag ended"><span class="dot"></span>已结束</span></td>
                 <td>
                   <div class="action-btns">
-                    <button class="action-btn edit" onclick="openEditSession(this)"><i class="fas fa-edit"></i> 编辑</button>
-                    <button class="action-btn view" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i> 数据</button>
+                    <button class="action-btn edit" title="编辑" onclick="openEditShow(this)"><i class="fas fa-pen"></i></button>
+                    <button class="action-btn" title="座位管理" onclick="openSeatManage('show-long')"><i class="fas fa-chair"></i></button>
+                    <button class="action-btn" title="查看数据" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i></button>
                   </div>
                 </td>
               </tr>
@@ -7042,8 +6499,9 @@ select.form-select-sm,
                 <td><input type="checkbox"></td>
                 <td><strong style="font-size:13px;">《南海奇缘》儿童剧</strong></td>
                 <td>2026-07-01 14:00</td>
-                <td><span class="open-time-tag not-open"><i class="fas fa-hourglass-half"></i>待开票 06-25</span></td>
                 <td>海南大剧院·小厅</td>
+                <td>3</td>
+                <td>600</td>
                 <td>0</td>
                 <td>
                   <div class="occupancy-cell">
@@ -7055,8 +6513,9 @@ select.form-select-sm,
                 <td><span class="status-tag not-opened"><span class="dot"></span>未开票</span></td>
                 <td>
                   <div class="action-btns">
-                    <button class="action-btn edit" onclick="openEditSession(this)"><i class="fas fa-edit"></i> 编辑</button>
-                    <button class="action-btn view" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i> 数据</button>
+                    <button class="action-btn edit" title="编辑" onclick="openEditShow(this)"><i class="fas fa-pen"></i></button>
+                    <button class="action-btn" title="座位管理" onclick="openSeatManage('show-nanhai')"><i class="fas fa-chair"></i></button>
+                    <button class="action-btn" title="查看数据" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i></button>
                   </div>
                 </td>
               </tr>
@@ -7064,8 +6523,9 @@ select.form-select-sm,
                 <td><input type="checkbox"></td>
                 <td><strong style="font-size:13px;">《红色娘子军》芭蕾舞剧</strong></td>
                 <td>2026-02-14 19:30</td>
-                <td><span class="open-time-tag ended"><i class="fas fa-history"></i>已结束</span></td>
                 <td>海南大剧院·主厅</td>
+                <td>4</td>
+                <td>1,600</td>
                 <td>1,600</td>
                 <td>
                   <div class="occupancy-cell">
@@ -7077,8 +6537,9 @@ select.form-select-sm,
                 <td><span class="status-tag ended"><span class="dot"></span>已结束</span></td>
                 <td>
                   <div class="action-btns">
-                    <button class="action-btn edit" onclick="openEditSession(this)"><i class="fas fa-edit"></i> 编辑</button>
-                    <button class="action-btn view" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i> 数据</button>
+                    <button class="action-btn edit" title="编辑" onclick="openEditShow(this)"><i class="fas fa-pen"></i></button>
+                    <button class="action-btn" title="座位管理" onclick="openSeatManage('show-niangzi')"><i class="fas fa-chair"></i></button>
+                    <button class="action-btn" title="查看数据" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i></button>
                   </div>
                 </td>
               </tr>
@@ -7087,6 +6548,8 @@ select.form-select-sm,
                 <td><strong style="font-size:13px;">《天涯故事》大型歌舞秀</strong></td>
                 <td>2026-05-10 19:30</td>
                 <td>海南大剧院·主厅</td>
+                <td>4</td>
+                <td>1,600</td>
                 <td>320</td>
                 <td>
                   <div class="occupancy-cell">
@@ -7098,8 +6561,9 @@ select.form-select-sm,
                 <td><span class="status-tag on-sale"><span class="dot"></span>售票中</span></td>
                 <td>
                   <div class="action-btns">
-                    <button class="action-btn edit" onclick="openEditSession(this)"><i class="fas fa-edit"></i> 编辑</button>
-                    <button class="action-btn view" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i> 数据</button>
+                    <button class="action-btn edit" title="编辑" onclick="openEditShow(this)"><i class="fas fa-pen"></i></button>
+                    <button class="action-btn" title="座位管理" onclick="openSeatManage('show-tianya')"><i class="fas fa-chair"></i></button>
+                    <button class="action-btn" title="查看数据" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i></button>
                   </div>
                 </td>
               </tr>
@@ -7108,6 +6572,8 @@ select.form-select-sm,
                 <td><strong style="font-size:13px;">椰风海韵·交响音乐会</strong></td>
                 <td>2026-05-02 19:30</td>
                 <td>三亚艺术中心·音乐厅</td>
+                <td>3</td>
+                <td>1,200</td>
                 <td>0</td>
                 <td>
                   <div class="occupancy-cell">
@@ -7119,8 +6585,9 @@ select.form-select-sm,
                 <td><span class="status-tag paused"><span class="dot"></span>已暂停</span></td>
                 <td>
                   <div class="action-btns">
-                    <button class="action-btn edit" onclick="openEditSession(this)"><i class="fas fa-edit"></i> 编辑</button>
-                    <button class="action-btn view" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i> 数据</button>
+                    <button class="action-btn edit" title="编辑" onclick="openEditShow(this)"><i class="fas fa-pen"></i></button>
+                    <button class="action-btn" title="座位管理" onclick="openSeatManage('show-yefeng')"><i class="fas fa-chair"></i></button>
+                    <button class="action-btn" title="查看数据" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i></button>
                   </div>
                 </td>
               </tr>
@@ -7129,6 +6596,8 @@ select.form-select-sm,
                 <td><strong style="font-size:13px;">爵士之夜·国际爵士音乐节</strong></td>
                 <td>2026-04-21 20:00</td>
                 <td>万宁海滨剧场·A厅</td>
+                <td>4</td>
+                <td>2,400</td>
                 <td>2,280</td>
                 <td>
                   <div class="occupancy-cell">
@@ -7140,8 +6609,9 @@ select.form-select-sm,
                 <td><span class="status-tag on-sale"><span class="dot"></span>售票中</span></td>
                 <td>
                   <div class="action-btns">
-                    <button class="action-btn edit" onclick="openEditSession(this)"><i class="fas fa-edit"></i> 编辑</button>
-                    <button class="action-btn view" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i> 数据</button>
+                    <button class="action-btn edit" title="编辑" onclick="openEditShow(this)"><i class="fas fa-pen"></i></button>
+                    <button class="action-btn" title="座位管理" onclick="openSeatManage('show-qindao')"><i class="fas fa-chair"></i></button>
+                    <button class="action-btn" title="查看数据" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i></button>
                   </div>
                 </td>
               </tr>
@@ -7170,7 +6640,7 @@ select.form-select-sm,
       <div class="tab-panel" id="panel-venues">
         <div class="venue-header">
           <h3>场馆列表</h3>
-          <button class="btn btn-primary"><i class="fas fa-plus"></i> 新建场馆</button>
+          <button class="btn-primary"><i class="fas fa-plus"></i>新建场馆</button>
         </div>
 
         <div class="venue-grid">
@@ -7187,9 +6657,9 @@ select.form-select-sm,
                 <div class="venue-stat"><i class="fas fa-calendar-check"></i>演出 <strong>8</strong></div>
               </div>
               <div class="venue-card-actions">
-                <button class="action-btn edit" onclick="editVenue('hainan')"><i class="fas fa-edit"></i> 编辑</button>
-                <button class="action-btn view" onclick="openHallManage('hainan')"><i class="fas fa-door-open"></i> 演出厅</button>
-                <button class="action-btn view" onclick="switchToVenueSeat('hainan')"><i class="fas fa-chair"></i> 管理座位</button>
+                <button class="btn-outline" onclick="editVenue('hainan')"><i class="fas fa-pen"></i> 编辑</button>
+                <button class="btn-outline" onclick="openHallManage('hainan')"><i class="fas fa-door-open"></i> 演出厅</button>
+                <button class="btn-outline" onclick="switchToVenueSeat('hainan')"><i class="fas fa-chair"></i> 管理座位</button>
               </div>
             </div>
           </div>
@@ -7206,9 +6676,9 @@ select.form-select-sm,
                 <div class="venue-stat"><i class="fas fa-calendar-check"></i>演出 <strong>5</strong></div>
               </div>
               <div class="venue-card-actions">
-                <button class="action-btn edit" onclick="editVenue('sanya')"><i class="fas fa-edit"></i> 编辑</button>
-                <button class="action-btn view" onclick="openHallManage('sanya')"><i class="fas fa-door-open"></i> 演出厅</button>
-                <button class="action-btn view" onclick="switchToVenueSeat('sanya')"><i class="fas fa-chair"></i> 管理座位</button>
+                <button class="btn-outline" onclick="editVenue('sanya')"><i class="fas fa-pen"></i> 编辑</button>
+                <button class="btn-outline" onclick="openHallManage('sanya')"><i class="fas fa-door-open"></i> 演出厅</button>
+                <button class="btn-outline" onclick="switchToVenueSeat('sanya')"><i class="fas fa-chair"></i> 管理座位</button>
               </div>
             </div>
           </div>
@@ -7225,9 +6695,9 @@ select.form-select-sm,
                 <div class="venue-stat"><i class="fas fa-calendar-check"></i>演出 <strong>3</strong></div>
               </div>
               <div class="venue-card-actions">
-                <button class="action-btn edit" onclick="editVenue('haikou')"><i class="fas fa-edit"></i> 编辑</button>
-                <button class="action-btn view" onclick="openHallManage('haikou')"><i class="fas fa-door-open"></i> 演出厅</button>
-                <button class="action-btn view" onclick="switchToVenueSeat('haikou')"><i class="fas fa-chair"></i> 管理座位</button>
+                <button class="btn-outline" onclick="editVenue('haikou')"><i class="fas fa-pen"></i> 编辑</button>
+                <button class="btn-outline" onclick="openHallManage('haikou')"><i class="fas fa-door-open"></i> 演出厅</button>
+                <button class="btn-outline" onclick="switchToVenueSeat('haikou')"><i class="fas fa-chair"></i> 管理座位</button>
               </div>
             </div>
           </div>
@@ -7244,9 +6714,9 @@ select.form-select-sm,
                 <div class="venue-stat"><i class="fas fa-calendar-check"></i>演出 <strong>2</strong></div>
               </div>
               <div class="venue-card-actions">
-                <button class="action-btn edit" onclick="editVenue('wanning')"><i class="fas fa-edit"></i> 编辑</button>
-                <button class="action-btn view" onclick="openHallManage('wanning')"><i class="fas fa-door-open"></i> 演出厅</button>
-                <button class="action-btn view" onclick="switchToVenueSeat('wanning')"><i class="fas fa-chair"></i> 管理座位</button>
+                <button class="btn-outline" onclick="editVenue('wanning')"><i class="fas fa-pen"></i> 编辑</button>
+                <button class="btn-outline" onclick="openHallManage('wanning')"><i class="fas fa-door-open"></i> 演出厅</button>
+                <button class="btn-outline" onclick="switchToVenueSeat('wanning')"><i class="fas fa-chair"></i> 管理座位</button>
               </div>
             </div>
           </div>
@@ -7263,9 +6733,9 @@ select.form-select-sm,
                 <div class="venue-stat"><i class="fas fa-calendar-check"></i>演出 <strong>1</strong></div>
               </div>
               <div class="venue-card-actions">
-                <button class="action-btn edit" onclick="editVenue('danzhou')"><i class="fas fa-edit"></i> 编辑</button>
-                <button class="action-btn view" onclick="openHallManage('danzhou')"><i class="fas fa-door-open"></i> 演出厅</button>
-                <button class="action-btn view" onclick="switchToVenueSeat('danzhou')"><i class="fas fa-chair"></i> 管理座位</button>
+                <button class="btn-outline" onclick="editVenue('danzhou')"><i class="fas fa-pen"></i> 编辑</button>
+                <button class="btn-outline" onclick="openHallManage('danzhou')"><i class="fas fa-door-open"></i> 演出厅</button>
+                <button class="btn-outline" onclick="switchToVenueSeat('danzhou')"><i class="fas fa-chair"></i> 管理座位</button>
               </div>
             </div>
           </div>
@@ -7283,16 +6753,8 @@ select.form-select-sm,
             <button class="status-filter-btn active">全部</button>
             <button class="status-filter-btn">待审核</button>
             <button class="status-filter-btn">已通过</button>
+            <button class="status-filter-btn">已拒绝</button>
           </div>
-          <select class="form-select" style="width:180px;">
-            <option value="">全部演出项目</option>
-            <option value="tianya">《天涯故事》大型歌舞秀</option>
-            <option value="yefeng">椰风海韵·交响音乐会</option>
-            <option value="langmu">黎苗风情·民族舞蹈专场</option>
-            <option value="nanhai">《南海奇缘》儿童剧</option>
-            <option value="jazz">爵士之夜·国际爵士音乐节</option>
-            <option value="niangzi">《红色娘子军》芭蕾舞剧</option>
-          </select>
           <div class="filter-search">
             <i class="fas fa-search"></i>
             <input type="text" placeholder="搜索评论内容...">
@@ -7309,14 +6771,21 @@ select.form-select-sm,
                 <span class="review-show">《天涯故事》大型歌舞秀</span>
                 <span class="review-time">2026-04-09 18:32</span>
               </div>
+              <div class="review-stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
               <div class="review-content">非常精彩的演出！舞台效果震撼，演员们的表演充满激情，尤其是第二幕的海浪舞蹈，美到让人屏住呼吸。强烈推荐！</div>
               <div class="review-reply-section" id="reply-section-1" style="display:none;">
                 <div class="review-reply-list"></div>
                 <div class="review-reply-input">
                   <textarea class="form-input" placeholder="输入回复内容..." rows="2" style="resize:vertical;min-height:60px;"></textarea>
                   <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:8px;">
-                    <button class="btn btn-outline" style="padding:4px 12px;font-size:12px;" onclick="cancelReply(1)">取消</button>
-                    <button class="btn btn-primary" style="padding:4px 12px;font-size:12px;" onclick="submitReply(1)">发送回复</button>
+                    <button class="btn-outline" style="padding:4px 12px;font-size:12px;" onclick="cancelReply(1)">取消</button>
+                    <button class="btn-primary" style="padding:4px 12px;font-size:12px;" onclick="submitReply(1)">发送回复</button>
                   </div>
                 </div>
               </div>
@@ -7324,7 +6793,7 @@ select.form-select-sm,
             <div class="review-actions">
               <button class="review-action-btn approve"><i class="fas fa-check"></i>通过</button>
               <button class="review-action-btn reject"><i class="fas fa-trash"></i>删除</button>
-              <button class="action-btn reply" onclick="toggleReply(1)" title="回复"><i class="fas fa-reply"></i> 回复</button>
+              <button class="action-btn reply" onclick="toggleReply(1)" title="回复"><i class="fas fa-reply"></i></button>
             </div>
           </div>
 
@@ -7337,14 +6806,21 @@ select.form-select-sm,
                 <span class="review-show">椰风海韵·交响音乐会</span>
                 <span class="review-time">2026-04-09 15:20</span>
               </div>
+              <div class="review-stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star empty"></i>
+              </div>
               <div class="review-content">交响乐的演奏水平很高，指挥家的功力深厚。不过场馆的空调有点冷，建议下次来多带件外套。整体体验还是很棒的。</div>
               <div class="review-reply-section" id="reply-section-2" style="display:none;">
                 <div class="review-reply-list"></div>
                 <div class="review-reply-input">
                   <textarea class="form-input" placeholder="输入回复内容..." rows="2" style="resize:vertical;min-height:60px;"></textarea>
                   <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:8px;">
-                    <button class="btn btn-outline" style="padding:4px 12px;font-size:12px;" onclick="cancelReply(2)">取消</button>
-                    <button class="btn btn-primary" style="padding:4px 12px;font-size:12px;" onclick="submitReply(2)">发送回复</button>
+                    <button class="btn-outline" style="padding:4px 12px;font-size:12px;" onclick="cancelReply(2)">取消</button>
+                    <button class="btn-primary" style="padding:4px 12px;font-size:12px;" onclick="submitReply(2)">发送回复</button>
                   </div>
                 </div>
               </div>
@@ -7352,7 +6828,7 @@ select.form-select-sm,
             <div class="review-actions">
               <button class="review-action-btn approve"><i class="fas fa-check"></i>通过</button>
               <button class="review-action-btn reject"><i class="fas fa-trash"></i>删除</button>
-              <button class="action-btn reply" onclick="toggleReply(2)" title="回复"><i class="fas fa-reply"></i> 回复</button>
+              <button class="action-btn reply" onclick="toggleReply(2)" title="回复"><i class="fas fa-reply"></i></button>
             </div>
           </div>
 
@@ -7365,14 +6841,21 @@ select.form-select-sm,
                 <span class="review-show">黎苗风情·民族舞蹈专场</span>
                 <span class="review-time">2026-04-08 21:45</span>
               </div>
+              <div class="review-stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
               <div class="review-content">带孩子去看的，非常有教育意义！黎族和苗族的文化通过舞蹈展现得淋漓尽致，孩子看得津津有味，回来还学着跳呢。票价也很亲民，值得一看。</div>
               <div class="review-reply-section" id="reply-section-3" style="display:none;">
                 <div class="review-reply-list"></div>
                 <div class="review-reply-input">
                   <textarea class="form-input" placeholder="输入回复内容..." rows="2" style="resize:vertical;min-height:60px;"></textarea>
                   <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:8px;">
-                    <button class="btn btn-outline" style="padding:4px 12px;font-size:12px;" onclick="cancelReply(3)">取消</button>
-                    <button class="btn btn-primary" style="padding:4px 12px;font-size:12px;" onclick="submitReply(3)">发送回复</button>
+                    <button class="btn-outline" style="padding:4px 12px;font-size:12px;" onclick="cancelReply(3)">取消</button>
+                    <button class="btn-primary" style="padding:4px 12px;font-size:12px;" onclick="submitReply(3)">发送回复</button>
                   </div>
                 </div>
               </div>
@@ -7380,7 +6863,7 @@ select.form-select-sm,
             <div class="review-actions">
               <button class="review-action-btn approve"><i class="fas fa-check"></i>通过</button>
               <button class="review-action-btn reject"><i class="fas fa-trash"></i>删除</button>
-              <button class="action-btn reply" onclick="toggleReply(3)" title="回复"><i class="fas fa-reply"></i> 回复</button>
+              <button class="action-btn reply" onclick="toggleReply(3)" title="回复"><i class="fas fa-reply"></i></button>
             </div>
           </div>
 
@@ -7393,14 +6876,21 @@ select.form-select-sm,
                 <span class="review-show">爵士之夜·国际爵士音乐节</span>
                 <span class="review-time">2026-04-08 14:10</span>
               </div>
+              <div class="review-stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star empty"></i>
+                <i class="fas fa-star empty"></i>
+              </div>
               <div class="review-content">音乐节的氛围很好，海滨的场地很有特色。但是音响效果一般，后排几乎听不清细节。而且停车不太方便，希望主办方下次能改善。</div>
               <div class="review-reply-section" id="reply-section-4" style="display:none;">
                 <div class="review-reply-list"></div>
                 <div class="review-reply-input">
                   <textarea class="form-input" placeholder="输入回复内容..." rows="2" style="resize:vertical;min-height:60px;"></textarea>
                   <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:8px;">
-                    <button class="btn btn-outline" style="padding:4px 12px;font-size:12px;" onclick="cancelReply(4)">取消</button>
-                    <button class="btn btn-primary" style="padding:4px 12px;font-size:12px;" onclick="submitReply(4)">发送回复</button>
+                    <button class="btn-outline" style="padding:4px 12px;font-size:12px;" onclick="cancelReply(4)">取消</button>
+                    <button class="btn-primary" style="padding:4px 12px;font-size:12px;" onclick="submitReply(4)">发送回复</button>
                   </div>
                 </div>
               </div>
@@ -7408,7 +6898,7 @@ select.form-select-sm,
             <div class="review-actions">
               <button class="review-action-btn approve"><i class="fas fa-check"></i>通过</button>
               <button class="review-action-btn reject"><i class="fas fa-trash"></i>删除</button>
-              <button class="action-btn reply" onclick="toggleReply(4)" title="回复"><i class="fas fa-reply"></i> 回复</button>
+              <button class="action-btn reply" onclick="toggleReply(4)" title="回复"><i class="fas fa-reply"></i></button>
             </div>
           </div>
 
@@ -7421,14 +6911,21 @@ select.form-select-sm,
                 <span class="review-show">《红色娘子军》芭蕾舞剧</span>
                 <span class="review-time">2026-04-07 09:55</span>
               </div>
+              <div class="review-stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
               <div class="review-content">经典就是经典！红色娘子军的芭蕾舞剧在海南演出别有一番意义，舞者们的技巧和情感表达都达到了极高的水准。作为海南人感到非常自豪！</div>
               <div class="review-reply-section" id="reply-section-5" style="display:none;">
                 <div class="review-reply-list"></div>
                 <div class="review-reply-input">
                   <textarea class="form-input" placeholder="输入回复内容..." rows="2" style="resize:vertical;min-height:60px;"></textarea>
                   <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:8px;">
-                    <button class="btn btn-outline" style="padding:4px 12px;font-size:12px;" onclick="cancelReply(5)">取消</button>
-                    <button class="btn btn-primary" style="padding:4px 12px;font-size:12px;" onclick="submitReply(5)">发送回复</button>
+                    <button class="btn-outline" style="padding:4px 12px;font-size:12px;" onclick="cancelReply(5)">取消</button>
+                    <button class="btn-primary" style="padding:4px 12px;font-size:12px;" onclick="submitReply(5)">发送回复</button>
                   </div>
                 </div>
               </div>
@@ -7436,7 +6933,7 @@ select.form-select-sm,
             <div class="review-actions">
               <button class="review-action-btn approve"><i class="fas fa-check"></i>通过</button>
               <button class="review-action-btn reject"><i class="fas fa-trash"></i>删除</button>
-              <button class="action-btn reply" onclick="toggleReply(5)" title="回复"><i class="fas fa-reply"></i> 回复</button>
+              <button class="action-btn reply" onclick="toggleReply(5)" title="回复"><i class="fas fa-reply"></i></button>
             </div>
           </div>
         </div>
@@ -7536,6 +7033,27 @@ select.form-select-sm,
                 <div id="vscZoneList">
                   <!-- 由JS渲染分区列表 -->
                 </div>
+                <!-- 新建分区内联表单 -->
+                <div class="vsc-zone-add-form" id="vscZoneAddForm" style="display:none;">
+                  <div class="vsc-zone-form-row">
+                    <label>分区名称</label>
+                    <input type="text" id="vscNewZoneName" placeholder="输入分区名称" maxlength="20">
+                  </div>
+                  <div class="vsc-zone-form-row">
+                    <label>分区颜色</label>
+                    <div class="vsc-zone-color-picker" id="vscNewZoneColors">
+                      <!-- 由JS渲染颜色选项 -->
+                    </div>
+                  </div>
+                  <div class="vsc-zone-form-row">
+                    <label>默认票价</label>
+                    <input type="number" id="vscNewZonePrice" value="380" min="0" step="10">
+                  </div>
+                  <div class="vsc-zone-form-actions">
+                    <button class="vsc-config-btn" onclick="vscConfirmAddZone()">确认创建</button>
+                    <button class="vsc-config-btn-outline" onclick="vscCancelAddZone()">取消</button>
+                  </div>
+                </div>
                 <button class="vsc-config-btn-outline" style="width:100%;margin-top:8px;" onclick="vscAddZone()" id="vscAddZoneBtn">
                   <i class="fas fa-plus"></i> 新建分区
                 </button>
@@ -7549,9 +7067,6 @@ select.form-select-sm,
                 <i class="fas fa-chevron-down toggle-icon"></i>
               </div>
               <div class="vsc-config-card-body">
-                <div style="font-size:12px;color:#888;margin-bottom:10px;line-height:1.5;">
-                  行号和列号为位置编号，始终从1开始连续递增，不受座位空缺影响。同一排内的座位编号也会自动连续递增，空位不占用座位号。
-                </div>
                 <div class="vsc-config-row">
                   <label>编号方式</label>
                   <select id="vscNumberingType" onchange="vscToggleNumberingMode()">
@@ -7615,8 +7130,8 @@ select.form-select-sm,
       </table>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('modalHallManage')">关闭</button>
-      <button class="btn btn-primary" onclick="openHallEdit()"><i class="fas fa-plus"></i> 新增厅</button>
+      <button class="btn-outline" onclick="closeModal('modalHallManage')">关闭</button>
+      <button class="btn-primary" onclick="openHallEdit()"><i class="fas fa-plus"></i>新增厅</button>
     </div>
   </div>
 </div>
@@ -7668,8 +7183,8 @@ select.form-select-sm,
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('modalHallEdit')">取消</button>
-      <button class="btn btn-primary" onclick="saveHallEdit()"><i class="fas fa-check"></i>保存</button>
+      <button class="btn-outline" onclick="closeModal('modalHallEdit')">取消</button>
+      <button class="btn-primary" onclick="saveHallEdit()"><i class="fas fa-check"></i>保存</button>
     </div>
   </div>
 </div>
@@ -7779,7 +7294,7 @@ select.form-select-sm,
           <div class="cover-cropper" id="coverCropper" style="display:none;">
             <div class="cropper-header">
               <span style="font-size:13px;font-weight:600;color:var(--text-primary);"><i class="fas fa-crop-simple" style="color:var(--coral);margin-right:6px;"></i>裁剪封面</span>
-              <button class="btn btn-outline" style="padding:4px 12px;font-size:12px;" onclick="cancelCoverCrop()">取消</button>
+              <button class="btn-outline" style="padding:4px 12px;font-size:12px;" onclick="cancelCoverCrop()">取消</button>
             </div>
             <!-- Ratio Tabs -->
             <div class="cropper-ratio-tabs">
@@ -7819,9 +7334,9 @@ select.form-select-sm,
               </div>
             </div>
             <div class="cropper-actions">
-              <button class="btn btn-outline" style="padding:8px 16px;font-size:13px;" onclick="cancelCoverCrop()">重新选择</button>
-              <button class="btn btn-primary" style="padding:8px 16px;font-size:13px;" onclick="cropNextRatio()" id="cropperNextBtn"><i class="fas fa-arrow-right"></i> 下一个尺寸</button>
-              <button class="btn btn-primary" style="padding:8px 16px;font-size:13px;display:none;" onclick="confirmCoverCrop()" id="cropperDoneBtn"><i class="fas fa-check"></i> 全部完成</button>
+              <button class="btn-outline" style="padding:8px 16px;font-size:13px;" onclick="cancelCoverCrop()">重新选择</button>
+              <button class="btn-primary" style="padding:8px 16px;font-size:13px;" onclick="cropNextRatio()" id="cropperNextBtn"><i class="fas fa-arrow-right"></i> 下一个尺寸</button>
+              <button class="btn-primary" style="padding:8px 16px;font-size:13px;display:none;" onclick="confirmCoverCrop()" id="cropperDoneBtn"><i class="fas fa-check"></i> 全部完成</button>
             </div>
           </div>
           <!-- Uploaded State (hidden by default) -->
@@ -7989,34 +7504,7 @@ select.form-select-sm,
       <!-- Step 3: 票务策略 -->
       <div class="step-content" id="showStep3">
         <div class="form-section-title"><i class="fas fa-tags"></i>票务策略</div>
-
-        <!-- 开票时间设置 -->
-        <div class="ticket-policy-card">
-          <div class="ticket-policy-header">
-            <div class="ticket-policy-title">
-              <i class="fas fa-clock"></i>
-              <span>开票时间设置</span>
-              <span class="required" style="margin-left:4px;">*</span>
-            </div>
-          </div>
-          <div class="ticket-policy-body">
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">统一开票时间</label>
-                <input type="datetime-local" class="form-input" id="ticketOpenTime" value="2026-04-20T10:00">
-                <div class="form-hint">所有场次统一在此时间开售票务</div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">当前状态</label>
-                <div id="ticketOpenStatus" class="status-preview" style="padding:8px 12px;background:#F5F6FA;border-radius:8px;font-size:13px;color:var(--text-secondary);">
-                  <i class="fas fa-circle" style="color:var(--emerald);font-size:8px;margin-right:6px;"></i>待开票
-                </div>
-                <div class="form-hint">根据开票时间自动计算</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        
         <!-- 早鸟票设置 -->
         <div class="ticket-policy-card">
           <div class="ticket-policy-header">
@@ -8032,12 +7520,12 @@ select.form-select-sm,
           <div class="ticket-policy-body" id="earlyBirdBody" style="display:none;">
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label">早鸟持续天数</label>
+                <label class="form-label">提前天数</label>
                 <div class="input-with-unit">
-                  <input type="number" class="form-input" id="earlyBirdDays" placeholder="0" value="7" min="1" max="30">
+                  <input type="number" class="form-input" placeholder="0" value="7" min="1" max="30">
                   <span class="input-unit">天</span>
                 </div>
-                <div class="form-hint">开票后多少天内可购买早鸟票</div>
+                <div class="form-hint">开售前多少天开始售卖早鸟票</div>
               </div>
               <div class="form-group">
                 <label class="form-label">折扣比例</label>
@@ -8104,12 +7592,12 @@ select.form-select-sm,
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label">优先购提前天数</label>
+                <label class="form-label">提前天数</label>
                 <div class="input-with-unit">
-                  <input type="number" class="form-input" id="priorityDays" placeholder="0" value="3" min="1" max="14">
+                  <input type="number" class="form-input" placeholder="0" value="3" min="1" max="14">
                   <span class="input-unit">天</span>
                 </div>
-                <div class="form-hint">开票前多少天会员可提前购买</div>
+                <div class="form-hint">会员可提前多少天购票</div>
               </div>
               <div class="form-group">
                 <label class="form-label">限购数量</label>
@@ -8125,10 +7613,10 @@ select.form-select-sm,
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('modalNewShow')">取消</button>
-      <button class="btn btn-outline" id="showPrevBtn" onclick="showStepNav(-1)" style="display:none;"><i class="fas fa-arrow-left"></i>上一步</button>
-      <button class="btn btn-primary" id="showNextBtn" onclick="showStepNav(1)">下一步<i class="fas fa-arrow-right"></i></button>
-      <button class="btn btn-primary" id="showSaveBtn" onclick="closeModal('modalNewShow')" style="display:none;"><i class="fas fa-check"></i>保存</button>
+      <button class="btn-outline" onclick="closeModal('modalNewShow')">取消</button>
+      <button class="btn-outline" id="showPrevBtn" onclick="showStepNav(-1)" style="display:none;"><i class="fas fa-arrow-left"></i>上一步</button>
+      <button class="btn-primary" id="showNextBtn" onclick="showStepNav(1)">下一步<i class="fas fa-arrow-right"></i></button>
+      <button class="btn-primary" id="showSaveBtn" onclick="closeModal('modalNewShow')" style="display:none;"><i class="fas fa-check"></i>保存</button>
     </div>
   </div>
 </div>
@@ -8140,25 +7628,7 @@ select.form-select-sm,
       <h3>编辑演出</h3>
       <button class="modal-close" onclick="closeModal('modalEditShow')"><i class="fas fa-xmark"></i></button>
     </div>
-    <!-- Step Indicator -->
-    <div class="step-indicator">
-      <div class="step-item active" data-step="1">
-        <div class="step-circle">1</div>
-        <span class="step-label">基础信息</span>
-      </div>
-      <div class="step-line"></div>
-      <div class="step-item" data-step="2">
-        <div class="step-circle">2</div>
-        <span class="step-label">票价与场次</span>
-      </div>
-      <div class="step-line"></div>
-      <div class="step-item" data-step="3">
-        <div class="step-circle">3</div>
-        <span class="step-label">上架与策略</span>
-      </div>
-    </div>
     <div class="modal-body">
-      <!-- Step 1: 基础信息 -->
       <div class="step-content active" id="editShowStep1">
         <div class="form-group">
           <label class="form-label">演出名称<span class="required">*</span></label>
@@ -8324,203 +7794,10 @@ select.form-select-sm,
           </div>
         </div>
       </div>
-      <!-- Step 2: 票价与场次（只读展示） -->
-      <div class="step-content" id="editShowStep2">
-        <div style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:8px;">
-          <i class="fas fa-info-circle" style="color:#D97706;font-size:14px;"></i>
-          <span style="font-size:13px;color:#92400E;">票档和场次信息为只读展示，如需修改请前往"场馆座位配置"调整分区票价，或前往"场次管理"调整场次信息</span>
-        </div>
-        <div class="form-section-title"><i class="fas fa-ticket"></i>当前票档</div>
-        <table class="tier-table" id="editTierTable">
-          <thead>
-            <tr>
-              <th style="width:25%;">票档名称</th>
-              <th style="width:20%;">票价（元）</th>
-              <th style="width:20%;">可用库存</th>
-              <th style="width:15%;">限购数量</th>
-              <th style="width:20%;">分区座位数</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><div style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:2px;background:#D4A853;"></span>VIP区</div></td>
-              <td style="color:var(--text-primary);font-weight:600;">¥1,280</td>
-              <td style="color:var(--text-muted);font-size:12px;">200 <span style="font-size:11px;">/ 200</span></td>
-              <td style="color:var(--text-muted);font-size:12px;">4</td>
-              <td style="color:var(--text-muted);font-size:12px;">200座</td>
-            </tr>
-            <tr>
-              <td><div style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:2px;background:#3B82F6;"></span>A区</div></td>
-              <td style="color:var(--text-primary);font-weight:600;">¥680</td>
-              <td style="color:var(--text-muted);font-size:12px;">400 <span style="font-size:11px;">/ 400</span></td>
-              <td style="color:var(--text-muted);font-size:12px;">6</td>
-              <td style="color:var(--text-muted);font-size:12px;">400座</td>
-            </tr>
-            <tr>
-              <td><div style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:2px;background:#6B7280;"></span>B区</div></td>
-              <td style="color:var(--text-primary);font-weight:600;">¥380</td>
-              <td style="color:var(--text-muted);font-size:12px;">600 <span style="font-size:11px;">/ 600</span></td>
-              <td style="color:var(--text-muted);font-size:12px;">8</td>
-              <td style="color:var(--text-muted);font-size:12px;">600座</td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="form-section-title" style="margin-top:24px;"><i class="fas fa-calendar-days"></i>当前场次</div>
-        <div class="session-list" id="editSessionList">
-          <div class="session-item" style="background:var(--light-gray);pointer-events:none;opacity:0.8;">
-            <span class="session-label">场次 1</span>
-            <input type="date" class="form-input" style="flex:1;" value="2026-05-01" readonly>
-            <input type="time" class="form-input" style="flex:1;" value="19:30" readonly>
-          </div>
-          <div class="session-item" style="background:var(--light-gray);pointer-events:none;opacity:0.8;">
-            <span class="session-label">场次 2</span>
-            <input type="date" class="form-input" style="flex:1;" value="2026-05-02" readonly>
-            <input type="time" class="form-input" style="flex:1;" value="19:30" readonly>
-          </div>
-        </div>
-      </div>
-      <!-- Step 3: 上架与策略 -->
-      <div class="step-content" id="editShowStep3">
-        <div class="form-section-title"><i class="fas fa-tags"></i>票务策略</div>
-
-        <!-- 开票时间设置 -->
-        <div class="ticket-policy-card">
-          <div class="ticket-policy-header">
-            <div class="ticket-policy-title">
-              <i class="fas fa-clock"></i>
-              <span>开票时间设置</span>
-              <span class="required" style="margin-left:4px;">*</span>
-            </div>
-          </div>
-          <div class="ticket-policy-body">
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">统一开票时间</label>
-                <input type="datetime-local" class="form-input" id="editTicketOpenTime" value="2026-04-20T10:00">
-                <div class="form-hint">所有场次统一在此时间开售票务</div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">当前状态</label>
-                <div id="editTicketOpenStatus" class="status-preview" style="padding:8px 12px;background:#F5F6FA;border-radius:8px;font-size:13px;color:var(--text-secondary);">
-                  <i class="fas fa-circle" style="color:var(--emerald);font-size:8px;margin-right:6px;"></i>已开票
-                </div>
-                <div class="form-hint">根据开票时间自动计算</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 早鸟票设置 -->
-        <div class="ticket-policy-card">
-          <div class="ticket-policy-header">
-            <div class="ticket-policy-title">
-              <i class="fas fa-dove"></i>
-              <span>早鸟票设置</span>
-            </div>
-            <label class="toggle-switch">
-              <input type="checkbox" id="editEarlyBirdToggle" onchange="toggleEditEarlyBird()">
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-          <div class="ticket-policy-body" id="editEarlyBirdBody" style="display:none;">
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">早鸟持续天数</label>
-                <div class="input-with-unit">
-                  <input type="number" class="form-input" id="editEarlyBirdDays" placeholder="0" value="7" min="1" max="30">
-                  <span class="input-unit">天</span>
-                </div>
-                <div class="form-hint">开票后多少天内可购买早鸟票</div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">折扣比例</label>
-                <div class="input-with-unit">
-                  <input type="number" class="form-input" id="editEarlyBirdDiscount" placeholder="0" value="85" min="50" max="99">
-                  <span class="input-unit">%</span>
-                </div>
-                <div class="form-hint">早鸟票价格为原价的百分比</div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="form-label">限购数量</label>
-              <div class="input-with-unit" style="width:150px;">
-                <input type="number" class="form-input" id="editEarlyBirdLimit" placeholder="0" value="4" min="1" max="10">
-                <span class="input-unit">张/人</span>
-              </div>
-              <div class="form-hint">每用户最多可购买的早鸟票数量</div>
-            </div>
-          </div>
-        </div>
-        <!-- 会员优先购设置 -->
-        <div class="ticket-policy-card">
-          <div class="ticket-policy-header">
-            <div class="ticket-policy-title">
-              <i class="fas fa-crown"></i>
-              <span>会员优先购设置</span>
-            </div>
-            <label class="toggle-switch">
-              <input type="checkbox" id="editMemberPriorityToggle" onchange="toggleEditMemberPriority()">
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-          <div class="ticket-policy-body" id="editMemberPriorityBody" style="display:none;">
-            <div class="form-group">
-              <label class="form-label">可优先购会员等级 <span style="font-size:12px;color:#94A3B8;font-weight:400;">（由会员政策自动配置）</span></label>
-              <div class="member-level-select" style="pointer-events:none;opacity:0.8;">
-                <label class="member-level-item">
-                  <input type="checkbox" checked disabled>
-                  <span class="member-level-badge silver">
-                    <i class="fas fa-medal"></i>银卡会员
-                  </span>
-                </label>
-                <label class="member-level-item">
-                  <input type="checkbox" checked disabled>
-                  <span class="member-level-badge gold">
-                    <i class="fas fa-crown"></i>金卡会员
-                  </span>
-                </label>
-                <label class="member-level-item">
-                  <input type="checkbox" checked disabled>
-                  <span class="member-level-badge platinum">
-                    <i class="fas fa-gem"></i>铂金会员
-                  </span>
-                </label>
-                <label class="member-level-item">
-                  <input type="checkbox" checked disabled>
-                  <span class="member-level-badge diamond">
-                    <i class="fas fa-star"></i>钻石会员
-                  </span>
-                </label>
-              </div>
-              <div class="form-hint">勾选的会员等级可享受优先购票权益</div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">提前天数</label>
-                <div class="input-with-unit">
-                  <input type="number" class="form-input" id="editMemberPriorityDays" placeholder="0" value="3" min="1" max="14">
-                  <span class="input-unit">天</span>
-                </div>
-                <div class="form-hint">会员可提前多少天购票</div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">限购数量</label>
-                <div class="input-with-unit">
-                  <input type="number" class="form-input" id="editMemberPriorityLimit" placeholder="0" value="6" min="1" max="10">
-                  <span class="input-unit">张/人</span>
-                </div>
-                <div class="form-hint">每会员最多可购买的优先购票数量</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('modalEditShow')">取消</button>
-      <button class="btn btn-outline" id="editShowPrevBtn" onclick="editShowStepNav(-1)" style="display:none;"><i class="fas fa-arrow-left"></i>上一步</button>
-      <button class="btn btn-primary" id="editShowNextBtn" onclick="editShowStepNav(1)">下一步<i class="fas fa-arrow-right"></i></button>
-      <button class="btn btn-primary" id="editShowSaveBtn" onclick="saveEditShow()" style="display:none;"><i class="fas fa-check"></i>保存</button>
+      <button class="btn-outline" onclick="closeModal('modalEditShow')">取消</button>
+      <button class="btn-primary" onclick="saveEditShow()"><i class="fas fa-check"></i>保存</button>
     </div>
   </div>
 </div>
@@ -8592,8 +7869,8 @@ select.form-select-sm,
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('modalNewVenue')">取消</button>
-      <button class="btn btn-primary" onclick="closeModal('modalNewVenue')"><i class="fas fa-check"></i>保存</button>
+      <button class="btn-outline" onclick="closeModal('modalNewVenue')">取消</button>
+      <button class="btn-primary" onclick="closeModal('modalNewVenue')"><i class="fas fa-check"></i>保存</button>
     </div>
   </div>
 </div>
@@ -8641,8 +7918,8 @@ select.form-select-sm,
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('modalEditZone')">取消</button>
-      <button class="btn btn-primary" id="btnSaveEditZone"><i class="fas fa-check"></i>保存</button>
+      <button class="btn-outline" onclick="closeModal('modalEditZone')">取消</button>
+      <button class="btn-primary" id="btnSaveEditZone"><i class="fas fa-check"></i>保存</button>
     </div>
   </div>
 </div>
@@ -8690,8 +7967,8 @@ select.form-select-sm,
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('modalAddZone')">取消</button>
-      <button class="btn btn-primary" id="btnSaveAddZone"><i class="fas fa-check"></i>保存</button>
+      <button class="btn-outline" onclick="closeModal('modalAddZone')">取消</button>
+      <button class="btn-primary" id="btnSaveAddZone"><i class="fas fa-check"></i>保存</button>
     </div>
   </div>
 </div>
@@ -8726,8 +8003,8 @@ select.form-select-sm,
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('modalSetSeats')">取消</button>
-      <button class="btn btn-primary" id="btnSaveSetSeats"><i class="fas fa-check"></i>应用</button>
+      <button class="btn-outline" onclick="closeModal('modalSetSeats')">取消</button>
+      <button class="btn-primary" id="btnSaveSetSeats"><i class="fas fa-check"></i>应用</button>
     </div>
   </div>
 </div>
@@ -8747,9 +8024,9 @@ select.form-select-sm,
         </div>
       </div>
       <div class="stock-manage-actions">
-        <button class="btn btn-outline" onclick="stockUndo()"><i class="fas fa-undo"></i>撤销</button>
-        <button class="btn btn-outline" onclick="stockRedo()"><i class="fas fa-redo"></i>重做</button>
-        <button class="btn btn-primary" onclick="saveStockManage()"><i class="fas fa-check"></i>保存</button>
+        <button class="btn-outline" onclick="stockUndo()"><i class="fas fa-undo"></i>撤销</button>
+        <button class="btn-outline" onclick="stockRedo()"><i class="fas fa-redo"></i>重做</button>
+        <button class="btn-primary" onclick="saveStockManage()"><i class="fas fa-check"></i>保存</button>
       </div>
     </div>
 
@@ -8817,7 +8094,7 @@ select.form-select-sm,
     <div class="modal-body">
       <div class="form-group">
         <label class="form-label">演出项目<span class="required">*</span></label>
-        <select class="form-select" id="newSessionShowSelect" onchange="onSessionShowChange(this)">
+        <select class="form-select">
           <option value="">请选择演出项目</option>
           <option value="tianya">《天涯故事》大型歌舞秀</option>
           <option value="yefeng">椰风海韵·交响音乐会</option>
@@ -8826,15 +8103,6 @@ select.form-select-sm,
           <option value="jazz">爵士之夜·国际爵士音乐节</option>
           <option value="niangzi">《红色娘子军》芭蕾舞剧</option>
         </select>
-      </div>
-      <!-- 演出信息展示（选择后显示） -->
-      <div id="sessionShowInfo" style="display:none;margin-bottom:16px;padding:16px;background:#F8FAFC;border-radius:10px;border:1px solid #E2E8F0;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px;">
-          <div><span style="color:#94A3B8;">演出时间：</span><span id="ssiDateRange" style="font-weight:600;color:#1E293B;">-</span></div>
-          <div><span style="color:#94A3B8;">场馆·厅：</span><span id="ssiVenue" style="font-weight:600;color:#1E293B;">-</span></div>
-          <div><span style="color:#94A3B8;">已建场次：</span><span id="ssiSessions" style="font-weight:600;color:#1E293B;">-</span></div>
-          <div><span style="color:#94A3B8;">演出时长：</span><span id="ssiDuration" style="font-weight:600;color:#1E293B;">-</span></div>
-        </div>
       </div>
       <div class="form-row">
         <div class="form-group">
@@ -8846,15 +8114,84 @@ select.form-select-sm,
           <input type="time" class="form-input" value="19:30">
         </div>
       </div>
-      <div class="form-group" id="sessionAllTimesWrap" style="display:none;">
-        <label class="form-label">该演出所有场次</label>
-        <div id="sessionAllTimes" style="padding:12px;background:#F8FAFC;border-radius:8px;border:1px solid #E2E8F0;font-size:13px;color:#475569;max-height:120px;overflow-y:auto;">
-          <!-- 由JS填充 -->
+      <div class="form-group">
+        <label class="form-label">场馆·厅<span class="required">*</span></label>
+        <select class="form-select" id="sessionVenueHall">
+          <option value="">请选择场馆·演出厅</option>
+          <optgroup label="海南大剧院">
+            <option value="hainan-main">海南大剧院 · 主剧场</option>
+            <option value="hainan-music">海南大剧院 · 音乐厅</option>
+            <option value="hainan-small">海南大剧院 · 小剧场</option>
+          </optgroup>
+          <optgroup label="三亚艺术中心">
+            <option value="sanya-main">三亚艺术中心 · 大剧场</option>
+            <option value="sanya-multi">三亚艺术中心 · 多功能厅</option>
+          </optgroup>
+          <optgroup label="海口演艺中心">
+            <option value="haikou-main">海口演艺中心 · 大剧场</option>
+            <option value="haikou-small">海口演艺中心 · 小剧场</option>
+          </optgroup>
+          <optgroup label="万宁海滨剧场">
+            <option value="wanning-main">万宁海滨剧场 · 主剧场</option>
+            <option value="wanning-outdoor">万宁海滨剧场 · 露天剧场</option>
+          </optgroup>
+          <optgroup label="儋州文化广场">
+            <option value="danzhou-main">儋州文化广场 · 大剧院</option>
+            <option value="danzhou-hall">儋州文化广场 · 演艺厅</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="form-section-title"><i class="fas fa-ticket"></i>票档配置</div>
+      <table class="tier-table" id="sessionTierTable">
+        <thead>
+          <tr>
+            <th style="width:30%;">票档名称</th>
+            <th style="width:25%;">票价（元）</th>
+            <th style="width:25%;">座位数</th>
+            <th style="width:15%;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="text" class="form-input" placeholder="如 VIP区" value="VIP区"></td>
+            <td><input type="number" class="form-input" placeholder="0" value="1680"></td>
+            <td><input type="number" class="form-input" placeholder="0" value="200"></td>
+            <td><button class="btn-remove-tier" onclick="this.closest('tr').remove()"><i class="fas fa-trash"></i></button></td>
+          </tr>
+          <tr>
+            <td><input type="text" class="form-input" placeholder="如 A区" value="A区"></td>
+            <td><input type="number" class="form-input" placeholder="0" value="880"></td>
+            <td><input type="number" class="form-input" placeholder="0" value="400"></td>
+            <td><button class="btn-remove-tier" onclick="this.closest('tr').remove()"><i class="fas fa-trash"></i></button></td>
+          </tr>
+          <tr>
+            <td><input type="text" class="form-input" placeholder="如 B区" value="B区"></td>
+            <td><input type="number" class="form-input" placeholder="0" value="580"></td>
+            <td><input type="number" class="form-input" placeholder="0" value="600"></td>
+            <td><button class="btn-remove-tier" onclick="this.closest('tr').remove()"><i class="fas fa-trash"></i></button></td>
+          </tr>
+          <tr>
+            <td><input type="text" class="form-input" placeholder="如 C区" value="C区"></td>
+            <td><input type="number" class="form-input" placeholder="0" value="280"></td>
+            <td><input type="number" class="form-input" placeholder="0" value="400"></td>
+            <td><button class="btn-remove-tier" onclick="this.closest('tr').remove()"><i class="fas fa-trash"></i></button></td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn-add-tier" onclick="addSessionTierRow()"><i class="fas fa-plus"></i>添加票档</button>
+      <div class="form-row" style="margin-top:20px;">
+        <div class="form-group">
+          <label class="form-label">开票时间</label>
+          <input type="datetime-local" class="form-input" value="2026-04-25T10:00">
+        </div>
+        <div class="form-group">
+          <label class="form-label">停止售票时间</label>
+          <input type="datetime-local" class="form-input" value="2026-05-15T18:30">
         </div>
       </div>
       <div class="form-group">
         <label class="form-label">状态</label>
-        <select class="form-select" id="sessionStatusSelect" onchange="checkSessionStatusChange(this)">
+        <select class="form-select">
           <option value="not-opened">未开票</option>
           <option value="on-sale">售票中</option>
           <option value="paused">已暂停</option>
@@ -8862,8 +8199,8 @@ select.form-select-sm,
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('modalNewSession')">取消</button>
-      <button class="btn btn-primary" onclick="closeModal('modalNewSession');showToast('场次已创建')"><i class="fas fa-check"></i>创建场次</button>
+      <button class="btn-outline" onclick="closeModal('modalNewSession')">取消</button>
+      <button class="btn-primary" onclick="closeModal('modalNewSession');showToast('场次已创建')"><i class="fas fa-check"></i>创建场次</button>
     </div>
   </div>
 </div>
@@ -8966,13 +8303,146 @@ select.form-select-sm,
       </table>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('modalSessionData')">关闭</button>
-      <button class="btn btn-primary"><i class="fas fa-download"></i>导出报表</button>
+      <button class="btn-outline" onclick="closeModal('modalSessionData')">关闭</button>
+      <button class="btn-primary"><i class="fas fa-download"></i>导出报表</button>
     </div>
   </div>
 </div>
 
+<!-- ========== 座位管理全屏模态框 ========== -->
+<div class="seat-manage-overlay" id="seatManageOverlay">
+  <!-- 顶部栏 -->
+  <div class="seat-manage-header">
+    <div class="seat-manage-header-left">
+      <button class="btn-back" onclick="closeSeatManage()"><i class="fas fa-xmark"></i></button>
+      <div>
+        <h3 id="smShowName">演出名称</h3>
+        <p id="smShowInfo">场次时间 · 场馆</p>
+      </div>
+    </div>
+    <div class="seat-manage-header-center">
+      <div class="seat-manage-floor-switcher" id="smFloorSwitcher">
+        <!-- JS动态生成 -->
+      </div>
+    </div>
+    <div class="seat-manage-header-right">
+      <button class="btn-outline" onclick="smUndo()" style="padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;border:1px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.7);cursor:pointer;display:flex;align-items:center;gap:6px;"><i class="fas fa-undo"></i>撤销</button>
+      <button class="btn-outline" onclick="smRedo()" style="padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;border:1px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.7);cursor:pointer;display:flex;align-items:center;gap:6px;"><i class="fas fa-redo"></i>重做</button>
+      <button class="btn-primary" onclick="closeSeatManage();showToast('座位数据已保存')" style="padding:8px 20px;border-radius:8px;font-size:12px;font-weight:600;border:none;background:linear-gradient(135deg,#FF6B4A,#D4A853);color:#fff;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 4px 15px rgba(255,107,74,0.3);"><i class="fas fa-check"></i>保存</button>
+    </div>
+  </div>
 
+  <!-- 主体 -->
+  <div class="seat-manage-body">
+    <!-- 左侧座位图 -->
+    <div class="seat-manage-canvas-area">
+      <div class="seat-manage-toolbar">
+        <div class="tool-group">
+          <button class="tool-btn active" id="smToolSelect" onclick="setSmTool('select')"><i class="fas fa-mouse-pointer"></i>选择</button>
+          <button class="tool-btn" id="smToolLock" onclick="setSmTool('lock')"><i class="fas fa-lock"></i>锁座</button>
+          <button class="tool-btn" id="smToolUnlock" onclick="setSmTool('unlock')"><i class="fas fa-lock-open"></i>解锁</button>
+          <button class="tool-btn" id="smToolReserve" onclick="setSmTool('reserve')"><i class="fas fa-bookmark"></i>预留</button>
+          <button class="tool-btn" id="smToolRepair" onclick="setSmTool('repair')"><i class="fas fa-tools"></i>维修</button>
+        </div>
+        <div class="tool-divider"></div>
+        <div class="tool-group">
+          <button class="tool-btn" id="smToolBox" onclick="setSmTool('box')"><i class="fas fa-vector-square"></i>框选</button>
+          <button class="tool-btn" id="smToolRow" onclick="setSmTool('row')"><i class="fas fa-grip-lines"></i>行选</button>
+          <button class="tool-btn" id="smToolCol" onclick="setSmTool('col')"><i class="fas fa-grip-lines-vertical"></i>列选</button>
+        </div>
+        <div class="tool-divider"></div>
+        <div class="tool-group">
+          <select class="tool-select" id="smChannelFilter" onchange="renderSmSeatMap()">
+            <option value="all">全部渠道</option>
+            <option value="本系统">本系统</option>
+            <option value="大麦">大麦</option>
+            <option value="猫眼">猫眼</option>
+            <option value="美团">美团</option>
+          </select>
+          <select class="tool-select" id="smStatusFilter" onchange="renderSmSeatMap()">
+            <option value="all">全部状态</option>
+            <option value="available">可选</option>
+            <option value="sold">已售</option>
+            <option value="locked">已锁定</option>
+            <option value="reserved">已预留</option>
+            <option value="maintenance">已维修</option>
+          </select>
+        </div>
+      </div>
+      <div class="seat-manage-canvas">
+        <div class="stage-area">STAGE · 舞台</div>
+        <div id="smSeatMapContainer" style="overflow:auto;flex:1;position:relative;"></div>
+      </div>
+      <div class="seat-manage-legend" id="smLegend"></div>
+    </div>
+
+    <!-- 右侧信息面板 -->
+    <div class="seat-manage-panel">
+      <div class="sm-panel-title">库存概览</div>
+      <div class="sm-stats-grid" id="smStatsGrid">
+        <!-- JS动态生成 -->
+      </div>
+
+      <div class="sm-panel-title">分区详情</div>
+      <div class="sm-zone-accordion" id="smZoneAccordion">
+        <!-- JS动态生成 -->
+      </div>
+
+      <div class="sm-panel-title">渠道库存</div>
+      <div class="sm-channel-list" id="smChannelList">
+        <!-- JS动态生成 -->
+      </div>
+
+      <div class="sm-panel-title">操作记录</div>
+      <div class="sm-op-log" id="smOpLog">
+        <div class="sm-op-item">
+          <div class="sm-op-time">2026-04-21 14:28</div>
+          <div class="sm-op-content"><strong>陈思远</strong> 锁定 A区3排5-8座</div>
+        </div>
+        <div class="sm-op-item">
+          <div class="sm-op-time">2026-04-21 14:15</div>
+          <div class="sm-op-content"><strong>陈思远</strong> 预留 VIP区1排1-2座</div>
+        </div>
+        <div class="sm-op-item">
+          <div class="sm-op-time">2026-04-21 13:50</div>
+          <div class="sm-op-content"><strong>系统</strong> 自动锁定 C区5排12座（维修）</div>
+        </div>
+        <div class="sm-op-item">
+          <div class="sm-op-time">2026-04-21 11:30</div>
+          <div class="sm-op-content"><strong>陈思远</strong> 解锁 B区2排3-6座</div>
+        </div>
+        <div class="sm-op-item">
+          <div class="sm-op-time">2026-04-21 10:00</div>
+          <div class="sm-op-content"><strong>系统</strong> 同步大麦渠道售出 A区4排7座</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部操作栏 -->
+  <div class="seat-manage-bottom-bar">
+    <div class="seat-manage-bottom-left">
+      已选中：<strong id="smSelectedCount">0</strong> 个座位
+    </div>
+    <div class="seat-manage-bottom-actions">
+      <button class="sm-action-btn" onclick="smApplyAction('lock')"><i class="fas fa-lock"></i>锁定选中</button>
+      <button class="sm-action-btn" onclick="smApplyAction('unlock')"><i class="fas fa-lock-open"></i>解锁选中</button>
+      <button class="sm-action-btn" onclick="smApplyAction('reserve')"><i class="fas fa-bookmark"></i>设为预留</button>
+      <button class="sm-action-btn" onclick="smApplyAction('repair')"><i class="fas fa-tools"></i>设为维修</button>
+      <select class="sm-channel-select" id="smBatchChannel">
+        <option value="">批量设渠道</option>
+        <option value="本系统">本系统</option>
+        <option value="大麦">大麦</option>
+        <option value="猫眼">猫眼</option>
+        <option value="美团">美团</option>
+      </select>
+      <button class="sm-action-btn primary" onclick="smApplyChannel()"><i class="fas fa-check"></i>应用渠道</button>
+    </div>
+  </div>
+</div>
+
+<!-- 座位管理Tooltip -->
+<div class="sm-seat-tooltip" id="smSeatTooltip"></div>
 
 <script>
 
@@ -9044,49 +8514,6 @@ document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
 });
 
 // ========== Edit Show Modal ==========
-var currentEditShowStep = 1;
-var totalEditShowSteps = 3;
-
-function updateEditShowStepUI() {
-  var stepItems = document.querySelectorAll('#modalEditShow .step-item');
-  var stepLines = document.querySelectorAll('#modalEditShow .step-line');
-  stepItems.forEach(function(item, index) {
-    var stepNum = index + 1;
-    item.classList.remove('active', 'completed');
-    if (stepNum === currentEditShowStep) item.classList.add('active');
-    else if (stepNum < currentEditShowStep) item.classList.add('completed');
-  });
-  stepLines.forEach(function(line, index) {
-    line.classList.toggle('completed', index < currentEditShowStep - 1);
-  });
-  for (var i = 1; i <= totalEditShowSteps; i++) {
-    var content = document.getElementById('editShowStep' + i);
-    if (content) content.classList.toggle('active', i === currentEditShowStep);
-  }
-  var prevBtn = document.getElementById('editShowPrevBtn');
-  var nextBtn = document.getElementById('editShowNextBtn');
-  var saveBtn = document.getElementById('editShowSaveBtn');
-  if (prevBtn) prevBtn.style.display = currentEditShowStep > 1 ? '' : 'none';
-  if (nextBtn) nextBtn.style.display = currentEditShowStep < totalEditShowSteps ? '' : 'none';
-  if (saveBtn) saveBtn.style.display = currentEditShowStep === totalEditShowSteps ? '' : 'none';
-}
-
-function editShowStepNav(direction) {
-  var newStep = currentEditShowStep + direction;
-  if (newStep < 1 || newStep > totalEditShowSteps) return;
-  if (direction > 0 && currentEditShowStep === 1) {
-    var nameInput = document.getElementById('editShowName');
-    if (nameInput && !nameInput.value.trim()) {
-      nameInput.style.borderColor = '#EF4444';
-      nameInput.focus();
-      return;
-    }
-    if (nameInput) nameInput.style.borderColor = '';
-  }
-  currentEditShowStep = newStep;
-  updateEditShowStepUI();
-}
-
 function openEditShow(btn) {
   var row = btn.closest('tr');
   if (!row) return;
@@ -9112,8 +8539,6 @@ function openEditShow(btn) {
       document.getElementById('editShowEndDate').value = dateMatch[1];
     }
   }
-  currentEditShowStep = 1;
-  updateEditShowStepUI();
   openModal('modalEditShow');
 }
 
@@ -9127,18 +8552,6 @@ function saveEditShow() {
   document.getElementById('editShowName').style.borderColor = '';
   closeModal('modalEditShow');
   showToast('演出信息已保存');
-}
-
-function toggleEditEarlyBird() {
-  var toggle = document.getElementById('editEarlyBirdToggle');
-  var body = document.getElementById('editEarlyBirdBody');
-  if (toggle && body) body.style.display = toggle.checked ? '' : 'none';
-}
-
-function toggleEditMemberPriority() {
-  var toggle = document.getElementById('editMemberPriorityToggle');
-  var body = document.getElementById('editMemberPriorityBody');
-  if (toggle && body) body.style.display = toggle.checked ? '' : 'none';
 }
 
 // Close modal on ESC key
@@ -9470,7 +8883,7 @@ function showConfirm(title, message, onConfirm) {
     '<p>' + message + '</p>' +
     '<div class="confirm-dialog-actions">' +
     '<button class="tool-btn" id="confirmCancel">取消</button>' +
-    '<button class="btn btn-primary" style="height:34px;" id="confirmOk"><i class="fas fa-check"></i>确认</button>' +
+    '<button class="btn-primary" style="height:34px;" id="confirmOk"><i class="fas fa-check"></i>确认</button>' +
     '</div></div>';
   document.body.appendChild(overlay);
   requestAnimationFrame(function() { overlay.classList.add('visible'); });
@@ -10150,56 +9563,6 @@ if (btnSaveAddZoneEl) btnSaveAddZoneEl.addEventListener('click', saveAddZone);
 var btnSaveSetSeatsEl = document.getElementById('btnSaveSetSeats');
 if (btnSaveSetSeatsEl) btnSaveSetSeatsEl.addEventListener('click', saveSetSeats);
 
-// Toggle show online/offline status
-function toggleShowStatus(btn) {
-  var soldCount = parseInt(btn.getAttribute('data-sold')) || 0;
-  var isOffShelf = btn.querySelector('.fa-eye');
-  var showName = btn.closest('tr').querySelector('.show-name').textContent;
-
-  if (!isOffShelf && soldCount > 0) {
-    openModal('modalConfirmOffShelf');
-    document.getElementById('confirmOffShelfShowName').textContent = showName;
-    document.getElementById('confirmOffShelfSoldCount').textContent = soldCount;
-    window._pendingToggleBtn = btn;
-  } else {
-    var icon = btn.querySelector('i');
-    if (isOffShelf) {
-      icon.className = 'fas fa-eye-slash';
-      btn.innerHTML = '';
-      btn.appendChild(icon);
-      btn.append('下架');
-      var statusTag = btn.closest('tr').querySelector('.status-tag');
-      if (statusTag) { statusTag.className = 'status-tag selling'; statusTag.innerHTML = '<span class="dot"></span>售票中'; }
-      showToast('演出已上架');
-    } else {
-      icon.className = 'fas fa-eye';
-      btn.innerHTML = '';
-      btn.appendChild(icon);
-      btn.append('上架');
-      var statusTag = btn.closest('tr').querySelector('.status-tag');
-      if (statusTag) { statusTag.className = 'status-tag off-shelf'; statusTag.innerHTML = '<span class="dot"></span>已下架'; }
-      showToast('演出已下架');
-    }
-  }
-}
-
-function confirmForceOffShelf() {
-  var btn = window._pendingToggleBtn;
-  if (btn) {
-    var icon = btn.querySelector('i');
-    icon.className = 'fas fa-eye';
-    btn.innerHTML = '';
-    btn.appendChild(icon);
-    btn.append('上架');
-    var statusTag = btn.closest('tr').querySelector('.status-tag');
-    if (statusTag) { statusTag.className = 'status-tag off-shelf'; statusTag.innerHTML = '<span class="dot"></span>已下架'; }
-    btn.setAttribute('data-sold', '0');
-    showToast('演出已强制下架');
-  }
-  closeModal('modalConfirmOffShelf');
-  window._pendingToggleBtn = null;
-}
-
 // ========== Initialize Seat Map on Load ==========
 function loadVenueSeatMap(venueId) {
   var venue = venueSeatData[venueId];
@@ -10237,29 +9600,6 @@ function switchToVenueSeat(venueId) {
   document.getElementById('panel-venue-seat-config').classList.add('active');
   document.getElementById('venueSeatSelect').value = venueId;
   loadVenueSeatMap(venueId);
-}
-
-// Switch to session management tab from show list
-function switchToSessions(showName) {
-  document.querySelectorAll('.tab-item').forEach(function(t) { t.classList.remove('active'); });
-  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
-  document.querySelector('[data-tab="sessions"]').classList.add('active');
-  document.getElementById('panel-sessions').classList.add('active');
-  // 根据演出名称匹配下拉选项并选中
-  var showFilter = document.getElementById('sessionShowFilter');
-  if (showFilter && showName) {
-    var matched = false;
-    for (var i = 0; i < showFilter.options.length; i++) {
-      if (showFilter.options[i].text === showName) {
-        showFilter.selectedIndex = i;
-        matched = true;
-        break;
-      }
-    }
-    if (!matched) showFilter.selectedIndex = 0;
-    // 触发自定义筛选逻辑（如果存在）
-    if (typeof filterSessions === 'function') filterSessions();
-  }
 }
 
 
@@ -11487,6 +10827,430 @@ document.querySelectorAll('.tag-option').forEach(tag => {
   });
 });
 
+// ========== Add Session Tier Row ==========
+function addSessionTierRow() {
+  const tbody = document.querySelector('#sessionTierTable tbody');
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td><input type="text" class="form-input" placeholder="如 D区"></td>
+    <td><input type="number" class="form-input" placeholder="0"></td>
+    <td><input type="number" class="form-input" placeholder="0"></td>
+    <td><button class="btn-remove-tier" onclick="this.closest('tr').remove()"><i class="fas fa-trash"></i></button></td>
+  `;
+  tbody.appendChild(row);
+}
+
+// ========== Seat Management Fullscreen Modal ==========
+const smShowNames = {
+  'show-tianya': '《天涯故事》大型歌舞秀',
+  'show-yefeng': '椰风海韵·交响音乐会',
+  'show-long': '黎苗风情·民族舞蹈专场',
+  'show-nanhai': '《南海奇缘》儿童剧',
+  'show-qindao': '爵士之夜·国际爵士音乐节',
+  'show-niangzi': '《红色娘子军》芭蕾舞剧'
+};
+
+let smCurrentTool = 'select';
+let smSelectedSeats = {};
+let smSeatData = [];
+let smCurrentFloor = '一楼';
+let smUndoStack = [];
+let smRedoStack = [];
+
+const smStatusColors = {
+  available: '#E2E8F0',
+  'sold-本系统': '#10B981',
+  'sold-大麦': '#3B82F6',
+  'sold-猫眼': '#F97316',
+  'sold-美团': '#8B5CF6',
+  locked: '#64748B',
+  reserved: '#8B5CF6',
+  maintenance: '#78716C'
+};
+
+const smZones = [
+  { name: 'VIP区', color: '#D4A853', rows: 5, cols: 20, price: 1680 },
+  { name: 'A区', color: '#3B82F6', rows: 8, cols: 25, price: 880 },
+  { name: 'B区', color: '#00C9A7', rows: 10, cols: 30, price: 580 },
+  { name: 'C区', color: '#9CA3AF', rows: 10, cols: 30, price: 280 }
+];
+
+function switchToSessions(showName) {
+  document.querySelector('[data-tab="sessions"]').click();
+  const select = document.querySelector('#sessionShowFilter');
+  if (select) {
+    for (let opt of select.options) {
+      if (opt.text === showName) { opt.selected = true; break; }
+    }
+  }
+}
+
+function openSeatManage(showId) {
+  const overlay = document.getElementById('seatManageOverlay');
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('smShowName').textContent = smShowNames[showId] || '演出名称';
+  document.getElementById('smShowInfo').textContent = '2026-04-20 19:30 · 海南大剧院·主厅';
+  smCurrentFloor = '一楼';
+  smSelectedSeats = {};
+  smUndoStack = [];
+  smRedoStack = [];
+  generateSmSeatData();
+  renderSmFloorSwitcher();
+  renderSmSeatMap();
+  renderSmStats();
+  renderSmZones();
+  renderSmChannels();
+  renderSmLegend();
+  updateSmSelectedCount();
+}
+
+function closeSeatManage() {
+  const overlay = document.getElementById('seatManageOverlay');
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function generateSmSeatData() {
+  smSeatData = [];
+  const statuses = ['available', 'sold-本系统', 'sold-大麦', 'sold-猫眼', 'sold-美团', 'locked', 'reserved', 'maintenance'];
+  const weights = [30, 25, 15, 10, 8, 5, 4, 3];
+  smZones.forEach(zone => {
+    for (let r = 1; r <= zone.rows; r++) {
+      for (let c = 1; c <= zone.cols; c++) {
+        const rand = Math.random() * 100;
+        let cumulative = 0;
+        let status = 'available';
+        for (let i = 0; i < statuses.length; i++) {
+          cumulative += weights[i];
+          if (rand < cumulative) { status = statuses[i]; break; }
+        }
+        smSeatData.push({
+          id: `${zone.name}-${r}-${c}`,
+          zone: zone.name,
+          row: r,
+          col: c,
+          status: status,
+          price: zone.price,
+          color: zone.color
+        });
+      }
+    }
+  });
+}
+
+function renderSmFloorSwitcher() {
+  const container = document.getElementById('smFloorSwitcher');
+  const floors = ['一楼', '二楼'];
+  container.innerHTML = floors.map(f =>
+    `<button class="floor-btn ${f === smCurrentFloor ? 'active' : ''}" onclick="switchSmFloor('${f}')">${f}</button>`
+  ).join('');
+}
+
+function switchSmFloor(floor) {
+  smCurrentFloor = floor;
+  smSelectedSeats = {};
+  generateSmSeatData();
+  renderSmFloorSwitcher();
+  renderSmSeatMap();
+  renderSmStats();
+  renderSmZones();
+  renderSmChannels();
+  updateSmSelectedCount();
+}
+
+function setSmTool(tool) {
+  smCurrentTool = tool;
+  document.querySelectorAll('.seat-manage-toolbar .tool-btn').forEach(btn => btn.classList.remove('active'));
+  const btn = document.getElementById('smTool' + tool.charAt(0).toUpperCase() + tool.slice(1));
+  if (btn) btn.classList.add('active');
+  // Change cursor
+  const canvas = document.getElementById('smSeatMapContainer');
+  if (tool === 'box') canvas.style.cursor = 'crosshair';
+  else if (tool === 'select') canvas.style.cursor = 'default';
+  else canvas.style.cursor = 'pointer';
+}
+
+function getSmSeatColor(seat) {
+  if (smSelectedSeats[seat.id]) return '#FF6B4A';
+  return smStatusColors[seat.status] || '#E2E8F0';
+}
+
+function renderSmSeatMap() {
+  const container = document.getElementById('smSeatMapContainer');
+  const channelFilter = document.getElementById('smChannelFilter').value;
+  const statusFilter = document.getElementById('smStatusFilter').value;
+
+  let svg = `<svg width="100%" height="100%" viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg" style="font-family:inherit;">`;
+  let yOffset = 10;
+
+  smZones.forEach(zone => {
+    const zoneWidth = zone.cols * 26 + 20;
+    const zoneHeight = zone.rows * 26 + 30;
+    const zoneX = (900 - zoneWidth) / 2;
+
+    // Zone label
+    svg += `<text x="${zoneX}" y="${yOffset + 12}" fill="rgba(255,255,255,0.5)" font-size="11" font-weight="600">${zone.name}</text>`;
+    yOffset += 18;
+
+    // Draw row numbers and seats
+    for (let r = 1; r <= zone.rows; r++) {
+      const rowY = yOffset + (r - 1) * 26 + 4;
+      // Row number
+      svg += `<text x="${zoneX - 4}" y="${rowY + 12}" fill="rgba(255,255,255,0.3)" font-size="10" text-anchor="end">${r}</text>`;
+      for (let c = 1; c <= zone.cols; c++) {
+        const seat = smSeatData.find(s => s.zone === zone.name && s.row === r && s.col === c);
+        if (!seat) continue;
+        // Apply filters
+        if (channelFilter !== 'all') {
+          if (seat.status === 'available' || seat.status === 'locked' || seat.status === 'reserved' || seat.status === 'maintenance') {
+            if (channelFilter !== 'all') continue; // skip non-sold seats when filtering by channel
+          } else {
+            const channel = seat.status.split('-')[1];
+            if (channel !== channelFilter) continue;
+          }
+        }
+        if (statusFilter !== 'all') {
+          const seatStatus = seat.status.includes('-') ? seat.status.split('-')[0] : seat.status;
+          if (seatStatus !== statusFilter) continue;
+        }
+        const seatX = zoneX + (c - 1) * 26 + 10;
+        const color = getSmSeatColor(seat);
+        const isSelected = !!smSelectedSeats[seat.id];
+        svg += `<rect class="sm-seat-rect" data-id="${seat.id}" x="${seatX}" y="${rowY}" width="20" height="20" rx="4" fill="${color}" stroke="${isSelected ? '#FF6B4A' : 'transparent'}" stroke-width="${isSelected ? 2 : 0}" style="cursor:pointer;transition:all 0.15s;" onmouseenter="showSmTooltip(event,'${seat.id}')" onmouseleave="hideSmTooltip()" onclick="smSeatClick('${seat.id}')"/>`;
+        // Icons for special states
+        if (seat.status === 'locked') {
+          svg += `<text x="${seatX + 10}" y="${rowY + 14}" fill="rgba(255,255,255,0.6)" font-size="8" text-anchor="middle" pointer-events="none">&#xf023;</text>`;
+        } else if (seat.status === 'maintenance') {
+          svg += `<text x="${seatX + 10}" y="${rowY + 14}" fill="rgba(255,255,255,0.6)" font-size="8" text-anchor="middle" pointer-events="none">&#xf0ad;</text>`;
+        } else if (seat.status === 'reserved') {
+          svg += `<text x="${seatX + 10}" y="${rowY + 14}" fill="rgba(255,255,255,0.6)" font-size="8" text-anchor="middle" pointer-events="none">&#xf02e;</text>`;
+        }
+      }
+    }
+    yOffset += zone.rows * 26 + 12;
+  });
+
+  svg += '</svg>';
+  container.innerHTML = svg;
+}
+
+function smSeatClick(seatId) {
+  const seat = smSeatData.find(s => s.id === seatId);
+  if (!seat) return;
+
+  if (smCurrentTool === 'select') {
+    if (smSelectedSeats[seatId]) {
+      delete smSelectedSeats[seatId];
+    } else {
+      smSelectedSeats[seatId] = true;
+    }
+  } else if (smCurrentTool === 'lock' && seat.status === 'available') {
+    smUndoStack.push({ id: seatId, oldStatus: seat.status });
+    seat.status = 'locked';
+  } else if (smCurrentTool === 'unlock' && seat.status === 'locked') {
+    smUndoStack.push({ id: seatId, oldStatus: seat.status });
+    seat.status = 'available';
+  } else if (smCurrentTool === 'reserve' && seat.status === 'available') {
+    smUndoStack.push({ id: seatId, oldStatus: seat.status });
+    seat.status = 'reserved';
+  } else if (smCurrentTool === 'repair' && (seat.status === 'available' || seat.status === 'locked')) {
+    smUndoStack.push({ id: seatId, oldStatus: seat.status });
+    seat.status = 'maintenance';
+  }
+
+  renderSmSeatMap();
+  renderSmStats();
+  renderSmZones();
+  renderSmChannels();
+  updateSmSelectedCount();
+}
+
+function showSmTooltip(event, seatId) {
+  const seat = smSeatData.find(s => s.id === seatId);
+  if (!seat) return;
+  const tooltip = document.getElementById('smSeatTooltip');
+  const statusMap = {
+    available: '可选', 'sold-本系统': '已售(本系统)', 'sold-大麦': '已售(大麦)',
+    'sold-猫眼': '已售(猫眼)', 'sold-美团': '已售(美团)', locked: '已锁定',
+    reserved: '已预留', maintenance: '已维修'
+  };
+  const channel = seat.status.includes('-') ? seat.status.split('-')[1] : '-';
+  tooltip.innerHTML = `<strong>${seat.zone} ${seat.row}排${seat.col}座</strong><br>状态：${statusMap[seat.status] || seat.status}<br>渠道：${channel}<br>价格：¥${seat.price}`;
+  tooltip.classList.add('visible');
+  tooltip.style.left = (event.clientX + 12) + 'px';
+  tooltip.style.top = (event.clientY - 10) + 'px';
+}
+
+function hideSmTooltip() {
+  document.getElementById('smSeatTooltip').classList.remove('visible');
+}
+
+function updateSmSelectedCount() {
+  document.getElementById('smSelectedCount').textContent = Object.keys(smSelectedSeats).length;
+}
+
+function renderSmStats() {
+  const total = smSeatData.length;
+  const sold = smSeatData.filter(s => s.status.startsWith('sold')).length;
+  const available = smSeatData.filter(s => s.status === 'available').length;
+  const locked = smSeatData.filter(s => s.status === 'locked').length;
+  document.getElementById('smStatsGrid').innerHTML = `
+    <div class="sm-stat-card"><div class="sm-label">总座位</div><div class="sm-value">${total}</div></div>
+    <div class="sm-stat-card"><div class="sm-label">已售</div><div class="sm-value green">${sold}</div></div>
+    <div class="sm-stat-card"><div class="sm-label">可售</div><div class="sm-value blue">${available}</div></div>
+    <div class="sm-stat-card"><div class="sm-label">已锁定</div><div class="sm-value yellow">${locked}</div></div>
+  `;
+}
+
+function renderSmZones() {
+  const container = document.getElementById('smZoneAccordion');
+  container.innerHTML = smZones.map(zone => {
+    const zoneSeats = smSeatData.filter(s => s.zone === zone.name);
+    const total = zoneSeats.length;
+    const sold = zoneSeats.filter(s => s.status.startsWith('sold')).length;
+    const available = zoneSeats.filter(s => s.status === 'available').length;
+    const rate = total > 0 ? Math.round(sold / total * 100) : 0;
+    return `
+      <div class="sm-zone-item">
+        <div class="sm-zone-header" onclick="this.parentElement.classList.toggle('expanded')">
+          <div class="sm-zone-header-left">
+            <div class="sm-zone-color" style="background:${zone.color}"></div>
+            <span class="sm-zone-name">${zone.name}</span>
+            <span class="sm-zone-seats">${total}座</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:12px;color:rgba(255,255,255,0.5);">已售${sold} · 可售${available}</span>
+            <i class="fas fa-chevron-down sm-zone-arrow"></i>
+          </div>
+        </div>
+        <div class="sm-zone-bar"><div class="sm-zone-bar-fill" style="width:${rate}%;background:${zone.color};"></div></div>
+        <div class="sm-zone-body">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+            <span>上座率</span><span style="color:${zone.color};font-weight:600;">${rate}%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+            <span>票价</span><span>¥${zone.price}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;">
+            <span>布局</span><span>${zone.rows}排 × ${zone.cols}列</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderSmChannels() {
+  const channels = [
+    { name: '本系统', color: '#10B981' },
+    { name: '大麦', color: '#3B82F6' },
+    { name: '猫眼', color: '#F97316' },
+    { name: '美团', color: '#8B5CF6' }
+  ];
+  const total = smSeatData.length;
+  const container = document.getElementById('smChannelList');
+  container.innerHTML = channels.map(ch => {
+    const count = smSeatData.filter(s => s.status === 'sold-' + ch.name).length;
+    const pct = total > 0 ? Math.round(count / total * 100) : 0;
+    return `
+      <div class="sm-channel-row">
+        <div class="sm-channel-dot" style="background:${ch.color}"></div>
+        <span class="sm-channel-name">${ch.name}</span>
+        <div class="sm-channel-bar"><div class="sm-channel-fill" style="width:${pct}%;background:${ch.color};"></div></div>
+        <span class="sm-channel-info">${count}张 (${pct}%)</span>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderSmLegend() {
+  const items = [
+    { label: '可选', color: '#E2E8F0' },
+    { label: '已售-本系统', color: '#10B981' },
+    { label: '已售-大麦', color: '#3B82F6' },
+    { label: '已售-猫眼', color: '#F97316' },
+    { label: '已售-美团', color: '#8B5CF6' },
+    { label: '已锁定', color: '#64748B' },
+    { label: '已预留', color: '#8B5CF6' },
+    { label: '已维修', color: '#78716C' },
+    { label: '当前选中', color: '#FF6B4A' }
+  ];
+  document.getElementById('smLegend').innerHTML = items.map((item, i) =>
+    `${i > 0 ? '<div class="legend-sep"></div>' : ''}<div class="legend-item"><div class="legend-color" style="background:${item.color}"></div>${item.label}</div>`
+  ).join('');
+}
+
+function smApplyAction(action) {
+  const selectedIds = Object.keys(smSelectedSeats);
+  if (selectedIds.length === 0) { showToast('请先选择座位'); return; }
+  selectedIds.forEach(id => {
+    const seat = smSeatData.find(s => s.id === id);
+    if (!seat) return;
+    smUndoStack.push({ id, oldStatus: seat.status });
+    if (action === 'lock') seat.status = 'locked';
+    else if (action === 'unlock' && (seat.status === 'locked' || seat.status === 'reserved' || seat.status === 'maintenance')) seat.status = 'available';
+    else if (action === 'reserve') seat.status = 'reserved';
+    else if (action === 'repair') seat.status = 'maintenance';
+  });
+  smSelectedSeats = {};
+  renderSmSeatMap();
+  renderSmStats();
+  renderSmZones();
+  renderSmChannels();
+  updateSmSelectedCount();
+  showToast(`已对 ${selectedIds.length} 个座位执行操作`);
+}
+
+function smApplyChannel() {
+  const channel = document.getElementById('smBatchChannel').value;
+  if (!channel) { showToast('请选择渠道'); return; }
+  const selectedIds = Object.keys(smSelectedSeats);
+  if (selectedIds.length === 0) { showToast('请先选择座位'); return; }
+  selectedIds.forEach(id => {
+    const seat = smSeatData.find(s => s.id === id);
+    if (!seat) return;
+    smUndoStack.push({ id, oldStatus: seat.status });
+    seat.status = 'sold-' + channel;
+  });
+  smSelectedSeats = {};
+  document.getElementById('smBatchChannel').value = '';
+  renderSmSeatMap();
+  renderSmStats();
+  renderSmZones();
+  renderSmChannels();
+  updateSmSelectedCount();
+  showToast(`已将 ${selectedIds.length} 个座位设为${channel}渠道`);
+}
+
+function smUndo() {
+  if (smUndoStack.length === 0) return;
+  const action = smUndoStack.pop();
+  const seat = smSeatData.find(s => s.id === action.id);
+  if (seat) {
+    smRedoStack.push({ id: action.id, oldStatus: seat.status });
+    seat.status = action.oldStatus;
+  }
+  renderSmSeatMap();
+  renderSmStats();
+  renderSmZones();
+  renderSmChannels();
+}
+
+function smRedo() {
+  if (smRedoStack.length === 0) return;
+  const action = smRedoStack.pop();
+  const seat = smSeatData.find(s => s.id === action.id);
+  if (seat) {
+    smUndoStack.push({ id: action.id, oldStatus: seat.status });
+    seat.status = action.oldStatus;
+  }
+  renderSmSeatMap();
+  renderSmStats();
+  renderSmZones();
+  renderSmChannels();
+}
+
 // ========== Hall Management ==========
 var hallData = {
   hainan: [
@@ -11557,7 +11321,7 @@ function renderHallTable() {
         '<td>' + hall.zones + '</td>' +
         '<td><span class="hall-status ' + statusClass + '"><span class="dot"></span>' + statusText + '</span></td>' +
         '<td>' +
-          '<button class="hall-action-btn" onclick="editHall(\'' + hall.id + '\')"><i class="fas fa-edit"></i> 编辑</button>' +
+          '<button class="hall-action-btn" onclick="editHall(\'' + hall.id + '\')"><i class="fas fa-pen"></i> 编辑</button>' +
           (hall.isDefault ? '' : '<button class="hall-action-btn set-default" onclick="setHallDefault(\'' + hall.id + '\')"><i class="fas fa-star"></i> 设为默认</button>') +
         '</td>' +
       '</tr>';
@@ -11694,23 +11458,12 @@ function submitReply(id) {
   replyList.className = 'review-reply-list';
   var now = new Date();
   var timeStr = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0') + ' ' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
-  var replyId = 'reply-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5);
-  replyList.innerHTML += '<div class="review-reply-item" id="' + replyId + '"><div class="review-reply-meta"><div style="display:flex;justify-content:space-between;align-items:center;"><strong>管理员</strong> · ' + timeStr + '</div><button class="action-btn-text" style="padding:2px 8px;font-size:11px;color:#EF4444;border-color:#FEE2E2;" onclick="deleteReply(\'' + replyId + '\')">删除</button></div><div class="review-reply-content">' + textarea.value + '</div></div>';
+  replyList.innerHTML += '<div class="review-reply-item"><div class="review-reply-meta"><strong>管理员</strong> · ' + timeStr + '</div><div class="review-reply-content">' + textarea.value + '</div></div>';
   if (!section.querySelector('.review-reply-list')) {
     section.insertBefore(replyList, section.querySelector('.review-reply-input'));
   }
   textarea.value = '';
   showToast('回复成功');
-}
-
-function deleteReply(replyId) {
-  if (confirm('确定要删除这条回复吗？')) {
-    var el = document.getElementById(replyId);
-    if (el) {
-      el.remove();
-      showToast('success', '回复已删除');
-    }
-  }
 }
 
 // Filter dropdown toggle
@@ -11923,17 +11676,20 @@ function vscRenderGrid() {
   var rowStart = 1;
   var colStart = 1;
 
-  // 列号（仅占位，不显示编号）
+  // 列号
   html += '<div class="vsc-grid-header">';
   for (var c = 0; c < vscState.cols; c++) {
-    html += '<span></span>';
+    var colNum = vscGetColNumber(c, vscState.cols, colStart);
+    html += '<span>' + (colNum || (c + 1)) + '</span>';
   }
   html += '</div>';
 
   // 行
   for (var r = 0; r < vscState.rows; r++) {
     html += '<div class="vsc-grid-row">';
-    html += '<div class="vsc-grid-row-label"></div>';
+    var rowLabels = ['一排','二排','三排','四排','五排','六排','七排','八排','九排','十排','十一排','十二排','十三排','十四排','十五排','十六排','十七排','十八排','十九排','二十排','二十一排','二十二排','二十三排','二十四排','二十五排','二十六排','二十七排','二十八排','二十九排','三十排'];
+    var rowLabel = rowLabels[r] || ('第' + (r + 1) + '排');
+    html += '<div class="vsc-grid-row-label">' + rowLabel + '</div>';
     for (var c = 0; c < vscState.cols; c++) {
       var state = vscState.grid[r][c];
       var key = r + '-' + c;
@@ -11953,107 +11709,17 @@ function vscRenderGrid() {
         }
       }
 
-      // 生成座位标签：仅已分配分区的seat才生成编号，未分配的不设置data-label
-      // 联动编号规则设置：支持顺序编号（左到右/右到左）和中间开始编号（左单右双/左双右单）
-      var seatLabel = '';
-      if (state === 'seat' && zoneId) {
-        // 获取编号规则
-        var numberingType = document.getElementById('vscNumberingType')?.value || 'sequential';
-        var numberingMode = document.getElementById('vscNumberingMode')?.value || 'odd_even';
-        var seqDir = document.getElementById('vscSequentialDir')?.value || 'left_to_right';
+      // 生成座位标签
+      var colNum = vscGetColNumber(c, vscState.cols, colStart);
+      var seatLabel = (r + rowStart) + '排' + (colNum || (c + colStart)) + '座' + zoneName;
 
-        // 收集当前行所有已分配分区的座位列索引
-        var assignedCols = [];
-        for (var sc = 0; sc < vscState.cols; sc++) {
-          if (vscState.grid[r][sc] === 'seat' && vscState.zoneMap[r + '-' + sc]) {
-            assignedCols.push(sc);
-          }
-        }
-
-        // 计算当前座号（在已分配座位中的序号）
-        var seatIndex = -1;
-        for (var i = 0; i < assignedCols.length; i++) {
-          if (assignedCols[i] === c) {
-            seatIndex = i;
-            break;
-          }
-        }
-        if (seatIndex === -1) seatIndex = assignedCols.length - 1;
-
-        // 根据编号规则计算座号
-        var seatNum;
-        if (numberingType === 'sequential') {
-          // 顺序编号：左到右从1开始，右到左从最大开始递减
-          if (seqDir === 'right_to_left') {
-            seatNum = assignedCols.length - seatIndex;
-          } else {
-            seatNum = seatIndex + 1;
-          }
-        } else {
-          // 中间开始编号（从中间向两侧递增，最小座号为1）
-          var center = Math.floor(assignedCols.length / 2);
-          var isLeft = seatIndex < center;
-          var distance = isLeft ? (center - seatIndex) : (seatIndex - center + (assignedCols.length % 2 === 0 ? 1 : 0));
-          if (numberingMode === 'odd_even') {
-            // 左单右双：中间左侧为1,3,5... 右侧为2,4,6...
-            seatNum = isLeft ? (distance * 2 + 1) : (distance * 2);
-          } else {
-            // 左双右单：中间左侧为2,4,6... 右侧为1,3,5...
-            seatNum = isLeft ? (distance * 2) : (distance * 2 + 1);
-          }
-        }
-
-        // 计算当前排号：统计当前行之前（含当前行）有多少行已分配分区的seat
-        var assignedRowCount = 0;
-        for (var sr = 0; sr <= r; sr++) {
-          var hasAssignedSeatInRow = false;
-          for (var sc = 0; sc < vscState.cols; sc++) {
-            if (vscState.grid[sr][sc] === 'seat' && vscState.zoneMap[sr + '-' + sc]) {
-              hasAssignedSeatInRow = true;
-              break;
-            }
-          }
-          if (hasAssignedSeatInRow) {
-            assignedRowCount++;
-          }
-        }
-
-        seatLabel = assignedRowCount + '排' + seatNum + '座' + zoneName;
-      }
-
-      html += '<div class="' + cls + '" data-row="' + r + '" data-col="' + c + '"' + (seatLabel ? ' data-label="' + seatLabel + '"' : '') + '>';
+      html += '<div class="' + cls + '" data-row="' + r + '" data-col="' + c + '" data-label="' + seatLabel + '">';
       html += '<div class="vsc-dot-inner"' + zoneStyle + '></div>';
       html += '</div>';
     }
     html += '</div>';
   }
   container.innerHTML = html;
-
-  // 中间开始编号时，在每行中间位置插入中线
-  var numberingTypeGlobal = document.getElementById('vscNumberingType')?.value || 'sequential';
-  if (numberingTypeGlobal === 'center') {
-    var allRows = container.querySelectorAll('.vsc-grid-row');
-    for (var ri = 0; ri < allRows.length; ri++) {
-      var row = allRows[ri];
-      var rowAssigned = [];
-      var rowDots = row.querySelectorAll('.vsc-dot[data-col]');
-      rowDots.forEach(function(dot) {
-        if (dot.classList.contains('seat') && dot.getAttribute('data-label')) {
-          rowAssigned.push(dot);
-        }
-      });
-      if (rowAssigned.length > 0) {
-        var cIdx = Math.floor(rowAssigned.length / 2);
-        var centerDot = rowAssigned[cIdx];
-        if (centerDot) {
-          var lineEl = document.createElement('div');
-          lineEl.className = 'vsc-center-line';
-          centerDot.after(lineEl);
-        }
-      }
-    }
-  }
-
   vscUpdateSelectedCount();
 
   // 绑定事件
@@ -12116,17 +11782,17 @@ function vscGetColNumber(colIndex, totalCols, colStart) {
     return colIndex + 1;
   }
 
-  // 中间开始编号（左单右双或左双右单，最小座号为1）
+  // 中间开始编号（左单右双或左双右单）
   var center = Math.floor(totalCols / 2);
   var isLeft = colIndex < center;
   var distance = isLeft ? (center - colIndex) : (colIndex - center + (totalCols % 2 === 0 ? 1 : 0));
 
   if (numberingMode === 'odd_even') {
-    // 左单右双：中间左侧为1,3,5... 右侧为2,4,6...
-    return isLeft ? (distance * 2 + 1) : (distance * 2);
+    // 左单右双
+    return isLeft ? (distance * 2 - 1) : (distance * 2);
   } else if (numberingMode === 'even_odd') {
-    // 左双右单：中间左侧为2,4,6... 右侧为1,3,5...
-    return isLeft ? (distance * 2) : (distance * 2 + 1);
+    // 左双右单
+    return isLeft ? (distance * 2) : (distance * 2 - 1);
   }
 
   return colIndex + 1;
@@ -12196,6 +11862,11 @@ function vscUpdateSelectedCount() {
   var count = Object.keys(vscState.selected).length;
   var el = document.getElementById('vscSelectedCount');
   if (el) el.textContent = '已选座位：' + count;
+  // 有选中时隐藏底部状态栏，避免与操作栏重叠
+  var statusBar = document.getElementById('vscStatusBar');
+  if (statusBar) {
+    statusBar.style.display = count >= 1 ? 'none' : 'flex';
+  }
 }
 
 // 鼠标释放结束框选
@@ -12410,12 +12081,12 @@ function vscSaveConfig() {
 var vscZoomLevel = 1;
 
 function vscZoomIn() {
-  vscZoomLevel = Math.min(vscZoomLevel + 0.1, 3);
+  vscZoomLevel = Math.min(vscZoomLevel + 0.2, 3);
   vscApplyZoom();
 }
 
 function vscZoomOut() {
-  vscZoomLevel = Math.max(vscZoomLevel - 0.1, 0.3);
+  vscZoomLevel = Math.max(vscZoomLevel - 0.2, 0.3);
   vscApplyZoom();
 }
 
@@ -12427,7 +12098,8 @@ function vscZoomReset() {
 function vscApplyZoom() {
   var container = document.getElementById('vscGridContainer');
   if (container) {
-    container.style.zoom = vscZoomLevel;
+    container.style.transform = 'scale(' + vscZoomLevel + ')';
+    container.style.transformOrigin = 'top center';
   }
   var label = document.getElementById('vscZoomLabel');
   if (label) label.textContent = Math.round(vscZoomLevel * 100) + '%';
@@ -12473,7 +12145,6 @@ function vscRenderZones() {
     html += '<span class="vsc-zone-name">' + zone.name + '</span>';
     html += '<span class="vsc-zone-count">' + count + '座</span>';
     html += '<input type="number" class="vsc-zone-price-input" value="' + zone.price + '" min="0" step="10" onchange="vscChangeZonePrice(' + idx + ', this.value)" onclick="event.stopPropagation()">';
-    html += '<i class="fas fa-pen vsc-zone-edit" onclick="event.stopPropagation();vscEditZone(' + idx + ')"></i>';
     html += '<i class="fas fa-trash-can vsc-zone-del" onclick="event.stopPropagation();vscDeleteZone(' + idx + ')"></i>';
     html += '</div>';
   });
@@ -12487,29 +12158,35 @@ function vscSetActiveZone(zoneId) {
   vscRenderZones();
 }
 
-// 新建分区 - 打开弹窗
+// 新建分区
+// 新建分区 - 打开内联表单
 var vscNewZoneSelectedColor = '';
 function vscAddZone() {
+  var form = document.getElementById('vscZoneAddForm');
+  var btn = document.getElementById('vscAddZoneBtn');
+  if (!form) return;
   // 渲染颜色选项
   var colorIdx = vscState.zones.length % vscPresetColors.length;
   vscNewZoneSelectedColor = vscPresetColors[colorIdx];
   var colorsHtml = '';
   vscPresetColors.forEach(function(c, i) {
-    colorsHtml += '<div class="color-swatch' + (i === colorIdx ? ' selected' : '') + '" style="background:' + c + ';" onclick="vscSelectNewZoneColor(\'' + c + '\', this)"></div>';
+    colorsHtml += '<div class="vsc-zone-color-opt' + (i === colorIdx ? ' selected' : '') + '" style="background:' + c + ';" onclick="vscSelectNewZoneColor(\'' + c + '\', this)"></div>';
   });
   document.getElementById('vscNewZoneColors').innerHTML = colorsHtml;
   // 设置默认值
   document.getElementById('vscNewZoneName').value = '新分区' + (vscState.zones.length + 1);
   document.getElementById('vscNewZonePrice').value = 380;
-  // 打开弹窗
-  openModal('modalNewZone');
-  setTimeout(function() { document.getElementById('vscNewZoneName').focus(); }, 100);
+  // 显示表单，隐藏按钮
+  form.style.display = 'block';
+  btn.style.display = 'none';
+  // 聚焦名称输入框
+  setTimeout(function() { document.getElementById('vscNewZoneName').focus(); }, 50);
 }
 
 // 选择新建分区颜色
 function vscSelectNewZoneColor(color, el) {
   vscNewZoneSelectedColor = color;
-  document.querySelectorAll('#vscNewZoneColors .color-swatch').forEach(function(opt) {
+  document.querySelectorAll('#vscNewZoneColors .vsc-zone-color-opt').forEach(function(opt) {
     opt.classList.remove('selected');
   });
   el.classList.add('selected');
@@ -12532,65 +12209,17 @@ function vscConfirmAddZone() {
   });
   vscState.selected = {};
   vscRenderZones();
-  closeModal('modalNewZone');
+  vscCancelAddZone();
   vscUpdateSelectedCount();
   showToast('已新建分区: ' + name);
 }
 
-// 取消新建分区（保留兼容，实际由 modal 关闭按钮处理）
+// 取消新建分区
 function vscCancelAddZone() {
-  closeModal('modalNewZone');
-}
-
-// 编辑分区 - 打开弹窗
-var vscEditZoneIndex = -1;
-var vscEditZoneSelectedColor = '';
-function vscEditZone(idx) {
-  vscEditZoneIndex = idx;
-  var zone = vscState.zones[idx];
-  vscEditZoneSelectedColor = zone.color;
-  // 渲染颜色选项，高亮当前颜色
-  var colorsHtml = '';
-  vscPresetColors.forEach(function(c, i) {
-    colorsHtml += '<div class="color-swatch' + (c === zone.color ? ' active' : '') + '" style="background:' + c + ';" onclick="vscSelectEditZoneColor(\'' + c + '\', this)"></div>';
-  });
-  document.getElementById('vscEditZoneColors').innerHTML = colorsHtml;
-  // 回填当前值
-  document.getElementById('vscEditZoneName').value = zone.name;
-  document.getElementById('vscEditZonePrice').value = zone.price;
-  // 打开弹窗
-  openModal('modalVscEditZone');
-  setTimeout(function() { document.getElementById('vscEditZoneName').focus(); }, 100);
-}
-
-// 选择编辑分区颜色
-function vscSelectEditZoneColor(color, el) {
-  vscEditZoneSelectedColor = color;
-  document.querySelectorAll('#vscEditZoneColors .color-swatch').forEach(function(opt) {
-    opt.classList.remove('active');
-  });
-  el.classList.add('active');
-}
-
-// 确认编辑分区
-function vscConfirmEditZone() {
-  if (vscEditZoneIndex < 0 || vscEditZoneIndex >= vscState.zones.length) return;
-  var name = document.getElementById('vscEditZoneName').value.trim();
-  var price = parseInt(document.getElementById('vscEditZonePrice').value) || 380;
-  if (!name) {
-    showToast('请输入分区名称');
-    document.getElementById('vscEditZoneName').focus();
-    return;
-  }
-  vscState.zones[vscEditZoneIndex].name = name;
-  vscState.zones[vscEditZoneIndex].color = vscEditZoneSelectedColor;
-  vscState.zones[vscEditZoneIndex].price = price;
-  vscRenderZones();
-  vscRenderGrid();
-  vscUpdateStats();
-  closeModal('modalVscEditZone');
-  showToast('已更新分区: ' + name);
-  vscEditZoneIndex = -1;
+  var form = document.getElementById('vscZoneAddForm');
+  var btn = document.getElementById('vscAddZoneBtn');
+  if (form) form.style.display = 'none';
+  if (btn) btn.style.display = 'block';
 }
 
 // 删除分区
@@ -13233,87 +12862,6 @@ function formatTime(base, minutesAgo) {
   var dlInput = document.getElementById('reserveDeadline');
   if (dlInput) dlInput.value = dlStr;
 })();
-
-
-var sessionShowData = {
-  'tianya': { name: '《天涯故事》大型歌舞秀', dateRange: '2026-04-20 至 2026-06-30', venue: '海南大剧院 · 主剧场', sessions: '12场', duration: '120分钟', allTimes: ['2026-04-20 19:30', '2026-04-21 14:00', '2026-04-25 19:30', '2026-05-01 19:30', '2026-05-08 19:30', '2026-05-15 19:30'] },
-  'yefeng': { name: '椰风海韵·交响音乐会', dateRange: '2026-05-01 至 2026-05-15', venue: '三亚艺术中心 · 大剧场', sessions: '3场', duration: '90分钟', allTimes: ['2026-05-01 19:30', '2026-05-02 19:30', '2026-05-03 14:00'] },
-  'langmu': { name: '黎苗风情·民族舞蹈专场', dateRange: '2026-04-15 至 2026-05-20', venue: '海口演艺中心 · 大剧场', sessions: '8场', duration: '100分钟', allTimes: ['2026-04-15 20:00', '2026-04-22 20:00', '2026-04-29 20:00', '2026-05-06 20:00'] },
-  'nanhai': { name: '《南海奇缘》儿童剧', dateRange: '2026-04-10 至 2026-05-10', venue: '万宁海滨剧场 · 主剧场', sessions: '6场', duration: '75分钟', allTimes: ['2026-04-10 14:00', '2026-04-17 14:00', '2026-04-24 14:00'] },
-  'jazz': { name: '爵士之夜·国际爵士音乐节', dateRange: '2026-05-20 至 2026-05-25', venue: '儋州文化广场 · 综合厅', sessions: '4场', duration: '150分钟', allTimes: ['2026-05-20 20:00', '2026-05-21 20:00', '2026-05-22 20:00', '2026-05-23 20:00'] },
-  'niangzi': { name: '《红色娘子军》芭蕾舞剧', dateRange: '2026-06-01 至 2026-06-15', venue: '海南大剧院 · 主剧场', sessions: '5场', duration: '135分钟', allTimes: ['2026-06-01 19:30', '2026-06-05 19:30', '2026-06-08 19:30', '2026-06-12 19:30', '2026-06-15 14:00'] }
-};
-
-function onSessionShowChange(select) {
-  var infoDiv = document.getElementById('sessionShowInfo');
-  var timesWrap = document.getElementById('sessionAllTimesWrap');
-  var timesDiv = document.getElementById('sessionAllTimes');
-  var data = sessionShowData[select.value];
-  if (data) {
-    document.getElementById('ssiDateRange').textContent = data.dateRange;
-    document.getElementById('ssiVenue').textContent = data.venue;
-    document.getElementById('ssiSessions').textContent = data.sessions;
-    document.getElementById('ssiDuration').textContent = data.duration;
-    infoDiv.style.display = 'block';
-    if (timesWrap && timesDiv) {
-      timesDiv.innerHTML = data.allTimes.map(function(t) { return '<div style="padding:4px 0;border-bottom:1px solid #E2E8F0;"><i class="fas fa-clock" style="color:#94A3B8;margin-right:6px;"></i>' + t + '</div>'; }).join('');
-      timesWrap.style.display = 'block';
-    }
-  } else {
-    infoDiv.style.display = 'none';
-    if (timesWrap) timesWrap.style.display = 'none';
-  }
-}
-
-function toggleSessionSale(checkbox) {
-  var row = checkbox.closest('tr');
-  var statusCell = row.querySelector('.status-tag');
-  if (checkbox.checked) {
-    statusCell.className = 'status-tag on-sale';
-    statusCell.innerHTML = '<span class="dot"></span>售票中';
-    showToast('场次已开售');
-  } else {
-    statusCell.className = 'status-tag paused';
-    statusCell.innerHTML = '<span class="dot"></span>已暂停';
-    showToast('场次已停售');
-  }
-}
-
-function openEditSession(btn) {
-  openModal('modalNewSession');
-  // 可以在这里填充编辑数据
-}
-
-// Check session status change - warn if show is currently performing
-function checkSessionStatusChange(select) {
-  if (select.value === 'paused') {
-    var showSelect = document.getElementById('newSessionShowSelect');
-    if (showSelect && showSelect.value) {
-      // Simulate check: shows currently performing cannot be paused
-      showToast('warning', '该演出正在演出中，不可暂停');
-      select.value = select.getAttribute('data-prev') || 'on-sale';
-    }
-  }
-  // Store current value for rollback
-  select.setAttribute('data-prev', select.value);
-}
-
-// Mobile menu toggle
-(function() {
-  var btn = document.getElementById('mobileMenuBtn');
-  var sidebar = document.querySelector('.sidebar');
-  var overlay = document.getElementById('sidebarOverlay');
-  if (btn && sidebar && overlay) {
-    btn.addEventListener('click', function() {
-      sidebar.classList.toggle('mobile-open');
-      overlay.classList.toggle('active');
-    });
-    overlay.addEventListener('click', function() {
-      sidebar.classList.remove('mobile-open');
-      overlay.classList.remove('active');
-    });
-  }
-})();
 </script>
 
 <!-- ========== 座位销售操作弹窗 ========== -->
@@ -13450,89 +12998,6 @@ function checkSessionStatusChange(select) {
     <div class="vsc-modal-footer">
       <button class="btn-cancel" onclick="closeModal('modalDisableSeat')">取消</button>
       <button class="btn-confirm" onclick="ssConfirmDisable()">确认禁售</button>
-    </div>
-  </div>
-</div>
-
-<!-- 新建分区弹窗 -->
-<div class="modal-overlay" id="modalNewZone">
-  <div class="modal-container modal-sm">
-    <div class="modal-header">
-      <h3>新建分区</h3>
-      <button class="modal-close" onclick="closeModal('modalNewZone')"><i class="fas fa-xmark"></i></button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label">分区名称<span class="required">*</span></label>
-        <input type="text" class="form-input" id="vscNewZoneName" placeholder="输入分区名称" maxlength="20">
-      </div>
-      <div class="form-group">
-        <label class="form-label">分区颜色</label>
-        <div class="color-picker-group" id="vscNewZoneColors">
-          <!-- 由JS渲染颜色选项 -->
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">默认票价</label>
-        <input type="number" class="form-input" id="vscNewZonePrice" value="380" min="0" step="10">
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal('modalNewZone')">取消</button>
-      <button class="btn-confirm" onclick="vscConfirmAddZone()">确认创建</button>
-    </div>
-  </div>
-</div>
-
-<!-- 编辑分区弹窗 -->
-<div class="modal-overlay" id="modalVscEditZone">
-  <div class="modal-container modal-sm">
-    <div class="modal-header">
-      <h3>编辑分区</h3>
-      <button class="modal-close" onclick="closeModal('modalVscEditZone')"><i class="fas fa-xmark"></i></button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label">分区名称<span class="required">*</span></label>
-        <input type="text" class="form-input" id="vscEditZoneName" placeholder="输入分区名称" maxlength="20">
-      </div>
-      <div class="form-group">
-        <label class="form-label">分区颜色</label>
-        <div class="color-picker-group" id="vscEditZoneColors">
-          <!-- 由JS渲染颜色选项 -->
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">默认票价</label>
-        <input type="number" class="form-input" id="vscEditZonePrice" value="380" min="0" step="10">
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal('modalVscEditZone')">取消</button>
-      <button class="btn-confirm" onclick="vscConfirmEditZone()">保存修改</button>
-    </div>
-  </div>
-</div>
-
-<!-- 确认下架弹窗 -->
-<div class="modal-overlay" id="modalConfirmOffShelf">
-  <div class="modal-container modal-sm">
-    <div class="modal-header">
-      <h3>确认下架</h3>
-      <button class="modal-close" onclick="closeModal('modalConfirmOffShelf')"><i class="fas fa-xmark"></i></button>
-    </div>
-    <div class="modal-body">
-      <div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:12px 16px;display:flex;align-items:flex-start;gap:8px;">
-        <i class="fas fa-exclamation-triangle" style="color:#DC2626;font-size:16px;margin-top:2px;"></i>
-        <div>
-          <div style="font-size:14px;font-weight:600;color:#991B1B;margin-bottom:4px;">该演出已有售出门票</div>
-          <div style="font-size:13px;color:#7F1D1D;">"<span id="confirmOffShelfShowName"></span>"已售出 <strong id="confirmOffShelfSoldCount"></strong> 张门票，下架后已购票用户仍可使用，但新用户将无法购买。确认下架？</div>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal('modalConfirmOffShelf')">取消</button>
-      <button class="btn-confirm" style="background:#DC2626;" onclick="confirmForceOffShelf()">确认下架</button>
     </div>
   </div>
 </div>

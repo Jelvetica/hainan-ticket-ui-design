@@ -1138,6 +1138,160 @@
                 display: none;
             }
         }
+/* ===== 更新日志弹窗 ===== */
+.changelog-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10, 22, 40, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+.changelog-overlay.active { display: flex; }
+.changelog-modal {
+    background: var(--card);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+    overflow: hidden;
+}
+.changelog-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--primary);
+    color: #fff;
+}
+.changelog-modal-header h3 { font-size: 16px; font-weight: 600; }
+.changelog-close-btn {
+    width: 32px; height: 32px;
+    border: none; background: rgba(255,255,255,0.15);
+    border-radius: 8px; color: #fff; font-size: 18px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+}
+.changelog-close-btn:hover { background: rgba(255,255,255,0.25); }
+.changelog-modal-body {
+    padding: 20px 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+.changelog-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+.changelog-table th {
+    background: #F8FAFC;
+    padding: 10px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--border);
+    position: sticky;
+    top: 0;
+}
+.changelog-table th:first-child { width: 110px; }
+.changelog-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+}
+.changelog-table tr:last-child td { border-bottom: none; }
+.changelog-table tr:hover td { background: #FAFBFC; }
+.changelog-date {
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+    font-size: 13px;
+}
+.changelog-entry {
+    margin-bottom: 6px;
+    line-height: 1.6;
+}
+.changelog-entry:last-child { margin-bottom: 0; }
+.changelog-page-tag {
+    display: inline-block;
+    background: rgba(255, 107, 74, 0.1);
+    color: var(--accent);
+    padding: 1px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-right: 6px;
+}
+.changelog-empty {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* 导航栏更新日志按钮 */
+.nav-changelog-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: all 0.2s;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: transparent;
+    margin-left: 8px;
+}
+.nav-changelog-btn:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.3);
+}
+.nav-changelog-btn .changelog-dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: none;
+}
+.nav-changelog-btn .changelog-dot.visible { display: block; }
+
+/* 侧边栏更新日志样式 */
+.sidebar-changelog-list { padding: 8px 0; }
+.sidebar-changelog-item {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+}
+.sidebar-changelog-item:last-child { border-bottom: none; }
+.sidebar-changelog-date {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 4px;
+}
+.sidebar-changelog-content {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+}
+.sidebar-changelog-empty {
+    padding: 24px 16px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 13px;
+}
     </style>
 </head>
 <body>
@@ -1166,6 +1320,9 @@
             </div>
         </div>
 
+        <button class="nav-changelog-btn" onclick="openChangelogModal()" title="更新日志">
+            📋 更新日志 <span class="changelog-dot" id="changelogDot"></span>
+        </button>
         <div class="nav-mode-toggle">
             <button class="mode-btn active" onclick="switchMode('card')">卡片</button>
             <button class="mode-btn" onclick="switchMode('frame')">预览</button>
@@ -1725,29 +1882,7 @@ const devDocs = {
                 title: '交互说明',
                 content: `<p><strong>搜索流程：</strong>初始->历史+热门；输入中->建议；搜索后->结果列表；无结果->空状态</p>
                 <p><strong>相关度：</strong>名称精确50分、模糊30分、场馆/演员20分</p>`
-            },
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '首页';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              }
+            }
         ]
     },
 
@@ -1852,29 +1987,7 @@ const devDocs = {
                 title: '交互说明',
                 content: `<p><strong>券类型：</strong>满减券、折扣券、无门槛券</p>
                 <p><strong>有效期：</strong>固定日期或领取后+N天</p>`
-            },
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '演出列表页';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              }
+            }
         ]
     },
 
@@ -1970,29 +2083,7 @@ const devDocs = {
                 title: '交互说明',
                 content: `<p><strong>积分规则：</strong>1元=1积分，100积分=1元，生日双倍，次年12月31日过期</p>
                 <p><strong>签到：</strong>每日+10，连续第3天+5，第7天+20</p>`
-            },
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '演出详情页';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              }
+            }
         ]
     },
 
@@ -2034,29 +2125,7 @@ const devDocs = {
             {
                 title: '交互说明',
                 content: `<p>按日期降序分组，收入绿色"+"，支出红色"-"，每条显示操作后余额，首次20条，上拉加载更多</p>`
-            },
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '选座购票页';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              }
+            }
         ]
     },
 
@@ -2103,29 +2172,7 @@ const devDocs = {
                 title: '交互说明',
                 content: `<p><strong>充值优惠：</strong>满100送5/满500送30/满1000送80</p>
                 <p><strong>提现：</strong>50元起提，手续费1%，T+1到账</p>`
-            },
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '搜索页';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              }
+            }
         ]
     },
 
@@ -2170,29 +2217,7 @@ const devDocs = {
                 <ul><li>3x3网格，高亮依次转动逐渐减速停在目标位置</li><li>数据字段：<code>activity_id</code>, <code>cost_points</code>(50), <code>prizes[]</code>(<code>prize_id</code>, <code>name</code>, <code>icon</code>, <code>probability</code>, <code>type</code>)</li></ul>
                 <p><strong>中奖弹窗 (.win-modal)</strong></p>
                 <ul><li>数据字段：<code>prize_type</code>(coupon/goods/points/thanks), <code>is_winning</code></li></ul>`
-            }
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '会员中心';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              },
+            },
         ]
     },
 
@@ -2272,29 +2297,7 @@ const devDocs = {
                         ]
                     }
                 ]
-            }
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '券包中心';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              },
+            },
         ]
     },
 
@@ -3051,29 +3054,7 @@ const devDocs = {
                     <li>点击券包卡片切换展开/收起</li>
                     <li>展开动画：高度过渡 + 箭头旋转</li>
                 </ul>`
-            },
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '商品订单';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              }
+            }
         ]
     },
 
@@ -3213,29 +3194,7 @@ const devDocs = {
                     <li>重复绑定提示"该卡已绑定"</li>
                     <li>无效卡号提示"充值卡号无效"</li>
                 </ul>`
-            },
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '商城首页';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              }
+            }
         ]
     },
 
@@ -3556,29 +3515,7 @@ const devDocs = {
         {
             title: '推广数据概览',
             content: `展示推广漏斗数据，顶部为时间Tab切换（今日/本周/本月）： - <b>访客</b>：256 - <b>下单</b>：42 - <b>支付</b>：38 - <b>退款</b>：3 数据以漏斗形式呈现，直观展示各环节转化情况`
-        }
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '实体卡申请';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              },
+        },
     ]
   },
 
@@ -3628,29 +3565,7 @@ const devDocs = {
         {
             title: '提现记录',
             content: `展示6条历史提现记录，每条记录包含： - <b>提现金额</b> - <b>状态</b>：已到账（绿色）/ 审核中（橙色）/ 已驳回（红色） - <b>申请时间</b> - <b>提现方式</b>：如微信零钱`
-        }
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '交易记录';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              },
+        },
     ]
   },
 
@@ -3747,29 +3662,7 @@ const devDocs = {
         {
             title: '注意事项',
             content: `5条分销注意事项，涵盖违规行为、账号冻结、佣金调整等提醒事项`
-        }
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '剧院列表';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              },
+        },
     ]
   },
 
@@ -3809,29 +3702,7 @@ const devDocs = {
         {
             title: '操作按钮',
             content: `底部两个操作按钮： - <b>保存图片</b> - 将分销码卡片保存为图片到手机相册 - <b>分享</b> - 调起微信分享功能，分享分销码给好友或群聊`
-        }
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '代理中心';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              },
+        },
     ]
   },
 
@@ -4814,29 +4685,7 @@ const devDocs = {
                 ]
               }
             ]
-          },
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '订单管理';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              }
+          }
         ]
       }
     ]
@@ -5360,29 +5209,7 @@ const devDocs = {
                 ]
               }
             ]
-          },
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '演出管理';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              }
+          }
         ]
       }
     ]
@@ -5615,29 +5442,7 @@ const devDocs = {
                 ]
               }
             ]
-          },
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '售票管理';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              }
+          }
         ]
       }
     ]
@@ -5690,7 +5495,7 @@ const devDocs = {
             <p><strong>编辑会员</strong></p>
             <ul>
               <li><strong>触发：</strong>点击操作列"编辑"按钮（笔图标）</li>
-              <li><strong>执行中：</strong>弹出编辑弹窗，回填数据，可修改姓名、手机号、身份证号、所在地区、会员等级、会员卡状态、备注</li>
+              <li><strong>执行中：</strong>弹出编辑弹窗，回填数据，可修改姓名、手机号、身份证号、所在地区、备注</li>
               <li><strong>成功：</strong>列表数据更新，Toast提示"保存成功"</li>
               <li><strong>失败：</strong>手机号重复提示"该手机号已注册"；身份证号格式错误提示"身份证号格式不正确"</li>
               <li><strong>边界条件：</strong>姓名和手机号为必填项</li>
@@ -5747,8 +5552,7 @@ const devDocs = {
                   ['account_balance', 'number', '是', '账户余额（元）'],
                   ['total_consumption', 'number', '是', '累计消费（元）'],
                   ['ticket_count', 'number', '是', '购买门票数量'],
-                  ['last_consume_date', 'string', '是', '最近消费日期'],
-                  ['card_status', 'enum', '是', '会员卡状态：已发放/未发放/已冻结']
+                  ['last_consume_date', 'string', '是', '最近消费日期']
                 ]
               },
               {
@@ -5790,8 +5594,6 @@ const devDocs = {
                   ['phone', 'string', '是', '手机号'],
                   ['id_card', 'string', '否', '身份证号'],
                   ['region', 'string', '否', '所在地区'],
-                  ['member_level', 'enum', '否', '会员等级：普通/银卡/金卡/铂金/钻石'],
-                  ['card_status', 'enum', '否', '会员卡状态：已发放/未发放/已冻结'],
                   ['remark', 'string', '否', '备注']
                 ]
               }
@@ -6123,34 +5925,26 @@ const devDocs = {
         sections: [
           {
             title: '功能描述',
-            content: `<p><strong>核心功能：</strong>管理实体会员卡的申请、审核、制卡、发货和注销。展示3张统计卡片（已发放会员卡/待审核申请/待发货），支持筛选（全部状态/全部卡类型/搜索会员），表格展示会员卡申请记录（会员信息/申请时间/卡类型/会员ID/绑定IC卡/收货地址/状态/操作），支持查看详情、制卡、填写物流、锁卡、注销、审核通过/拒绝等操作。</p>
+            content: `<p><strong>核心功能：</strong>管理实体会员卡的申请、制卡、发货和注销。展示3张统计卡片（已发放会员卡/待审核申请/待发货），支持筛选（全部状态/全部卡类型/搜索会员），表格展示会员卡申请记录（会员信息/申请时间/卡类型/会员ID/绑定IC卡/收货地址/状态/操作），支持查看详情、制卡、填写物流、锁卡、注销等操作。</p>
             <p><strong>业务说明：</strong></p>
             <ul>
               <li><strong>前置条件：</strong>操作人需具有"会员卡管理"权限</li>
               <li><strong>功能实现逻辑：</strong>
                 <ul>
                   <li>卡类型：金卡、钻石卡、充值年卡</li>
-                  <li>状态流转：待审核→已审核→已发货；已发货可锁卡/注销</li>
+                  <li>状态流转：待发货→已发货；已发货可锁卡/注销</li>
                   <li>制卡：通过读卡器读取IC卡UID并绑定到会员</li>
                   <li>物流：填写快递公司和快递单号，确认发货</li>
                 </ul>
               </li>
-              <li><strong>权限控制：</strong>查看需"会员卡查看"权限；审核/制卡/发货/锁卡/注销需"会员卡管理"权限</li>
+              <li><strong>权限控制：</strong>查看需"会员卡查看"权限；制卡/发货/锁卡/注销需"会员卡管理"权限</li>
               <li><strong>数据约束：</strong>一张IC卡只能绑定一个会员；已注销的会员卡不可恢复</li>
-              <li><strong>能力边界：</strong>不支持批量审核；不支持批量制卡；不支持物流轨迹查询</li>
+              <li><strong>能力边界：</strong>不支持批量制卡；不支持物流轨迹查询</li>
             </ul>`
           },
           {
             title: '交互说明',
-            content: `<p><strong>审核会员卡申请</strong></p>
-            <ul>
-              <li><strong>触发：</strong>点击操作列"审核"按钮（对勾图标）或"拒绝"按钮（叉图标）</li>
-              <li><strong>执行中：</strong>弹出确认弹窗</li>
-              <li><strong>成功：</strong>状态变为"已审核"或移除申请</li>
-              <li><strong>失败：</strong>Toast提示"操作失败"</li>
-              <li><strong>边界条件：</strong>仅待审核状态可操作</li>
-            </ul>
-            <p><strong>制卡</strong></p>
+            content: `<p><strong>制卡</strong></p>
             <ul>
               <li><strong>触发：</strong>点击操作列"制卡"按钮（芯片图标）</li>
               <li><strong>执行中：</strong>弹出制卡弹窗，提示将空白IC卡放置在读卡器上，系统自动读取UID</li>
@@ -6200,15 +5994,15 @@ const devDocs = {
                 headers: ['字段名', '类型', '必填', '说明'],
                 rows: [
                   ['issued_card_count', 'number', '是', '已发放会员卡数量'],
-                  ['pending_audit_count', 'number', '是', '待审核申请数量'],
-                  ['pending_shipment_count', 'number', '是', '待发货数量']
+                  ['pending_shipment_count', 'number', '是', '待发货数量'],
+                  ['shipped_count', 'number', '是', '已发货数量']
                 ]
               },
               {
                 title: '筛选条件字段',
                 headers: ['字段名', '类型', '必填', '说明'],
                 rows: [
-                  ['card_status', 'enum', '否', '状态：全部/待审核/已审核/已发货/已锁定/已注销'],
+                  ['card_status', 'enum', '否', '状态：全部/待发货/已发货/已锁定/已注销'],
                   ['card_type', 'enum', '否', '卡类型：全部/金卡/钻石卡/充值年卡'],
                   ['search_keyword', 'string', '否', '搜索会员']
                 ]
@@ -6223,7 +6017,7 @@ const devDocs = {
                   ['card_type', 'enum', '是', '卡类型：金卡/钻石卡/充值年卡'],
                   ['ic_card_bound', 'boolean', '是', '是否已绑定IC卡'],
                   ['shipping_address', 'string', '是', '收货地址'],
-                  ['card_status', 'enum', '是', '状态：待审核/已审核/已发货/已锁定/已注销']
+                  ['card_status', 'enum', '是', '状态：待发货/已发货/已锁定/已注销']
                 ]
               },
               {
@@ -6250,29 +6044,7 @@ const devDocs = {
                 ]
               }
             ]
-          },
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '会员管理';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              }
+          }
         ]
       }
     ]
@@ -6446,6 +6218,7 @@ const devDocs = {
                 <ul>
                   <li>折扣类型：百分比折扣（如8折，可设置最大优惠金额上限）或满减优惠（满X减Y，门槛为0时表示立减）</li>
                   <li>关联范围：可选择全部演出或指定演出，指定演出可选择全部场次或部分场次（多选）</li>
+                  <li>售票渠道：新建和编辑时可选择适用的售票渠道（小程序/窗口），至少选择一个，默认全选；用户仅在选中的渠道购票时方可享受该折扣</li>
                   <li>状态流转：未开始→进行中→已结束（自动），进行中可手动停止→已停止</li>
                   <li>数据统计：总使用次数、累计优惠金额、带动订单金额、转化率、使用趋势</li>
                 </ul>
@@ -6460,10 +6233,10 @@ const devDocs = {
             content: `<p><strong>新建折扣活动</strong></p>
             <ul>
               <li><strong>触发：</strong>点击"新建折扣活动"按钮</li>
-              <li><strong>执行中：</strong>弹出新建弹窗，填写活动名称、关联演出（下拉选择，选演出后加载场次多选）、折扣类型（百分比折扣/满减优惠，切换显示不同字段）、折扣比例/满减门槛和减免金额、最大优惠金额、开始/结束时间、活动说明</li>
+              <li><strong>执行中：</strong>弹出新建弹窗，填写活动名称、关联演出（下拉选择，选演出后加载场次多选）、折扣类型（百分比折扣/满减优惠，切换显示不同字段）、折扣比例/满减门槛和减免金额、最大优惠金额、开始/结束时间、活动说明、售票渠道（复选框：小程序/窗口，默认全选）</li>
               <li><strong>成功：</strong>弹窗关闭，列表新增记录，Toast提示"折扣活动已创建"</li>
-              <li><strong>失败：</strong>名称重复提示"该活动名称已存在"；时间重叠提示"该时段已有折扣活动"</li>
-              <li><strong>边界条件：</strong>开始时间不可早于当前时间；折扣比例范围1-99；满减门槛需大于等于0</li>
+              <li><strong>失败：</strong>名称重复提示"该活动名称已存在"；时间重叠提示"该时段已有折扣活动"；未选渠道提示"请至少选择一个售票渠道"</li>
+              <li><strong>边界条件：</strong>开始时间不可早于当前时间；折扣比例范围1-99；满减门槛需大于等于0；至少选择一个售票渠道</li>
             </ul>
             <p><strong>编辑折扣活动</strong></p>
             <ul>
@@ -6546,6 +6319,7 @@ const devDocs = {
                   ['max_discount_amount', 'number', '否', '最大优惠金额（元），不填则不限制'],
                   ['discount_threshold', 'number', '否', '满减门槛（元），discount_type=reduce时必填'],
                   ['discount_reduce_amount', 'number', '否', '减免金额（元），discount_type=reduce时必填'],
+                  ['discount_channel', 'array', '是', '售票渠道：miniapp（小程序）/window（窗口），可多选'],
                   ['start_time', 'string', '是', '开始时间'],
                   ['end_time', 'string', '是', '结束时间'],
                   ['description', 'string', '否', '活动说明']
@@ -6570,66 +6344,100 @@ const devDocs = {
         sections: [
           {
             title: '功能描述',
-            content: `<p><strong>核心功能：</strong>管理优惠券的创建、编辑、停用、二维码领券和数据查看。页面展示3张统计卡片（已发放优惠券/已使用/核销总金额），支持按类型、状态筛选，表格展示优惠券列表（券名称/类型/面值/使用条件/已发放已使用/有效期/状态/操作），支持新建优惠券（现金券或抵扣券，固定日期或领取后N天有效期），提供二维码领券入口（支持下载二维码、复制链接、分享、自定义页面）。</p>
+            content: `<p><strong>核心功能：</strong>管理优惠券的创建、编辑、停用、二维码领券和数据查看。页面展示3张统计卡片（已发放优惠券/已使用/核销总金额），支持按类型、状态筛选，表格展示优惠券列表（券名称/类型/面值或折扣/使用条件/适用范围/已发放已使用/有效期/状态/操作），支持新建优惠券（现金券固定金额减免或折扣券按比例折扣），支持按演出-场次层级指定适用范围，支持设置与早鸟票/会员折扣/票品折扣的叠加规则。编辑弹窗根据优惠券状态（未开始/进行中/已过期/已停用）控制可编辑字段范围。</p>
             <p><strong>业务说明：</strong></p>
             <ul>
               <li><strong>前置条件：</strong>操作人需具有"优惠券管理"权限</li>
               <li><strong>功能实现逻辑：</strong>
                 <ul>
-                  <li>券类型：现金券（直接抵扣现金）或抵扣券（满足条件后抵扣）</li>
+                  <li>券类型：现金券（设置减免金额，如满200减50）或折扣券（设置折扣比例，如8折即减免20%，范围1-99折）；两种类型均可独立设置消费门槛（满X元可用），0或不填表示无门槛</li>
+                  <li>适用范围：全部演出可用，或指定演出/场次；选择指定演出后，以演出为层级展示该演出下的所有场次，每个演出独立勾选场次，不勾选任何场次则该演出下全部场次可用</li>
+                  <li>叠加设置：独立开关控制是否可与早鸟票、会员折扣、票品折扣叠加使用</li>
                   <li>有效期模式：固定日期（设置生效时间和失效时间）或领取后N天（用户领取后N天内有效）</li>
-                  <li>使用条件：设置最低消费金额，0表示无门槛</li>
-                  <li>指定演出：可选择全部演出可用或指定某场演出</li>
                   <li>状态流转：未开始→进行中→已过期（自动），进行中可手动停用→已停用</li>
-                  <li>发放与使用：表格展示已发放数量和已使用数量，带进度条展示使用率</li>
+                  <li>编辑规则：未开始状态所有字段可编辑；进行中状态仅有效期和使用说明可编辑（核心参数灰显不可修改）；已过期/已停用状态仅可查看，不可编辑，不可复制</li>
+                  <li>发放与使用：表格展示已发放数量和已使用数量，带进度条展示使用率；列表操作栏提供编辑、数据、二维码、停用按钮（已过期仅保留查看和数据）</li>
+                  <li>数据查看：数据弹窗展示总发放量/已使用/使用率/未使用/核销总金额/平均优惠金额等统计卡片，下方为领取与使用明细表格（含领取时间/使用状态/订单号/订单金额/优惠金额/使用时间），支持按用户姓名/手机号搜索、按使用状态筛选，支持分页</li>
+                  <li>二维码：每行操作栏提供"二维码"按钮，点击弹出微信小程序二维码弹窗，仅支持下载二维码，不支持自定义跳转页面，不提供网址链接</li>
                 </ul>
               </li>
               <li><strong>权限控制：</strong>查看需"优惠券查看"权限；新增/编辑需"优惠券编辑"权限；停用需"优惠券管理"权限</li>
-              <li><strong>数据约束：</strong>券名称不可重复；已过期/已停用优惠券不可编辑；发放数量需大于0</li>
-              <li><strong>能力边界：</strong>不支持批量创建；不支持发放记录导出；不支持与折扣活动叠加使用</li>
+              <li><strong>数据约束：</strong>券名称不可重复；已过期/已停用优惠券不可编辑；发放数量需大于0；折扣比例范围为1-99的整数；消费门槛为0表示无门槛</li>
+              <li><strong>能力边界：</strong>不支持批量创建；不支持发放记录导出；不支持与折扣活动叠加使用（由叠加设置开关控制）；二维码仅支持微信小程序，不支持支付宝等其他渠道</li>
             </ul>`
           },
           {
             title: '交互说明',
             content: `<p><strong>新建优惠券</strong></p>
             <ul>
-              <li><strong>触发：</strong>点击"新建优惠券"按钮</li>
-              <li><strong>执行中：</strong>弹出新建弹窗，填写券名称、券类型（现金券/抵扣券）、面值、使用条件（最低消费）、发放数量、指定演出（下拉选择）、有效期模式（固定日期/领取后N天）、生效/失效时间、使用说明</li>
+              <li><strong>触发：</strong>点击"新建优惠券"按钮（右上角，蓝色主按钮，带加号图标）</li>
+              <li><strong>执行中：</strong>弹出 modal-coupon-new 弹窗，填写券名称、券类型（下拉选择：现金券/折扣券，切换后下方显示减免金额或折扣比例输入框）、消费门槛（满X元可用，0表示无门槛）、发放数量；适用范围区域选择全部演出可用或指定演出/场次（选择后展示演出多选标签，每个演出下展开场次复选框）；叠加设置区域三个独立开关（早鸟票/会员折扣/票品折扣）；有效期模式（固定日期/领取后N天）、生效/失效时间、使用说明</li>
               <li><strong>成功：</strong>弹窗关闭，列表新增记录，Toast提示"创建成功"</li>
-              <li><strong>失败：</strong>名称重复提示"该优惠券名称已存在"</li>
-              <li><strong>边界条件：</strong>面值需大于0；发放数量需大于0；最低消费为0表示无门槛</li>
+              <li><strong>失败：</strong>名称重复提示"该优惠券名称已存在"；未选券类型提示"请选择券类型"</li>
+              <li><strong>边界条件：</strong>现金券减免金额需大于0；折扣券比例范围为1-99整数；发放数量需大于0；消费门槛为0表示无门槛；适用范围选择"指定演出/场次"时必须至少选择1个演出</li>
             </ul>
-            <p><strong>编辑优惠券</strong></p>
+
+            <p><strong>编辑优惠券（未开始状态）</strong></p>
             <ul>
-              <li><strong>触发：</strong>点击进行中/未开始优惠券操作列"编辑"按钮</li>
-              <li><strong>执行中：</strong>弹出编辑弹窗，回填数据</li>
-              <li><strong>成功：</strong>列表数据更新</li>
+              <li><strong>触发：</strong>点击未开始状态优惠券操作列"编辑"按钮</li>
+              <li><strong>执行中：</strong>弹出 modal-coupon-edit 弹窗，所有字段可编辑，顶部无状态限制提示</li>
+              <li><strong>成功：</strong>弹窗关闭，列表数据更新，Toast提示"保存成功"</li>
               <li><strong>失败：</strong>Toast提示"保存失败"</li>
-              <li><strong>边界条件：</strong>已过期/已停用优惠券不可编辑</li>
+              <li><strong>边界条件：</strong>名称不可与其他优惠券重复</li>
             </ul>
+
+            <p><strong>编辑优惠券（进行中状态）</strong></p>
+            <ul>
+              <li><strong>触发：</strong>点击进行中状态优惠券操作列"编辑"按钮</li>
+              <li><strong>执行中：</strong>弹出 modal-coupon-edit 弹窗，顶部黄色警告提示"当前状态：进行中 — 已有N张券被领取，N张已使用。以下字段不可修改：券类型、面值/折扣、消费门槛、适用范围、叠加设置。仅可修改有效期和使用说明。"券名称、券类型、减免金额/折扣比例、消费门槛、发放数量、适用范围、叠加设置区域均灰显 disabled；有效期设置区域标注"可编辑"标签，生效/失效时间、使用说明可修改</li>
+              <li><strong>成功：</strong>弹窗关闭，列表数据更新，Toast提示"保存成功"</li>
+              <li><strong>失败：</strong>Toast提示"保存失败"</li>
+              <li><strong>边界条件：</strong>核心参数（券类型、面值/折扣、门槛、范围、叠加）不可变更</li>
+            </ul>
+
+            <p><strong>查看优惠券（已过期/已停用状态）</strong></p>
+            <ul>
+              <li><strong>触发：</strong>点击已过期/已停用状态优惠券操作列"查看"按钮（眼睛图标）</li>
+              <li><strong>执行中：</strong>弹出 modal-coupon-view 弹窗，顶部红色锁定提示"当前状态：已过期 — 该优惠券已过期，所有内容均为只读，不可修改。"所有表单字段 disabled，叠加设置区域 pointer-events:none，有效期设置区域灰显，底部仅显示"关闭"按钮，无"保存修改"按钮</li>
+              <li><strong>成功：</strong>展示完整只读信息</li>
+              <li><strong>失败：</strong>Toast提示"加载失败"</li>
+              <li><strong>边界条件：</strong>已过期/已停用状态不可编辑，不可复制</li>
+            </ul>
+
             <p><strong>停用优惠券</strong></p>
             <ul>
-              <li><strong>触发：</strong>点击操作列"停用"按钮（红色禁止图标）</li>
+              <li><strong>触发：</strong>点击进行中/未开始优惠券操作列"停用"按钮（红色禁止图标）</li>
               <li><strong>执行中：</strong>状态直接切换为"已停用"</li>
-              <li><strong>成功：</strong>状态变更，操作按钮变为"查看/数据/复制"</li>
+              <li><strong>成功：</strong>状态变更，操作按钮变为"查看/数据"（已过期/已停用状态不显示编辑、二维码、停用、复制按钮）</li>
               <li><strong>失败：</strong>Toast提示"操作失败"</li>
               <li><strong>边界条件：</strong>已过期优惠券不可停用</li>
             </ul>
-            <p><strong>二维码领券</strong></p>
+
+            <p><strong>查看二维码</strong></p>
             <ul>
-              <li><strong>触发：</strong>页面底部展示二维码领券入口卡片，或点击操作列"二维码"按钮</li>
-              <li><strong>执行中：</strong>展示二维码图片、链接地址，支持下载二维码、复制链接、分享、自定义页面</li>
-              <li><strong>成功：</strong>用户扫码进入领券页面</li>
+              <li><strong>触发：</strong>点击列表操作列"二维码"按钮（二维码图标）</li>
+              <li><strong>执行中：</strong>弹出 modal-coupon-qrcode 弹窗，展示200x200微信小程序码占位图、优惠券名称、说明文字"用户使用微信扫描此二维码，可直接打开小程序领取该优惠券"</li>
+              <li><strong>成功：</strong>弹窗展示二维码</li>
               <li><strong>失败：</strong>Toast提示"生成失败"</li>
-              <li><strong>边界条件：</strong>仅进行中优惠券可领取</li>
+              <li><strong>边界条件：</strong>仅支持微信小程序二维码；不支持自定义跳转页面；不提供网址链接；仅进行中优惠券显示二维码按钮</li>
             </ul>
+
+            <p><strong>下载二维码</strong></p>
+            <ul>
+              <li><strong>触发：</strong>在二维码弹窗中点击"下载二维码"按钮</li>
+              <li><strong>执行中：</strong>触发图片下载</li>
+              <li><strong>成功：</strong>文件下载到本地</li>
+              <li><strong>失败：</strong>Toast提示"下载失败"</li>
+              <li><strong>边界条件：</strong>无</li>
+            </ul>
+
             <p><strong>查看优惠券数据</strong></p>
             <ul>
-              <li><strong>触发：</strong>点击已过期/已停用优惠券操作列"数据"按钮</li>
-              <li><strong>执行中：</strong>展示优惠券使用统计数据</li>
-              <li><strong>成功：</strong>展示完整数据</li>
+              <li><strong>触发：</strong>点击任意状态优惠券操作列"数据"按钮（柱状图图标）</li>
+              <li><strong>执行中：</strong>弹出 modal-coupon-data 弹窗（modal-xl 宽屏），顶部6张统计卡片（总发放量/已使用/使用率/未使用/核销总金额/平均优惠金额）；下方为"领取与使用明细"区域，左侧标题右侧搜索框（按用户姓名/手机号搜索）+ 筛选下拉（全部记录/已领取未使用/已使用）；表格列：用户/手机号/领取时间/使用状态/订单号/订单金额/优惠金额/使用时间；表格底部有分页组件</li>
+              <li><strong>成功：</strong>展示完整统计数据和明细</li>
               <li><strong>失败：</strong>Toast提示"加载失败"</li>
-              <li><strong>边界条件：</strong>无</li>
+              <li><strong>边界条件：</strong>已领取未使用记录的使用相关字段显示"—"；支持分页浏览大量记录</li>
             </ul>`
           },
           {
@@ -6649,8 +6457,8 @@ const devDocs = {
                 title: '筛选条件字段',
                 headers: ['字段名', '类型', '必填', '说明'],
                 rows: [
-                  ['filter_type', 'enum', '否', '类型筛选：全部类型/现金券/抵扣券'],
-                  ['filter_status', 'enum', '否', '状态筛选：全部状态/进行中/已过期/已停用']
+                  ['filter_type', 'enum', '否', '类型筛选：全部类型/现金券/折扣券'],
+                  ['filter_status', 'enum', '否', '状态筛选：全部状态/未开始/进行中/已过期/已停用']
                 ]
               },
               {
@@ -6658,32 +6466,75 @@ const devDocs = {
                 headers: ['字段名', '类型', '必填', '说明'],
                 rows: [
                   ['coupon_name', 'string', '是', '券名称'],
-                  ['coupon_type', 'enum', '是', '类型：现金券/抵扣券'],
-                  ['face_value', 'number', '是', '面值（元）'],
-                  ['min_order_amount', 'number', '是', '使用条件，最低消费（元），0表示无门槛'],
+                  ['coupon_type', 'enum', '是', '类型：cash（现金券）/discount（折扣券）'],
+                  ['face_value', 'number', '否', '现金券为减免金额（元）；折扣券为折扣比例（折）'],
+                  ['min_order_amount', 'number', '否', '消费门槛（元），0表示无门槛'],
+                  ['applicable_scope', 'enum', '是', '适用范围：all（全部演出）/specific（指定演出场次）'],
+                  ['applicable_shows', 'array', '否', '指定演出ID列表，applicable_scope=specific时必填'],
+                  ['applicable_sessions', 'object', '否', '演出场次映射，key为show_id，value为session_id数组，空数组表示该演出全部场次'],
                   ['issued_count', 'number', '是', '已发放数量（张）'],
                   ['used_count', 'number', '是', '已使用数量（张）'],
                   ['usage_rate', 'number', '是', '使用率（%）'],
                   ['valid_start', 'string', '是', '有效期开始时间'],
                   ['valid_end', 'string', '是', '有效期结束时间'],
-                  ['status', 'enum', '是', '状态：未开始/进行中/已过期/已停用']
+                  ['status', 'enum', '是', '状态：pending（未开始）/active（进行中）/expired（已过期）/stopped（已停用）']
                 ]
               },
               {
-                title: '新建优惠券弹窗字段',
+                title: '新建/编辑优惠券弹窗字段',
                 headers: ['字段名', '类型', '必填', '说明'],
                 rows: [
                   ['coupon_name', 'string', '是', '券名称'],
-                  ['coupon_type', 'enum', '是', '券类型：现金券/抵扣券'],
-                  ['face_value', 'number', '是', '面值（元）'],
-                  ['min_order_amount', 'number', '否', '最低消费（元），0表示无门槛'],
+                  ['coupon_type', 'enum', '是', '券类型：cash（现金券）/discount（折扣券）'],
+                  ['discount_amount', 'number', '否', '减免金额（元），coupon_type=cash时必填'],
+                  ['discount_percent', 'number', '否', '折扣比例（折，1-99整数），coupon_type=discount时必填'],
+                  ['min_order_amount', 'number', '否', '消费门槛（元），0表示无门槛'],
                   ['issue_quantity', 'number', '是', '发放数量（张）'],
-                  ['applicable_show', 'string', '否', '指定演出，空表示全部演出可用'],
-                  ['validity_mode', 'enum', '是', '有效期模式：fixed（固定日期）/relative（领取后N天），切换后生效/失效时间字段含义变更'],
-                  ['valid_start', 'string', '是', '固定日期模式为生效时间；领取后N天模式为领取后起始计算时间'],
-                  ['valid_end', 'string', '是', '固定日期模式为失效时间；领取后N天模式为领取后有效截止时间'],
+                  ['applicable_scope', 'enum', '是', '适用范围：all/specific'],
+                  ['applicable_shows', 'array', '否', '指定演出ID列表，applicable_scope=specific时必填'],
+                  ['applicable_sessions', 'object', '否', '演出场次映射，key为show_id，value为session_id数组'],
+                  ['stack_early_bird', 'boolean', '是', '是否可与早鸟票叠加'],
+                  ['stack_member_discount', 'boolean', '是', '是否可与会员折扣叠加'],
+                  ['stack_ticket_discount', 'boolean', '是', '是否可与票品折扣叠加'],
+                  ['validity_mode', 'enum', '是', '有效期模式：fixed（固定日期）/relative（领取后N天）'],
+                  ['valid_start', 'string', '是', '固定日期模式为生效时间'],
+                  ['valid_end', 'string', '是', '固定日期模式为失效时间'],
                   ['valid_days', 'number', '否', '领取后N天有效，validity_mode=relative时必填'],
                   ['usage_desc', 'string', '否', '使用说明']
+                ]
+              },
+              {
+                title: '优惠券数据弹窗-统计卡片字段',
+                headers: ['字段名', '类型', '必填', '说明'],
+                rows: [
+                  ['total_issued', 'number', '是', '总发放量（张）'],
+                  ['total_used', 'number', '是', '已使用（张）'],
+                  ['usage_rate', 'number', '是', '使用率（%）'],
+                  ['total_unused', 'number', '是', '未使用（张）'],
+                  ['total_write_off_amount', 'number', '是', '核销总金额（元）'],
+                  ['avg_discount_amount', 'number', '是', '平均优惠金额（元）']
+                ]
+              },
+              {
+                title: '优惠券数据弹窗-明细列表字段',
+                headers: ['字段名', '类型', '必填', '说明'],
+                rows: [
+                  ['user_name', 'string', '是', '用户姓名'],
+                  ['user_phone', 'string', '是', '用户手机号（脱敏）'],
+                  ['claim_time', 'string', '是', '领取时间'],
+                  ['use_status', 'enum', '是', '使用状态：claimed（已领取未使用）/used（已使用）'],
+                  ['order_no', 'string', '否', '订单号，use_status=used时必填'],
+                  ['order_amount', 'number', '否', '订单金额（元），use_status=used时必填'],
+                  ['discount_amount', 'number', '否', '优惠金额（元），use_status=used时必填'],
+                  ['use_time', 'string', '否', '使用时间，use_status=used时必填']
+                ]
+              },
+              {
+                title: '明细筛选/搜索字段',
+                headers: ['字段名', '类型', '必填', '说明'],
+                rows: [
+                  ['search_keyword', 'string', '否', '搜索关键词，按用户姓名或手机号模糊匹配'],
+                  ['filter_use_status', 'enum', '否', '使用状态筛选：all/claimed/used']
                 ]
               }
             ]
@@ -6936,29 +6787,7 @@ const devDocs = {
                 ]
               }
             ]
-          },
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '营销中心';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              }
+          }
         ]
       }
     ]
@@ -7679,29 +7508,7 @@ Tab切换交互：
                             ]
                         }
                     ]
-                },
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '运营活动';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              }
+                }
             ]
         }
     ]
@@ -8031,32 +7838,68 @@ Tab切换交互：
 - 代理等级分布：各等级代理占比
 - 推广业绩排行：按推广金额/订单排行
 - 佣金统计：佣金产生/结算/待结算金额`
-        },
-            {
-                title: '更新日志',
-                content: (function() {
-                  var pageName = '代理管理';
-                  var logs = getChangelogByPage(pageName);
-                  if (logs.length === 0) {
-                    return '<p style="color:#94a3b8;font-size:13px;">暂无更新记录</p>';
-                  }
-                  var html = '<div class="changelog-sidebar">';
-                  logs.forEach(function(day) {
-                    html += '<div class="changelog-day">';
-                    html += '<div class="changelog-date">📅 ' + day.date + '</div>';
-                    html += '<ul class="changelog-list">';
-                    day.updates.forEach(function(u) {
-                      html += '<li><span class="changelog-page-tag">' + u.page + '</span> ' + u.content + '</li>';
-                    });
-                    html += '</ul></div>';
-                  });
-                  html += '</div>';
-                  return html;
-                })()
-              }
+        }
     ]
   }
 };
+// ===== 更新日志数据 =====
+// 每次更新原型时，在此数组前面插入新记录
+// entries.page 对应 devDocs 中的页面URL键名
+const changelogData = [
+    {
+        date: '2026-06-11',
+        entries: [
+            {
+                page: 'pc-admin/marketing-center.html',
+                pageName: '营销中心',
+                module: '票品折扣',
+                content: `新增和编辑弹窗增加售票渠道选择（小程序/窗口），默认全选，至少选择一个`
+            }
+        ]
+    },
+    {
+        date: '2026-06-10',
+        entries: [
+            {
+                page: 'pc-admin/member-management.html',
+                pageName: '会员管理',
+                module: '会员管理',
+                content: `会员编辑移除会员等级和会员卡状态；详情移除会员卡状态；会员卡管理取消审核/拒绝功能，状态筛选改为待发货/已发货/已锁定/已注销`
+            },
+            {
+                page: 'pc-admin/marketing-center.html',
+                pageName: '营销中心',
+                module: '优惠券',
+                content: `券类型改为现金券/折扣券；新增消费门槛、适用范围（演出-场次层级多选）、叠加设置（早鸟票/会员折扣/票品折扣）；编辑弹窗按状态控制可编辑内容；列表操作栏新增数据/二维码按钮；移除底部二维码区域和领券二维码按钮；数据弹窗增加领取使用明细（含领取时间/订单号）、搜索筛选和分页；已过期状态仅可查看不可编辑不可复制`
+            },
+            {
+                page: 'index.html',
+                pageName: '设计总览',
+                module: '设计总览',
+                content: `新增更新日志弹窗和侧边栏更新日志Tab；新增售票管理与订单管理完整流程图`
+            },
+            {
+                page: 'pc-admin/show-management.html',
+                pageName: '演出管理',
+                module: '演出管理',
+                content: `重构侧边栏为二级标签结构（功能描述/交互说明/核心字段）`
+            },
+            {
+                page: 'pc-admin/order-management.html',
+                pageName: '订单管理',
+                module: '订单管理',
+                content: `重构侧边栏为二级标签结构`
+            },
+            {
+                page: 'user-miniapp/home.html',
+                pageName: '首页',
+                module: '首页',
+                content: `重构侧边栏为二级标签结构`
+            }
+        ]
+    }
+];
+
 const defaultDevDoc = {
     title: '页面开发说明',
     subtitle: '该页面文档待完善',
@@ -8148,6 +7991,7 @@ function init() {
     renderAllCards();
     renderDropdown();
     initIframeListener();
+    checkAutoShowChangelog();
 }
 
 // 渲染所有卡片
@@ -8357,6 +8201,7 @@ function updateSidebar(url) {
 
     titleEl.textContent = doc.title || '页面开发说明';
     subtitleEl.textContent = doc.subtitle || '';
+    window.currentSidebarUrl = url;
 
     if (!doc.sections || doc.sections.length === 0) {
         tabBarEl.innerHTML = '';
@@ -8382,12 +8227,18 @@ function updateSidebar(url) {
                 <button class="sidebar-sub-tab-btn ${subIdx === 0 ? 'active' : ''}" data-subtab="${index}-${subIdx}" onclick="switchSubTab(${index}, ${subIdx})">
                     ${sub.title}
                 </button>
-            `).join('');
+            `).join('') + `
+                <button class="sidebar-sub-tab-btn" data-subtab="${index}-changelog" onclick="switchSubTab(${index}, ${subSections.length})" style="margin-left:auto; opacity:0.7;">
+                    📋 更新日志
+                </button>`;
             const subPanelsHtml = subSections.map((sub, subIdx) => `
                 <div class="sidebar-sub-panel ${subIdx === 0 ? 'active' : ''}" data-subpanel="${index}-${subIdx}">
                     ${renderSectionContent(sub)}
                 </div>
-            `).join('');
+            `).join('') + `
+                <div class="sidebar-sub-panel" data-subpanel="${index}-changelog">
+                    ${renderSidebarChangelog(currentSidebarUrl, section.title)}
+                </div>`;
             return `
                 <div class="sidebar-tab-panel ${index === 0 ? 'active' : ''}" data-panel="${index}">
                     <div class="sidebar-sub-tabs">${subTabsHtml}</div>
@@ -8404,13 +8255,19 @@ function updateSidebar(url) {
             <button class="sidebar-tab-btn ${index === 0 ? 'active' : ''}" data-tab="${index}" onclick="switchSidebarTab(${index})">
                 ${section.title}
             </button>
-        `).join('');
+        `).join('') + `
+            <button class="sidebar-tab-btn" data-tab="${doc.sections.length}" onclick="switchSidebarTab(${doc.sections.length})" style="margin-left:auto; opacity:0.7;">
+                📋 更新日志
+            </button>`;
 
         const panelsHtml = doc.sections.map((section, index) => `
             <div class="sidebar-tab-panel ${index === 0 ? 'active' : ''}" data-panel="${index}">
                 ${renderSectionContent(section)}
             </div>
-        `).join('');
+        `).join('') + `
+            <div class="sidebar-tab-panel" data-panel="${doc.sections.length}">
+                ${renderSidebarChangelog(url)}
+            </div>`;
 
         tabBarEl.innerHTML = tabsHtml;
         tabContentEl.innerHTML = panelsHtml;
@@ -8569,8 +8426,123 @@ function filterCategory(category) {
     }
 }
 
+// ===== 更新日志功能 =====
+
+// 渲染全局更新日志弹窗内容
+function renderChangelogModal() {
+    const body = document.getElementById('changelogModalBody');
+    if (!body) return;
+    
+    if (!changelogData || changelogData.length === 0) {
+        body.innerHTML = '<div class="changelog-empty">暂无更新记录</div>';
+        return;
+    }
+    
+    // 按日期分组，合并同一日期的条目
+    const grouped = {};
+    changelogData.forEach(item => {
+        if (!grouped[item.date]) grouped[item.date] = [];
+        item.entries.forEach(entry => grouped[item.date].push(entry));
+    });
+    
+    const dates = Object.keys(grouped).sort((a, b) => b.localeCompare(a));
+    
+    let html = '<table class="changelog-table"><thead><tr><th>日期</th><th>更新内容</th></tr></thead><tbody>';
+    dates.forEach(date => {
+        const entries = grouped[date];
+        html += `<tr><td rowspan="${entries.length}" class="changelog-date">${date}</td>`;
+        entries.forEach((entry, idx) => {
+            if (idx > 0) html += '<tr>';
+            html += `<td><div class="changelog-entry"><span class="changelog-page-tag">${entry.pageName}</span>${entry.content}</div></td></tr>`;
+        });
+    });
+    html += '</tbody></table>';
+    body.innerHTML = html;
+}
+
+// 渲染侧边栏中当前页面的更新日志
+function renderSidebarChangelog(pageUrl, moduleName) {
+    if (!changelogData || changelogData.length === 0) {
+        return '<div class="sidebar-changelog-empty">该页面暂无更新记录</div>';
+    }
+    
+    // 过滤当前页面 + 当前模块的日志
+    const pageLogs = [];
+    changelogData.forEach(item => {
+        item.entries.forEach(entry => {
+            if (entry.page === pageUrl) {
+                // 如果传了 moduleName，则按 module 过滤；否则展示该页面所有日志
+                if (moduleName && entry.module && entry.module !== moduleName) {
+                    return;
+                }
+                pageLogs.push({ date: item.date, content: entry.content });
+            }
+        });
+    });
+    
+    if (pageLogs.length === 0) {
+        return '<div class="sidebar-changelog-empty">该模块暂无更新记录</div>';
+    }
+    
+    let html = '<div class="sidebar-changelog-list">';
+    pageLogs.forEach(log => {
+        html += `<div class="sidebar-changelog-item">
+            <div class="sidebar-changelog-date">${log.date}</div>
+            <div class="sidebar-changelog-content">${log.content}</div>
+        </div>`;
+    });
+    html += '</div>';
+    return html;
+}
+
+// 打开更新日志弹窗
+function openChangelogModal() {
+    renderChangelogModal();
+    document.getElementById('changelogOverlay').classList.add('active');
+    // 标记已读
+    sessionStorage.setItem('changelog_viewed', 'true');
+    const dot = document.getElementById('changelogDot');
+    if (dot) dot.classList.remove('visible');
+}
+
+// 关闭更新日志弹窗
+function closeChangelogModal() {
+    document.getElementById('changelogOverlay').classList.remove('active');
+}
+
+// 点击遮罩关闭
+function closeChangelogOnOverlay(event) {
+    if (event.target === event.currentTarget) {
+        closeChangelogModal();
+    }
+}
+
+// 检查是否需要自动弹出更新日志
+function checkAutoShowChangelog() {
+    const viewed = sessionStorage.getItem('changelog_viewed');
+    if (!viewed && changelogData && changelogData.length > 0) {
+        // 延迟500ms弹出，等页面加载完成
+        setTimeout(() => {
+            openChangelogModal();
+        }, 500);
+    }
+}
+
 // 初始化
 init();
 </script>
+
+<!-- 更新日志弹窗 -->
+<div class="changelog-overlay" id="changelogOverlay" onclick="closeChangelogOnOverlay(event)">
+    <div class="changelog-modal">
+        <div class="changelog-modal-header">
+            <h3>📋 原型更新日志</h3>
+            <button class="changelog-close-btn" onclick="closeChangelogModal()">&times;</button>
+        </div>
+        <div class="changelog-modal-body" id="changelogModalBody">
+            <!-- 动态渲染 -->
+        </div>
+    </div>
+</div>
 </body>
 </html>

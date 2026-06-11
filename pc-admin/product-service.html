@@ -6,6 +6,7 @@
 <title>商品管理 - 海南演艺票务系统</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="admin-components.css" rel="stylesheet">
 <style>
 /* Force mobile viewport */
 @-ms-viewport { width: device-width; }
@@ -253,8 +254,20 @@ html {
   --radius-md: 10px;
   --radius-lg: 14px;
   --sidebar-width: 240px;
-  --header-height: 64px;
+  --topbar-height: 64px;
   --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --white: var(--bg-white, #FFFFFF);
+  --border-gray: var(--border, #e5e7eb);
+  --light-gray: var(--bg-light, #F5F6FA);
+  --coral-orange: var(--accent, #FF6B4A);
+  --coral-orange-light: rgba(255,107,74,0.1);
+  --text-light: #9ca3af;
+  --border-color: #e5e7eb;
+  --deep-blue: #0A1628;
+  --bg-content: #F0F2F5;
+  --danger: #EF4444;
+  --coral: var(--accent, #FF6B4A);
+  --card-white: var(--bg-white, #FFFFFF);
 }
 
 /* ========== Reset & Base ========== */
@@ -286,80 +299,171 @@ table { border-collapse: collapse; width: 100%; }
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #F0F2F5;
+  background: var(--bg-content, #F0F2F5);
 }
 
-/* ========== Header ========== */
-.top-header {
-  height: var(--header-height);
-  background: var(--bg-white);
-  border-bottom: 1px solid var(--border-light);
+
+
+/* ========== Top Bar ========== */
+.topbar {
+  height: var(--topbar-height);
+  background: var(--white);
+  border-bottom: 1px solid var(--border-gray);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 32px;
+  padding: 0 28px;
   position: sticky;
   top: 0;
   z-index: 50;
+  gap: 20px;
 }
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
 .breadcrumb {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  color: var(--text-muted);
+  color: var(--text-light);
+  flex-shrink: 0;
 }
-
-.breadcrumb .bc-sep {
-  color: var(--border);
-}
-
-.breadcrumb .bc-current {
-  color: var(--text-primary);
-  font-weight: 500;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.header-icon-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-secondary);
-  transition: var(--transition);
-  background: transparent;
+.breadcrumb a { color: var(--text-secondary); transition: var(--transition); }
+.breadcrumb a:hover { color: var(--coral-orange); }
+.breadcrumb .sep { color: var(--text-light); }
+.breadcrumb .current { color: var(--text-primary); font-weight: 500; }
+.topbar-search {
+  flex: 1;
+  max-width: 400px;
+  margin: 0 auto;
   position: relative;
 }
-
-.header-icon-btn:hover {
-  background: var(--bg-light);
-  color: var(--text-primary);
+.topbar-search input {
+  width: 100%;
+  height: 36px;
+  border: 1px solid var(--border-gray);
+  border-radius: 18px;
+  padding: 0 16px 0 38px;
+  font-size: 13px;
+  background: var(--light-gray);
+  outline: none;
+  transition: var(--transition);
 }
-
-.header-icon-btn .notif-dot {
+.topbar-search input:focus {
+  border-color: var(--coral-orange);
+  background: var(--white);
+  box-shadow: 0 0 0 3px var(--coral-orange-light);
+}
+.topbar-search svg {
   position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 7px;
-  height: 7px;
-  background: var(--accent);
-  border-radius: 50%;
-  border: 2px solid var(--bg-white);
+  left: 12px; top: 50%;
+  transform: translateY(-50%);
+  width: 16px; height: 16px;
+  color: var(--text-light);
 }
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.topbar-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent;
+  color: var(--text-secondary);
+  transition: var(--transition);
+  position: relative;
+}
+.topbar-btn:hover { background: var(--light-gray); color: var(--text-primary); }
+.topbar-btn .badge-dot {
+.topbar-btn .dot {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 8px; height: 8px;
+  background: var(--coral-orange);
+  border-radius: 50%;
+  border: 2px solid var(--white);
+}
+  position: absolute;
+.topbar-btn .dot {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 8px; height: 8px;
+  background: var(--coral-orange);
+  border-radius: 50%;
+  border: 2px solid var(--white);
+}
+  top: 6px; right: 6px;
+.topbar-btn .dot {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 8px; height: 8px;
+  background: var(--coral-orange);
+  border-radius: 50%;
+  border: 2px solid var(--white);
+}
+  width: 8px; height: 8px;
+.topbar-btn .dot {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 8px; height: 8px;
+  background: var(--coral-orange);
+  border-radius: 50%;
+  border: 2px solid var(--white);
+}
+  background: var(--coral-orange);
+.topbar-btn .dot {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 8px; height: 8px;
+  background: var(--coral-orange);
+  border-radius: 50%;
+  border: 2px solid var(--white);
+}
+  border-radius: 50%;
+.topbar-btn .dot {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 8px; height: 8px;
+  background: var(--coral-orange);
+  border-radius: 50%;
+  border: 2px solid var(--white);
+}
+  border: 2px solid var(--white);
+.topbar-btn .dot {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 8px; height: 8px;
+  background: var(--coral-orange);
+  border-radius: 50%;
+  border: 2px solid var(--white);
+}
+}
+.topbar-btn .dot {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 8px; height: 8px;
+  background: var(--coral-orange);
+  border-radius: 50%;
+  border: 2px solid var(--white);
+}
+.topbar-admin {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px 4px 4px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.topbar-admin:hover { background: var(--light-gray); }
+.topbar-admin .avatar-sm {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--coral-orange), var(--gold));
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 700; font-size: 12px;
+}
+.topbar-admin span { font-size: 13px; font-weight: 500; color: var(--text-primary); }
 
 /* ========== Page Content ========== */
 .page-content {
@@ -420,9 +524,10 @@ table { border-collapse: collapse; width: 100%; }
 }
 
 .tab-btn.active {
-  background: var(--primary);
   color: #fff;
-  box-shadow: 0 2px 8px rgba(10,22,40,0.2);
+  background: linear-gradient(135deg, #FF6B4A, #FF8A65);
+  box-shadow: 0 2px 8px rgba(255,107,74,0.3);
+  font-weight: 600;
 }
 
 .tab-panel { display: none; }
@@ -511,29 +616,7 @@ table { border-collapse: collapse; width: 100%; }
   white-space: nowrap;
 }
 
-.btn-primary {
-  background: linear-gradient(135deg, var(--accent), #ff8a6a);
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(255,107,74,0.3);
-}
 
-.btn-primary:hover {
-  background: linear-gradient(135deg, var(--accent-hover), var(--accent));
-  box-shadow: 0 4px 14px rgba(255,107,74,0.4);
-  transform: translateY(-1px);
-}
-
-.btn-outline {
-  background: var(--bg-white);
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
-}
-
-.btn-outline:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: rgba(255,107,74,0.04);
-}
 
 .btn-sm {
   padding: 5px 12px;
@@ -768,34 +851,6 @@ table { border-collapse: collapse; width: 100%; }
 .price .symbol {
   font-size: 12px;
 }
-
-/* ========== Action Buttons ========== */
-.action-group {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.action-btn {
-  padding: 5px 10px;
-  border-radius: var(--radius-sm);
-  font-size: 12px;
-  color: var(--text-secondary);
-  background: transparent;
-  transition: var(--transition);
-  white-space: nowrap;
-}
-
-.action-btn:hover {
-  background: var(--bg-light);
-  color: var(--text-primary);
-}
-
-.action-btn.edit:hover { color: #3b82f6; background: rgba(59,130,246,0.06); }
-.action-btn.offline:hover { color: var(--gold); background: rgba(212,168,83,0.06); }
-.action-btn.delete:hover { color: #ef4444; background: rgba(239,68,68,0.06); }
-.action-btn.assign:hover { color: var(--emerald); background: rgba(0,201,167,0.06); }
-.action-btn.disable:hover { color: #ef4444; background: rgba(239,68,68,0.06); }
 
 /* ========== Pagination ========== */
 .table-footer {
@@ -1550,6 +1605,8 @@ table { border-collapse: collapse; width: 100%; }
 }
 
 @media screen and (max-width: 768px) {
+  .topbar { padding: 0 12px; }
+  .topbar .topbar-search { display: none; }
   .sidebar {
     position: fixed;
     left: 0;
@@ -1837,12 +1894,6 @@ table { border-collapse: collapse; width: 100%; }
   .stat-label {
     font-size: 11px !important;
   }
-  .topbar-title {
-    font-size: 14px !important;
-  }
-  .topbar-admin-name {
-    font-size: 12px !important;
-  }
   .badge {
     font-size: 9px !important;
     padding: 1px 6px !important;
@@ -1992,9 +2043,7 @@ table { border-collapse: collapse; width: 100%; }
     font-size: 13px !important;
     padding: 8px 14px !important;
   }
-  .btn-primary, .btn-outline {
-    font-size: 13px !important;
-  }
+
   .btn-sm {
     font-size: 12px !important;
     padding: 5px 10px !important;
@@ -2292,14 +2341,12 @@ table { border-collapse: collapse; width: 100%; }
   <!-- ==================== Sidebar ==================== -->
 <aside class="sidebar">
   <div class="sidebar-logo">
-    <div class="logo-icon">
-      <i class="fas fa-masks-theater"></i>
+      <img src="assets/logo.png" alt="海南省演艺集团" style="width:36px; height:auto; flex-shrink:0;">
+      <div class="logo-text">
+        <span class="logo-title">海南省演艺集团</span>
+        <span class="logo-sub">艺术演出院线数字服务系统</span>
+      </div>
     </div>
-    <div class="logo-text">
-      <span class="logo-title">海南演艺票务</span>
-      <span class="logo-sub">管理后台</span>
-    </div>
-  </div>
   <nav class="sidebar-nav">
     <div class="nav-group">
       <div class="nav-group-label">核心功能</div>
@@ -2333,12 +2380,7 @@ table { border-collapse: collapse; width: 100%; }
       <a class="nav-item" href="ai-marketing.html">
         <i class="fas fa-robot"></i>
         <span>AI智能营销</span>
-      </a>
-      <a class="nav-item" href="banner-management.html">
-        <i class="fas fa-images"></i>
-        <span>轮播图管理</span>
-      </a>
-      <a class="nav-item active" href="product-service.html">
+      </a>      <a class="nav-item active" href="product-service.html">
         <i class="fas fa-store"></i>
         <span>商品管理</span>
       </a>
@@ -2355,50 +2397,39 @@ table { border-collapse: collapse; width: 100%; }
         <span>报表中心</span>
       </a>
     </div>
-    <div class="nav-group">
-      <div class="nav-group-label">系统设置</div>
-      <a class="nav-item" href="activity-decoration.html#decoration">
-        <i class="fas fa-palette"></i>
-        <span>首页装修</span>
-      </a>
-    </div>
+
   </nav>
-  <div class="sidebar-footer">
-    <div class="admin-avatar">陈</div>
-    <div class="admin-info">
-      <div class="admin-name">陈思远</div>
-      <div class="admin-role">超级管理员</div>
-    </div>
-    <button class="logout-btn" title="退出登录">
-      <i class="fas fa-sign-out-alt"></i>
-    </button>
-  </div>
 </aside>
 
   <!-- ========== Main Content ========== -->
   <main class="main-content">
-    <!-- Header -->
-    <header class="top-header">
-      <div class="header-left">
-        <div class="breadcrumb">
-          <span>首页</span>
-          <span class="bc-sep">/</span>
-          <span class="bc-current" id="breadcrumb-current">商品管理</span>
-        </div>
-      </div>
-      <div class="header-right">
-        <button class="header-icon-btn" title="搜索">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        </button>
-        <button class="header-icon-btn" title="通知">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-          <span class="notif-dot"></span>
-        </button>
-        <button class="header-icon-btn" title="全屏">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-        </button>
-      </div>
-    </header>
+    
+        <header class="topbar">
+  <div class="breadcrumb">
+    <a href="#">首页</a>
+    <span class="sep"><i class="fas fa-chevron-right"></i></span>
+    <span class="current">商品管理</span>
+  </div>
+  <div class="topbar-actions">
+    <div class="topbar-search">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="搜索商品名称、分类...">
+    </div>
+    <button class="topbar-btn" title="通知" onclick="showToast('info','您有3条未读消息')">
+      <i class="fas fa-bell"></i>
+      <span class="dot"></span>
+    </button>
+    <button class="topbar-btn" title="设置">
+      <i class="fas fa-cog"></i>
+    </button>
+    <div class="topbar-admin">
+      <div class="avatar-sm">陈</div>
+      <span class="name">陈思远</span>
+      <i class="fas fa-chevron-down" style="font-size:10px;color:var(--text-light);"></i>
+    </div>
+  </div>
+</header> <!-- Header -->
+    
 
 <!-- Mobile Menu Button -->
 <button class="mobile-menu-btn" id="mobileMenuBtn" style="display:none;position:fixed;top:16px;left:16px;z-index:150;width:40px;height:40px;border-radius:10px;border:none;background:var(--deep-blue);color:#fff;font-size:18px;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.2);">
@@ -2457,7 +2488,7 @@ table { border-collapse: collapse; width: 100%; }
             </div>
             <div class="filter-actions">
               <button class="btn btn-outline">重置</button>
-              <button class="btn btn-primary" onclick="openAddProductModal()">+ 新建商品</button>
+              <button class="btn btn-primary" onclick="openAddProductModal()"><i class="fas fa-plus"></i> 新建商品</button>
             </div>
           </div>
 
@@ -2502,9 +2533,9 @@ table { border-collapse: collapse; width: 100%; }
                   <td><span class="badge badge-success"><span class="badge-dot green"></span> 已上架</span></td>
                   <td>
                     <div class="action-group">
-                      <button class="action-btn edit" onclick="openEditProductModal('P001')">编辑</button>
-                      <button class="action-btn offline">下架</button>
-                      <button class="action-btn delete">删除</button>
+                      <button class="action-btn edit" onclick="openEditProductModal('P001')"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn offline"><i class="fas fa-arrow-down"></i> 下架</button>
+                      <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                     </div>
                   </td>
                 </tr>
@@ -2529,9 +2560,9 @@ table { border-collapse: collapse; width: 100%; }
                   <td><span class="badge badge-success"><span class="badge-dot green"></span> 已上架</span></td>
                   <td>
                     <div class="action-group">
-                      <button class="action-btn edit" onclick="openEditProductModal('P002')">编辑</button>
-                      <button class="action-btn offline">下架</button>
-                      <button class="action-btn delete">删除</button>
+                      <button class="action-btn edit" onclick="openEditProductModal('P002')"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn offline"><i class="fas fa-arrow-down"></i> 下架</button>
+                      <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                     </div>
                   </td>
                 </tr>
@@ -2562,9 +2593,9 @@ table { border-collapse: collapse; width: 100%; }
                   <td><span class="badge badge-success"><span class="badge-dot green"></span> 已上架</span></td>
                   <td>
                     <div class="action-group">
-                      <button class="action-btn edit" onclick="openEditProductModal('P003')">编辑</button>
-                      <button class="action-btn offline">下架</button>
-                      <button class="action-btn delete">删除</button>
+                      <button class="action-btn edit" onclick="openEditProductModal('P003')"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn offline"><i class="fas fa-arrow-down"></i> 下架</button>
+                      <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                     </div>
                   </td>
                 </tr>
@@ -2589,9 +2620,9 @@ table { border-collapse: collapse; width: 100%; }
                   <td><span class="badge badge-warning"><span class="badge-dot yellow"></span> 库存不足</span></td>
                   <td>
                     <div class="action-group">
-                      <button class="action-btn edit" onclick="openEditProductModal('P004')">编辑</button>
-                      <button class="action-btn offline">下架</button>
-                      <button class="action-btn delete">删除</button>
+                      <button class="action-btn edit" onclick="openEditProductModal('P004')"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn offline"><i class="fas fa-arrow-down"></i> 下架</button>
+                      <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                     </div>
                   </td>
                 </tr>
@@ -2616,9 +2647,9 @@ table { border-collapse: collapse; width: 100%; }
                   <td><span class="badge badge-danger"><span class="badge-dot red"></span> 已下架</span></td>
                   <td>
                     <div class="action-group">
-                      <button class="action-btn edit" onclick="openEditProductModal('P005')">编辑</button>
-                      <button class="action-btn offline">上架</button>
-                      <button class="action-btn delete">删除</button>
+                      <button class="action-btn edit" onclick="openEditProductModal('P005')"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn offline"><i class="fas fa-arrow-up"></i> 上架</button>
+                      <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                     </div>
                   </td>
                 </tr>
@@ -2649,9 +2680,9 @@ table { border-collapse: collapse; width: 100%; }
                   <td><span class="badge badge-success"><span class="badge-dot green"></span> 已上架</span></td>
                   <td>
                     <div class="action-group">
-                      <button class="action-btn edit">编辑</button>
-                      <button class="action-btn offline">下架</button>
-                      <button class="action-btn delete">删除</button>
+                      <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn offline"><i class="fas fa-arrow-down"></i> 下架</button>
+                      <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                     </div>
                   </td>
                 </tr>
@@ -2676,9 +2707,9 @@ table { border-collapse: collapse; width: 100%; }
                   <td><span class="badge badge-success"><span class="badge-dot green"></span> 已上架</span></td>
                   <td>
                     <div class="action-group">
-                      <button class="action-btn edit">编辑</button>
-                      <button class="action-btn offline">下架</button>
-                      <button class="action-btn delete">删除</button>
+                      <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn offline"><i class="fas fa-arrow-down"></i> 下架</button>
+                      <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                     </div>
                   </td>
                 </tr>
@@ -2707,7 +2738,7 @@ table { border-collapse: collapse; width: 100%; }
             <div class="tree-card">
               <div class="card-header">
                 <h3>分类结构</h3>
-                <button class="btn btn-primary btn-sm">+ 新建分类</button>
+                <button class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> 新建分类</button>
               </div>
               <div class="tree-list">
                 <!-- Parent 1 -->
@@ -2792,8 +2823,8 @@ table { border-collapse: collapse; width: 100%; }
                     <td><span class="badge badge-success"><span class="badge-dot green"></span> 启用</span></td>
                     <td>
                       <div class="action-group">
-                        <button class="action-btn edit">编辑</button>
-                        <button class="action-btn delete">删除</button>
+                        <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                        <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                       </div>
                     </td>
                   </tr>
@@ -2809,8 +2840,8 @@ table { border-collapse: collapse; width: 100%; }
                     <td><span class="badge badge-success"><span class="badge-dot green"></span> 启用</span></td>
                     <td>
                       <div class="action-group">
-                        <button class="action-btn edit">编辑</button>
-                        <button class="action-btn delete">删除</button>
+                        <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                        <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                       </div>
                     </td>
                   </tr>
@@ -2826,8 +2857,8 @@ table { border-collapse: collapse; width: 100%; }
                     <td><span class="badge badge-success"><span class="badge-dot green"></span> 启用</span></td>
                     <td>
                       <div class="action-group">
-                        <button class="action-btn edit">编辑</button>
-                        <button class="action-btn delete">删除</button>
+                        <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                        <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                       </div>
                     </td>
                   </tr>
@@ -2843,8 +2874,8 @@ table { border-collapse: collapse; width: 100%; }
                     <td><span class="badge badge-success"><span class="badge-dot green"></span> 启用</span></td>
                     <td>
                       <div class="action-group">
-                        <button class="action-btn edit">编辑</button>
-                        <button class="action-btn delete">删除</button>
+                        <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                        <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                       </div>
                     </td>
                   </tr>
@@ -2861,8 +2892,8 @@ table { border-collapse: collapse; width: 100%; }
                     <td><span class="badge badge-success"><span class="badge-dot green"></span> 启用</span></td>
                     <td>
                       <div class="action-group">
-                        <button class="action-btn edit">编辑</button>
-                        <button class="action-btn delete">删除</button>
+                        <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                        <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                       </div>
                     </td>
                   </tr>
@@ -2878,8 +2909,8 @@ table { border-collapse: collapse; width: 100%; }
                     <td><span class="badge badge-success"><span class="badge-dot green"></span> 启用</span></td>
                     <td>
                       <div class="action-group">
-                        <button class="action-btn edit">编辑</button>
-                        <button class="action-btn delete">删除</button>
+                        <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                        <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                       </div>
                     </td>
                   </tr>
@@ -2895,8 +2926,8 @@ table { border-collapse: collapse; width: 100%; }
                     <td><span class="badge badge-success"><span class="badge-dot green"></span> 启用</span></td>
                     <td>
                       <div class="action-group">
-                        <button class="action-btn edit">编辑</button>
-                        <button class="action-btn delete">删除</button>
+                        <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                        <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                       </div>
                     </td>
                   </tr>
@@ -2913,8 +2944,8 @@ table { border-collapse: collapse; width: 100%; }
                     <td><span class="badge badge-success"><span class="badge-dot green"></span> 启用</span></td>
                     <td>
                       <div class="action-group">
-                        <button class="action-btn edit">编辑</button>
-                        <button class="action-btn delete">删除</button>
+                        <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                        <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                       </div>
                     </td>
                   </tr>
@@ -2944,7 +2975,7 @@ table { border-collapse: collapse; width: 100%; }
               </select>
             </div>
             <div class="filter-actions">
-              <button class="btn btn-primary">+ 新增取货地</button>
+              <button class="btn btn-primary"><i class="fas fa-plus"></i> 新增取货地</button>
             </div>
           </div>
 
@@ -2973,8 +3004,8 @@ table { border-collapse: collapse; width: 100%; }
                   <td><span class="badge badge-success"><span class="badge-dot green"></span> 启用</span></td>
                   <td>
                     <div class="action-group">
-                      <button class="action-btn edit">编辑</button>
-                      <button class="action-btn disable">禁用</button>
+                      <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn disable"><i class="fas fa-ban"></i> 禁用</button>
                     </div>
                   </td>
                 </tr>
@@ -2986,8 +3017,8 @@ table { border-collapse: collapse; width: 100%; }
                   <td><span class="badge badge-success"><span class="badge-dot green"></span> 启用</span></td>
                   <td>
                     <div class="action-group">
-                      <button class="action-btn edit">编辑</button>
-                      <button class="action-btn disable">禁用</button>
+                      <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn disable"><i class="fas fa-ban"></i> 禁用</button>
                     </div>
                   </td>
                 </tr>
@@ -2999,8 +3030,8 @@ table { border-collapse: collapse; width: 100%; }
                   <td><span class="badge badge-success"><span class="badge-dot green"></span> 启用</span></td>
                   <td>
                     <div class="action-group">
-                      <button class="action-btn edit">编辑</button>
-                      <button class="action-btn disable">禁用</button>
+                      <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn disable"><i class="fas fa-ban"></i> 禁用</button>
                     </div>
                   </td>
                 </tr>
@@ -3012,8 +3043,8 @@ table { border-collapse: collapse; width: 100%; }
                   <td><span class="badge badge-danger"><span class="badge-dot red"></span> 禁用</span></td>
                   <td>
                     <div class="action-group">
-                      <button class="action-btn edit">编辑</button>
-                      <button class="action-btn disable">启用</button>
+                      <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn disable"><i class="fas fa-play"></i> 启用</button>
                     </div>
                   </td>
                 </tr>
@@ -3025,8 +3056,8 @@ table { border-collapse: collapse; width: 100%; }
                   <td><span class="badge badge-success"><span class="badge-dot green"></span> 启用</span></td>
                   <td>
                     <div class="action-group">
-                      <button class="action-btn edit">编辑</button>
-                      <button class="action-btn disable">禁用</button>
+                      <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn disable"><i class="fas fa-ban"></i> 禁用</button>
                     </div>
                   </td>
                 </tr>
@@ -3116,7 +3147,7 @@ table { border-collapse: collapse; width: 100%; }
                     </span>
                     <input class="filter-input" type="text" placeholder="搜索问题..." style="min-width:180px;">
                   </div>
-                  <button class="btn btn-primary btn-sm">+ 新建问答</button>
+                  <button class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> 新建问答</button>
                 </div>
               </div>
               <div>
@@ -3138,8 +3169,8 @@ table { border-collapse: collapse; width: 100%; }
                     </div>
                   </div>
                   <div class="qa-actions">
-                    <button class="action-btn edit">编辑</button>
-                    <button class="action-btn delete">删除</button>
+                    <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                    <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                   </div>
                 </div>
                 <!-- QA Item 2 -->
@@ -3160,8 +3191,8 @@ table { border-collapse: collapse; width: 100%; }
                     </div>
                   </div>
                   <div class="qa-actions">
-                    <button class="action-btn edit">编辑</button>
-                    <button class="action-btn delete">删除</button>
+                    <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                    <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                   </div>
                 </div>
                 <!-- QA Item 3 -->
@@ -3182,8 +3213,8 @@ table { border-collapse: collapse; width: 100%; }
                     </div>
                   </div>
                   <div class="qa-actions">
-                    <button class="action-btn edit">编辑</button>
-                    <button class="action-btn delete">删除</button>
+                    <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                    <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                   </div>
                 </div>
                 <!-- QA Item 4 -->
@@ -3204,8 +3235,8 @@ table { border-collapse: collapse; width: 100%; }
                     </div>
                   </div>
                   <div class="qa-actions">
-                    <button class="action-btn edit">编辑</button>
-                    <button class="action-btn delete">删除</button>
+                    <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                    <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                   </div>
                 </div>
                 <!-- QA Item 5 -->
@@ -3227,8 +3258,8 @@ table { border-collapse: collapse; width: 100%; }
                     </div>
                   </div>
                   <div class="qa-actions">
-                    <button class="action-btn edit">编辑</button>
-                    <button class="action-btn delete">删除</button>
+                    <button class="action-btn edit"><i class="fas fa-pen"></i> 编辑</button>
+                    <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                   </div>
                 </div>
               </div>
@@ -3448,8 +3479,8 @@ table { border-collapse: collapse; width: 100%; }
                   </div>
                 </div>
                 <div class="cs-staff-actions">
-                  <button class="btn btn-outline btn-sm">分配会话</button>
-                  <button class="btn btn-outline btn-sm" style="color:#ef4444;border-color:rgba(239,68,68,0.3);">禁用</button>
+                  <button class="action-btn assign"><i class="fas fa-user-plus"></i> 分配会话</button>
+                  <button class="action-btn delete" style="color:#ef4444;border-color:rgba(239,68,68,0.3);"><i class="fas fa-trash"></i> 禁用</button>
                 </div>
               </div>
               <!-- Staff 2 -->
@@ -3477,8 +3508,8 @@ table { border-collapse: collapse; width: 100%; }
                   </div>
                 </div>
                 <div class="cs-staff-actions">
-                  <button class="btn btn-outline btn-sm">分配会话</button>
-                  <button class="btn btn-outline btn-sm" style="color:#ef4444;border-color:rgba(239,68,68,0.3);">禁用</button>
+                  <button class="action-btn assign"><i class="fas fa-user-plus"></i> 分配会话</button>
+                  <button class="action-btn delete" style="color:#ef4444;border-color:rgba(239,68,68,0.3);"><i class="fas fa-trash"></i> 禁用</button>
                 </div>
               </div>
               <!-- Staff 3 -->
@@ -3506,8 +3537,8 @@ table { border-collapse: collapse; width: 100%; }
                   </div>
                 </div>
                 <div class="cs-staff-actions">
-                  <button class="btn btn-outline btn-sm">分配会话</button>
-                  <button class="btn btn-outline btn-sm" style="color:#ef4444;border-color:rgba(239,68,68,0.3);">禁用</button>
+                  <button class="action-btn assign"><i class="fas fa-user-plus"></i> 分配会话</button>
+                  <button class="action-btn delete" style="color:#ef4444;border-color:rgba(239,68,68,0.3);"><i class="fas fa-trash"></i> 禁用</button>
                 </div>
               </div>
               <!-- Staff 4 -->
@@ -3535,8 +3566,8 @@ table { border-collapse: collapse; width: 100%; }
                   </div>
                 </div>
                 <div class="cs-staff-actions">
-                  <button class="btn btn-outline btn-sm" disabled style="opacity:0.5;">分配会话</button>
-                  <button class="btn btn-outline btn-sm" style="color:#ef4444;border-color:rgba(239,68,68,0.3);">禁用</button>
+                  <button class="action-btn assign" disabled style="opacity:0.5;"><i class="fas fa-user-plus"></i> 分配会话</button>
+                  <button class="action-btn delete" style="color:#ef4444;border-color:rgba(239,68,68,0.3);"><i class="fas fa-trash"></i> 禁用</button>
                 </div>
               </div>
               <!-- Staff 5 -->
@@ -3564,8 +3595,8 @@ table { border-collapse: collapse; width: 100%; }
                   </div>
                 </div>
                 <div class="cs-staff-actions">
-                  <button class="btn btn-outline btn-sm">分配会话</button>
-                  <button class="btn btn-outline btn-sm" style="color:#ef4444;border-color:rgba(239,68,68,0.3);">禁用</button>
+                  <button class="action-btn assign"><i class="fas fa-user-plus"></i> 分配会话</button>
+                  <button class="action-btn delete" style="color:#ef4444;border-color:rgba(239,68,68,0.3);"><i class="fas fa-trash"></i> 禁用</button>
                 </div>
               </div>
               <!-- Staff 6 -->
@@ -3593,8 +3624,8 @@ table { border-collapse: collapse; width: 100%; }
                   </div>
                 </div>
                 <div class="cs-staff-actions">
-                  <button class="btn btn-outline btn-sm">分配会话</button>
-                  <button class="btn btn-outline btn-sm" style="color:#ef4444;border-color:rgba(239,68,68,0.3);">禁用</button>
+                  <button class="action-btn assign"><i class="fas fa-user-plus"></i> 分配会话</button>
+                  <button class="action-btn delete" style="color:#ef4444;border-color:rgba(239,68,68,0.3);"><i class="fas fa-trash"></i> 禁用</button>
                 </div>
               </div>
             </div>
@@ -3643,8 +3674,8 @@ table { border-collapse: collapse; width: 100%; }
                   <td><span class="badge badge-success">进行中</span></td>
                   <td>
                     <div class="action-group">
-                      <button class="action-btn edit">查看</button>
-                      <button class="action-btn assign">转接</button>
+                      <button class="action-btn edit"><i class="fas fa-pen"></i> 查看</button>
+                      <button class="action-btn assign"><i class="fas fa-user-arrow"></i> 转接</button>
                     </div>
                   </td>
                 </tr>
@@ -3672,8 +3703,8 @@ table { border-collapse: collapse; width: 100%; }
                   <td><span class="badge badge-success">进行中</span></td>
                   <td>
                     <div class="action-group">
-                      <button class="action-btn edit">查看</button>
-                      <button class="action-btn assign">转接</button>
+                      <button class="action-btn edit"><i class="fas fa-pen"></i> 查看</button>
+                      <button class="action-btn assign"><i class="fas fa-user-arrow"></i> 转接</button>
                     </div>
                   </td>
                 </tr>
@@ -3698,7 +3729,7 @@ table { border-collapse: collapse; width: 100%; }
                   <td><span class="badge badge-warning">排队中</span></td>
                   <td>
                     <div class="action-group">
-                      <button class="action-btn assign">立即接入</button>
+                      <button class="action-btn assign"><i class="fas fa-headset"></i> 立即接入</button>
                     </div>
                   </td>
                 </tr>
@@ -3726,8 +3757,8 @@ table { border-collapse: collapse; width: 100%; }
                   <td><span class="badge badge-success">进行中</span></td>
                   <td>
                     <div class="action-group">
-                      <button class="action-btn edit">查看</button>
-                      <button class="action-btn assign">转接</button>
+                      <button class="action-btn edit"><i class="fas fa-pen"></i> 查看</button>
+                      <button class="action-btn assign"><i class="fas fa-user-arrow"></i> 转接</button>
                     </div>
                   </td>
                 </tr>
@@ -3752,7 +3783,7 @@ table { border-collapse: collapse; width: 100%; }
                   <td><span class="badge badge-warning">排队中</span></td>
                   <td>
                     <div class="action-group">
-                      <button class="action-btn assign">立即接入</button>
+                      <button class="action-btn assign"><i class="fas fa-headset"></i> 立即接入</button>
                     </div>
                   </td>
                 </tr>
@@ -3780,8 +3811,8 @@ table { border-collapse: collapse; width: 100%; }
                   <td><span class="badge badge-success">进行中</span></td>
                   <td>
                     <div class="action-group">
-                      <button class="action-btn edit">查看</button>
-                      <button class="action-btn assign">转接</button>
+                      <button class="action-btn edit"><i class="fas fa-pen"></i> 查看</button>
+                      <button class="action-btn assign"><i class="fas fa-user-arrow"></i> 转接</button>
                     </div>
                   </td>
                 </tr>
@@ -4288,6 +4319,768 @@ document.getElementById('modalProduct')?.addEventListener('click', function(e) {
 #modalProduct .btn-outline:hover {
   background: var(--bg);
 }
+
+/* ========== Unified Action Buttons ========== */
+.action-btns {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+/* Text action buttons */
+.action-btn-text {
+  padding: 5px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.action-btn-text:hover {
+  background: var(--light-gray);
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-1px);
+}
+/* Review action buttons */
+.review-action-btn {
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+.review-action-btn.approve {
+  background: rgba(0,201,167,0.1);
+  color: #00A88A;
+}
+.review-action-btn.approve:hover {
+  background: rgba(0,201,167,0.2);
+  transform: translateY(-1px);
+}
+.review-action-btn.reject {
+  background: rgba(239,68,68,0.1);
+  color: #EF4444;
+}
+.review-action-btn.reject:hover {
+  background: rgba(239,68,68,0.2);
+  transform: translateY(-1px);
+}
+/* Hall action buttons */
+.hall-action-btn {
+  background: none;
+  border: none;
+  color: var(--coral);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+.hall-action-btn:hover {
+  background: rgba(255,107,74,0.1);
+  transform: translateY(-1px);
+}
+.hall-action-btn.set-default {
+  color: var(--gold);
+}
+.hall-action-btn.set-default:hover {
+  background: rgba(212,168,83,0.1);
+}
+/* VSC action buttons */
+.vsc-toolbar .vsc-action-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+.vsc-toolbar .vsc-action-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-1px);
+}
+.vsc-toolbar .vsc-action-btn.vsc-save-btn {
+  background: var(--coral);
+  color: #fff;
+  border-color: var(--coral);
+}
+.vsc-toolbar .vsc-action-btn.vsc-save-btn:hover {
+  background: #E85A3A;
+  transform: translateY(-1px);
+}
+/* Batch dropdown buttons */
+.ss-batch-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+.ss-batch-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-1px);
+}
+
+/* ========== Unified Form Select ========== */
+.form-select,
+.st-form-select,
+.filter-select,
+.order-form-select,
+.page-size-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FF6B4A' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+  cursor: pointer;
+  height: 38px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0 32px 0 14px;
+  font-size: 13px;
+  color: var(--text-primary);
+  background-color: #fff;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.form-select:focus,
+.st-form-select:focus,
+.filter-select:focus,
+.order-form-select:focus,
+.page-size-select:focus {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px rgba(255,107,74,0.1);
+  outline: none;
+}
+.form-select:hover,
+.st-form-select:hover,
+.filter-select:hover,
+.order-form-select:hover,
+.page-size-select:hover {
+  border-color: var(--coral-orange);
+}
+/* Filter dropdowns in tables */
+.filter-dropdowns .form-select {
+  padding: 6px 28px 6px 10px;
+  font-size: 13px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-color);
+  background: var(--card-white);
+  color: var(--text-secondary);
+  height: 34px;
+}
+.filter-dropdowns .form-select:focus {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px rgba(255,107,74,0.1);
+}
+/* Small selects */
+select.form-select-sm,
+.form-select.form-select-sm {
+  height: 32px;
+  padding: 0 28px 0 10px;
+  font-size: 12px;
+  border-radius: 8px;
+}
+
+/* ========== Unified Custom Dropdowns ========== */
+.filter-dropdown-wrap { position: relative; z-index: 100; }
+.filter-dropdown {
+  display: none; position: absolute; top: 100%; left: 0;
+  margin-top: 6px; background: #fff;
+  border: 1px solid var(--border-color); border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12); padding: 16px;
+  min-width: 280px; z-index: 200;
+}
+.filter-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Theater select dropdown */
+.theater-select-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  padding: 8px 0;
+  min-width: 200px;
+  display: none;
+  z-index: 200;
+}
+.theater-select-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
+.theater-option {
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.15s;
+}
+.theater-option:hover { background: var(--light-gray); }
+.theater-option.active { color: var(--coral); background: rgba(255,107,74,0.06); }
+.theater-group-label {
+  padding: 4px 14px;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+/* Session select dropdown */
+.session-select-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  padding: 8px 0;
+  min-width: 200px;
+  display: none;
+  z-index: 200;
+}
+.session-select-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
+/* Banner link dropdown */
+.banner-link-dropdown {
+  max-height: 160px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  margin-top: 4px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.banner-link-option {
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.15s;
+}
+.banner-link-option:hover { background: var(--light-gray); }
+.banner-link-option:last-child { border-bottom: none; }
+/* VSC assign dropdown */
+.vsc-assign-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  padding: 8px 0;
+  min-width: 160px;
+  display: none;
+  z-index: 200;
+}
+.vsc-assign-dropdown.show { display: block; animation: dropIn 0.2s ease-out; }
+/* SS batch dropdown */
+.ss-batch-dropdown { position: relative; }
+.ss-batch-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  padding: 6px 0;
+  min-width: 140px;
+  z-index: 200;
+}
+.ss-batch-menu.open { display: block; animation: dropIn 0.2s ease-out; }
+.ss-batch-menu button {
+  display: block;
+  width: 100%;
+  padding: 8px 14px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.ss-batch-menu button:hover { background: var(--light-gray); color: var(--coral); }
+
+
+/* ========== Unified Dropdown Layer Styles ========== */
+
+/* Base dropdown layer - all dropdowns share this foundation */
+.dropdown-layer,
+.filter-dropdown,
+.theater-select-dropdown,
+.session-select-dropdown,
+.banner-link-dropdown,
+.vsc-assign-dropdown,
+.ss-batch-menu,
+.date-picker-popup,
+.dropdown-menu,
+.dropdown-content {
+  background: #fff;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+  overflow: hidden;
+}
+
+/* Filter dropdown panel */
+.filter-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  margin-top: 0;
+  padding: 20px;
+  min-width: 300px;
+  z-index: 200;
+}
+.filter-dropdown.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Theater select dropdown */
+.theater-select-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  padding: 8px 0;
+  min-width: 220px;
+  z-index: 200;
+}
+.theater-select-dropdown.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.theater-option {
+  padding: 10px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.15s ease;
+  color: var(--text-primary);
+}
+.theater-option:hover {
+  background: linear-gradient(90deg, rgba(255, 107, 74, 0.06), transparent);
+  color: var(--coral);
+}
+.theater-option.active {
+  color: var(--coral);
+  background: linear-gradient(90deg, rgba(255, 107, 74, 0.08), transparent);
+  font-weight: 500;
+}
+.theater-option i {
+  width: 16px;
+  text-align: center;
+  color: var(--text-muted);
+  transition: color 0.15s;
+}
+.theater-option:hover i,
+.theater-option.active i {
+  color: var(--coral);
+}
+.theater-group-label {
+  padding: 6px 16px 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* Session select dropdown */
+.session-select-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  padding: 8px 0;
+  min-width: 220px;
+  z-index: 200;
+}
+.session-select-dropdown.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Banner link dropdown */
+.banner-link-dropdown {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 6px;
+  padding: 4px 0;
+}
+.banner-link-option {
+  padding: 10px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(241, 245, 249, 0.6);
+  transition: all 0.15s ease;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.banner-link-option:hover {
+  background: linear-gradient(90deg, rgba(255, 107, 74, 0.06), transparent);
+  color: var(--coral);
+}
+.banner-link-option:last-child {
+  border-bottom: none;
+}
+
+/* VSC assign dropdown */
+.vsc-assign-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  padding: 8px 0;
+  min-width: 180px;
+  z-index: 200;
+}
+.vsc-assign-dropdown.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* SS batch menu */
+.ss-batch-dropdown { position: relative; }
+.ss-batch-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  padding: 6px 0;
+  min-width: 160px;
+  z-index: 200;
+}
+.ss-batch-menu.open {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ss-batch-menu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 13px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.ss-batch-menu button:hover {
+  background: linear-gradient(90deg, rgba(255, 107, 74, 0.06), transparent);
+  color: var(--coral);
+}
+
+/* Date picker popup */
+.date-picker-popup {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 440px;
+  padding: 0;
+  z-index: 200;
+}
+.date-picker-popup.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dropdown animation */
+@keyframes dropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Dropdown trigger buttons */
+.dropdown-trigger,
+.filter-dropdown-btn,
+.theater-select-trigger,
+.ss-batch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+.dropdown-trigger:hover,
+.filter-dropdown-btn:hover,
+.theater-select-trigger:hover,
+.ss-batch-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 107, 74, 0.1);
+}
+.dropdown-trigger.active,
+.filter-dropdown-btn.active,
+.theater-select-trigger.active {
+  border-color: var(--coral);
+  color: var(--coral);
+  background: rgba(255, 107, 74, 0.04);
+}
+
+/* ========== Unified Table Action Buttons ========== */
+
+/* Action buttons container */
+.action-btns {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Text action button */
+.action-btn-text {
+  padding: 6px 14px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.action-btn-text:hover {
+  background: var(--light-gray);
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.1);
+}
+.action-btn-text:active {
+  transform: translateY(0);
+}
+
+/* Table action button (text + icon) */
+.table-action-btn {
+  padding: 6px 14px;
+  border: 1.5px solid var(--border-color);
+  background: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-secondary);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
+  white-space: nowrap;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.table-action-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.1);
+}
+.table-action-btn:active {
+  transform: translateY(0);
+}
+.table-action-btn.primary {
+  background: var(--coral);
+  color: #fff;
+  border-color: var(--coral);
+}
+.table-action-btn.primary:hover {
+  background: #E85A3A;
+  border-color: #E85A3A;
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.25);
+}
+.table-action-btn.success {
+  background: var(--emerald);
+  color: #fff;
+  border-color: var(--emerald);
+}
+.table-action-btn.success:hover {
+  background: #00b396;
+  border-color: #00b396;
+  box-shadow: 0 4px 12px rgba(0, 201, 167, 0.25);
+}
+.table-action-btn.danger-outline {
+  color: #ef4444;
+  border-color: #fca5a5;
+}
+.table-action-btn.danger-outline:hover {
+  background: #fef2f2;
+  border-color: #ef4444;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+}
+
+/* Review action button */
+.review-action-btn {
+  height: 34px;
+  padding: 0 18px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+  cursor: pointer;
+}
+.review-action-btn.approve {
+  background: rgba(0, 201, 167, 0.1);
+  color: #00A88A;
+}
+.review-action-btn.approve:hover {
+  background: #00C9A7;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 201, 167, 0.2);
+}
+.review-action-btn.reject {
+  background: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+}
+.review-action-btn.reject:hover {
+  background: #EF4444;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+/* Hall action button */
+.hall-action-btn {
+  background: none;
+  border: none;
+  color: var(--coral);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 8px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 500;
+}
+.hall-action-btn:hover {
+  background: rgba(255, 107, 74, 0.1);
+  transform: translateY(-2px);
+}
+.hall-action-btn.set-default {
+  color: var(--gold);
+}
+.hall-action-btn.set-default:hover {
+  background: rgba(212, 168, 83, 0.1);
+}
+
+/* VSC action button */
+.vsc-toolbar .vsc-action-btn {
+  padding: 7px 16px;
+  border-radius: 10px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1.5px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 500;
+}
+.vsc-toolbar .vsc-action-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.1);
+}
+.vsc-toolbar .vsc-action-btn.vsc-save-btn {
+  background: var(--coral);
+  color: #fff;
+  border-color: var(--coral);
+}
+.vsc-toolbar .vsc-action-btn.vsc-save-btn:hover {
+  background: #E85A3A;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.25);
+}
+
+/* Batch dropdown button */
+.ss-batch-btn {
+  padding: 7px 16px;
+  border-radius: 10px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1.5px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 500;
+}
+.ss-batch-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.1);
+}
+
 </style>
 
 </body>
