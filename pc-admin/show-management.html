@@ -880,6 +880,13 @@ table { border-collapse: collapse; width: 100%; }
 #panel-shows .data-table td:nth-child(5) .action-btns {
   flex-wrap: wrap;
   justify-content: flex-start;
+  gap: 8px;
+  max-width: 330px;
+}
+#panel-shows .data-table td:nth-child(5) .action-btns .action-btn {
+  flex: 0 0 calc(33.333% - 6px);
+  min-width: 0;
+  justify-content: center;
 }
 
 #panel-shows .data-table td:nth-child(4) .status-tag {
@@ -13618,7 +13625,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- 标签编辑弹窗 -->
 <div class="modal-overlay" id="modalTagEdit">
-  <div class="modal" style="max-width:420px;">
+  <div class="modal" style="max-width:420px;background:#fff;">
     <div class="modal-header">
       <h3 class="modal-title">设置小程序展示标签</h3>
       <button class="modal-close" onclick="closeModal('modalTagEdit')"><i class="fas fa-times"></i></button>
