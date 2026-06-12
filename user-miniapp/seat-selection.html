@@ -2394,9 +2394,18 @@
   // ========== Confirm ==========
   function confirmSeats() {
     if (selectedSeats.length === 0) return;
-    const seatNames = selectedSeats.map(s => `${s.row}排${s.col}座`).join('、');
-    const finalTotal = getFinalTotal();
-    showToast(`已选 ${seatNames}，应付 ¥${finalTotal.toFixed(2)}`);
+    const showName = document.querySelector('.show-title')?.textContent || '';
+    const showDate = document.querySelector('.show-date')?.textContent || '';
+    const showVenue = document.querySelector('.show-venue')?.textContent || '';
+    const seatsData = selectedSeats.map(function(s) {
+      return { zone: s.zone, row: s.row, col: s.col, price: s.price };
+    });
+    const params = new URLSearchParams();
+    params.set('show', showName);
+    params.set('date', showDate);
+    params.set('venue', showVenue);
+    params.set('seats', encodeURIComponent(JSON.stringify(seatsData)));
+    window.location.href = 'order-confirm.html?' + params.toString();
   }
 
   // ========== Coupon Logic ==========

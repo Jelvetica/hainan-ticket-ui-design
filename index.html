@@ -1536,7 +1536,7 @@
             <span>海南演艺票务系统</span>
         </div>
 
-        <div class="nav-tabs">
+        <div class="nav-tabs" id="navTabs">
             <button class="nav-tab pc active" data-category="pc" onclick="filterCategory('pc')">🖥️ PC管理后台</button>
             <button class="nav-tab user" data-category="user" onclick="filterCategory('user')">📱 用户小程序</button>
             <button class="nav-tab admin" data-category="admin" onclick="filterCategory('admin')">🔧 管理员小程序</button>
@@ -1797,10 +1797,11 @@ const devDocs = {
                 content: `<p><strong>点击行为：</strong></p>
                 <ul>
                     <li>轮播图：根据 <code>jump_type</code> 跳转对应页面</li>
-                    <li>演出卡片：跳转 show-detail.html?show_id=xxx</li>
-                    <li>券包卡片：跳转 coupon-package.html?package_id=xxx</li>
-                    <li>剧院卡片：跳转 theater-list.html 或剧院详情</li>
-                    <li>"查看全部"：跳转 show-list-detail.html</li>
+                    <li>热门推荐演出卡片：点击直达 show-detail.html?show_id=xxx（不经过演出列表）</li>
+                    <li>券包卡片：点击整张卡片或"立即抢购"按钮跳转 coupon-package.html?package_id=xxx</li>
+                    <li>剧院卡片：点击跳转 theater-detail.html?theater_id=xxx（剧院详情页）</li>
+                    <li>"查看全部"（热门推荐）：跳转 show-list-detail.html</li>
+                    <li>"全部剧院"（剧院导航）：跳转 theater-list.html</li>
                 </ul>
                 <p><strong>加载策略：</strong></p>
                 <ul>
@@ -2059,7 +2060,120 @@ const devDocs = {
             {
                 title: '交互说明',
                 content: `<p><strong>锁定机制：</strong>选座后自动锁定15分钟，超时释放并提示</p>
-                <p><strong>混合支付：</strong>最终金额=原价-早鸟优惠-优惠券-积分抵扣-充值卡抵扣-余额支付（100积分=1元）</p>`
+                <p><strong>混合支付：</strong>最终金额=原价-早鸟优惠-优惠券-积分抵扣-充值卡抵扣-余额支付（100积分=1元）</p>
+                <p><strong>确认选座：</strong>点击"确认选座"按钮后，携带演出名称/时间/场馆/座位数据跳转 order-confirm.html</p>`
+            }
+        ]
+    },
+
+    'user-miniapp/theater-detail.html': {
+        title: '剧院详情页',
+        subtitle: '剧院信息 + 演出厅 + 当前演出',
+        sections: [
+            {
+                title: '功能说明',
+                content: `<p><strong>核心功能：</strong>展示剧院详细信息、演出厅列表、当前演出列表，支持从首页剧院卡片或剧院列表进入。</p>
+                <p><strong>页面模块：</strong></p>
+                <ul>
+                    <li><strong>顶部大图</strong>：剧院封面图 + 渐变遮罩 + 剧院名称/地址</li>
+                    <li><strong>信息卡片</strong>：总座位/演出厅/近期演出/座位分区统计 + 电话/营业时间/简介</li>
+                    <li><strong>演出厅列表</strong>：各演出厅名称 + 座位数/分区数/特色</li>
+                    <li><strong>当前演出</strong>：演出卡片列表（封面/标签/名称/时间/价格/购票按钮）</li>
+                </ul>`
+            },
+            {
+                title: '核心字段',
+                tables: [
+                    {
+                        title: '剧院字段',
+                        headers: ['字段名', '中文名', '类型', '必填', '说明'],
+                        rows: [
+                            ['theater_id', '剧院ID', 'number', '是', '剧院唯一标识'],
+                            ['name', '名称', 'string', '是', '剧院名称'],
+                            ['address', '地址', 'string', '是', '剧院地址'],
+                            ['phone', '电话', 'string', '是', '联系电话'],
+                            ['cover_image', '封面图', 'string', '是', '剧院封面图URL'],
+                            ['total_seats', '总座位', 'number', '是', '总座位数'],
+                            ['hall_count', '演出厅数', 'number', '是', '演出厅数量'],
+                            ['show_count', '演出数量', 'number', '是', '近期演出数量'],
+                            ['zone_count', '分区数', 'number', '是', '座位分区数量'],
+                            ['description', '简介', 'string', '否', '剧院简介'],
+                            ['business_hours', '营业时间', 'string', '否', '营业时间']
+                        ]
+                    },
+                    {
+                        title: '演出厅字段',
+                        headers: ['字段名', '中文名', '类型', '必填', '说明'],
+                        rows: [
+                            ['hall_id', '演出厅ID', 'number', '是', '演出厅唯一标识'],
+                            ['hall_name', '名称', 'string', '是', '演出厅名称'],
+                            ['seat_count', '座位数', 'number', '是', '座位数量'],
+                            ['zone_count', '分区数', 'number', '是', '座位分区数'],
+                            ['feature', '特色', 'string', '否', '演出厅特色描述']
+                        ]
+                    }
+                ]
+            },
+            {
+                title: '交互说明',
+                content: `<p><strong>点击行为：</strong></p>
+                <ul>
+                    <li>当前演出卡片：跳转 show-detail.html?show_id=xxx</li>
+                    <li>"去购票"按钮：跳转 show-detail.html?show_id=xxx</li>
+                </ul>
+                <p><strong>数据加载：</strong>根据 URL 参数 theater_id 加载对应剧院数据</p>`
+            }
+        ]
+    },
+
+    'user-miniapp/order-confirm.html': {
+        title: '确认订单页',
+        subtitle: '演出信息 + 已选座位 + 费用明细 + 支付',
+        sections: [
+            {
+                title: '功能说明',
+                content: `<p><strong>核心功能：</strong>展示选座后的订单确认信息，包含演出详情、已选座位、费用明细、取票人信息和支付方式，支持确认支付。</p>
+                <p><strong>页面模块：</strong></p>
+                <ul>
+                    <li><strong>演出信息</strong>：封面图 + 演出名称 + 时间/场馆/时长</li>
+                    <li><strong>已选座位</strong>：座位列表（分区标签 + 排座 + 单价）</li>
+                    <li><strong>费用明细</strong>：商品总价 + 票品折扣 + 会员折扣 + 应付金额</li>
+                    <li><strong>取票人信息</strong>：姓名 + 手机号（电子票短信通知）</li>
+                    <li><strong>支付方式</strong>：微信支付/支付宝（单选）</li>
+                    <li><strong>底部栏</strong>：应付金额 + 确认支付按钮</li>
+                </ul>`
+            },
+            {
+                title: '核心字段',
+                tables: [
+                    {
+                        title: '订单字段',
+                        headers: ['字段名', '中文名', '类型', '必填', '说明'],
+                        rows: [
+                            ['show_name', '演出名称', 'string', '是', '演出名称'],
+                            ['show_date', '演出时间', 'string', '是', '演出日期时间'],
+                            ['show_venue', '演出场馆', 'string', '是', '场馆名称'],
+                            ['seats[]', '座位数组', 'array', '是', '已选座位列表'],
+                            ['seat_zone', '座位分区', 'string', '是', '座位所属分区'],
+                            ['seat_row', '排号', 'number', '是', '座位排号'],
+                            ['seat_col', '座号', 'number', '是', '座位列号'],
+                            ['seat_price', '座位单价', 'number', '是', '单座票价'],
+                            ['original_amount', '商品总价', 'number', '是', '原价总额'],
+                            ['ticket_discount', '票品折扣', 'number', '否', '票品折扣金额'],
+                            ['member_discount', '会员折扣', 'number', '否', '会员折扣金额'],
+                            ['final_amount', '应付金额', 'number', '是', '最终支付金额'],
+                            ['contact_name', '取票人姓名', 'string', '是', '取票人姓名'],
+                            ['contact_phone', '取票人手机', 'string', '是', '取票人手机号'],
+                            ['payment_method', '支付方式', 'enum', '是', '支付方式：1-微信支付 2-支付宝']
+                        ]
+                    }
+                ]
+            },
+            {
+                title: '交互说明',
+                content: `<p><strong>页面进入：</strong>从选座页面携带演出名称/时间/场馆/座位数据跳转进入</p>
+                <p><strong>确认支付：</strong>点击"确认支付"按钮，校验取票人信息，提交订单后跳转订单列表</p>
+                <p><strong>支付方式：</strong>默认选中微信支付，点击切换支付宝</p>`
             }
         ]
     },
@@ -4463,10 +4577,10 @@ const devDocs = {
                   <li>统计卡片：年营业额（带同比趋势）、年订单数（带同比趋势）、预约订单数、待核销订单数、退款中订单数，均带环比趋势指示</li>
                   <li>筛选查询：支持订单状态（全部/预约/已支付/待核销/已核销/退款中/已取消）、关键词模糊搜索（订单号/演出名称/手机号）、渠道订单号精确查询、下单日期范围、支付方式（微信支付/支付宝/钱包支付/现金）、销售渠道（小程序/大麦/猫眼/美团/线下窗口）、出票状态（已出票/待出票/未出票）、销售员筛选</li>
                   <li>订单列表：展示订单号、渠道订单号、演出信息（名称+场次+票档）、数量、应收/实收金额、支付方式（带图标）、订单状态（彩色标签）、出票状态（圆点标签）、销售渠道（带图标标签）、销售员、下单时间、操作按钮</li>
-                  <li>订单详情弹窗：分区域展示订单信息（订单号/状态/时间/渠道/销售员/备注）、用户信息（姓名/手机号/会员等级）、演出信息（名称/场馆/场次/票档/数量）及座位明细表格、支付信息（商品总价/优惠减免/实付金额/支付时间/交易单号/组合支付明细）、减免明细（票品满减/优惠券/券包/会员折扣）、出票信息（出票状态/渠道/取票码/出票明细折叠面板）、操作日志时间轴。出票日志分为出票明细（每次出票时记录，含出票时间/操作员/地点/设备/出票方式/打印次数）和操作日志（订单全生命周期关键操作记录，含操作时间/操作员/操作类型/操作描述/状态变更前后/涉及金额/支付方式/备注）</li>
-                  <li>订单收款（3步流程）：Step1选择支付方式（微信支付/支付宝/现金/充值卡/钱包支付）→ 打开对应二级弹窗完成收款 → Step2选择出票方式（纸质票/电子票/暂不出票）及打印模板 → Step3完成，订单状态更新为"已支付"，出票状态更新为"待出票"</li>
-                  <li>出票：选择出票方式（纸质票/电子票），确认后更新出票状态为"已出票"，记录出票明细</li>
-                  <li>退票申请：选择退票原因（观众原因/演出取消/演出延期/场次合并/其他，可多选），填写退票说明，系统计算手续费（10%）和实际退款金额，确认后订单状态变为"退款中"</li>
+                  <li>订单详情弹窗：分Tab展示订单信息（订单号/状态/时间/渠道/销售员/备注）、演出座位（演出名称/场馆/演出厅/场次/数量及座位明细表格）、支付减免（支付信息含商品总价/优惠减免/实付金额/支付时间/交易单号/组合支付明细；减免明细表格始终显示5种减免类型行：票品折扣/优惠券/券包/会员折扣/积分抵扣，有数据显示具体名称和金额，无数据显示0）、出票日志（出票状态/渠道/取票码/出票明细折叠面板含取票码、操作日志时间轴）。底部操作按钮：已支付状态显示"确认核销"和"申请退款"</li>
+                  <li>订单收款（3步流程）：Step1选择支付方式（微信支付/支付宝/现金/充值卡/钱包支付）→ 打开对应二级弹窗完成收款 → Step2选择出票方式（纸质票/电子票/暂不出票）及打印模板，电子票需填写接收手机号 → Step3完成，订单状态更新为"已支付"，出票状态更新为"待出票"</li>
+                  <li>出票：选择出票方式（纸质票/电子票），确认后更新出票状态为"已出票"，记录出票明细（含取票码）</li>
+                  <li>退票申请：选择退款手续费比例（0%/5%/10%），选择退票原因（观众原因/演出取消/演出延期/场次合并/其他，可多选），填写退票说明，系统根据手续费比例计算实际退款金额。提示：退款仅返还实付金额、钱包余额、充值卡金额，不返还任何优惠券、券包或积分</li>
                   <li>批量导入：下载Excel模板 → 填写渠道订单数据 → 上传文件 → 选择导入渠道 → 开始导入，支持大麦/猫眼/美团/票大师/票务通/线下窗口/其他渠道</li>
                   <li>订单状态流转：预约 → 收款 → 已支付 → 出票 → 已出票 → 核销 → 已核销；预约超时未支付 → 已取消；已支付/已出票 → 退款中 → 已退款</li>
                 </ul>
@@ -4490,7 +4604,7 @@ const devDocs = {
             <ul>
               <li><strong>触发：</strong>点击表格行操作列的"查看"文字按钮</li>
               <li><strong>执行中：</strong>弹出订单详情弹窗（720px），分多个区域展示完整订单数据</li>
-              <li><strong>成功：</strong>弹窗正常展示完整订单数据，底部根据状态显示不同操作按钮（已支付显示"打印订单"/"确认核销"/"申请退款"）</li>
+              <li><strong>成功：</strong>弹窗正常展示完整订单数据，底部根据状态显示不同操作按钮（已支付显示"确认核销"/"申请退款"）</li>
               <li><strong>失败：</strong>Toast提示"加载失败"</li>
               <li><strong>边界条件：</strong>弹窗内信息为只读，不可编辑；出票明细可点击展开/折叠</li>
             </ul>
@@ -4504,7 +4618,7 @@ const devDocs = {
             </ul>
             <p><strong>打印出票</strong></p>
             <ul>
-              <li><strong>触发：</strong>点击已支付订单操作列的"打印"按钮，或详情弹窗底部的"打印订单"按钮</li>
+              <li><strong>触发：</strong>点击已支付订单操作列的"出票"按钮</li>
               <li><strong>执行中：</strong>弹出打印出票弹窗（580px），显示订单摘要、出票方式选择、是否显示票价选择、座位列表预览</li>
               <li><strong>成功：</strong>确认出票后出票状态更新为"已出票"，记录出票明细（时间/操作员/地点），Toast提示"出票成功"</li>
               <li><strong>失败：</strong>Toast提示"打印失败"</li>
@@ -4513,14 +4627,14 @@ const devDocs = {
             <p><strong>申请退票</strong></p>
             <ul>
               <li><strong>触发：</strong>点击已支付/已出票订单详情弹窗底部的"申请退款"按钮</li>
-              <li><strong>执行中：</strong>弹出退票申请弹窗（560px），显示订单摘要、退款金额计算（实付金额-10%手续费）、退票原因多选、退票说明文本框</li>
+              <li><strong>执行中：</strong>弹出退票申请弹窗（560px），显示订单摘要、退款手续费比例选择（0%/5%/10%，选择后实时更新手续费和实际退款金额）、退票原因多选、退票说明文本框，底部提示"退款仅返还实付金额、钱包余额、充值卡金额，不返还任何优惠券、券包或积分"</li>
               <li><strong>成功：</strong>确认退票后订单状态变为"退款中"，座位状态更新为"已退票"，Toast提示"退票申请已提交"</li>
               <li><strong>失败：</strong>未选择退票原因提示"请至少选择一个退票原因"</li>
               <li><strong>边界条件：</strong>距演出不足2小时的退款申请自动拒绝；已核销订单不可退款</li>
             </ul>
             <p><strong>批量导入渠道订单</strong></p>
             <ul>
-              <li><strong>触发：</strong>点击筛选栏"批量导入"按钮（btn-warning）</li>
+              <li><strong>触发：</strong>点击筛选栏"批量导入"按钮（btn-coral 珊瑚红色）</li>
               <li><strong>执行中：</strong>弹出导入弹窗（560px），分两步：下载模板 → 上传Excel文件 → 选择导入渠道 → 开始导入</li>
               <li><strong>成功：</strong>导入完成后Toast提示成功导入数量，列表自动刷新</li>
               <li><strong>失败：</strong>文件格式错误提示"请上传.xlsx或.xls格式文件"；未选择渠道时"开始导入"按钮禁用</li>
@@ -4585,6 +4699,7 @@ const devDocs = {
                   ['user_phone', 'string', '是', '用户手机号（脱敏）'],
                   ['member_level', 'enum', '否', '会员等级：普通会员/银卡会员/金卡会员/钻石会员'],
                   ['venue_name', 'string', '是', '演出场馆名称'],
+                  ['hall_name', 'string', '否', '演出厅名称，如大剧场/小剧场'],
                   ['total_amount', 'number', '是', '商品总价（元）'],
                   ['discount_amount', 'number', '是', '总优惠减免金额（元）'],
                   ['service_fee', 'number', '否', '服务费（元）'],
@@ -4597,7 +4712,7 @@ const devDocs = {
                   ['reserve_expire', 'string', '否', '预约到期时间，仅预约订单'],
                   ['ticket_detail_logs', 'array', '否', '出票明细数组，包含time/operator/location/print_times'],
                   ['payment_details', 'array', '否', '组合支付明细数组，包含method/amount/transactionId'],
-                  ['discount_details', 'array', '否', '减免明细数组，包含type/name/amount']
+                  ['discount_details', 'array', '否', '减免明细数组，包含type(减免类型：票品折扣/优惠券/券包/会员折扣/积分抵扣)/name(子类型+名称)/amount(减免金额)']
                 ]
               },
               {
@@ -4645,6 +4760,7 @@ const devDocs = {
                   ['ticket_time', 'string', '是', '出票时间，格式YYYY-MM-DD HH:mm:ss'],
                   ['operator_name', 'string', '是', '执行出票的操作员姓名'],
                   ['ticket_location', 'string', '是', '出票地点，如售票窗口A/大厅自助机'],
+                  ['pickup_code', 'string', '否', '本次出票取票码'],
                   ['ticket_device', 'string', '否', '出票设备名称/编号'],
                   ['ticket_type', 'enum', '是', '出票方式：纸质票/电子票'],
                   ['print_times', 'number', '是', '打印次数，首次出票为1，每次重印累加']
@@ -4973,14 +5089,14 @@ const devDocs = {
         sections: [
           {
             title: '功能描述',
-            content: `<p><strong>核心功能：</strong>管理演出项目的完整生命周期，包括创建、编辑、上架/下架、删除。支持3步向导式创建与编辑（基础信息→票价与场次→票务策略），一个演出统一设置一个开票时间，基于开票时间配置早鸟票（开票后前N天优惠）和会员优先购（开票前N天提前购买）。列表页提供统计卡片（总演出数/售票中/总售票数/总票房/今年票房）、快捷状态筛选（全部/售票中/已结束）、高级筛选（场馆·演出厅/演出类型/演出日期范围）和搜索功能。</p>
+            content: `<p><strong>核心功能：</strong>管理演出项目的完整生命周期，包括创建、编辑、上架/下架、删除。支持3步向导式创建与编辑（基础信息→票价与场次→票务策略），一个演出统一设置一个开票时间，基于开票时间配置会员优先购（开票前N天提前购买）。列表页提供统计卡片（总演出数/售票中/总售票数/总票房/今年票房）、快捷状态筛选（全部/售票中/已结束）、高级筛选（场馆·演出厅/演出类型/演出日期范围）和搜索功能。</p>
             <p><strong>业务说明：</strong></p>
             <ul>
               <li><strong>前置条件：</strong>操作人需具有"演出管理"权限；场馆需已在"场馆管理"中创建并配置演出厅；演出厅需已在"场馆座位配置"中完成座位布局和分区设置</li>
               <li><strong>功能实现逻辑：</strong>
                 <ul>
-                  <li>创建演出（3步向导）：Step1 基础信息（名称/类型/场馆/演出厅/封面/简介/时长/入场时间/儿童规则/语言/主办方/禁止携带/须知/日期范围）→ Step2 票价与场次（根据场馆座位分区自动生成票档，可设置票价和限购数量；手动添加多个场次日期和时间）→ Step3 票务策略（设置统一开票时间；可选开启早鸟票：开票后前N天内购买享受折扣；可选开启会员优先购：开票前N天会员可提前购买）→ 保存</li>
-                  <li>编辑演出（3步向导）：Step1 基础信息（字段与创建一致，回填现有数据，包含日期范围）→ Step2 票价与场次（只读展示现有票档和场次，提示"如需修改请前往场次管理"）→ Step3 票务策略（修改开票时间/早鸟票/会员优先购配置）→ 保存</li>
+                  <li>创建演出（3步向导）：Step1 基础信息（名称/类型/场馆/演出厅/封面/简介/时长/入场时间/儿童规则/语言/主办方/禁止携带/须知/日期范围）→ Step2 票价与场次（根据场馆座位分区自动生成票档，可设置票价和限购数量；手动添加多个场次日期和时间）→ Step3 票务策略（设置统一开票时间；可选开启会员优先购：开票前N天会员可提前购买）→ 保存</li>
+                  <li>编辑演出（3步向导）：Step1 基础信息（字段与创建一致，回填现有数据，包含日期范围）→ Step2 票价与场次（只读展示现有票档和场次，提示"如需修改请前往场次管理"）→ Step3 票务策略（修改开票时间/会员优先购配置）→ 保存</li>
                   <li>封面裁剪：上传后支持3种比例裁剪（列表页16:9 / 详情页3:4 / 分享图1:1），带九宫格辅助线和四角拖拽</li>
                   <li>上架/下架：列表行内操作，切换演出可见状态，已结束演出不可操作</li>
                   <li>删除：仅草稿状态可删除，已产生订单不可删除</li>
@@ -4988,7 +5104,7 @@ const devDocs = {
                 </ul>
               </li>
               <li><strong>开票时间规则：</strong>一个演出统一设置一个开票时间，所有场次在此时间同时开售；系统根据当前时间与开票时间自动计算状态（待开票/已开票）</li>
-              <li><strong>早鸟票规则：</strong>开票后前N天内购买享受折扣价（如开票后7天内85折），过期后恢复原价；可设置限购数量</li>
+              <li><strong>早鸟票规则：</strong>早鸟票不再在演出项目级别配置，统一在营销中心-票品折扣中创建"早鸟票"类型折扣活动进行管理</li>
               <li><strong>会员优先购规则：</strong>开票前N天会员可提前购买（如开票前3天），仅指定会员等级可享受；可设置限购数量</li>
               <li><strong>权限控制：</strong>新建/编辑需"演出编辑"权限；上架/下架需"演出发布"权限；删除需"演出删除"权限</li>
               <li><strong>数据约束：</strong>演出名称不可重复；演出厅选项联动场馆选择；票档名称和库存由场馆座位分区决定不可修改</li>
@@ -5000,7 +5116,7 @@ const devDocs = {
             content: `<p><strong>新建演出</strong></p>
             <ul>
               <li><strong>触发：</strong>点击列表页右上角"新建演出"按钮（btn-primary，带 fa-plus 图标）</li>
-              <li><strong>执行中：</strong>弹出3步向导弹窗（modalNewShow），顶部步骤指示器显示当前进度，底部按钮：取消/下一步（Step1-2）/上一步+保存（Step3）；Step3包含：统一开票时间设置（datetime-local输入）、早鸟票开关（开启后显示持续天数/折扣比例/限购数量）、会员优先购开关（开启后显示提前天数/会员等级/限购数量）</li>
+              <li><strong>执行中：</strong>弹出3步向导弹窗（modalNewShow），顶部步骤指示器显示当前进度，底部按钮：取消/下一步（Step1-2）/上一步+保存（Step3）；Step3包含：统一开票时间设置（datetime-local输入）、会员优先购开关（开启后显示提前天数/会员等级/限购数量）</li>
               <li><strong>成功：</strong>保存成功后弹窗关闭，列表刷新显示新演出，Toast提示"创建成功"</li>
               <li><strong>失败：</strong>必填字段未填时在字段下方显示红色错误提示；名称重复时提示"该演出名称已存在"</li>
               <li><strong>边界条件：</strong>未选择场馆时演出厅下拉框为空；未配置座位分区的演出厅提示"请先在场馆座位配置中设置分区"</li>
@@ -5008,7 +5124,7 @@ const devDocs = {
             <p><strong>编辑演出</strong></p>
             <ul>
               <li><strong>触发：</strong>点击列表行操作列"编辑"按钮（fa-pen + 编辑）</li>
-              <li><strong>执行中：</strong>弹出3步向导弹窗（modalEditShow），顶部步骤指示器，Step1回填现有数据，Step2只读展示票档和场次并提示"如需修改请前往场次管理"，Step3可修改开票时间及票务策略（开票时间/早鸟票/会员优先购配置，与新建一致）；底部按钮：取消/下一步（Step1-2）/上一步+保存（Step3）</li>
+              <li><strong>执行中：</strong>弹出3步向导弹窗（modalEditShow），顶部步骤指示器，Step1回填现有数据，Step2只读展示票档和场次并提示"如需修改请前往场次管理"，Step3可修改开票时间及票务策略（开票时间/会员优先购配置，与新建一致）；底部按钮：取消/下一步（Step1-2）/上一步+保存（Step3）</li>
               <li><strong>成功：</strong>弹窗关闭，列表对应行数据更新，Toast提示"保存成功"</li>
               <li><strong>失败：</strong>校验不通过显示错误提示</li>
               <li><strong>边界条件：</strong>封面图显示已上传状态，可重新裁剪；已售出票的演出不可修改场馆和演出厅</li>
@@ -5035,6 +5151,14 @@ const devDocs = {
               <li><strong>执行中：</strong>自动切换到"场次管理"Tab，并筛选该演出的场次</li>
               <li><strong>成功：</strong>场次Tab激活，筛选条件自动填入</li>
               <li><strong>失败：</strong>无</li>
+              <li><strong>边界条件：</strong>无</li>
+            </ul>
+            <p><strong>票品折扣快捷入口</strong></p>
+            <ul>
+              <li><strong>触发：</strong>点击列表行操作列"票品折扣"按钮（fa-percent + 票品折扣）</li>
+              <li><strong>执行中：</strong>跳转至营销中心-票品折扣Tab，URL参数携带演出名称，页面自动筛选该演出的折扣活动</li>
+              <li><strong>成功：</strong>营销中心页面打开，票品折扣Tab激活，关联演出筛选自动匹配该演出</li>
+              <li><strong>失败：</strong>若演出名称无匹配项，筛选保持"全部演出"</li>
               <li><strong>边界条件：</strong>无</li>
             </ul>`
           },
@@ -5094,16 +5218,7 @@ const devDocs = {
                   ['ticket_open_status', 'enum', '是', '开票状态：待开票/已开票（系统自动计算）']
                 ]
               },
-              {
-                title: '早鸟票字段',
-                headers: ['字段名', '类型', '必填', '说明'],
-                rows: [
-                  ['is_enabled', 'boolean', '是', '是否启用早鸟票'],
-                  ['early_bird_days', 'number', '是', '早鸟持续天数（开票后前N天），1-30'],
-                  ['discount_rate', 'number', '是', '折扣比例（%），原价的百分比，50-99'],
-                  ['limit_per_user', 'number', '是', '限购数量（张/人），1-10']
-                ]
-              },
+
               {
                 title: '会员优先购字段',
                 headers: ['字段名', '类型', '必填', '说明'],
@@ -5920,9 +6035,10 @@ const devDocs = {
               <li><strong>前置条件：</strong>操作人需具有"积分管理"权限</li>
               <li><strong>功能实现逻辑：</strong>
                 <ul>
-                  <li>任务配置：设置每日签到、发表评论、分享演出、完成订单、邀请好友等任务的积分奖励值</li>
+                  <li>任务配置：设置每日签到、发表评论、分享演出、完成订单等任务的积分奖励值。发表评论和分享演出支持设置每日次数上限，超过上限不再获得积分</li>
                   <li>使用规则：设置积分抵扣比例、单笔最高抵扣比例、最低使用积分、适用范围、积分抽奖消耗</li>
-                  <li>过期规则：设置积分有效期（12个月/24个月/永久有效）、过期结算方式、过期提醒天数</li>
+                  <li>过期规则：积分有效期固定12个月，过期结算方式固定为"按获取月份逐月过期"，不可修改。设置到期前提醒天数</li>
+                  <li>配置保存时间：任务配置/使用规则/过期规则三个Tab均展示最后一次保存配置的时间</li>
                   <li>积分明细：记录所有会员的积分变动，包括获取和消耗</li>
                 </ul>
               </li>
@@ -5937,7 +6053,7 @@ const devDocs = {
             <ul>
               <li><strong>触发：</strong>在任务配置/使用规则/过期规则页面修改数值后，点击"保存配置"按钮</li>
               <li><strong>执行中：</strong>按钮loading，校验输入值合法性</li>
-              <li><strong>成功：</strong>Toast提示"保存成功"，配置即时生效</li>
+              <li><strong>成功：</strong>Toast提示"保存成功"，配置即时生效，保存时间更新</li>
               <li><strong>失败：</strong>Toast提示"保存失败"，非法输入项高亮提示</li>
               <li><strong>边界条件：</strong>点击"重置"恢复上次保存的数值</li>
             </ul>
@@ -5969,12 +6085,11 @@ const devDocs = {
                 rows: [
                   ['daily_checkin_points', 'number', '是', '每日签到基础积分'],
                   ['continuous_checkin_bonus', 'number', '否', '连续签到加成积分（7天+额外奖励）'],
-                  ['comment_points', 'number', '是', '发表评论积分'],
-                  ['comment_daily_limit', 'number', '否', '评论积分每日上限（条/日）'],
-                  ['share_points', 'number', '是', '分享演出积分'],
-                  ['share_daily_limit', 'number', '否', '分享积分每日上限（次/日）'],
-                  ['order_points_per_yuan', 'number', '是', '每消费1元获得积分'],
-                  ['invite_points', 'number', '是', '邀请好友积分']
+                  ['comment_points', 'number', '是', '发表评论积分（积分/条）'],
+                  ['comment_daily_limit', 'number', '是', '评论积分每日上限（条）'],
+                  ['share_points', 'number', '是', '分享演出积分（积分/次）'],
+                  ['share_daily_limit', 'number', '是', '分享积分每日上限（次）'],
+                  ['order_points_per_yuan', 'number', '是', '每消费1元获得积分']
                 ]
               },
               {
@@ -5992,8 +6107,8 @@ const devDocs = {
                 title: '过期规则字段',
                 headers: ['字段名', '类型', '必填', '说明'],
                 rows: [
-                  ['points_validity', 'enum', '是', '积分有效期：12个月/24个月/永久有效'],
-                  ['expire_settlement_type', 'enum', '是', '过期结算方式：按获取时间逐月过期/按自然年滚动过期/统一年末清零'],
+                  ['points_validity', 'enum', '是', '积分有效期：固定12个月'],
+                  ['expire_settlement_type', 'enum', '是', '过期结算方式：固定按获取月份逐月过期，不可修改'],
                   ['expire_remind_days', 'number', '是', '到期前提醒天数']
                 ]
               },
@@ -6028,7 +6143,7 @@ const devDocs = {
         sections: [
           {
             title: '功能描述',
-            content: `<p><strong>核心功能：</strong>管理会员等级政策和成长值配置。等级配置以卡片形式展示5个等级（普通会员/银卡会员/金卡会员/钻石会员/充值年卡），每个卡片展示等级名称、成长值范围、购票折扣、权益列表，支持编辑和删除等级，支持新增等级。成长值配置包括推荐会员成长值、消费成长值比例、充值成长值比例、充值成长值活动。</p>
+            content: `<p><strong>核心功能：</strong>管理会员等级政策和成长值配置。等级配置以卡片形式展示5个等级（普通会员/银卡会员/金卡会员/钻石会员/充值年卡），每个卡片展示等级名称、成长值范围、购票折扣、权益列表，支持编辑和删除等级，支持新增等级。成长值配置包括消费成长值比例、充值成长值比例、充值成长值活动、推荐会员成长值。</p>
             <p><strong>业务说明：</strong></p>
             <ul>
               <li><strong>前置条件：</strong>操作人需具有"会员政策管理"权限</li>
@@ -6036,8 +6151,9 @@ const devDocs = {
                 <ul>
                   <li>等级配置：等级名称、成长值范围（下限-上限）、购票折扣、权益设置（基础权益/购票权益/服务权益/专属特权）</li>
                   <li>权益类型：积分加成倍数、每月优惠券、生日福利、优先购票、免费改签、专属选座区、专属客服、VIP入场通道、会员卡寄送、赠票额度、后台参观、年度答谢活动</li>
-                  <li>成长值获取：推荐新用户注册、消费、充值均可获得成长值</li>
+                  <li>成长值获取：消费、充值、推荐新用户注册均可获得成长值</li>
                   <li>成长值活动：可开启限时活动，活动期间充值获得额外成长值加成</li>
+                  <li>配置保存时间：成长值配置区域展示最后一次保存配置的时间</li>
                 </ul>
               </li>
               <li><strong>权限控制：</strong>查看需"会员查看"权限；编辑/新增/删除需"会员政策编辑"权限</li>
@@ -6049,7 +6165,7 @@ const devDocs = {
             title: '交互说明',
             content: `<p><strong>编辑等级</strong></p>
             <ul>
-              <li><strong>触发：</strong>点击等级卡片右上角"编辑"按钮</li>
+              <li><strong>触发：</strong>点击等级卡片右上角圆形"编辑"按钮（铅笔图标，白色半透明背景）</li>
               <li><strong>执行中：</strong>弹出编辑弹窗，可修改等级名称、成长值下限/上限、购票折扣、权益设置（积分加成倍数/每月优惠券/生日福利/优先购票/免费改签/专属选座区/专属客服/VIP入场通道/会员卡申请/后台参观/年度答谢活动）、颜色选择</li>
               <li><strong>成功：</strong>列表数据更新，已关联会员的权益实时生效</li>
               <li><strong>失败：</strong>Toast提示"保存失败"</li>
@@ -6057,7 +6173,7 @@ const devDocs = {
             </ul>
             <p><strong>新增等级</strong></p>
             <ul>
-              <li><strong>触发：</strong>点击"+ 新增等级"按钮</li>
+              <li><strong>触发：</strong>点击等级卡片列表末尾的"新增等级"虚线框卡片（白底、2px虚线边框、加号图标）</li>
               <li><strong>执行中：</strong>弹窗填写等级配置，含实时预览卡片，字段与编辑相同</li>
               <li><strong>成功：</strong>列表新增等级记录</li>
               <li><strong>失败：</strong>名称重复提示"该等级名称已存在"</li>
@@ -6065,7 +6181,7 @@ const devDocs = {
             </ul>
             <p><strong>删除等级</strong></p>
             <ul>
-              <li><strong>触发：</strong>点击等级卡片右上角"删除"按钮</li>
+              <li><strong>触发：</strong>点击等级卡片右上角圆形"删除"按钮（垃圾桶图标，白色半透明背景，hover变红色）</li>
               <li><strong>执行中：</strong>弹出确认弹窗</li>
               <li><strong>成功：</strong>等级卡片移除</li>
               <li><strong>失败：</strong>Toast提示"删除失败"</li>
@@ -6075,7 +6191,7 @@ const devDocs = {
             <ul>
               <li><strong>触发：</strong>修改成长值配置后点击"保存成长值配置"按钮</li>
               <li><strong>执行中：</strong>校验输入值</li>
-              <li><strong>成功：</strong>Toast提示"保存成功"</li>
+              <li><strong>成功：</strong>Toast提示"保存成功"，保存时间更新</li>
               <li><strong>失败：</strong>Toast提示"保存失败"</li>
               <li><strong>边界条件：</strong>充值成长值活动需开启开关后才可配置活动参数</li>
             </ul>`
@@ -6518,14 +6634,14 @@ const devDocs = {
         sections: [
           {
             title: '功能描述',
-            content: `<p><strong>核心功能：</strong>管理票品折扣活动的创建、编辑、停止和数据查看。页面展示3张统计卡片（进行中活动/累计优惠金额/受益用户），支持按状态、类型筛选，表格展示折扣活动列表（活动名称/关联演出/折扣类型/优惠值/有效期/使用次数/状态/操作），支持新建折扣活动（百分比折扣或满减优惠）。活动数据弹窗展示总使用次数、累计优惠金额、带动订单金额、转化率及使用趋势图表。</p>
+            content: `<p><strong>核心功能：</strong>管理票品折扣活动的创建、编辑、停止和数据查看。页面展示3张统计卡片（进行中活动/累计优惠金额/受益用户），支持按状态、类型、关联演出筛选，表格展示折扣活动列表（活动名称/关联演出/折扣类型/优惠值/有效期/使用次数/状态/操作），支持新建折扣活动（百分比折扣、满减优惠或早鸟票）。活动数据弹窗展示总使用次数、累计优惠金额、带动订单金额、转化率及使用趋势图表。</p>
             <p><strong>业务说明：</strong></p>
             <ul>
               <li><strong>前置条件：</strong>操作人需具有"折扣活动管理"权限；关联演出需已创建</li>
               <li><strong>功能实现逻辑：</strong>
                 <ul>
-                  <li>折扣类型：百分比折扣（如8折，可设置最大优惠金额上限）或满减优惠（满X减Y，门槛为0时表示立减）</li>
-                  <li>关联范围：可选择全部演出或指定演出，指定演出可选择全部场次或部分场次（多选）</li>
+                  <li>折扣类型：百分比折扣（如8折，可设置最大优惠金额上限）、满减优惠（满X减Y，门槛为0时表示立减）或早鸟票（设置折扣比例/最大优惠金额/持续天数，开票后N天内有效，不设活动时间）</li>
+                  <li>关联范围：必须选择指定演出（不可选"全部演出"），指定演出可选择全部场次或部分场次（多选）</li>
                   <li>售票渠道：新建和编辑时可选择适用的售票渠道（小程序/窗口），至少选择一个，默认全选；用户仅在选中的渠道购票时方可享受该折扣</li>
                   <li>状态流转：未开始→进行中→已结束（自动），进行中可手动停止→已停止</li>
                   <li>数据统计：总使用次数、累计优惠金额、带动订单金额、转化率、使用趋势</li>
@@ -6541,10 +6657,10 @@ const devDocs = {
             content: `<p><strong>新建折扣活动</strong></p>
             <ul>
               <li><strong>触发：</strong>点击"新建折扣活动"按钮</li>
-              <li><strong>执行中：</strong>弹出新建弹窗，填写活动名称、关联演出（下拉选择，选演出后加载场次多选）、折扣类型（百分比折扣/满减优惠，切换显示不同字段）、折扣比例/满减门槛和减免金额、最大优惠金额、开始/结束时间、活动说明、售票渠道（复选框：小程序/窗口，默认全选）</li>
-              <li><strong>成功：</strong>弹窗关闭，列表新增记录，Toast提示"折扣活动已创建"</li>
-              <li><strong>失败：</strong>名称重复提示"该活动名称已存在"；时间重叠提示"该时段已有折扣活动"；未选渠道提示"请至少选择一个售票渠道"</li>
-              <li><strong>边界条件：</strong>开始时间不可早于当前时间；折扣比例范围1-99；满减门槛需大于等于0；至少选择一个售票渠道</li>
+              <li><strong>执行中：</strong>弹出新建弹窗，填写活动名称、关联演出（下拉选择，必须选择具体演出，选演出后加载场次多选）、折扣类型（百分比折扣/满减优惠/早鸟票，切换显示不同字段）、折扣比例/满减门槛和减免金额/早鸟票持续天数、最大优惠金额、开始/结束时间（早鸟票类型不显示活动时间）、活动说明、售票渠道（复选框：小程序/窗口，默认全选）</li>
+            <li><strong>成功：</strong>弹窗关闭，列表新增记录，Toast提示"折扣活动已创建"</li>
+            <li><strong>失败：</strong>名称重复提示"该活动名称已存在"；时间重叠提示"该时段已有折扣活动"；未选渠道提示"请至少选择一个售票渠道"</li>
+            <li><strong>边界条件：</strong>开始时间不可早于当前时间；折扣比例范围1-99；满减门槛需大于等于0；至少选择一个售票渠道；早鸟票类型不设活动时间，以开票后持续天数计算有效期</li>
             </ul>
             <p><strong>编辑折扣活动</strong></p>
             <ul>
@@ -6597,7 +6713,14 @@ const devDocs = {
                 headers: ['字段名', '类型', '必填', '说明'],
                 rows: [
                   ['filter_status', 'enum', '否', '状态筛选：全部状态/进行中/已结束/未开始'],
-                  ['filter_type', 'enum', '否', '类型筛选：全部类型/满减/折扣']
+                  ['filter_type', 'enum', '否', '类型筛选：全部类型/满减/折扣/早鸟票']
+                ]
+              },
+              {
+                title: '关联演出筛选字段',
+                headers: ['字段名', '类型', '必填', '说明'],
+                rows: [
+                  ['filter_show', 'enum', '否', '关联演出筛选：全部演出/具体演出名称']
                 ]
               },
               {
@@ -6607,10 +6730,10 @@ const devDocs = {
                   ['activity_name', 'string', '是', '活动名称'],
                   ['related_show', 'string', '是', '关联演出名称'],
                   ['related_session', 'string', '否', '关联场次，空表示全部场次'],
-                  ['discount_type', 'enum', '是', '折扣类型：折扣/满减'],
-                  ['discount_value', 'string', '是', '优惠值，如"8折"或"满300减50"'],
-                  ['valid_start', 'string', '是', '有效期开始时间'],
-                  ['valid_end', 'string', '是', '有效期结束时间'],
+                  ['discount_type', 'enum', '是', '折扣类型：折扣/满减/早鸟票'],
+                  ['discount_value', 'string', '是', '优惠值，如"8折"、"满300减50"或"8折/7天"'],
+                  ['valid_start', 'string', '否', '有效期开始时间，早鸟票类型为空'],
+                  ['valid_end', 'string', '否', '有效期结束时间，早鸟票类型为空'],
                   ['use_count', 'number', '是', '使用次数'],
                   ['status', 'enum', '是', '状态：进行中/已结束/未开始/已停止']
                 ]
@@ -6620,16 +6743,17 @@ const devDocs = {
                 headers: ['字段名', '类型', '必填', '说明'],
                 rows: [
                   ['activity_name', 'string', '是', '活动名称'],
-                  ['related_show', 'string', '是', '关联演出，可选"全部演出"'],
+                  ['related_show', 'string', '是', '关联演出，必须选择具体演出'],
                   ['related_session', 'array', '否', '关联场次ID列表，空表示全部场次'],
-                  ['discount_type', 'enum', '是', '折扣类型：percent/reduce'],
-                  ['discount_percent', 'number', '否', '折扣比例（折），discount_type=percent时必填'],
+                  ['discount_type', 'enum', '是', '折扣类型：percent/reduce/earlybird'],
+                  ['discount_percent', 'number', '否', '折扣比例（折），discount_type=percent或earlybird时必填'],
                   ['max_discount_amount', 'number', '否', '最大优惠金额（元），不填则不限制'],
                   ['discount_threshold', 'number', '否', '满减门槛（元），discount_type=reduce时必填'],
                   ['discount_reduce_amount', 'number', '否', '减免金额（元），discount_type=reduce时必填'],
+                  ['earlybird_days', 'number', '否', '早鸟持续天数，discount_type=earlybird时必填'],
                   ['discount_channel', 'array', '是', '售票渠道：miniapp（小程序）/window（窗口），可多选'],
-                  ['start_time', 'string', '是', '开始时间'],
-                  ['end_time', 'string', '是', '结束时间'],
+                  ['start_time', 'string', '否', '开始时间，discount_type=earlybird时为空'],
+                  ['end_time', 'string', '否', '结束时间，discount_type=earlybird时为空'],
                   ['description', 'string', '否', '活动说明']
                 ]
               },
@@ -6652,7 +6776,7 @@ const devDocs = {
         sections: [
           {
             title: '功能描述',
-            content: `<p><strong>核心功能：</strong>管理优惠券的创建、编辑、停用、二维码领券和数据查看。页面展示3张统计卡片（已发放优惠券/已使用/核销总金额），支持按类型、状态筛选，表格展示优惠券列表（券名称/类型/面值或折扣/使用条件/适用范围/已发放已使用/有效期/状态/操作），支持新建优惠券（现金券固定金额减免或折扣券按比例折扣），支持按演出-场次层级指定适用范围，支持设置与早鸟票/会员折扣/票品折扣的叠加规则。编辑弹窗根据优惠券状态（未开始/进行中/已过期/已停用）控制可编辑字段范围。</p>
+            content: `<p><strong>核心功能：</strong>管理优惠券的创建、编辑、停用、二维码领券和数据查看。页面展示3张统计卡片（已发放优惠券/已使用/核销总金额），支持按类型、状态筛选，表格展示优惠券列表（券名称/类型/面值或折扣/使用条件/适用范围/已发放已使用/有效期/状态/操作），支持新建优惠券（现金券固定金额减免或折扣券按比例折扣），支持按演出-场次层级指定适用范围，支持设置与会员折扣/票品折扣的叠加规则。编辑弹窗根据优惠券状态（未开始/进行中/已过期/已停用）控制可编辑字段范围。</p>
             <p><strong>业务说明：</strong></p>
             <ul>
               <li><strong>前置条件：</strong>操作人需具有"优惠券管理"权限</li>
@@ -6660,7 +6784,7 @@ const devDocs = {
                 <ul>
                   <li>券类型：现金券（设置减免金额，如满200减50）或折扣券（设置折扣比例，如8折即减免20%，范围1-99折）；两种类型均可独立设置消费门槛（满X元可用），0或不填表示无门槛</li>
                   <li>适用范围：全部演出可用，或指定演出/场次；选择指定演出后，以演出为层级展示该演出下的所有场次，每个演出独立勾选场次，不勾选任何场次则该演出下全部场次可用</li>
-                  <li>叠加设置：独立开关控制是否可与早鸟票、会员折扣、票品折扣叠加使用</li>
+                  <li>叠加设置：独立开关控制是否可与会员折扣、票品折扣叠加使用</li>
                   <li>有效期模式：固定日期（设置生效时间和失效时间）或领取后N天（用户领取后N天内有效）</li>
                   <li>状态流转：未开始→进行中→已过期（自动），进行中可手动停用→已停用</li>
                   <li>编辑规则：未开始状态所有字段可编辑；进行中状态仅有效期和使用说明可编辑（核心参数灰显不可修改）；已过期/已停用状态仅可查看，不可编辑，不可复制</li>
@@ -6679,7 +6803,7 @@ const devDocs = {
             content: `<p><strong>新建优惠券</strong></p>
             <ul>
               <li><strong>触发：</strong>点击"新建优惠券"按钮（右上角，蓝色主按钮，带加号图标）</li>
-              <li><strong>执行中：</strong>弹出 modal-coupon-new 弹窗，填写券名称、券类型（下拉选择：现金券/折扣券，切换后下方显示减免金额或折扣比例输入框）、消费门槛（满X元可用，0表示无门槛）、发放数量；适用范围区域选择全部演出可用或指定演出/场次（选择后展示演出多选标签，每个演出下展开场次复选框）；叠加设置区域三个独立开关（早鸟票/会员折扣/票品折扣）；有效期模式（固定日期/领取后N天）、生效/失效时间、使用说明</li>
+              <li><strong>执行中：</strong>弹出 modal-coupon-new 弹窗，填写券名称、券类型（下拉选择：现金券/折扣券，切换后下方显示减免金额或折扣比例输入框）、消费门槛（满X元可用，0表示无门槛）、发放数量；适用范围区域选择全部演出可用或指定演出/场次（选择后展示演出多选标签，每个演出下展开场次复选框）；叠加设置区域两个独立开关（会员折扣/票品折扣）；有效期模式（固定日期/领取后N天），固定日期模式下显示生效/失效时间输入框，领取后N天模式下显示有效天数输入框；使用说明</li>
               <li><strong>成功：</strong>弹窗关闭，列表新增记录，Toast提示"创建成功"</li>
               <li><strong>失败：</strong>名称重复提示"该优惠券名称已存在"；未选券类型提示"请选择券类型"</li>
               <li><strong>边界条件：</strong>现金券减免金额需大于0；折扣券比例范围为1-99整数；发放数量需大于0；消费门槛为0表示无门槛；适用范围选择"指定演出/场次"时必须至少选择1个演出</li>
@@ -6697,7 +6821,7 @@ const devDocs = {
             <p><strong>编辑优惠券（进行中状态）</strong></p>
             <ul>
               <li><strong>触发：</strong>点击进行中状态优惠券操作列"编辑"按钮</li>
-              <li><strong>执行中：</strong>弹出 modal-coupon-edit 弹窗，顶部黄色警告提示"当前状态：进行中 — 已有N张券被领取，N张已使用。以下字段不可修改：券类型、面值/折扣、消费门槛、适用范围、叠加设置。仅可修改有效期和使用说明。"券名称、券类型、减免金额/折扣比例、消费门槛、发放数量、适用范围、叠加设置区域均灰显 disabled；有效期设置区域标注"可编辑"标签，生效/失效时间、使用说明可修改</li>
+              <li><strong>执行中：</strong>弹出 modal-coupon-edit 弹窗，顶部黄色警告提示"当前状态：进行中 — 已有N张券被领取，N张已使用。以下字段不可修改：券类型、面值/折扣、消费门槛、适用范围、叠加设置。仅可修改有效期和使用说明。"券名称、券类型、减免金额/折扣比例、消费门槛、发放数量、适用范围、叠加设置区域均灰显 disabled；有效期设置区域标注"可编辑"标签，固定日期模式下显示生效/失效时间，领取后N天模式下显示有效天数，使用说明可修改</li>
               <li><strong>成功：</strong>弹窗关闭，列表数据更新，Toast提示"保存成功"</li>
               <li><strong>失败：</strong>Toast提示"保存失败"</li>
               <li><strong>边界条件：</strong>核心参数（券类型、面值/折扣、门槛、范围、叠加）不可变更</li>
@@ -6801,13 +6925,12 @@ const devDocs = {
                   ['applicable_scope', 'enum', '是', '适用范围：all/specific'],
                   ['applicable_shows', 'array', '否', '指定演出ID列表，applicable_scope=specific时必填'],
                   ['applicable_sessions', 'object', '否', '演出场次映射，key为show_id，value为session_id数组'],
-                  ['stack_early_bird', 'boolean', '是', '是否可与早鸟票叠加'],
                   ['stack_member_discount', 'boolean', '是', '是否可与会员折扣叠加'],
                   ['stack_ticket_discount', 'boolean', '是', '是否可与票品折扣叠加'],
                   ['validity_mode', 'enum', '是', '有效期模式：fixed（固定日期）/relative（领取后N天）'],
-                  ['valid_start', 'string', '是', '固定日期模式为生效时间'],
-                  ['valid_end', 'string', '是', '固定日期模式为失效时间'],
-                  ['valid_days', 'number', '否', '领取后N天有效，validity_mode=relative时必填'],
+                  ['valid_start', 'string', '否', '固定日期模式为生效时间，validity_mode=fixed时必填'],
+                  ['valid_end', 'string', '否', '固定日期模式为失效时间，validity_mode=fixed时必填'],
+                  ['valid_days', 'number', '否', '有效天数（天），validity_mode=relative时必填'],
                   ['usage_desc', 'string', '否', '使用说明']
                 ]
               },
@@ -8155,19 +8278,78 @@ Tab切换交互：
 // entries.page 对应 devDocs 中的页面URL键名
 const changelogData = [
     {
+        date: '2026-06-12',
+        entries: [
+            {
+                page: 'pc-admin/member-management.html',
+                pageName: '会员管理',
+                module: '积分管理',
+                content: `任务配置：发表评论/分享演出增加每日次数上限设置，移除邀请好友任务；过期规则：过期结算方式仅保留"按获取月份逐月过期"并禁用下拉框；任务配置/使用规则/过期规则均增加配置保存时间展示`
+            },
+            {
+                page: 'pc-admin/member-management.html',
+                pageName: '会员管理',
+                module: '会员政策',
+                content: `等级配置卡片删除/编辑按钮改为右上角圆形半透明图标按钮；成长值配置顺序调整（推荐会员移到最后）；新增等级按钮改为白底虚线框卡片样式；成长值配置增加配置保存时间展示`
+            },
+            {
+                page: 'user-miniapp/home.html',
+                pageName: '首页',
+                module: '首页',
+                content: `超值券包卡片阴影修复（增加padding），点击卡片跳转券包详情；合作剧院卡片点击跳转剧院详情；热门推荐演出卡片点击直达演出详情`
+            },
+            {
+                page: 'user-miniapp/theater-detail.html',
+                pageName: '剧院详情',
+                module: '剧院详情',
+                content: `新增剧院详情页面，包含剧院大图、信息统计、演出厅列表、当前演出列表，支持URL参数切换不同剧院`
+            },
+            {
+                page: 'user-miniapp/order-confirm.html',
+                pageName: '确认订单',
+                module: '确认订单',
+                content: `新增确认订单页面，包含演出信息、已选座位、费用明细、取票人信息、支付方式，底部固定确认支付栏`
+            },
+            {
+                page: 'user-miniapp/seat-selection.html',
+                pageName: '选座购票',
+                module: '选座购票',
+                content: `确认选座按钮点击后跳转确认订单页面，携带演出名称/时间/场馆/座位数据`
+            }
+        ]
+    },
+    {
         date: '2026-06-11',
         entries: [
+            {
+                page: 'pc-admin/show-management.html',
+                pageName: '演出管理',
+                module: '演出项目',
+                content: `新建/编辑步骤3移除早鸟票设置；列表操作栏新增票品折扣按钮，点击跳转营销中心票品折扣Tab`
+            },
             {
                 page: 'pc-admin/marketing-center.html',
                 pageName: '营销中心',
                 module: '票品折扣',
-                content: `新增和编辑弹窗增加售票渠道选择（小程序/窗口），默认全选，至少选择一个`
+                content: `折扣类型新增早鸟票（折扣比例/最大优惠金额/持续天数，不设活动时间）；关联演出移除全部演出选项；列表新增关联演出筛选；列表新增一条早鸟票数据`
+            },
+            {
+                page: 'pc-admin/marketing-center.html',
+                pageName: '营销中心',
+                module: '优惠券',
+                content: `新建/编辑/查看弹窗的有效期设置，选择"领取后N天"模式时，时间范围改为"有效天数"输入框（单位：天），固定日期模式保持生效/失效时间输入框`
             },
             {
                 page: 'pc-admin/order-management.html',
                 pageName: '订单管理',
                 module: '票务订单',
-                content: `列表打印按钮改为出票；详情出票信息去掉出票方式和操作员；出票日志打印日志改为出票明细，明细增加出票方式和打印次数展示；新增出票日志字段（出票日志/出票明细/操作日志），出票日志增加取票码字段（8位随机数字），去掉操作员ID和操作员姓名`
+                content: `批量导入按钮改为珊瑚红色；订单详情演出信息移除票档字段，新增演出厅字段；支付减免tab统一表格样式，表头"优惠类型"改为"减免类型"，始终显示5种减免类型行（票品折扣/优惠券/券包/会员折扣/积分抵扣）；移除订单详情打印订单按钮；出票日志增加取票码模拟数据；付款弹窗电子票手机号输入框增加图标和提示文案；申请退款弹窗新增手续费比例选择（0%/5%/10%），提示文案改为仅返还实付/钱包/充值卡金额`
+            },
+            {
+                page: 'pc-admin/marketing-center.html',
+                pageName: '营销中心',
+                module: '优惠券',
+                content: `新建/编辑/查看弹窗叠加设置移除早鸟票叠加选项`
             },
             {
                 page: 'index.html',
@@ -8410,6 +8592,11 @@ function switchMode(mode) {
 
     document.getElementById('cardView').style.display = mode === 'card' ? 'block' : 'none';
     document.getElementById('frameView').classList.toggle('active', mode === 'frame');
+
+    // Hide category buttons in frame (preview) mode, keep the container visible
+    document.querySelectorAll('#navTabs .nav-tab').forEach(btn => {
+        btn.style.display = mode === 'frame' ? 'none' : '';
+    });
 }
 
 // 切换右侧栏收起/展开

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>剧院详情 - 海南演艺</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #E8EAF0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .page-container {
+      width: 100%;
+      max-width: 375px;
+      min-height: 100vh;
+      background: #F5F6FA;
+      position: relative;
+      overflow-x: hidden;
+    }
+    /* Nav */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 48px;
+      background: linear-gradient(135deg, #0A1628 0%, #132744 50%, #0A1628 100%);
+      padding: 0 16px;
+      box-shadow: 0 2px 12px rgba(10,22,40,0.15);
+    }
+    .nav-back {
+      position: absolute;
+      left: 16px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+    .nav-back:active { background: rgba(255,255,255,0.1); }
+    .nav-title { font-size: 16px; font-weight: 700; color: #fff; letter-spacing: 0.5px; }
+    /* Theater Hero */
+    .theater-hero {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+    }
+    .theater-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .theater-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 80%;
+      background: linear-gradient(to top, rgba(10,22,40,0.85) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .theater-hero-info {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      z-index: 2;
+    }
+    .theater-hero-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .theater-hero-addr {
+      font-size: 12px;
+      color: rgba(255,255,255,0.8);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    /* Info Card */
+    .info-card {
+      background: #fff;
+      margin: -20px 16px 16px;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 4px 20px rgba(10,22,40,0.08);
+      position: relative;
+      z-index: 3;
+    }
+    .info-stats {
+      display: flex;
+      justify-content: space-around;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(10,22,40,0.06);
+      margin-bottom: 14px;
+    }
+    .info-stat {
+      text-align: center;
+    }
+    .info-stat-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0A1628;
+    }
+    .info-stat-label {
+      font-size: 11px;
+      color: #999;
+      margin-top: 2px;
+    }
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      color: #555;
+      line-height: 1.5;
+    }
+    .info-row i {
+      font-size: 14px;
+      color: #FF6B4A;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+    .info-row:last-child { margin-bottom: 0; }
+    /* Halls */
+    .section-title-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      margin-bottom: 10px;
+    }
+    .section-title-text {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0A1628;
+    }
+    .hall-list {
+      padding: 0 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .hall-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 16px;
+      box-shadow: 0 2px 10px rgba(10,22,40,0.05);
+    }
+    .hall-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #0A1628;
+      margin-bottom: 8px;
+    }
+    .hall-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: #888;
+    }
+    .hall-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .hall-meta i { font-size: 11px; color: #D4A853; }
+    /* Shows Section */
+    .shows-section {
+      padding: 0 16px 24px;
+    }
+    .show-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(10,22,40,0.05);
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .show-card:active { transform: scale(0.98); }
+    .show-card-img {
+      width: 100%;
+      height: 130px;
+      position: relative;
+      overflow: hidden;
+    }
+    .show-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .show-card-tag {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(135deg, #FF6B4A, #FF8F6B);
+    }
+    .show-card-info {
+      padding: 12px;
+    }
+    .show-card-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #0A1628;
+      margin-bottom: 6px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .show-card-date {
+      font-size: 12px;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+    .show-card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .show-card-price {
+      font-size: 18px;
+      font-weight: 700;
+      color: #FF6B4A;
+    }
+    .show-card-price .original {
+      font-size: 12px;
+      color: #bbb;
+      text-decoration: line-through;
+      margin-left: 6px;
+      font-weight: 400;
+    }
+    .show-card-btn {
+      padding: 6px 14px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #FF6B4A, #FF8F6B);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+    }
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: rgba(10,22,40,0.85);
+      backdrop-filter: blur(16px);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-align: center;
+      max-width: 260px;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  </style>
+</head>
+<body>
+<div class="page-container">
+  <!-- Nav -->
+  <div class="nav-bar">
+    <a class="nav-back" href="javascript:history.back()">
+      <i class="fas fa-chevron-left"></i>
+    </a>
+    <span class="nav-title">剧院详情</span>
+  </div>
+
+  <!-- Theater Hero -->
+  <div class="theater-hero">
+    <img src="https://picsum.photos/seed/theater-detail/750/400.jpg" alt="剧院封面">
+    <div class="theater-hero-info">
+      <div class="theater-hero-name" id="theaterName">海南大剧院</div>
+      <div class="theater-hero-addr"><i class="fas fa-location-dot"></i> <span id="theaterAddr">海口市龙华区国兴大道68号</span></div>
+    </div>
+  </div>
+
+  <!-- Info Card -->
+  <div class="info-card">
+    <div class="info-stats">
+      <div class="info-stat">
+        <div class="info-stat-value" id="statSeats">1,600</div>
+        <div class="info-stat-label">总座位</div>
+      </div>
+      <div class="info-stat">
+        <div class="info-stat-value" id="statHalls">3</div>
+        <div class="info-stat-label">演出厅</div>
+      </div>
+      <div class="info-stat">
+        <div class="info-stat-value" id="statShows">8</div>
+        <div class="info-stat-label">近期演出</div>
+      </div>
+      <div class="info-stat">
+        <div class="info-stat-value" id="statZones">4</div>
+        <div class="info-stat-label">座位分区</div>
+      </div>
+    </div>
+    <div class="info-row"><i class="fas fa-phone"></i><span id="theaterPhone">0898-12345678</span></div>
+    <div class="info-row"><i class="fas fa-clock"></i><span>营业时间：09:00 - 22:00</span></div>
+    <div class="info-row"><i class="fas fa-circle-info"></i><span id="theaterDesc">海南大剧院是海南省规模最大、设施最先进的综合性演出场馆，拥有大剧场、音乐厅、多功能厅三个演出厅。</span></div>
+  </div>
+
+  <!-- Halls -->
+  <div class="section-title-bar">
+    <div class="section-title-text">演出厅</div>
+  </div>
+  <div class="hall-list" id="hallList">
+    <div class="hall-card">
+      <div class="hall-name">大剧场</div>
+      <div class="hall-meta">
+        <span><i class="fas fa-couch"></i> 1,200座</span>
+        <span><i class="fas fa-layer-group"></i> 4个分区</span>
+        <span><i class="fas fa-ruler-combined"></i> 舞台台口18m</span>
+      </div>
+    </div>
+    <div class="hall-card">
+      <div class="hall-name">音乐厅</div>
+      <div class="hall-meta">
+        <span><i class="fas fa-couch"></i> 300座</span>
+        <span><i class="fas fa-layer-group"></i> 2个分区</span>
+        <span><i class="fas fa-music"></i> 专业声学设计</span>
+      </div>
+    </div>
+    <div class="hall-card">
+      <div class="hall-name">多功能厅</div>
+      <div class="hall-meta">
+        <span><i class="fas fa-couch"></i> 100座</span>
+        <span><i class="fas fa-layer-group"></i> 1个分区</span>
+        <span><i class="fas fa-sliders"></i> 灵活布局</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Current Shows -->
+  <div class="section-title-bar">
+    <div class="section-title-text">当前演出</div>
+  </div>
+  <div class="shows-section" id="showsList">
+    <div class="show-card" onclick="window.location.href='show-detail.html'">
+      <div class="show-card-img">
+        <img src="https://picsum.photos/seed/show-piano/750/300.jpg" alt="演出">
+        <span class="show-card-tag">即将开演</span>
+      </div>
+      <div class="show-card-info">
+        <div class="show-card-name">世界名曲钢琴独奏音乐会</div>
+        <div class="show-card-date"><i class="far fa-calendar-alt"></i> 2025.01.15 20:00 | 大剧场</div>
+        <div class="show-card-bottom">
+          <div class="show-card-price">¥280<span class="original">¥480</span></div>
+          <button class="show-card-btn">去购票</button>
+        </div>
+      </div>
+    </div>
+    <div class="show-card" onclick="window.location.href='show-detail.html'">
+      <div class="show-card-img">
+        <img src="https://picsum.photos/seed/show-ballet/750/300.jpg" alt="演出">
+        <span class="show-card-tag">会员专享</span>
+      </div>
+      <div class="show-card-info">
+        <div class="show-card-name">经典芭蕾《天鹅湖》</div>
+        <div class="show-card-date"><i class="far fa-calendar-alt"></i> 2025.01.20 19:30 | 大剧场</div>
+        <div class="show-card-bottom">
+          <div class="show-card-price">¥380<span class="original">¥680</span></div>
+          <button class="show-card-btn">去购票</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // Parse URL params
+  const params = new URLSearchParams(window.location.search);
+  const theaterId = params.get('id') || 'hainan';
+
+  const theaterData = {
+    hainan: { name: '海南大剧院', addr: '海口市龙华区国兴大道68号', phone: '0898-12345678', seats: '1,600', halls: '3', shows: '8', zones: '4', desc: '海南大剧院是海南省规模最大、设施最先进的综合性演出场馆，拥有大剧场、音乐厅、多功能厅三个演出厅。', img: 'theater-haikou' },
+    sanya: { name: '三亚艺术中心', addr: '三亚市吉阳区迎宾路188号', phone: '0898-87654321', seats: '1,200', halls: '2', shows: '5', zones: '3', desc: '三亚艺术中心坐落于美丽的三亚湾畔，是三亚市标志性文化建筑，配备先进的舞台灯光音响系统。', img: 'theater-sanya' },
+    haikou: { name: '海口演艺中心', addr: '海口市美兰区海府路16号', phone: '0898-11223344', seats: '800', halls: '2', shows: '3', zones: '3', desc: '海口演艺中心位于海口市中心地带，交通便利，是海口市重要的文化演出场所。', img: 'theater-haikou2' },
+    wanning: { name: '万宁海滨剧场', addr: '万宁市万城镇滨海大道1号', phone: '0898-55667788', seats: '2,400', halls: '4', shows: '2', zones: '4', desc: '万宁海滨剧场依海而建，拥有独特的海滨演出体验，是万宁市最大的演出场馆。', img: 'theater-wanning' },
+    danzhou: { name: '儋州文化广场', addr: '儋州市那大镇中兴大道30号', phone: '0898-99887766', seats: '600', halls: '1', shows: '2', zones: '2', desc: '儋州文化广场是儋州市综合性文化设施，集演出、展览、会议于一体。', img: 'theater-danzhou' }
+  };
+
+  const data = theaterData[theaterId] || theaterData.hainan;
+  document.getElementById('theaterName').textContent = data.name;
+  document.getElementById('theaterAddr').textContent = data.addr;
+  document.getElementById('theaterPhone').textContent = data.phone;
+  document.getElementById('theaterDesc').textContent = data.desc;
+  document.getElementById('statSeats').textContent = data.seats;
+  document.getElementById('statHalls').textContent = data.halls;
+  document.getElementById('statShows').textContent = data.shows;
+  document.getElementById('statZones').textContent = data.zones;
+  document.querySelector('.theater-hero img').src = 'https://picsum.photos/seed/' + data.img + '/750/400.jpg';
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1800);
+  }
+</script>
+</body>
+</html>

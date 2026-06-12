@@ -653,6 +653,8 @@ table { border-collapse: collapse; width: 100%; }
 .btn-success:hover { background: #00b396; }
 .btn-warning { background: #F97316; color: var(--white); }
 .btn-warning:hover { background: #EA580C; }
+.btn-coral { background: #FF7F50; color: var(--white); }
+.btn-coral:hover { background: #E86A3C; }
 .btn-danger { background: var(--danger); color: var(--white); }
 .btn-danger:hover { background: #dc2626; }
 .btn-sm { height: 28px; padding: 0 10px; font-size: 12px; }
@@ -1633,6 +1635,29 @@ table { border-collapse: collapse; width: 100%; }
   color: #92400E;
 }
 .refund-fee-info i { margin-right: 6px; }
+.refund-fee-options {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+.refund-fee-option {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid var(--border-gray);
+  border-radius: var(--radius-sm);
+  text-align: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: var(--transition);
+  background: var(--white);
+}
+.refund-fee-option:hover { border-color: var(--coral-orange); color: var(--coral-orange); }
+.refund-fee-option.active {
+  border-color: var(--coral-orange);
+  background: var(--coral-orange-light);
+  color: var(--coral-orange);
+}
 .refund-modal-footer {
   display: flex;
   align-items: center;
@@ -3615,7 +3640,7 @@ select.form-select-sm,
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               导出
             </button>
-            <button class="btn btn-warning" onclick="openImportModal()">
+            <button class="btn btn-coral" onclick="openImportModal()">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
               批量导入
             </button>
@@ -4487,15 +4512,16 @@ var orders = [
       {seat: 'A区 3排 6座', tier: 'VIP贵宾席', price: 640, status: '已出票'}
     ],
     printLogs: [
-      {time: '2026-04-10 15:00', operator: '系统自动', location: '线上出票'},
-      {time: '2026-04-11 09:30', operator: '张小花', location: '海南大剧院窗口'}
+      {time: '2026-04-10 15:00', operator: '系统自动', location: '线上出票', pickupCode: 'PK20260410A001'},
+      {time: '2026-04-11 09:30', operator: '张小花', location: '海南大剧院窗口', pickupCode: 'PK20260411W002'}
     ],
+    pickupCode: 'PK20260410A001',
     paymentDetails: [
       { method: '微信支付', amount: 800, transactionId: 'WX20260410142348001' },
       { method: '钱包支付', amount: 352, transactionId: 'WLT20260410142348002' }
     ],
     discountDetails: [
-      { type: '票品满减', name: '天涯故事满200减30', amount: 30 },
+      { type: '票品折扣', name: '早鸟票-天涯故事开票前7天8折', amount: 128 },
       { type: '优惠券', name: '6元无门槛优惠券', amount: 6 },
       { type: '券包', name: '三亚旅游券包', amount: 10 },
       { type: '会员折扣', name: '金卡会员9.5折', amount: 24 }
@@ -4517,7 +4543,8 @@ var orders = [
       {seat: 'A区 5排 3座', tier: 'A区甲等', price: 540, status: '已出票'},
       {seat: 'A区 5排 4座', tier: 'A区甲等', price: 540, status: '已出票'}
     ],
-    printLogs: [{time: '2026-04-10 14:00', operator: '系统自动', location: '线上出票'}],
+    printLogs: [{time: '2026-04-10 14:00', operator: '系统自动', location: '线上出票', pickupCode: 'PK20260410B003'}],
+    pickupCode: 'PK20260410B003',
     ticketMethod: '电子票', printCount: 1, showPrice: true, remark: ''
   },
   {
@@ -4546,7 +4573,8 @@ var orders = [
       {seat: 'C区 2排 8座', tier: 'C区普通', price: 190, status: '已核销'},
       {seat: 'C区 2排 9座', tier: 'C区普通', price: 190, status: '已核销'}
     ],
-    printLogs: [{time: '2026-04-09 21:00', operator: '系统自动', location: '线上出票'}],
+    printLogs: [{time: '2026-04-09 21:00', operator: '系统自动', location: '线上出票', pickupCode: 'PK20260409C005'}],
+    pickupCode: 'PK20260409C005',
     ticketMethod: '电子票', printCount: 1, showPrice: true, remark: ''
   },
   {
@@ -4559,7 +4587,8 @@ var orders = [
     totalAmount: 640, shouldPay: 640, actualPay: 576, discount: 64, serviceFee: 0,
     transactionId: 'AL20260409180545001', payTime: '2026-04-09 18:05:45',
     seats: [{seat: 'A区 2排 8座', tier: 'VIP贵宾席', price: 640, status: '已退票'}],
-    printLogs: [{time: '2026-04-09 18:30', operator: '系统自动', location: '线上出票'}],
+    printLogs: [{time: '2026-04-09 18:30', operator: '系统自动', location: '线上出票', pickupCode: 'PK20260409D008'}],
+    pickupCode: 'PK20260409D008',
     ticketMethod: '电子票', printCount: 1, showPrice: false, remark: '临时有事无法到场'
   },
   {
@@ -4576,7 +4605,7 @@ var orders = [
       { method: '现金', amount: 350, transactionId: '-' }
     ],
     discountDetails: [
-      { type: '票品满减', name: '南海奇缘满500减80', amount: 80 },
+      { type: '票品折扣', name: '满减-南海奇缘满500减80', amount: 80 },
       { type: '会员折扣', name: '钻石会员9折', amount: 70 }
     ],
     seats: [
@@ -4616,15 +4645,16 @@ var orders = [
       {seat: 'VIP区 1排 4座', tier: 'VIP贵宾席', price: 760, status: '已出票'}
     ],
     printLogs: [
-      {time: '2026-04-08 22:30', operator: '系统自动', location: '线上出票'},
-      {time: '2026-04-09 10:00', operator: '李大明', location: '三亚艺术中心窗口'}
+      {time: '2026-04-08 22:30', operator: '系统自动', location: '线上出票', pickupCode: 'PK20260408E012'},
+      {time: '2026-04-09 10:00', operator: '李大明', location: '三亚艺术中心窗口', pickupCode: 'PK20260409W013'}
     ],
+    pickupCode: 'PK20260408E012',
     paymentDetails: [
       { method: '支付宝', amount: 1000, transactionId: 'AL20260408221056001' },
       { method: '现金', amount: 368, transactionId: '-' }
     ],
     discountDetails: [
-      { type: '票品满减', name: '椰风海韵满100减15', amount: 15 },
+      { type: '票品折扣', name: '折扣-椰风海韵8.5折', amount: 15 },
       { type: '会员折扣', name: '银卡会员9.8折', amount: 8 }
     ],
     ticketMethod: '纸质票', printCount: 2, showPrice: true, remark: ''
@@ -4639,7 +4669,8 @@ var orders = [
     totalAmount: 580, shouldPay: 580, actualPay: 580, discount: 0, serviceFee: 0,
     transactionId: 'OFFLINE20260408195500', payTime: '2026-04-08 19:55:10',
     seats: [{seat: 'VIP区 2排 1座', tier: 'VIP贵宾席', price: 580, status: '已核销'}],
-    printLogs: [{time: '2026-04-08 20:00', operator: '李大明', location: '海南大剧院窗口'}],
+    printLogs: [{time: '2026-04-08 20:00', operator: '李大明', location: '海南大剧院窗口', pickupCode: 'PK20260408W015'}],
+    pickupCode: 'PK20260408W015',
     ticketMethod: '纸质票', printCount: 1, showPrice: true, remark: ''
   },
   {
@@ -4655,7 +4686,8 @@ var orders = [
       {seat: 'A区 4排 9座', tier: 'A区甲等', price: 380, status: '已退票'},
       {seat: 'A区 4排 10座', tier: 'A区甲等', price: 380, status: '已退票'}
     ],
-    printLogs: [{time: '2026-04-08 17:35', operator: '王芳芳', location: '海南大剧院窗口'}],
+    printLogs: [{time: '2026-04-08 17:35', operator: '王芳芳', location: '海南大剧院窗口', pickupCode: 'PK20260408W018'}],
+    pickupCode: 'PK20260408W018',
     ticketMethod: '纸质票', printCount: 1, showPrice: false, remark: '演出延期申请退票'
   },
   {
@@ -4672,7 +4704,8 @@ var orders = [
       {seat: 'A区 6排 2座', tier: 'A区甲等', price: 540, status: '已出票'},
       {seat: 'A区 6排 3座', tier: 'A区甲等', price: 540, status: '已出票'}
     ],
-    printLogs: [{time: '2026-04-07 14:30', operator: '系统自动', location: '线上出票'}],
+    printLogs: [{time: '2026-04-07 14:30', operator: '系统自动', location: '线上出票', pickupCode: 'PK20260407F021'}],
+    pickupCode: 'PK20260407F021',
     ticketMethod: '电子票', printCount: 1, showPrice: true, remark: ''
   },
   {
@@ -4768,6 +4801,18 @@ function renderOrderTable(data) {
 // Initial render
 renderOrderTable(orders);
 
+// ==================== Discount Tag Helper ====================
+function getDiscountTagClass(type) {
+  var map = {
+    '票品折扣': 'money',
+    '优惠券': 'points',
+    '券包': 'growth',
+    '会员折扣': 'vip',
+    '积分抵扣': 'discount'
+  };
+  return map[type] || 'money';
+}
+
 // ==================== Tab Switching ====================
 function switchTab(tabName) {
   document.querySelectorAll('.tab-item').forEach(function(item) {
@@ -4818,8 +4863,8 @@ function openOrderModal(orderId) {
   tab2 += '<div class="detail-section"><div class="detail-section-title">演出信息</div><div class="detail-grid">' +
     '<div class="detail-item full"><span class="detail-label">演出名称</span><span class="detail-value">' + order.show + '</span></div>' +
     '<div class="detail-item"><span class="detail-label">演出场馆</span><span class="detail-value">' + order.venue + '</span></div>' +
+    '<div class="detail-item"><span class="detail-label">演出厅</span><span class="detail-value">' + (order.hall || '大剧场') + '</span></div>' +
     '<div class="detail-item"><span class="detail-label">演出场次</span><span class="detail-value">2026-' + order.session + '</span></div>' +
-    '<div class="detail-item"><span class="detail-label">票档</span><span class="detail-value">' + order.tier + '</span></div>' +
     '<div class="detail-item"><span class="detail-label">购票数量</span><span class="detail-value">' + order.qty + '张</span></div>' +
     '</div>';
 
@@ -4855,20 +4900,23 @@ function openOrderModal(orderId) {
   tab3 += '</div>';
 
   tab3 += '<div class="detail-section"><div class="detail-section-title">减免明细</div>';
+  tab3 += '<table class="seat-detail-table"><thead><tr><th>减免类型</th><th>优惠名称</th><th>减免金额</th></tr></thead><tbody>';
   if (order.discountDetails && order.discountDetails.length > 0) {
-    tab3 += '<table class="seat-detail-table"><thead><tr><th>优惠类型</th><th>优惠名称</th><th>减免金额</th></tr></thead><tbody>';
     order.discountDetails.forEach(function(dd) {
-      tab3 += '<tr><td>' + dd.type + '</td><td>' + dd.name + '</td><td style="color:var(--coral-orange);">-¥' + dd.amount.toLocaleString() + '.00</td></tr>';
+      tab3 += '<tr><td><span class="value-tag ' + getDiscountTagClass(dd.type) + '">' + dd.type + '</span></td><td>' + dd.name + '</td><td style="color:var(--coral-orange);">-¥' + dd.amount.toLocaleString() + '.00</td></tr>';
     });
-    tab3 += '</tbody></table>';
-  } else {
-    tab3 += '<div class="detail-grid">' +
-      '<div class="detail-item"><span class="detail-label">票品折扣</span><span class="detail-value" style="color:var(--coral-orange);">-¥' + (order.ticketDiscount || 0).toLocaleString() + '.00</span></div>' +
-      '<div class="detail-item"><span class="detail-label">优惠券</span><span class="detail-value" style="color:var(--coral-orange);">-¥' + (order.couponDiscount || 0).toLocaleString() + '.00</span></div>' +
-      '<div class="detail-item"><span class="detail-label">券包优惠</span><span class="detail-value" style="color:var(--coral-orange);">-¥' + (order.voucherDiscount || 0).toLocaleString() + '.00</span></div>' +
-      '<div class="detail-item"><span class="detail-label">会员折扣</span><span class="detail-value" style="color:var(--coral-orange);">-¥' + (order.memberDiscount || 0).toLocaleString() + '.00</span></div>' +
-      '</div>';
   }
+  // Always show all discount types with data or 0
+  var allTypes = ['票品折扣', '优惠券', '券包', '会员折扣', '积分抵扣'];
+  var typeMap = {'票品折扣':'ticketDiscount','优惠券':'couponDiscount','券包':'voucherDiscount','会员折扣':'memberDiscount','积分抵扣':'pointDiscount'};
+  allTypes.forEach(function(t) {
+    var hasInDetails = order.discountDetails && order.discountDetails.some(function(d){ return d.type === t; });
+    if (!hasInDetails) {
+      var val = order[typeMap[t]] || 0;
+      tab3 += '<tr><td><span class="value-tag ' + getDiscountTagClass(t) + '">' + t + '</span></td><td>-</td><td style="color:var(--coral-orange);">-¥' + val.toLocaleString() + '.00</td></tr>';
+    }
+  });
+  tab3 += '</tbody></table>';
   tab3 += '</div>';
 
   // === Tab 4: 出票 & 日志 ===
@@ -4881,7 +4929,7 @@ function openOrderModal(orderId) {
   if (order.printLogs.length > 0) {
     tab4 += '<div class="print-log-collapse"><div class="print-log-header" onclick="togglePrintLog(this)"><span><i class="fas fa-list-alt" style="margin-right:6px;"></i>出票明细 (' + order.printLogs.length + '次)</span><i class="fas fa-chevron-right"></i></div><div class="print-log-body">';
     order.printLogs.forEach(function(log, i) {
-      tab4 += '<div class="print-log-item"><span class="print-log-num">第' + (i+1) + '次</span><span class="print-log-time">' + log.time + '</span><span class="print-log-operator">' + log.operator + '</span><span class="print-log-location">' + log.location + '</span>' + (log.ticketType ? '<span class="print-log-type">' + log.ticketType + '</span>' : '') + (log.printTimes ? '<span class="print-log-count">打印' + log.printTimes + '次</span>' : '') + '</div>';
+      tab4 += '<div class="print-log-item"><span class="print-log-num">第' + (i+1) + '次</span><span class="print-log-time">' + log.time + '</span><span class="print-log-operator">' + log.operator + '</span><span class="print-log-location">' + log.location + '</span>' + (log.pickupCode ? '<span class="print-log-type mono">' + log.pickupCode + '</span>' : '') + (log.printTimes ? '<span class="print-log-count">打印' + log.printTimes + '次</span>' : '') + '</div>';
     });
     tab4 += '</div></div>';
   }
@@ -4909,7 +4957,6 @@ function openOrderModal(orderId) {
   // Footer buttons
   var footer = '';
   if (order.status === '已支付') {
-    footer += '<button class="btn btn-outline" onclick="closeModal();openPrintModal(\'' + order.id + '\')"><i class="fas fa-print"></i> 打印订单</button>';
     footer += '<button class="btn btn-success" onclick="showToast(\'success\',\'核销成功！\')"><i class="fas fa-check"></i> 确认核销</button>';
     footer += '<button class="btn btn-danger" onclick="closeModal();openRefundModal(\'' + order.id + '\')"><i class="fas fa-undo-alt"></i> 申请退款</button>';
   }
@@ -5156,8 +5203,11 @@ function renderOrderTicketStep() {
     '<select class="order-form-select" id="orderTicketTemplate"><option value="standard">标准票面</option><option value="simple">简约票面</option><option value="vip">VIP票面</option></select></div>' +
     '</div>' +
     '<div id="orderDigitalOptions" style="display:none;">' +
-    '<div class="st-form-group"><label class="st-form-label">接收手机号</label>' +
-    '<input type="tel" class="st-form-input" id="orderDigitalPhone" placeholder="请输入接收电子票的手机号"></div>' +
+    '<div class="st-form-group"><label class="st-form-label"><i class="fas fa-mobile-alt" style="margin-right:4px;color:var(--accent);"></i>接收手机号</label>' +
+    '<div class="input-with-icon" style="position:relative;">' +
+    '<i class="fas fa-mobile-alt" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:14px;"></i>' +
+    '<input type="tel" class="st-form-input" id="orderDigitalPhone" placeholder="请输入接收电子票的手机号" style="padding-left:36px;"></div>' +
+    '<div style="font-size:12px;color:var(--text-secondary);margin-top:6px;"><i class="fas fa-info-circle" style="margin-right:4px;"></i>电子票将通过短信发送至该手机号</div></div>' +
     '</div>' +
     '<div class="st-form-group"><label class="st-form-label">座位列表</label>' +
     '<div style="padding:12px;background:#F8FAFC;border-radius:8px;font-size:13px;color:#475569;">' + seatStr + '</div></div>' +
@@ -5399,9 +5449,7 @@ function openRefundModal(orderId) {
   if (!order) return;
   currentRefundOrder = order;
   selectedRefundReasons = [];
-
-  var refundFee = Math.round(order.actualPay * 0.1);
-  var actualRefund = order.actualPay - refundFee;
+  currentRefundFeeRate = 0.1;
 
   var body = '';
   body += '<div class="refund-order-summary">';
@@ -5409,9 +5457,15 @@ function openRefundModal(orderId) {
   body += '<div class="ros-row"><span class="ros-label">演出名称</span><span class="ros-value">' + order.show + '</span></div>';
   body += '<div class="ros-row"><span class="ros-label">票数</span><span class="ros-value">' + order.qty + '张</span></div>';
   body += '<div class="ros-row"><span class="ros-label">实付金额</span><span class="ros-value">¥' + order.actualPay.toLocaleString() + '.00</span></div>';
-  body += '<div class="ros-row"><span class="ros-label">手续费 (10%)</span><span class="ros-value" style="color:var(--danger);">-¥' + refundFee.toLocaleString() + '.00</span></div>';
-  body += '<div class="ros-row ros-total"><span class="ros-label">实际退款</span><span class="ros-value">¥' + actualRefund.toLocaleString() + '.00</span></div>';
+  body += '<div class="ros-row"><span class="ros-label">手续费</span><span class="ros-value" id="refundFeeDisplay" style="color:var(--danger);">-¥' + Math.round(order.actualPay * 0.1).toLocaleString() + '.00</span></div>';
+  body += '<div class="ros-row ros-total"><span class="ros-label">实际退款</span><span class="ros-value" id="actualRefundDisplay">¥' + Math.round(order.actualPay * 0.9).toLocaleString() + '.00</span></div>';
   body += '</div>';
+
+  body += '<div class="refund-reason-group"><label>退款手续费比例</label><div class="refund-fee-options">';
+  body += '<div class="refund-fee-option active" data-rate="0" onclick="selectRefundFeeRate(this,0)">0%</div>';
+  body += '<div class="refund-fee-option" data-rate="0.05" onclick="selectRefundFeeRate(this,0.05)">5%</div>';
+  body += '<div class="refund-fee-option" data-rate="0.1" onclick="selectRefundFeeRate(this,0.1)">10%</div>';
+  body += '</div></div>';
 
   body += '<div class="refund-reason-group"><label>退票原因（可多选）</label><div class="refund-reason-options">';
   ['观众原因', '演出取消', '演出延期', '场次合并', '其他'].forEach(function(r) {
@@ -5421,7 +5475,7 @@ function openRefundModal(orderId) {
 
   body += '<div class="refund-reason-group"><label>退票说明</label><textarea class="refund-textarea" id="refundRemark" placeholder="请输入退票说明（选填）"></textarea></div>';
 
-  body += '<div class="refund-fee-info"><i class="fas fa-info-circle"></i>退票手续费为实付金额的10%，将在1-3个工作日内退还至原支付账户。</div>';
+  body += '<div class="refund-fee-info"><i class="fas fa-exclamation-triangle" style="color:var(--warning);"></i>退款仅返还实付金额、钱包余额、充值卡金额，不返还任何优惠券、券包或积分。</div>';
 
   document.getElementById('refundModalBody').innerHTML = body;
   document.getElementById('refundModal').classList.add('show');
@@ -5431,6 +5485,20 @@ function openRefundModal(orderId) {
 function closeRefundModal() {
   document.getElementById('refundModal').classList.remove('show');
   document.body.style.overflow = '';
+}
+
+var currentRefundFeeRate = 0.1;
+
+function selectRefundFeeRate(el, rate) {
+  currentRefundFeeRate = rate;
+  document.querySelectorAll('.refund-fee-option').forEach(function(e) { e.classList.remove('active'); });
+  el.classList.add('active');
+  var order = currentRefundOrder;
+  if (!order) return;
+  var fee = Math.round(order.actualPay * rate);
+  var actual = order.actualPay - fee;
+  document.getElementById('refundFeeDisplay').textContent = '-¥' + fee.toLocaleString() + '.00';
+  document.getElementById('actualRefundDisplay').textContent = '¥' + actual.toLocaleString() + '.00';
 }
 
 function toggleRefundReason(el, reason) {

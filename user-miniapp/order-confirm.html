@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>确认订单 - 海南演艺</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #E8EAF0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .page-container {
+      width: 100%;
+      max-width: 375px;
+      min-height: 100vh;
+      background: #F5F6FA;
+      position: relative;
+      overflow-x: hidden;
+      padding-bottom: 80px;
+    }
+    /* Nav */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 48px;
+      background: linear-gradient(135deg, #0A1628 0%, #132744 50%, #0A1628 100%);
+      padding: 0 16px;
+      box-shadow: 0 2px 12px rgba(10,22,40,0.15);
+    }
+    .nav-back {
+      position: absolute;
+      left: 16px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+    .nav-back:active { background: rgba(255,255,255,0.1); }
+    .nav-title { font-size: 16px; font-weight: 700; color: #fff; letter-spacing: 0.5px; }
+
+    /* Show Info Card */
+    .show-info-card {
+      background: #fff;
+      margin: 12px 16px;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 2px 12px rgba(10,22,40,0.06);
+      display: flex;
+      gap: 12px;
+    }
+    .show-info-img {
+      width: 80px;
+      height: 110px;
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .show-info-img img { width: 100%; height: 100%; object-fit: cover; }
+    .show-info-body { flex: 1; min-width: 0; }
+    .show-info-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0A1628;
+      margin-bottom: 6px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .show-info-meta {
+      font-size: 12px;
+      color: #888;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .show-info-meta span { display: flex; align-items: center; gap: 4px; }
+    .show-info-meta i { font-size: 11px; color: #D4A853; }
+
+    /* Section Card */
+    .section-card {
+      background: #fff;
+      margin: 0 16px 12px;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 2px 12px rgba(10,22,40,0.06);
+    }
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0A1628;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .section-title i { font-size: 14px; color: #FF6B4A; }
+
+    /* Seat List */
+    .seat-list { display: flex; flex-direction: column; gap: 8px; }
+    .seat-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: #F8F9FC;
+      border-radius: 10px;
+    }
+    .seat-item-left { display: flex; align-items: center; gap: 8px; }
+    .seat-item-tag {
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(135deg, #FF6B4A, #FF8F6B);
+    }
+    .seat-item-pos { font-size: 13px; color: #555; }
+    .seat-item-price { font-size: 14px; font-weight: 700; color: #FF6B4A; }
+
+    /* Discount List */
+    .discount-list { display: flex; flex-direction: column; gap: 10px; }
+    .discount-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+    .discount-row .label { color: #666; }
+    .discount-row .value { color: #0A1628; font-weight: 500; }
+    .discount-row .value.minus { color: #FF6B4A; }
+    .discount-divider {
+      height: 1px;
+      background: rgba(10,22,40,0.06);
+      margin: 4px 0;
+    }
+    .discount-row.total .label { font-weight: 700; color: #0A1628; font-size: 14px; }
+    .discount-row.total .value { font-weight: 700; color: #FF6B4A; font-size: 18px; }
+
+    /* Contact Form */
+    .form-group { margin-bottom: 12px; }
+    .form-group:last-child { margin-bottom: 0; }
+    .form-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #0A1628;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .form-input {
+      width: 100%;
+      height: 44px;
+      border: 1px solid rgba(10,22,40,0.1);
+      border-radius: 10px;
+      padding: 0 14px;
+      font-size: 14px;
+      color: #0A1628;
+      background: #F8F9FC;
+      transition: border-color 0.2s;
+      font-family: inherit;
+    }
+    .form-input:focus { outline: none; border-color: #FF6B4A; background: #fff; }
+    .form-input::placeholder { color: #bbb; }
+    .form-hint {
+      font-size: 11px;
+      color: #999;
+      margin-top: 4px;
+    }
+
+    /* Bottom Bar */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 375px;
+      background: #fff;
+      padding: 10px 16px 24px;
+      box-shadow: 0 -4px 20px rgba(10,22,40,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 200;
+    }
+    .bottom-price {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+    .bottom-price-label { font-size: 12px; color: #888; }
+    .bottom-price-value { font-size: 22px; font-weight: 700; color: #FF6B4A; }
+    .bottom-price-detail { font-size: 11px; color: #bbb; }
+    .bottom-btn {
+      padding: 12px 32px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #FF6B4A, #FF8F6B);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(255,107,74,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .bottom-btn:active { transform: scale(0.97); box-shadow: 0 2px 8px rgba(255,107,74,0.25); }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: rgba(10,22,40,0.85);
+      backdrop-filter: blur(16px);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-align: center;
+      max-width: 260px;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  </style>
+</head>
+<body>
+<div class="page-container">
+  <!-- Nav -->
+  <div class="nav-bar">
+    <a class="nav-back" href="javascript:history.back()">
+      <i class="fas fa-chevron-left"></i>
+    </a>
+    <span class="nav-title">确认订单</span>
+  </div>
+
+  <!-- Show Info -->
+  <div class="show-info-card">
+    <div class="show-info-img">
+      <img src="https://picsum.photos/seed/show-confirm/300/400.jpg" alt="演出">
+    </div>
+    <div class="show-info-body">
+      <div class="show-info-name" id="showName">世界名曲钢琴独奏音乐会</div>
+      <div class="show-info-meta">
+        <span><i class="far fa-calendar-alt"></i> <span id="showDate">2025.01.15 周三 20:00</span></span>
+        <span><i class="fas fa-location-dot"></i> <span id="showVenue">海南大剧院 · 大剧场</span></span>
+        <span><i class="fas fa-clock"></i> 约120分钟（含中场休息）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Selected Seats -->
+  <div class="section-card">
+    <div class="section-title"><i class="fas fa-chair"></i> 已选座位</div>
+    <div class="seat-list" id="seatList">
+      <div class="seat-item">
+        <div class="seat-item-left">
+          <span class="seat-item-tag">VIP区</span>
+          <span class="seat-item-pos">1排 5座</span>
+        </div>
+        <div class="seat-item-price">¥680</div>
+      </div>
+      <div class="seat-item">
+        <div class="seat-item-left">
+          <span class="seat-item-tag">VIP区</span>
+          <span class="seat-item-pos">1排 6座</span>
+        </div>
+        <div class="seat-item-price">¥680</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Discounts -->
+  <div class="section-card">
+    <div class="section-title"><i class="fas fa-tags"></i> 费用明细</div>
+    <div class="discount-list">
+      <div class="discount-row">
+        <span class="label">商品总价</span>
+        <span class="value">¥1,360</span>
+      </div>
+      <div class="discount-row">
+        <span class="label">票品折扣（早鸟票8折）</span>
+        <span class="value minus">-¥272</span>
+      </div>
+      <div class="discount-row">
+        <span class="label">会员折扣（金卡9.5折）</span>
+        <span class="value minus">-¥54</span>
+      </div>
+      <div class="discount-divider"></div>
+      <div class="discount-row total">
+        <span class="label">应付金额</span>
+        <span class="value">¥1,034</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Info -->
+  <div class="section-card">
+    <div class="section-title"><i class="fas fa-user"></i> 取票人信息</div>
+    <div class="form-group">
+      <label class="form-label">姓名</label>
+      <input type="text" class="form-input" placeholder="请输入取票人姓名" value="张三">
+    </div>
+    <div class="form-group">
+      <label class="form-label">手机号</label>
+      <input type="tel" class="form-input" placeholder="请输入手机号" value="138****8888">
+      <div class="form-hint">电子票将通过短信发送至该手机号</div>
+    </div>
+  </div>
+
+  <!-- Payment Method -->
+  <div class="section-card">
+    <div class="section-title"><i class="fas fa-credit-card"></i> 支付方式</div>
+    <div class="discount-list">
+      <div class="discount-row" style="padding:10px 0; border-bottom:1px solid rgba(10,22,40,0.04);">
+        <span class="label" style="display:flex;align-items:center;gap:8px;">
+          <i class="fab fa-weixin" style="color:#07C160;font-size:18px;"></i> 微信支付
+        </span>
+        <span class="value"><i class="fas fa-check-circle" style="color:#07C160;"></i></span>
+      </div>
+      <div class="discount-row" style="padding:10px 0;">
+        <span class="label" style="display:flex;align-items:center;gap:8px;">
+          <i class="fab fa-alipay" style="color:#1677FF;font-size:18px;"></i> 支付宝
+        </span>
+        <span class="value"><i class="far fa-circle" style="color:#ccc;"></i></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bottom Bar -->
+<div class="bottom-bar">
+  <div class="bottom-price">
+    <span class="bottom-price-label">应付</span>
+    <span class="bottom-price-value" id="totalPrice">¥1,034</span>
+    <span class="bottom-price-detail" id="priceDetail">已优惠¥326</span>
+  </div>
+  <button class="bottom-btn" onclick="submitOrder()">确认支付</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // Parse URL params
+  const params = new URLSearchParams(window.location.search);
+  const showName = params.get('show') || '世界名曲钢琴独奏音乐会';
+  const showDate = params.get('date') || '2025.01.15 周三 20:00';
+  const showVenue = params.get('venue') || '海南大剧院 · 大剧场';
+  const seatsParam = params.get('seats');
+
+  document.getElementById('showName').textContent = showName;
+  document.getElementById('showDate').textContent = showDate;
+  document.getElementById('showVenue').textContent = showVenue;
+
+  // Parse seats from URL
+  if (seatsParam) {
+    try {
+      const seats = JSON.parse(decodeURIComponent(seatsParam));
+      const seatList = document.getElementById('seatList');
+      seatList.innerHTML = '';
+      let total = 0;
+      seats.forEach(function(s) {
+        total += s.price;
+        seatList.innerHTML +=
+          '<div class="seat-item">' +
+            '<div class="seat-item-left">' +
+              '<span class="seat-item-tag">' + s.zone + '</span>' +
+              '<span class="seat-item-pos">' + s.row + '排 ' + s.col + '座</span>' +
+            '</div>' +
+            '<div class="seat-item-price">¥' + s.price + '</div>' +
+          '</div>';
+      });
+      document.getElementById('totalPrice').textContent = '¥' + total.toLocaleString();
+    } catch(e) {}
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1800);
+  }
+
+  function submitOrder() {
+    showToast('订单提交成功！');
+    setTimeout(function() {
+      window.location.href = 'order-list.html';
+    }, 1500);
+  }
+</script>
+</body>
+</html>

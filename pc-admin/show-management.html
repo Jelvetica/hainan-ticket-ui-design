@@ -876,7 +876,7 @@ table { border-collapse: collapse; width: 100%; }
 #panel-shows .data-table th:nth-child(4),
 #panel-shows .data-table td:nth-child(4) { width: 100px; min-width: 100px; text-align: center; }
 #panel-shows .data-table th:nth-child(5),
-#panel-shows .data-table td:nth-child(5) { width: auto; min-width: 280px; }
+#panel-shows .data-table td:nth-child(5) { width: auto; min-width: 350px; }
 #panel-shows .data-table td:nth-child(5) .action-btns {
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -6618,6 +6618,7 @@ select.form-select-sm,
                   <div class="action-btns">
                     <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
                     <button class="action-btn view" onclick="switchToSessions('《天涯故事》大型歌舞秀')"><i class="fas fa-calendar-days"></i> 场次</button>
+                    <button class="action-btn discount" onclick="goToShowDiscount('《天涯故事》大型歌舞秀')"><i class="fas fa-percent"></i> 票品折扣</button>
                     <button class="action-btn offline" data-sold="180" onclick="toggleShowStatus(this)"><i class="fas fa-toggle-off"></i> 下架</button>
                     <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                   </div>
@@ -6665,6 +6666,7 @@ select.form-select-sm,
                   <div class="action-btns">
                     <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
                     <button class="action-btn view" onclick="switchToSessions('椰风海韵·交响音乐会')"><i class="fas fa-calendar-days"></i> 场次</button>
+                    <button class="action-btn discount" onclick="goToShowDiscount('椰风海韵·交响音乐会')"><i class="fas fa-percent"></i> 票品折扣</button>
                     <button class="action-btn offline" data-sold="360" onclick="toggleShowStatus(this)"><i class="fas fa-toggle-off"></i> 下架</button>
                     <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                   </div>
@@ -6712,6 +6714,7 @@ select.form-select-sm,
                   <div class="action-btns">
                     <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
                     <button class="action-btn view" onclick="switchToSessions('黎苗风情·民族舞蹈专场')"><i class="fas fa-calendar-days"></i> 场次</button>
+                    <button class="action-btn discount" onclick="goToShowDiscount('黎苗风情·民族舞蹈专场')"><i class="fas fa-percent"></i> 票品折扣</button>
                     <button class="action-btn toggle" data-sold="200" onclick="toggleShowStatus(this)"><i class="fas fa-toggle-on"></i> 上架</button>
                     <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                   </div>
@@ -6761,6 +6764,7 @@ select.form-select-sm,
                   <div class="action-btns">
                     <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
                     <button class="action-btn view" onclick="switchToSessions('爵士之夜·国际爵士音乐节')"><i class="fas fa-calendar-days"></i> 场次</button>
+                    <button class="action-btn discount" onclick="goToShowDiscount('爵士之夜·国际爵士音乐节')"><i class="fas fa-percent"></i> 票品折扣</button>
                     <button class="action-btn offline" data-sold="480" onclick="toggleShowStatus(this)"><i class="fas fa-toggle-off"></i> 下架</button>
                     <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                   </div>
@@ -6809,6 +6813,7 @@ select.form-select-sm,
                   <div class="action-btns">
                     <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
                     <button class="action-btn view" onclick="switchToSessions('《红色娘子军》芭蕾舞剧')"><i class="fas fa-calendar-days"></i> 场次</button>
+                    <button class="action-btn discount" onclick="goToShowDiscount('《红色娘子军》芭蕾舞剧')"><i class="fas fa-percent"></i> 票品折扣</button>
                     <button class="action-btn toggle" data-sold="400" onclick="toggleShowStatus(this)"><i class="fas fa-toggle-on"></i> 上架</button>
                     <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
                   </div>
@@ -8017,48 +8022,6 @@ select.form-select-sm,
           </div>
         </div>
 
-        <!-- 早鸟票设置 -->
-        <div class="ticket-policy-card">
-          <div class="ticket-policy-header">
-            <div class="ticket-policy-title">
-              <i class="fas fa-dove"></i>
-              <span>早鸟票设置</span>
-            </div>
-            <label class="toggle-switch">
-              <input type="checkbox" id="earlyBirdToggle" onchange="toggleEarlyBird()">
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-          <div class="ticket-policy-body" id="earlyBirdBody" style="display:none;">
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">早鸟持续天数</label>
-                <div class="input-with-unit">
-                  <input type="number" class="form-input" id="earlyBirdDays" placeholder="0" value="7" min="1" max="30">
-                  <span class="input-unit">天</span>
-                </div>
-                <div class="form-hint">开票后多少天内可购买早鸟票</div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">折扣比例</label>
-                <div class="input-with-unit">
-                  <input type="number" class="form-input" placeholder="0" value="85" min="50" max="99">
-                  <span class="input-unit">%</span>
-                </div>
-                <div class="form-hint">早鸟票价格为原价的百分比</div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="form-label">限购数量</label>
-              <div class="input-with-unit" style="width:150px;">
-                <input type="number" class="form-input" placeholder="0" value="4" min="1" max="10">
-                <span class="input-unit">张/人</span>
-              </div>
-              <div class="form-hint">每用户最多可购买的早鸟票数量</div>
-            </div>
-          </div>
-        </div>
-        
         <!-- 会员优先购设置 -->
         <div class="ticket-policy-card">
           <div class="ticket-policy-header">
@@ -8410,47 +8373,6 @@ select.form-select-sm,
           </div>
         </div>
 
-        <!-- 早鸟票设置 -->
-        <div class="ticket-policy-card">
-          <div class="ticket-policy-header">
-            <div class="ticket-policy-title">
-              <i class="fas fa-dove"></i>
-              <span>早鸟票设置</span>
-            </div>
-            <label class="toggle-switch">
-              <input type="checkbox" id="editEarlyBirdToggle" onchange="toggleEditEarlyBird()">
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-          <div class="ticket-policy-body" id="editEarlyBirdBody" style="display:none;">
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">早鸟持续天数</label>
-                <div class="input-with-unit">
-                  <input type="number" class="form-input" id="editEarlyBirdDays" placeholder="0" value="7" min="1" max="30">
-                  <span class="input-unit">天</span>
-                </div>
-                <div class="form-hint">开票后多少天内可购买早鸟票</div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">折扣比例</label>
-                <div class="input-with-unit">
-                  <input type="number" class="form-input" id="editEarlyBirdDiscount" placeholder="0" value="85" min="50" max="99">
-                  <span class="input-unit">%</span>
-                </div>
-                <div class="form-hint">早鸟票价格为原价的百分比</div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="form-label">限购数量</label>
-              <div class="input-with-unit" style="width:150px;">
-                <input type="number" class="form-input" id="editEarlyBirdLimit" placeholder="0" value="4" min="1" max="10">
-                <span class="input-unit">张/人</span>
-              </div>
-              <div class="form-hint">每用户最多可购买的早鸟票数量</div>
-            </div>
-          </div>
-        </div>
         <!-- 会员优先购设置 -->
         <div class="ticket-policy-card">
           <div class="ticket-policy-header">
@@ -8976,15 +8898,6 @@ select.form-select-sm,
 
 <script>
 
-// Toggle Early Bird Settings
-function toggleEarlyBird() {
-  var toggle = document.getElementById('earlyBirdToggle');
-  var body = document.getElementById('earlyBirdBody');
-  if (toggle && body) {
-    body.style.display = toggle.checked ? 'block' : 'none';
-  }
-}
-
 // Toggle Member Priority Settings
 function toggleMemberPriority() {
   var toggle = document.getElementById('memberPriorityToggle');
@@ -9127,12 +9040,6 @@ function saveEditShow() {
   document.getElementById('editShowName').style.borderColor = '';
   closeModal('modalEditShow');
   showToast('演出信息已保存');
-}
-
-function toggleEditEarlyBird() {
-  var toggle = document.getElementById('editEarlyBirdToggle');
-  var body = document.getElementById('editEarlyBirdBody');
-  if (toggle && body) body.style.display = toggle.checked ? '' : 'none';
 }
 
 function toggleEditMemberPriority() {
@@ -10181,6 +10088,14 @@ function toggleShowStatus(btn) {
       showToast('演出已下架');
     }
   }
+}
+
+// Navigate to Marketing Center - Ticket Discount tab with show filter
+function goToShowDiscount(showName) {
+  // Store the show name for the marketing center page to pick up
+  localStorage.setItem('_pendingDiscountShow', showName);
+  // Navigate to marketing center page
+  window.location.href = 'marketing-center.html?tab=discount&show=' + encodeURIComponent(showName);
 }
 
 function confirmForceOffShelf() {

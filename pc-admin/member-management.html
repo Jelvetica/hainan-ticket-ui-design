@@ -1336,6 +1336,41 @@ html {
             transform: translateY(-2px);
         }
 
+        .level-config-card--add {
+            border: 2px dashed var(--border);
+            background: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 180px;
+            transition: var(--transition);
+        }
+        .level-config-card--add:hover {
+            border-color: var(--accent);
+            background: rgba(255,107,74,0.02);
+        }
+        .level-add-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .level-add-inner i {
+            font-size: 28px;
+            color: var(--border);
+            transition: color 0.2s;
+        }
+        .level-config-card--add:hover .level-add-inner i {
+            color: var(--accent);
+        }
+        .level-config-card--add:hover .level-add-inner {
+            color: var(--accent);
+        }
+
         .level-config-card .lcc-header {
             padding: 16px 18px;
             color: #fff;
@@ -4218,24 +4253,12 @@ select.form-select-sm,
                                         <span style="font-size:11px;color:var(--text-light);">次/日</span>
                                     </div>
                                 </div>
-                                <div class="task-item">
-                                    <div class="task-info">
-                                        <div class="task-icon" style="background:rgba(56,189,248,0.1);color:#38bdf8;"><i class="fas fa-user-friends"></i></div>
-                                        <div>
-                                            <div class="task-name">邀请注册积分</div>
-                                            <div class="task-desc">成功邀请好友注册</div>
-                                        </div>
-                                    </div>
-                                    <div class="task-points">
-                                        <input type="number" value="100" style="width:60px;">
-                                        <span>积分/人</span>
-                                    </div>
-                                </div>
                             </div>
                             <div style="display:flex;justify-content:flex-end;gap:10px;padding-top:16px;border-top:1px solid var(--border-light);margin-top:12px;">
                                 <button class="btn btn-outline" style="padding:8px 20px;"><i class="fas fa-redo-alt"></i> 重置</button>
                                 <button class="btn btn-primary" style="padding:8px 20px;" onclick="showToast('获取规则保存成功')"><i class="fas fa-save"></i> 保存配置</button>
                             </div>
+                            <div style="text-align:right;font-size:11px;color:var(--text-light);margin-top:8px;"><i class="fas fa-clock"></i> 配置保存时间：2026-06-10 14:30:00</div>
                         </div>
                         <div id="pr-use" class="points-rules-content">
                             <div class="task-list">
@@ -4315,6 +4338,7 @@ select.form-select-sm,
                                 <button class="btn btn-outline" style="padding:8px 20px;"><i class="fas fa-redo-alt"></i> 重置</button>
                                 <button class="btn btn-primary" style="padding:8px 20px;" onclick="showToast('使用规则保存成功')"><i class="fas fa-save"></i> 保存配置</button>
                             </div>
+                            <div style="text-align:right;font-size:11px;color:var(--text-light);margin-top:8px;"><i class="fas fa-clock"></i> 配置保存时间：2026-06-10 14:30:00</div>
                         </div>
                         <div id="pr-expire" class="points-rules-content">
                             <div class="task-list">
@@ -4343,10 +4367,8 @@ select.form-select-sm,
                                         </div>
                                     </div>
                                     <div class="task-points">
-                                        <select style="height:32px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:0 10px;font-size:13px;color:var(--text-primary);background:#fff;outline:none;font-family:inherit;cursor:pointer;">
-                                            <option>按获取时间逐月过期</option>
-                                            <option>按自然年滚动过期</option>
-                                            <option>统一年末清零</option>
+                                        <select style="height:32px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:0 10px;font-size:13px;color:var(--text-primary);background:#fff;outline:none;font-family:inherit;cursor:pointer;" disabled>
+                                            <option>按获取月份逐月过期</option>
                                         </select>
                                     </div>
                                 </div>
@@ -4369,6 +4391,7 @@ select.form-select-sm,
                                 <button class="btn btn-outline" style="padding:8px 20px;"><i class="fas fa-redo-alt"></i> 重置</button>
                                 <button class="btn btn-primary" style="padding:8px 20px;" onclick="showToast('过期规则保存成功')"><i class="fas fa-save"></i> 保存配置</button>
                             </div>
+                            <div style="text-align:right;font-size:11px;color:var(--text-light);margin-top:8px;"><i class="fas fa-clock"></i> 配置保存时间：2026-06-10 14:30:00</div>
                         </div>
                         <div id="pr-task" class="points-rules-content active">
                             <div class="task-list">
@@ -4393,7 +4416,10 @@ select.form-select-sm,
                                         </div>
                                     </div>
                                     <div class="task-points">
-                                        <input type="number" value="50"> <span>积分</span>
+                                        <input type="number" value="50"> <span>积分/条</span>
+                                        <span style="font-size:11px;color:var(--text-light);margin-left:8px;">每日上限</span>
+                                        <input type="number" value="3" style="width:44px;">
+                                        <span style="font-size:11px;color:var(--text-light);">条</span>
                                     </div>
                                 </div>
                                 <div class="task-item">
@@ -4405,7 +4431,10 @@ select.form-select-sm,
                                         </div>
                                     </div>
                                     <div class="task-points">
-                                        <input type="number" value="30"> <span>积分</span>
+                                        <input type="number" value="30"> <span>积分/次</span>
+                                        <span style="font-size:11px;color:var(--text-light);margin-left:8px;">每日上限</span>
+                                        <input type="number" value="5" style="width:44px;">
+                                        <span style="font-size:11px;color:var(--text-light);">次</span>
                                     </div>
                                 </div>
                                 <div class="task-item">
@@ -4420,24 +4449,12 @@ select.form-select-sm,
                                         <input type="number" value="1"> <span>积分/元</span>
                                     </div>
                                 </div>
-
-                                <div class="task-item">
-                                    <div class="task-info">
-                                        <div class="task-icon" style="background:rgba(56,189,248,0.1);color:#38bdf8;"><i class="fas fa-user-friends"></i></div>
-                                        <div>
-                                            <div class="task-name">邀请好友</div>
-                                            <div class="task-desc">成功邀请好友注册</div>
-                                        </div>
-                                    </div>
-                                    <div class="task-points">
-                                        <input type="number" value="100"> <span>积分</span>
-                                    </div>
-                                </div>
                             </div>
                             <div style="display:flex;justify-content:flex-end;gap:10px;padding-top:16px;border-top:1px solid var(--border-light);margin-top:12px;">
                                 <button class="btn btn-outline" style="padding:8px 20px;"><i class="fas fa-redo-alt"></i> 重置</button>
                                 <button class="btn btn-primary" style="padding:8px 20px;" onclick="showToast('任务配置保存成功')"><i class="fas fa-save"></i> 保存配置</button>
                             </div>
+                            <div style="text-align:right;font-size:11px;color:var(--text-light);margin-top:8px;"><i class="fas fa-clock"></i> 配置保存时间：2026-06-10 14:30:00</div>
                         </div>
                     </div>
                     <div class="section-title" style="margin-top:28px;"><i class="fas fa-list-alt"></i> 积分明细</div>
@@ -4564,8 +4581,8 @@ select.form-select-sm,
                             <div class="lcc-header">
                                 <div class="lcc-level">普通会员</div>
                                 <div class="lcc-range">成长值 0 - 999</div>
-                                <button class="action-btn delete" title="删除" onclick="deleteLevel(this)"><i class="fas fa-trash-alt"></i> 删除</button>
-                                <button class="action-btn edit" title="编辑" onclick="openEditLevelModal(this)"><i class="fas fa-pen"></i> 编辑</button>
+                                <button class="lcc-action-btn lcc-action-btn--delete" title="删除" onclick="deleteLevel(this)"><i class="fas fa-trash-alt"></i></button>
+                                <button class="lcc-action-btn lcc-action-btn--edit" title="编辑" onclick="openEditLevelModal(this)"><i class="fas fa-pen"></i></button>
                             </div>
                             <div class="lcc-body">
                                 <div class="lcc-discount">购票折扣 <strong>9.8</strong> 折</div>
@@ -4580,8 +4597,8 @@ select.form-select-sm,
                             <div class="lcc-header">
                                 <div class="lcc-level">银卡会员</div>
                                 <div class="lcc-range">成长值 1,000 - 4,999</div>
-                                <button class="action-btn delete" title="删除" onclick="deleteLevel(this)"><i class="fas fa-trash-alt"></i> 删除</button>
-                                <button class="action-btn edit" title="编辑" onclick="openEditLevelModal(this)"><i class="fas fa-pen"></i> 编辑</button>
+                                <button class="lcc-action-btn lcc-action-btn--delete" title="删除" onclick="deleteLevel(this)"><i class="fas fa-trash-alt"></i></button>
+                                <button class="lcc-action-btn lcc-action-btn--edit" title="编辑" onclick="openEditLevelModal(this)"><i class="fas fa-pen"></i></button>
                             </div>
                             <div class="lcc-body">
                                 <div class="lcc-discount">购票折扣 <strong>9.5</strong> 折</div>
@@ -4597,8 +4614,8 @@ select.form-select-sm,
                             <div class="lcc-header">
                                 <div class="lcc-level">金卡会员</div>
                                 <div class="lcc-range">成长值 5,000 - 19,999</div>
-                                <button class="action-btn delete" title="删除" onclick="deleteLevel(this)"><i class="fas fa-trash-alt"></i> 删除</button>
-                                <button class="action-btn edit" title="编辑" onclick="openEditLevelModal(this)"><i class="fas fa-pen"></i> 编辑</button>
+                                <button class="lcc-action-btn lcc-action-btn--delete" title="删除" onclick="deleteLevel(this)"><i class="fas fa-trash-alt"></i></button>
+                                <button class="lcc-action-btn lcc-action-btn--edit" title="编辑" onclick="openEditLevelModal(this)"><i class="fas fa-pen"></i></button>
                             </div>
                             <div class="lcc-body">
                                 <div class="lcc-discount">购票折扣 <strong>9.0</strong> 折</div>
@@ -4615,8 +4632,8 @@ select.form-select-sm,
                             <div class="lcc-header">
                                 <div class="lcc-level">钻石会员</div>
                                 <div class="lcc-range">成长值 20,000+</div>
-                                <button class="action-btn delete" title="删除" onclick="deleteLevel(this)"><i class="fas fa-trash-alt"></i> 删除</button>
-                                <button class="action-btn edit" title="编辑" onclick="openEditLevelModal(this)"><i class="fas fa-pen"></i> 编辑</button>
+                                <button class="lcc-action-btn lcc-action-btn--delete" title="删除" onclick="deleteLevel(this)"><i class="fas fa-trash-alt"></i></button>
+                                <button class="lcc-action-btn lcc-action-btn--edit" title="编辑" onclick="openEditLevelModal(this)"><i class="fas fa-pen"></i></button>
                             </div>
                             <div class="lcc-body">
                                 <div class="lcc-discount">购票折扣 <strong>8.5</strong> 折</div>
@@ -4634,8 +4651,8 @@ select.form-select-sm,
                             <div class="lcc-header">
                                 <div class="lcc-level">充值年卡</div>
                                 <div class="lcc-range">年费 &#165;2,999</div>
-                                <button class="action-btn delete" title="删除" onclick="deleteLevel(this)"><i class="fas fa-trash-alt"></i> 删除</button>
-                                <button class="action-btn edit" title="编辑" onclick="openEditLevelModal(this)"><i class="fas fa-pen"></i> 编辑</button>
+                                <button class="lcc-action-btn lcc-action-btn--delete" title="删除" onclick="deleteLevel(this)"><i class="fas fa-trash-alt"></i></button>
+                                <button class="lcc-action-btn lcc-action-btn--edit" title="编辑" onclick="openEditLevelModal(this)"><i class="fas fa-pen"></i></button>
                             </div>
                             <div class="lcc-body">
                                 <div class="lcc-discount">购票折扣 <strong>8.0</strong> 折</div>
@@ -4649,28 +4666,17 @@ select.form-select-sm,
                                 </ul>
                             </div>
                         </div>
+                        <div class="level-config-card level-config-card--add" onclick="openAddLevelModal()">
+                            <div class="level-add-inner">
+                                <i class="fas fa-plus-circle"></i>
+                                <span>新增等级</span>
+                            </div>
+                        </div>
                     </div>
-                    <button class="btn btn-primary" style="margin-bottom: 24px;" onclick="openAddLevelModal()">
-                        <i class="fas fa-plus"></i> 新增等级
-                    </button>
 
                     <!-- Growth Value Config -->
                     <div class="section-title"><i class="fas fa-seedling"></i> 成长值配置</div>
                     <div class="growth-config">
-                        <div class="growth-config-card">
-                            <div class="gc-header">
-                                <div class="gc-icon gc-icon--indigo"><i class="fas fa-user-plus"></i></div>
-                                <div class="gc-title">推荐会员成长值</div>
-                            </div>
-                            <div class="gc-body">
-                                <div class="gc-desc">成功推荐新用户注册并消费后，推荐人可获得成长值奖励</div>
-                                <div class="gc-setting">
-                                    <span class="gc-label">每推荐1人获得</span>
-                                    <input type="number" class="gc-input gc-input--md" value="100">
-                                    <span class="gc-unit">成长值</span>
-                                </div>
-                            </div>
-                        </div>
                         <div class="growth-config-card">
                             <div class="gc-header">
                                 <div class="gc-icon gc-icon--emerald"><i class="fas fa-shopping-bag"></i></div>
@@ -4744,10 +4750,25 @@ select.form-select-sm,
                                 </div>
                             </div>
                         </div>
+                        <div class="growth-config-card">
+                            <div class="gc-header">
+                                <div class="gc-icon gc-icon--indigo"><i class="fas fa-user-plus"></i></div>
+                                <div class="gc-title">推荐会员成长值</div>
+                            </div>
+                            <div class="gc-body">
+                                <div class="gc-desc">成功推荐新用户注册并消费后，推荐人可获得成长值奖励</div>
+                                <div class="gc-setting">
+                                    <span class="gc-label">每推荐1人获得</span>
+                                    <input type="number" class="gc-input gc-input--md" value="100">
+                                    <span class="gc-unit">成长值</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <button class="btn btn-primary" style="margin-bottom: 24px;" onclick="saveGrowthConfig()">
+                    <button class="btn btn-primary" style="margin-bottom: 8px;" onclick="saveGrowthConfig()">
                         <i class="fas fa-save"></i> 保存成长值配置
                     </button>
+                    <div style="text-align:right;font-size:11px;color:var(--text-light);margin-bottom:24px;"><i class="fas fa-clock"></i> 配置保存时间：2026-06-10 14:30:00</div>
                 </div>
 
                 <!-- ==================== Tab 4: 会员钱包 ==================== -->

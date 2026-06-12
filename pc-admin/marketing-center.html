@@ -1058,6 +1058,7 @@ html {
     }
     .value-tag.money { background: var(--gold-light); color: #b8860b; }
     .value-tag.points { background: var(--green-light); color: #059669; }
+    .value-tag.earlybird { background: #fef3c7; color: #d97706; }
     .value-tag.growth { background: #e0e7ff; color: #4f46e5; }
     .value-tag.discount { background: #fce7f3; color: #db2777; }
 
@@ -3699,16 +3700,24 @@ select.form-select-sm,
         <div class="card">
           <div class="toolbar">
             <div class="toolbar-left">
-              <select class="filter-select">
+              <select class="filter-select" id="discount-status-filter">
                 <option>全部状态</option>
                 <option>进行中</option>
                 <option>已结束</option>
                 <option>未开始</option>
               </select>
-              <select class="filter-select">
+              <select class="filter-select" id="discount-type-filter">
                 <option>全部类型</option>
                 <option>满减</option>
                 <option>折扣</option>
+                <option>早鸟票</option>
+              </select>
+              <select class="filter-select" id="discount-show-filter">
+                <option value="">全部演出</option>
+                <option value="show1">《天涯故事》歌舞剧</option>
+                <option value="show2">《海南记忆》音乐会</option>
+                <option value="show3">《椰风海韵》儿童剧</option>
+                <option value="show4">《南海之声》交响乐</option>
               </select>
             </div>
             <div class="toolbar-right">
@@ -3764,7 +3773,7 @@ select.form-select-sm,
                 </tr>
                 <tr data-discount-id="3">
                   <td style="font-weight:500">开季狂欢 7折起</td>
-                  <td style="color:var(--text-secondary)">全部演出</td>
+                  <td style="color:var(--text-secondary)">《南海之声》交响乐<br><small style="color:#9ca3af;">全部场次</small></td>
                   <td><span class="value-tag money"><i class="fas fa-percent"></i> 折扣</span></td>
                   <td style="font-weight:600; color:var(--accent)">7折</td>
                   <td style="color:var(--text-secondary); font-size:12px">2026-03-01 ~ 2026-03-31</td>
@@ -3780,7 +3789,7 @@ select.form-select-sm,
                 </tr>
                 <tr data-discount-id="4">
                   <td style="font-weight:500">新人首单立减30</td>
-                  <td style="color:var(--text-secondary)">全部演出</td>
+                  <td style="color:var(--text-secondary)">《椰风海韵》儿童剧<br><small style="color:#9ca3af;">全部场次</small></td>
                   <td><span class="value-tag points"><i class="fas fa-minus-circle"></i> 满减</span></td>
                   <td style="font-weight:600; color:var(--accent)">立减30</td>
                   <td style="color:var(--text-secondary); font-size:12px">2026-01-01 ~ 2026-12-31</td>
@@ -3794,11 +3803,27 @@ select.form-select-sm,
                     </div>
                   </td>
                 </tr>
+                <tr data-discount-id="5">
+                  <td style="font-weight:500">《天涯故事》早鸟票</td>
+                  <td style="color:var(--text-secondary)">《天涯故事》歌舞剧<br><small style="color:#9ca3af;">全部场次</small></td>
+                  <td><span class="value-tag earlybird"><i class="fas fa-dove"></i> 早鸟票</span></td>
+                  <td style="font-weight:600; color:var(--accent)">8折 / 7天</td>
+                  <td style="color:var(--text-secondary); font-size:12px">开票后7天内</td>
+                  <td>458次</td>
+                  <td><span class="status status-active">进行中</span></td>
+                  <td>
+                    <div class="actions-cell">
+                      <button class="action-btn edit" onclick="openDiscountEdit(5)"><i class="fas fa-pen"></i> 编辑</button>
+                      <button class="action-btn view" onclick="openDiscountData(5)"><i class="fas fa-chart-bar"></i> 数据</button>
+                      <button class="action-btn offline" style="color:#dc2626" onclick="stopDiscountActivity(this)"><i class="fas fa-stop-circle"></i> 停止</button>
+                    </div>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
           <div class="pagination">
-            <span class="pagination-info">共 8 条记录，第 1/1 页</span>
+            <span class="pagination-info">共 9 条记录，第 1/1 页</span>
             <div class="pagination-btns">
               <button class="page-btn disabled"><i class="fas fa-chevron-left"></i></button>
               <button class="page-btn active">1</button>
@@ -4996,7 +5021,6 @@ select.form-select-sm,
           <label class="form-label">关联演出<span class="required">*</span></label>
           <select class="form-select" id="discount-show" onchange="onDiscountShowChange(this)">
             <option value="">请选择关联演出</option>
-            <option value="all">全部演出</option>
             <option value="show1">《天涯故事》歌舞剧</option>
             <option value="show2">《海南记忆》音乐会</option>
             <option value="show3">《椰风海韵》儿童剧</option>
@@ -5029,6 +5053,9 @@ select.form-select-sm,
           <label class="checkbox-label discount-type-option" id="label-discount-reduce" style="padding:10px 20px; border:1px solid var(--border); border-radius:var(--radius-sm); cursor:pointer; transition:var(--transition);" onclick="switchDiscountType('reduce')">
             <input type="radio" name="discount-type" value="reduce" style="display:none;"> <i class="fas fa-minus-circle" style="margin-right:4px;"></i>满减优惠
           </label>
+          <label class="checkbox-label discount-type-option" id="label-discount-earlybird" style="padding:10px 20px; border:1px solid var(--border); border-radius:var(--radius-sm); cursor:pointer; transition:var(--transition);" onclick="switchDiscountType('earlybird')">
+            <input type="radio" name="discount-type" value="earlybird" style="display:none;"> <i class="fas fa-dove" style="margin-right:4px;"></i>早鸟票
+          </label>
         </div>
       </div>
       <!-- 百分比折扣字段 -->
@@ -5053,11 +5080,31 @@ select.form-select-sm,
           <input type="number" class="form-input" id="discount-reduce-amount" placeholder="例如：50">
         </div>
       </div>
-      <hr class="form-divider">
-      <h4 style="font-size:14px; font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+      <!-- 早鸟票字段 -->
+      <div class="form-row" id="discount-earlybird-fields" style="display:none;">
+        <div class="form-group">
+          <label class="form-label">折扣比例 (折)<span class="required">*</span></label>
+          <input type="number" class="form-input" id="earlybird-percent" placeholder="例如：8 表示8折" min="1" max="99" step="0.1">
+          <div class="form-hint" style="font-size:12px; color:var(--text-secondary); margin-top:4px;">早鸟票价格为原价的百分比</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">最大优惠金额 (元)</label>
+          <input type="number" class="form-input" id="earlybird-max-amount" placeholder="不填则不限制">
+        </div>
+        <div class="form-group">
+          <label class="form-label">持续天数<span class="required">*</span></label>
+          <div class="input-with-unit">
+            <input type="number" class="form-input" id="earlybird-days" placeholder="例如：7" min="1" max="90">
+            <span class="input-unit">天</span>
+          </div>
+          <div class="form-hint" style="font-size:12px; color:var(--text-secondary); margin-top:4px;">开票后多少天内可购买早鸟票</div>
+        </div>
+      </div>
+      <hr class="form-divider" id="discount-time-divider">
+      <h4 style="font-size:14px; font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:8px;" id="discount-time-title">
         <i class="fas fa-clock" style="color:var(--accent);"></i> 活动时间
       </h4>
-      <div class="form-row">
+      <div class="form-row" id="discount-time-fields">
         <div class="form-group">
           <label class="form-label">开始时间<span class="required">*</span></label>
           <input type="datetime-local" class="form-input" id="discount-start">
@@ -5370,13 +5417,6 @@ select.form-select-sm,
       <div class="stack-settings">
         <div class="stack-item">
           <div>
-            <div class="stack-label"><i class="fas fa-dove"></i> 可与早鸟票叠加</div>
-            <div class="stack-desc">开启后，用户在使用早鸟价的基础上还可使用此优惠券</div>
-          </div>
-          <div class="toggle-switch" onclick="this.classList.toggle('active')"></div>
-        </div>
-        <div class="stack-item">
-          <div>
             <div class="stack-label"><i class="fas fa-crown"></i> 可与会员折扣叠加</div>
             <div class="stack-desc">开启后，用户在享受会员折扣的基础上还可使用此优惠券</div>
           </div>
@@ -5398,14 +5438,14 @@ select.form-select-sm,
       <div class="form-group">
         <div style="display:flex; gap:16px; margin-bottom:12px;">
           <label class="checkbox-label">
-            <input type="radio" name="coupon-time" value="fixed" checked> 固定日期
+            <input type="radio" name="coupon-time" value="fixed" checked onchange="switchCouponTimeMode('new')"> 固定日期
           </label>
           <label class="checkbox-label">
-            <input type="radio" name="coupon-time" value="relative"> 领取后N天
+            <input type="radio" name="coupon-time" value="relative" onchange="switchCouponTimeMode('new')"> 领取后N天
           </label>
         </div>
       </div>
-      <div class="form-row">
+      <div class="form-row" id="coupon-new-fixed-time">
         <div class="form-group">
           <label class="form-label">生效时间<span class="required">*</span></label>
           <input type="datetime-local" class="form-input">
@@ -5414,6 +5454,14 @@ select.form-select-sm,
           <label class="form-label">失效时间<span class="required">*</span></label>
           <input type="datetime-local" class="form-input">
         </div>
+      </div>
+      <div class="form-group" id="coupon-new-relative-days" style="display:none;">
+        <label class="form-label">有效天数<span class="required">*</span></label>
+        <div class="input-with-unit">
+          <input type="number" class="form-input" placeholder="例如：7" min="1" max="365">
+          <span class="input-unit">天</span>
+        </div>
+        <div class="form-hint" style="font-size:12px; color:var(--text-secondary); margin-top:4px;">用户领取后N天内有效</div>
       </div>
       <div class="form-group">
         <label class="form-label">使用说明</label>
@@ -5495,13 +5543,6 @@ select.form-select-sm,
       <div class="stack-settings" style="opacity:0.6; pointer-events:none;">
         <div class="stack-item">
           <div>
-            <div class="stack-label"><i class="fas fa-dove"></i> 可与早鸟票叠加</div>
-            <div class="stack-desc">开启后，用户在使用早鸟价的基础上还可使用此优惠券</div>
-          </div>
-          <div class="toggle-switch active"></div>
-        </div>
-        <div class="stack-item">
-          <div>
             <div class="stack-label"><i class="fas fa-crown"></i> 可与会员折扣叠加</div>
             <div class="stack-desc">开启后，用户在享受会员折扣的基础上还可使用此优惠券</div>
           </div>
@@ -5530,7 +5571,7 @@ select.form-select-sm,
           </label>
         </div>
       </div>
-      <div class="form-row">
+      <div class="form-row" id="coupon-view-fixed-time">
         <div class="form-group disabled">
           <label class="form-label">生效时间</label>
           <input type="datetime-local" class="form-input" value="2026-01-20T00:00" disabled>
@@ -5538,6 +5579,13 @@ select.form-select-sm,
         <div class="form-group disabled">
           <label class="form-label">失效时间</label>
           <input type="datetime-local" class="form-input" value="2026-02-28T23:59" disabled>
+        </div>
+      </div>
+      <div class="form-group disabled" id="coupon-view-relative-days" style="display:none;">
+        <label class="form-label">有效天数</label>
+        <div class="input-with-unit">
+          <input type="number" class="form-input" value="30" disabled>
+          <span class="input-unit">天</span>
         </div>
       </div>
       <div class="form-group disabled">
@@ -5621,13 +5669,6 @@ select.form-select-sm,
       <div class="stack-settings" style="opacity:0.6; pointer-events:none;">
         <div class="stack-item">
           <div>
-            <div class="stack-label"><i class="fas fa-dove"></i> 可与早鸟票叠加</div>
-            <div class="stack-desc">开启后，用户在使用早鸟价的基础上还可使用此优惠券</div>
-          </div>
-          <div class="toggle-switch"></div>
-        </div>
-        <div class="stack-item">
-          <div>
             <div class="stack-label"><i class="fas fa-crown"></i> 可与会员折扣叠加</div>
             <div class="stack-desc">开启后，用户在享受会员折扣的基础上还可使用此优惠券</div>
           </div>
@@ -5650,14 +5691,14 @@ select.form-select-sm,
       <div class="form-group">
         <div style="display:flex; gap:16px; margin-bottom:12px;">
           <label class="checkbox-label">
-            <input type="radio" name="edit-coupon-time" value="fixed" checked> 固定日期
+            <input type="radio" name="edit-coupon-time" value="fixed" checked onchange="switchCouponTimeMode('edit')"> 固定日期
           </label>
           <label class="checkbox-label">
-            <input type="radio" name="edit-coupon-time" value="relative"> 领取后N天
+            <input type="radio" name="edit-coupon-time" value="relative" onchange="switchCouponTimeMode('edit')"> 领取后N天
           </label>
         </div>
       </div>
-      <div class="form-row">
+      <div class="form-row" id="coupon-edit-fixed-time">
         <div class="form-group">
           <label class="form-label">生效时间<span class="required">*</span></label>
           <input type="datetime-local" class="form-input" value="2026-01-01T00:00">
@@ -5666,6 +5707,14 @@ select.form-select-sm,
           <label class="form-label">失效时间<span class="required">*</span></label>
           <input type="datetime-local" class="form-input" value="2026-12-31T23:59">
         </div>
+      </div>
+      <div class="form-group" id="coupon-edit-relative-days" style="display:none;">
+        <label class="form-label">有效天数<span class="required">*</span></label>
+        <div class="input-with-unit">
+          <input type="number" class="form-input" placeholder="例如：7" min="1" max="365">
+          <span class="input-unit">天</span>
+        </div>
+        <div class="form-hint" style="font-size:12px; color:var(--text-secondary); margin-top:4px;">用户领取后N天内有效</div>
       </div>
       <div class="form-group">
         <label class="form-label">使用说明</label>
@@ -6085,6 +6134,29 @@ select.form-select-sm,
     document.getElementById('panel-' + tabId).classList.add('active');
   }
 
+  // Handle URL params for cross-page navigation (e.g. from show-management)
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var tab = params.get('tab');
+    var showName = params.get('show');
+    if (tab === 'discount') {
+      var discountTab = document.querySelector('.tab-btn[data-tab="discount"]');
+      if (discountTab) switchTab(discountTab, 'discount');
+      if (showName) {
+        // Try to match show name to select option
+        var showFilter = document.getElementById('discount-show-filter');
+        if (showFilter) {
+          for (var i = 0; i < showFilter.options.length; i++) {
+            if (showFilter.options[i].text.indexOf(showName) !== -1) {
+              showFilter.value = showFilter.options[i].value;
+              break;
+            }
+          }
+        }
+      }
+    }
+  })();
+
   // ========== Sub-tab Switching ==========
   function switchSubTab(btn, subId) {
     const parent = btn.closest('.tab-panel');
@@ -6158,8 +6230,9 @@ select.form-select-sm,
   const discountDataMap = {
     1: { name: '五一特惠 早鸟8折', show: 'show1', session: 'session1', type: 'percent', percent: 8, maxAmount: 200, start: '2026-04-15T00:00', end: '2026-04-30T23:59', desc: '五一期间早鸟特惠', totalUse: 236, totalSave: '¥18,880', totalOrder: '¥94,400', conversion: '12.5%' },
     2: { name: '满300减50', show: 'show2', session: 'all', type: 'reduce', threshold: 300, reduceAmount: 50, start: '2026-04-01T00:00', end: '2026-05-01T23:59', desc: '满减优惠活动', totalUse: 158, totalSave: '¥7,900', totalOrder: '¥47,400', conversion: '8.3%' },
-    3: { name: '开季狂欢 7折起', show: 'all', session: 'all', type: 'percent', percent: 7, maxAmount: '', start: '2026-03-01T00:00', end: '2026-03-31T23:59', desc: '开季大促', totalUse: 892, totalSave: '¥62,440', totalOrder: '¥249,760', conversion: '15.2%' },
-    4: { name: '新人首单立减30', show: 'all', session: 'all', type: 'reduce', threshold: 0, reduceAmount: 30, start: '2026-01-01T00:00', end: '2026-12-31T23:59', desc: '新用户专享', totalUse: 1245, totalSave: '¥37,350', totalOrder: '¥112,050', conversion: '22.1%' }
+    3: { name: '开季狂欢 7折起', show: 'show4', session: 'all', type: 'percent', percent: 7, maxAmount: '', start: '2026-03-01T00:00', end: '2026-03-31T23:59', desc: '开季大促', totalUse: 892, totalSave: '¥62,440', totalOrder: '¥249,760', conversion: '15.2%' },
+    4: { name: '新人首单立减30', show: 'show3', session: 'all', type: 'reduce', threshold: 0, reduceAmount: 30, start: '2026-01-01T00:00', end: '2026-12-31T23:59', desc: '新用户专享', totalUse: 1245, totalSave: '¥37,350', totalOrder: '¥112,050', conversion: '22.1%' },
+    5: { name: '《天涯故事》早鸟票', show: 'show1', session: 'all', type: 'earlybird', percent: 8, maxAmount: '', earlybirdDays: 7, start: '', end: '', desc: '开票后7天内可购买早鸟票', totalUse: 458, totalSave: '¥36,640', totalOrder: '¥183,200', conversion: '18.7%' }
   };
 
   let currentEditingDiscountId = null;
@@ -6171,13 +6244,13 @@ select.form-select-sm,
     const checkAll = document.getElementById('session-check-all');
     const hiddenInput = document.getElementById('discount-session');
 
-    if (showId === '' || showId === 'all') {
-      sessionText.textContent = showId === 'all' ? '全部场次' : '请先选择演出';
-      sessionText.className = showId === 'all' ? '' : 'session-select-text-placeholder';
+    if (showId === '') {
+      sessionText.textContent = '请先选择演出';
+      sessionText.className = 'session-select-text-placeholder';
       optionsList.innerHTML = '';
       checkAll.checked = false;
       checkAll.disabled = true;
-      hiddenInput.value = showId === 'all' ? 'all' : '';
+      hiddenInput.value = '';
     } else {
       const sessions = showSessions[showId] || [];
       optionsList.innerHTML = sessions.map((s, i) =>
@@ -6242,28 +6315,66 @@ select.form-select-sm,
     }
   });
 
+  // Toggle coupon validity mode: fixed date vs relative days
+  function switchCouponTimeMode(context) {
+    var radioName = (context === 'edit') ? 'edit-coupon-time' : 'coupon-time';
+    var radios = document.getElementsByName(radioName);
+    var isRelative = false;
+    for (var i = 0; i < radios.length; i++) {
+      if (radios[i].checked && radios[i].value === 'relative') {
+        isRelative = true;
+        break;
+      }
+    }
+    var fixedEl = document.getElementById('coupon-' + context + '-fixed-time');
+    var relativeEl = document.getElementById('coupon-' + context + '-relative-days');
+    if (fixedEl) fixedEl.style.display = isRelative ? 'none' : '';
+    if (relativeEl) relativeEl.style.display = isRelative ? '' : 'none';
+  }
+
   function switchDiscountType(type) {
     const percentLabel = document.getElementById('label-discount-percent');
     const reduceLabel = document.getElementById('label-discount-reduce');
+    const earlybirdLabel = document.getElementById('label-discount-earlybird');
     const percentFields = document.getElementById('discount-percent-fields');
     const reduceFields = document.getElementById('discount-reduce-fields');
+    const earlybirdFields = document.getElementById('discount-earlybird-fields');
+    const timeFields = document.getElementById('discount-time-fields');
+    const timeDivider = document.getElementById('discount-time-divider');
+    const timeTitle = document.getElementById('discount-time-title');
+
+    // Reset all labels
+    [percentLabel, reduceLabel, earlybirdLabel].forEach(function(lbl) {
+      lbl.style.border = '1px solid var(--border)';
+      lbl.style.background = '';
+    });
+
+    // Hide all field groups
+    percentFields.style.display = 'none';
+    reduceFields.style.display = 'none';
+    earlybirdFields.style.display = 'none';
+
+    // Show/hide activity time based on type
+    var isEarlyBird = (type === 'earlybird');
+    timeFields.style.display = isEarlyBird ? 'none' : 'flex';
+    timeDivider.style.display = isEarlyBird ? 'none' : '';
+    timeTitle.style.display = isEarlyBird ? 'none' : '';
 
     if (type === 'percent') {
       percentLabel.style.border = '2px solid var(--accent)';
       percentLabel.style.background = 'rgba(255,107,74,0.05)';
-      reduceLabel.style.border = '1px solid var(--border)';
-      reduceLabel.style.background = '';
       percentFields.style.display = 'flex';
-      reduceFields.style.display = 'none';
       document.querySelector('input[name="discount-type"][value="percent"]').checked = true;
-    } else {
+    } else if (type === 'reduce') {
       reduceLabel.style.border = '2px solid var(--accent)';
       reduceLabel.style.background = 'rgba(255,107,74,0.05)';
-      percentLabel.style.border = '1px solid var(--border)';
-      percentLabel.style.background = '';
-      percentFields.style.display = 'none';
       reduceFields.style.display = 'flex';
       document.querySelector('input[name="discount-type"][value="reduce"]').checked = true;
+    } else if (type === 'earlybird') {
+      earlybirdLabel.style.border = '2px solid var(--accent)';
+      earlybirdLabel.style.background = 'rgba(255,107,74,0.05)';
+      earlybirdFields.style.display = 'flex';
+      document.querySelector('input[name="discount-type"][value="earlybird"]').checked = true;
     }
   }
 
@@ -6302,9 +6413,13 @@ select.form-select-sm,
     if (data.type === 'percent') {
       document.getElementById('discount-percent').value = data.percent;
       document.getElementById('discount-max-amount').value = data.maxAmount;
-    } else {
+    } else if (data.type === 'reduce') {
       document.getElementById('discount-threshold').value = data.threshold;
       document.getElementById('discount-reduce-amount').value = data.reduceAmount;
+    } else if (data.type === 'earlybird') {
+      document.getElementById('earlybird-percent').value = data.percent;
+      document.getElementById('earlybird-max-amount').value = data.maxAmount;
+      document.getElementById('earlybird-days').value = data.earlybirdDays || 7;
     }
 
     openModal('modal-discount-new');
@@ -6368,9 +6483,13 @@ select.form-select-sm,
       if (data.type === 'percent') {
         document.getElementById('discount-percent').value = data.percent;
         document.getElementById('discount-max-amount').value = data.maxAmount;
-      } else {
+      } else if (data.type === 'reduce') {
         document.getElementById('discount-threshold').value = data.threshold;
         document.getElementById('discount-reduce-amount').value = data.reduceAmount;
+      } else if (data.type === 'earlybird') {
+        document.getElementById('earlybird-percent').value = data.percent;
+        document.getElementById('earlybird-max-amount').value = data.maxAmount;
+        document.getElementById('earlybird-days').value = data.earlybirdDays || 7;
       }
     }
     openModal('modal-discount-new');
