@@ -6550,7 +6550,7 @@ const devDocs = {
               <li><strong>功能实现逻辑：</strong>
                 <ul>
                   <li>任务配置：设置每日签到、发表评论、分享演出、完成订单等任务的积分奖励值。发表评论和分享演出支持设置每日次数上限，超过上限不再获得积分</li>
-                  <li>使用规则：设置积分抵扣比例、单笔最高抵扣比例、最低使用积分、适用范围、积分抽奖消耗</li>
+                  <li>使用规则：积分抵扣比例固定为1积分=0.01元（不可修改，输入框只读）；可配置单笔最高抵扣比例、最低使用积分、适用范围、积分抽奖消耗</li>
                   <li>过期规则：积分有效期固定12个月，过期结算方式固定为"按获取月份逐月过期"，不可修改。设置到期前提醒天数</li>
                   <li>配置保存时间：任务配置/使用规则/过期规则三个Tab均展示最后一次保存配置的时间</li>
                   <li>积分明细：记录所有会员的积分变动，包括获取和消耗</li>
@@ -6610,7 +6610,7 @@ const devDocs = {
                 title: '使用规则字段',
                 headers: ['字段名', '类型', '必填', '说明'],
                 rows: [
-                  ['points_to_yuan_ratio', 'number', '是', '积分抵扣比例：每1积分=多少元'],
+                  ['points_to_yuan_ratio', 'number', '是', '积分抵扣比例：固定1积分=0.01元（只读不可修改）'],
                   ['max_deduction_percent', 'number', '是', '单笔最高抵扣比例（%）'],
                   ['min_use_points', 'number', '是', '最低使用积分数'],
                   ['applicable_scope', 'array', '是', '适用范围：购买门票/购买商品/积分抽奖'],
@@ -7421,8 +7421,10 @@ const devDocs = {
                   ['issued_count', 'number', '是', '已发放数量（张）'],
                   ['used_count', 'number', '是', '已使用数量（张）'],
                   ['usage_rate', 'number', '是', '使用率（%）'],
-                  ['valid_start', 'string', '是', '有效期开始时间'],
-                  ['valid_end', 'string', '是', '有效期结束时间'],
+                  ['valid_start', 'string', '否', '有效期开始时间，validity_mode=fixed时显示'],
+                  ['valid_end', 'string', '否', '有效期结束时间，validity_mode=fixed时显示'],
+                  ['valid_days', 'number', '否', '有效天数，validity_mode=relative时列表显示为"领取后N天"（绿色标签）'],
+                  ['validity_mode', 'enum', '是', '有效期模式：fixed（固定日期范围）/relative（领取后N天）'],
                   ['status', 'enum', '是', '状态：pending（未开始）/active（进行中）/expired（已过期）/stopped（已停用）']
                 ]
               },
@@ -8829,6 +8831,18 @@ const changelogData = [
                 pageName: '选座购票',
                 module: '选座购票',
                 content: `确认选座按钮点击后跳转确认订单页面，携带演出名称/时间/场馆/座位数据`
+            },
+            {
+                page: 'pc-admin/marketing-center.html',
+                pageName: '营销中心',
+                module: '优惠券',
+                content: `优惠券列表有效期列增加"领取后N天"显示格式（绿色标签），区分固定日期范围和动态天数两种有效期类型`
+            },
+            {
+                page: 'pc-admin/member-management.html',
+                pageName: '会员管理',
+                module: '积分管理',
+                content: `使用规则-积分抵扣比例固定为1积分=0.01元，输入框设为只读不可编辑`
             }
         ]
     },
