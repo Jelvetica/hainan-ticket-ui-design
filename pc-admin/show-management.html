@@ -13625,10 +13625,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- 标签编辑弹窗 -->
 <div class="modal-overlay" id="modalTagEdit">
-  <div class="modal" style="max-width:420px;background:#fff;">
+  <div class="modal-container" style="max-width:420px;">
     <div class="modal-header">
-      <h3 class="modal-title">设置小程序展示标签</h3>
-      <button class="modal-close" onclick="closeModal('modalTagEdit')"><i class="fas fa-times"></i></button>
+      <h3>设置小程序展示标签</h3>
+      <button class="modal-close" onclick="closeModal('modalTagEdit')"><i class="fas fa-xmark"></i></button>
     </div>
     <div class="modal-body">
       <div class="form-group">
@@ -13658,8 +13658,8 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="clearTag()">清除标签</button>
-      <button class="btn btn-primary" onclick="saveTag()">确认</button>
+      <button class="btn btn-cancel" onclick="clearTag()">清除标签</button>
+      <button class="btn btn-confirm" onclick="saveTag()">确认</button>
     </div>
   </div>
 </div>
