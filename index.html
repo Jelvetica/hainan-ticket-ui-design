@@ -1800,6 +1800,12 @@ const devDocs = {
                 </ul>`
             },
             {
+                title: '交互说明',
+                content: `<p><strong>排序规则：</strong>综合排序（运营权重60%+浏览量20%+销量20%）、最新上线、价格升序/降序</p>
+                <p><strong>筛选联动：</strong>切换分类标签重置分页保留筛选；切换筛选条件重置分页保留分类；多条件组合筛选</p>
+                <p><strong>加载状态：</strong>首次加载骨架屏、下拉刷新顶部loading、加载更多底部loading、无数据空状态插画</p>`
+            },
+            {
                 title: '核心字段',
                 noTableWrap: true,
                 tables: [
@@ -1807,71 +1813,32 @@ const devDocs = {
                         title: '演出列表字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['show_id', '演出ID', 'number', '是', '演出唯一标识'],
-                            ['title', '标题', 'string', '是', '演出名称'],
-                            ['cover_image', '封面图片', 'string', '是', '封面图URL'],
-                            ["category_name", "category名称", "string", "是", "分类名称，如\"演唱会\"\"话剧\""],
-                            ['rating', '评分', 'number', '是', '评分，0-5分'],
-                            ['show_time', '演出时间', 'string', '是', '演出时间'],
-                            ['venue_name', '场馆名称', 'string', '是', '场馆名称'],
-                            ['min_price', '最低价格', 'number', '是', '最低票价'],
-                            ['status', '状态', 'enum', '是', '状态：1-即将开票 2-售票中 3-已售罄 4-即将开演']
+                            ['show_id', 'number', '是', '演出唯一标识'],
+                            ['title', 'string', '是', '演出名称'],
+                            ['cover_image', 'string', '是', '封面图URL'],
+                            ["category_name", "string", "是", "分类名称，如\"演唱会\"\"话剧\""],
+                            ['rating', 'number', '是', '评分，0-5分'],
+                            ['show_time', 'string', '是', '演出时间'],
+                            ['venue_name', 'string', '是', '场馆名称'],
+                            ['min_price', 'number', '是', '最低票价'],
+                            ['status', 'enum', '是', '状态：1-即将开票 2-售票中 3-已售罄 4-即将开演']
                         ]
                     },
                     {
                         title: '筛选条件字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['category_id', '分类ID', 'number', '否', '分类ID，0为全部'],
-                            ['category_name', '分类名称', 'string', '否', '分类名称'],
-                            ['region', 'region', 'string', '否', '区域筛选：海口/三亚/琼海/万宁/儋州'],
-                            ['time_range', 'time范围', 'string', '否', '时间范围：全部/今天/明天/本周末/一周内/一个月内'],
-                            ['price_range', '价格范围', 'string', '否', '价格范围：全部/0-100/100-300/300-500/500-800/800+'],
-                            ['sort_type', '排序类型', 'string', '否', '排序方式：综合/最新/价格升序/价格降序'],
-                            ['page', 'page', 'number', '是', '当前页码'],
-                            ['page_size', 'page大小', 'number', '是', '每页条数']
+                            ['category_id', 'number', '否', '分类ID，0为全部'],
+                            ['category_name', 'string', '否', '分类名称'],
+                            ['region', 'string', '否', '区域筛选：海口/三亚/琼海/万宁/儋州'],
+                            ['time_range', 'string', '否', '时间范围：全部/今天/明天/本周末/一周内/一个月内'],
+                            ['price_range', 'string', '否', '价格范围：全部/0-100/100-300/300-500/500-800/800+'],
+                            ['sort_type', 'string', '否', '排序方式：综合/最新/价格升序/价格降序'],
+                            ['page', 'number', '是', '当前页码'],
+                            ['page_size', 'number', '是', '每页条数']
                         ]
                     }
                 ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>1. 导航栏 (.nav-bar)</strong></p>
-                <ul>
-                    <li>展示内容：左侧返回箭头按钮 + 居中标题"演出" + 右侧搜索图标按钮</li>
-                    <li>交互行为：返回按钮返回上一页；搜索按钮跳转 search.html</li>
-                    <li>数据字段：无</li>
-                </ul>
-                <p><strong>2. 分类筛选 (.category-tabs)</strong></p>
-                <ul>
-                    <li>展示内容：水平滚动标签栏，标签包括：全部/演唱会/话剧/舞蹈/音乐会/儿童剧/魔术/脱口秀。选中标签底部有主题色指示条，文字加粗变色</li>
-                    <li>交互行为：水平滚动切换标签；点击标签筛选对应分类，列表重置为第一页并刷新数据；保留当前筛选条件（区域/时间/价格）</li>
-                    <li>数据字段：<code>category_id</code>, <code>category_name</code></li>
-                </ul>
-                <p><strong>3. 筛选栏 (.filter-bar)</strong></p>
-                <ul>
-                    <li>展示内容：三个筛选按钮并排（区域/时间/价格），默认显示"区域"、"时间"、"价格"文字，选中后显示已选值。点击后弹出底部下拉筛选面板</li>
-                    <li>交互行为：点击筛选按钮弹出对应筛选面板（从底部滑出）；面板内多选/单选后点击"确定"应用筛选；支持"重置"清空筛选条件</li>
-                    <li>数据字段：区域 <code>region</code>（海口/三亚/琼海/万宁/儋州）；时间 <code>time_range</code>（全部/今天/明天/本周末/一周内/一个月内）；价格 <code>price_range</code>（全部/0-100/100-300/300-500/500-800/800+）</li>
-                </ul>
-                <p><strong>4. 演出列表 (.show-list)</strong></p>
-                <ul>
-                    <li>展示内容：垂直排列的演出卡片。每张卡片：左侧圆角封面图 + 右侧信息区（演出名称 + 分类标签 + 评分星星 + 演出时间 + 场馆名称 + 价格"¥180起"）</li>
-                    <li>交互行为：点击卡片跳转 show-detail.html；上拉触底加载更多（触底距离 100rpx）；下拉刷新</li>
-                    <li>数据字段：<code>show_id</code>, <code>title</code>, <code>cover_image</code>, <code>category_name</code>, <code>rating</code>, <code>show_time</code>, <code>venue_name</code>, <code>min_price</code>, <code>status</code></li>
-                </ul>
-                <p><strong>5. 底部 Tab 栏 (.tab-bar)</strong></p>
-                <ul>
-                    <li>展示内容：5 个 Tab（首页/演出/商城/会员/我的），当前激活"演出"Tab</li>
-                    <li>交互行为：点击切换 Tab</li>
-                    <li>数据字段：<code>tab_key</code>, <code>label</code>, <code>icon</code>, <code>active_icon</code>, <code>url</code></li>
-                </ul>`
-            },
-            {
-                title: '交互说明',
-                content: `<p><strong>排序规则：</strong>综合排序（运营权重60%+浏览量20%+销量20%）、最新上线、价格升序/降序</p>
-                <p><strong>筛选联动：</strong>切换分类标签重置分页保留筛选；切换筛选条件重置分页保留分类；多条件组合筛选</p>
-                <p><strong>加载状态：</strong>首次加载骨架屏、下拉刷新顶部loading、加载更多底部loading、无数据空状态插画</p>`
             }
         ]
     },
@@ -1886,6 +1853,11 @@ const devDocs = {
                 <p><strong>页面模块：</strong>演出大图+返回/分享按钮、演出信息（名称/标签/评分/时长/年龄限制）、早鸟/会员优先横幅、场次选择（水平滚动卡片）、详情Tab（详情/评论/须知）、场馆信息（名称/地址/距离）、底部操作栏（收藏+分享+立即购买）</p>`
             },
             {
+                title: '交互说明',
+                content: `<p><strong>余票状态：</strong>&gt;50%余票充足(绿色)、20%-50%余票不多(橙色)、&lt;20%余票紧张(红色)、0已售罄(灰色)</p>
+                <p><strong>页面跳转：</strong>立即购买->seat-selection.html?session_id=xxx；场馆地址->微信地图导航</p>`
+            },
+            {
                 title: '核心字段',
                 noTableWrap: true,
                 tables: [
@@ -1893,81 +1865,59 @@ const devDocs = {
                         title: '演出详情字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['show_id', '演出ID', 'number', '是', '演出唯一标识'],
-                            ['title', '标题', 'string', '是', '演出名称'],
-                            ['images[]', 'images[]', 'array', '是', '演出图片列表，最多9张'],
-                            ["tags[]", "tags[]", "array", "是", "标签数组，如[\"沉浸式\",\"大型\",\"原创\"]"],
-                            ['rating', '评分', 'number', '是', '评分，0-5分'],
-                            ['duration', 'duration', 'number', '是', '演出时长（分钟）'],
-                            ["age_limit", "age限制", "string", "是", "年龄限制，如\"6岁以上\""],
-                            ['description', '描述', 'string', '是', '演出详情富文本'],
-                            ['is_favorited', '是否favorited', 'boolean', '是', '是否已收藏'],
-                            ['early_bird_discount', '早鸟折扣', 'string', '否', '早鸟折扣信息'],
-                            ['early_bird_end_time', '早鸟结束时间', 'string', '否', '早鸟结束时间'],
-                            ['priority_start_time', '优先开始时间', 'string', '否', '会员优先购票开始时间']
+                            ['show_id', 'number', '是', '演出唯一标识'],
+                            ['title', 'string', '是', '演出名称'],
+                            ['images[]', 'array', '是', '演出图片列表，最多9张'],
+                            ["tags[]", "array", "是", "标签数组，如[\"沉浸式\",\"大型\",\"原创\"]"],
+                            ['rating', 'number', '是', '评分，0-5分'],
+                            ['duration', 'number', '是', '演出时长（分钟）'],
+                            ["age_limit", "string", "是", "年龄限制，如\"6岁以上\""],
+                            ['description', 'string', '是', '演出详情富文本'],
+                            ['is_favorited', 'boolean', '是', '是否已收藏'],
+                            ['early_bird_discount', 'string', '否', '早鸟折扣信息'],
+                            ['early_bird_end_time', 'string', '否', '早鸟结束时间'],
+                            ['priority_start_time', 'string', '否', '会员优先购票开始时间']
                         ]
                     },
                     {
                         title: '场次字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['session_id', '会话ID', 'number', '是', '场次唯一标识'],
-                            ['show_date', '演出日期', 'string', '是', '演出日期'],
-                            ['show_time', '演出时间', 'string', '是', '演出时间'],
-                            ['weekday', 'weekday', 'string', '是', '星期几'],
-                            ['min_price', '最低价格', 'number', '是', '最低票价'],
-                            ['remaining_seats', 'remaining_seats', 'number', '是', '剩余座位数'],
-                            ['status', '状态', 'enum', '是', '状态：1-售票中 2-已售罄 3-已结束'],
-                            ['is_early_bird', '是否早鸟', 'boolean', '否', '是否为早鸟场次']
+                            ['session_id', 'number', '是', '场次唯一标识'],
+                            ['show_date', 'string', '是', '演出日期'],
+                            ['show_time', 'string', '是', '演出时间'],
+                            ['weekday', 'string', '是', '星期几'],
+                            ['min_price', 'number', '是', '最低票价'],
+                            ['remaining_seats', 'number', '是', '剩余座位数'],
+                            ['status', 'enum', '是', '状态：1-售票中 2-已售罄 3-已结束'],
+                            ['is_early_bird', 'boolean', '否', '是否为早鸟场次']
                         ]
                     },
                     {
                         title: '场馆信息字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['venue_name', '场馆名称', 'string', '是', '场馆名称'],
-                            ['venue_address', '场馆地址', 'string', '是', '场馆地址'],
-                            ["distance", "distance", "string", "否", "距用户距离，如\"3.5km\""],
-                            ['latitude', 'latitude', 'number', '是', '纬度'],
-                            ['longitude', 'longitude', 'number', '是', '经度']
+                            ['venue_name', 'string', '是', '场馆名称'],
+                            ['venue_address', 'string', '是', '场馆地址'],
+                            ["distance", "string", "否", "距用户距离，如\"3.5km\""],
+                            ['latitude', 'number', '是', '纬度'],
+                            ['longitude', 'number', '是', '经度']
                         ]
                     },
                     {
                         title: '评论字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['comment_id', 'commentID', 'number', '是', '评论唯一标识'],
-                            ['user_avatar', '用户头像', 'string', '是', '评论者头像URL'],
-                            ['user_name', '用户名称', 'string', '是', '评论者昵称'],
-                            ['rating', '评分', 'number', '是', '评论评分'],
-                            ['content', '内容', 'string', '是', '评论内容'],
-                            ['images[]', 'images[]', 'array', '否', '评论图片列表'],
-                            ['create_time', '创建时间', 'string', '是', '评论时间']
+                            ['comment_id', 'number', '是', '评论唯一标识'],
+                            ['user_avatar', 'string', '是', '评论者头像URL'],
+                            ['user_name', 'string', '是', '评论者昵称'],
+                            ['rating', 'number', '是', '评论评分'],
+                            ['content', 'string', '是', '评论内容'],
+                            ['images[]', 'array', '否', '评论图片列表'],
+                            ['create_time', 'string', '是', '评论时间']
                         ]
                     }
                 ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>1. 演出大图 (.show-hero)</strong></p>
-                <ul><li>展示内容：顶部全宽大图，左上角半透明返回按钮，右上角半透明分享按钮</li><li>交互行为：返回上一页；调起微信分享面板</li><li>数据字段：<code>images[]</code>（最多9张）</li></ul>
-                <p><strong>2. 演出信息 (.show-info)</strong></p>
-                <ul><li>展示内容：演出名称+分类标签组（沉浸式/大型/原创）+评分（9.2分）+时长（120分钟）+年龄限制（6岁以上）</li><li>数据字段：<code>title</code>, <code>tags[]</code>, <code>rating</code>, <code>duration</code>, <code>age_limit</code></li></ul>
-                <p><strong>3. 早鸟/会员优先横幅 (.promo-banner)</strong></p>
-                <ul><li>展示内容：渐变色横幅，非会员显示早鸟折扣，会员显示优先购票提示</li><li>数据字段：<code>early_bird_discount</code>, <code>early_bird_end_time</code>, <code>priority_start_time</code>, <code>member_level</code></li></ul>
-                <p><strong>4. 场次选择 (.session-selector)</strong></p>
-                <ul><li>展示内容：水平滚动场次卡片（日期+星期+时间+价格+早鸟标签），选中高亮</li><li>交互行为：点击选中场次联动更新座位信息；已售罄灰色不可点击</li><li>数据字段：<code>session_id</code>, <code>show_date</code>, <code>show_time</code>, <code>weekday</code>, <code>min_price</code>, <code>remaining_seats</code>, <code>status</code>, <code>is_early_bird</code></li></ul>
-                <p><strong>5. 详情Tab (.detail-tabs)</strong></p>
-                <ul><li>展示内容：3个Tab（详情/评论/须知）。详情：图文富文本；评论：头像+昵称+评分+内容+图片+时间；须知：购票须知/退换规则/入场须知</li><li>交互行为：Tab切换；评论分页加载；图文展开/收起</li></ul>
-                <p><strong>6. 场馆信息 (.venue-info)</strong></p>
-                <ul><li>展示内容：场馆名称+地址+"距我x.xkm"</li><li>交互行为：点击调起微信内置地图导航</li><li>数据字段：<code>venue_name</code>, <code>venue_address</code>, <code>distance</code>, <code>latitude</code>, <code>longitude</code></li></ul>
-                <p><strong>7. 底部操作栏 (.bottom-bar)</strong></p>
-                <ul><li>展示内容：收藏图标（空心/实心）+分享图标+"立即购买"按钮（含价格）</li><li>交互行为：收藏切换；分享调起分享面板；立即购买跳转 seat-selection.html</li><li>数据字段：<code>is_favorited</code>, <code>min_price</code></li></ul>`
-            },
-            {
-                title: '交互说明',
-                content: `<p><strong>余票状态：</strong>&gt;50%余票充足(绿色)、20%-50%余票不多(橙色)、&lt;20%余票紧张(红色)、0已售罄(灰色)</p>
-                <p><strong>页面跳转：</strong>立即购买->seat-selection.html?session_id=xxx；场馆地址->微信地图导航</p>`
             }
         ]
     },
@@ -2218,6 +2168,11 @@ const devDocs = {
                 content: `<p><strong>核心功能：</strong>全局搜索演出，支持搜索建议（防抖300ms）、历史记录（localStorage最多10条）、热门搜索排行（Top3高亮）、搜索结果（关键词高亮）、空状态</p>`
             },
             {
+                title: '交互说明',
+                content: `<p><strong>搜索流程：</strong>初始->历史+热门；输入中->建议；搜索后->结果列表；无结果->空状态</p>
+                <p><strong>相关度：</strong>名称精确50分、模糊30分、场馆/演员20分</p>`
+            },
+            {
                 title: '核心字段',
                 noTableWrap: true,
                 tables: [
@@ -2225,44 +2180,26 @@ const devDocs = {
                         title: '搜索结果字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['keyword', 'keyword', 'string', '是', '搜索关键词'],
-                            ['show_id', '演出ID', 'number', '是', '演出唯一标识'],
-                            ['title', '标题', 'string', '是', '演出名称'],
-                            ['cover_image', '封面图片', 'string', '是', '封面图URL'],
-                            ['category_name', '分类名称', 'string', '是', '分类名称'],
-                            ['min_price', '最低价格', 'number', '是', '最低票价'],
-                            ['page', 'page', 'number', '是', '当前页码'],
-                            ['page_size', 'page大小', 'number', '是', '每页条数']
+                            ['keyword', 'string', '是', '搜索关键词'],
+                            ['show_id', 'number', '是', '演出唯一标识'],
+                            ['title', 'string', '是', '演出名称'],
+                            ['cover_image', 'string', '是', '封面图URL'],
+                            ['category_name', 'string', '是', '分类名称'],
+                            ['min_price', 'number', '是', '最低票价'],
+                            ['page', 'number', '是', '当前页码'],
+                            ['page_size', 'number', '是', '每页条数']
                         ]
                     },
                     {
                         title: '搜索建议字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['suggestion_list[]', 'suggestion_list[]', 'array', '是', '搜索建议列表，最多8条'],
-                            ['hot_keywords[]', 'hot_keywords[]', 'array', '是', '热门搜索关键词列表'],
-                            ['search_history[]', 'search_history[]', 'array', '否', '搜索历史记录，最多10条']
+                            ['suggestion_list[]', 'array', '是', '搜索建议列表，最多8条'],
+                            ['hot_keywords[]', 'array', '是', '热门搜索关键词列表'],
+                            ['search_history[]', 'array', '否', '搜索历史记录，最多10条']
                         ]
                     }
                 ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>1. 搜索输入框 (.search-input)</strong></p>
-                <ul><li>自动聚焦；输入触发搜索建议；回车/点击搜索按钮执行搜索</li><li>数据字段：<code>keyword</code></li></ul>
-                <p><strong>2. 搜索建议 (.search-suggestions)</strong></p>
-                <ul><li>最多8条匹配建议，关键词橙色加粗高亮</li><li>数据字段：<code>suggestion_list[]</code></li></ul>
-                <p><strong>3. 搜索历史 (.search-history)</strong></p>
-                <ul><li>横向灰色标签，支持清空（二次确认）</li><li>数据字段：localStorage key: search_history</li></ul>
-                <p><strong>4. 热门搜索 (.hot-search)</strong></p>
-                <ul><li>排行榜，Top1/2/3红色/橙色/金色高亮</li><li>数据字段：<code>hot_keywords[]</code></li></ul>
-                <p><strong>5. 搜索结果 (.search-results)</strong></p>
-                <ul><li>演出卡片（封面+名称关键词高亮+标签+价格），上拉加载更多</li><li>数据字段：<code>show_id</code>, <code>title</code>, <code>cover_image</code>, <code>category_name</code>, <code>min_price</code></li></ul>`
-            },
-            {
-                title: '交互说明',
-                content: `<p><strong>搜索流程：</strong>初始->历史+热门；输入中->建议；搜索后->结果列表；无结果->空状态</p>
-                <p><strong>相关度：</strong>名称精确50分、模糊30分、场馆/演员20分</p>`
             }
         ]
     },
@@ -2277,6 +2214,11 @@ const devDocs = {
                 <p><strong>页面模块：</strong>会员卡片（深色渐变，头像+昵称+金卡徽章+成长值进度条3200/5000+卡号）、会员权益（水平滚动5项：优先购票/等级折扣/生日赠礼/定期发券/专属客服）、优先购票（倒计时+演出卡片列表）、推荐有奖（海报+分享链接）、底部Tab栏</p>`
             },
             {
+                title: '交互说明',
+                content: `<p><strong>等级体系：</strong>普通(注册)->银卡(1000元)->金卡(5000元)->黑卡(20000元)</p>
+                <p><strong>等级权益：</strong>折扣(银95/金9/黑85折)、优先购(金卡以上提前24h)、积分倍数(银1.2x/金1.5x/黑2x)</p>`
+            },
+            {
                 title: '核心字段',
                 noTableWrap: true,
                 tables: [
@@ -2284,49 +2226,37 @@ const devDocs = {
                         title: '会员信息字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['avatar', 'avatar', 'string', '是', '用户头像URL'],
-                            ['nickname', 'nickname', 'string', '是', '用户昵称'],
-                            ['member_level', '会员等级', 'enum', '是', '会员等级：0-普通 1-银卡 2-金卡 3-黑卡'],
-                            ['growth_value', 'growth值', 'number', '是', '当前成长值'],
-                            ['growth_target', 'growth目标', 'number', '是', '升级所需成长值'],
-                            ['card_no', '卡编号', 'string', '是', '会员卡号']
+                            ['avatar', 'string', '是', '用户头像URL'],
+                            ['nickname', 'string', '是', '用户昵称'],
+                            ['member_level', 'enum', '是', '会员等级：0-普通 1-银卡 2-金卡 3-黑卡'],
+                            ['growth_value', 'number', '是', '当前成长值'],
+                            ['growth_target', 'number', '是', '升级所需成长值'],
+                            ['card_no', 'string', '是', '会员卡号']
                         ]
                     },
                     {
                         title: '会员权益字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['benefit_id', 'benefitID', 'number', '是', '权益唯一标识'],
-                            ["name", "名称", "string", "是", "权益名称，如\"优先购票\"\"等级折扣\""],
-                            ['icon', 'icon', 'string', '是', '权益图标URL'],
-                            ['description', '描述', 'string', '是', '权益说明'],
-                            ['is_available', '是否available', 'boolean', '是', '当前等级是否可用']
+                            ['benefit_id', 'number', '是', '权益唯一标识'],
+                            ["name", "string", "是", "权益名称，如\"优先购票\"\"等级折扣\""],
+                            ['icon', 'string', '是', '权益图标URL'],
+                            ['description', 'string', '是', '权益说明'],
+                            ['is_available', 'boolean', '是', '当前等级是否可用']
                         ]
                     },
                     {
                         title: '优先购票字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['show_id', '演出ID', 'number', '是', '演出唯一标识'],
-                            ['title', '标题', 'string', '是', '演出名称'],
-                            ['cover_image', '封面图片', 'string', '是', '封面图URL'],
-                            ['sale_start_time', 'sale_start时间', 'string', '是', '公开开票时间'],
-                            ['priority_start_time', '优先开始时间', 'string', '是', '会员优先开票时间']
+                            ['show_id', 'number', '是', '演出唯一标识'],
+                            ['title', 'string', '是', '演出名称'],
+                            ['cover_image', 'string', '是', '封面图URL'],
+                            ['sale_start_time', 'string', '是', '公开开票时间'],
+                            ['priority_start_time', 'string', '是', '会员优先开票时间']
                         ]
                     }
                 ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>1. 会员卡片 (.member-card)</strong></p>
-                <ul><li>深蓝到深紫渐变，成长值进度条百分比"64%"</li><li>数据字段：<code>avatar</code>, <code>nickname</code>, <code>member_level</code>(0-3), <code>growth_value</code>, <code>growth_target</code>, <code>card_no</code></li></ul>
-                <p><strong>2. 优先购票 (.priority-purchase)</strong></p>
-                <ul><li>倒计时"距开票 02:15:30"实时更新；结束后按钮变"立即购买"</li><li>数据字段：<code>show_id</code>, <code>title</code>, <code>cover_image</code>, <code>sale_start_time</code>, <code>priority_start_time</code></li></ul>`
-            },
-            {
-                title: '交互说明',
-                content: `<p><strong>等级体系：</strong>普通(注册)->银卡(1000元)->金卡(5000元)->黑卡(20000元)</p>
-                <p><strong>等级权益：</strong>折扣(银95/金9/黑85折)、优先购(金卡以上提前24h)、积分倍数(银1.2x/金1.5x/黑2x)</p>`
             }
         ]
     },
@@ -2341,6 +2271,11 @@ const devDocs = {
                 <p><strong>页面模块：</strong>导航栏（返回+"我的优惠券"+"去使用"）、筛选Tab（4项含角标）、优惠券列表（左侧金额区半圆缺口+右侧信息区）、空状态</p>`
             },
             {
+                title: '交互说明',
+                content: `<p><strong>券类型：</strong>满减券、折扣券、无门槛券</p>
+                <p><strong>有效期：</strong>固定日期或领取后+N天</p>`
+            },
+            {
                 title: '核心字段',
                 noTableWrap: true,
                 tables: [
@@ -2348,28 +2283,18 @@ const devDocs = {
                         title: '优惠券字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['coupon_id', '优惠券ID', 'number', '是', '优惠券唯一标识'],
-                            ['amount', '金额', 'number', '是', '优惠金额'],
-                            ['threshold', 'threshold', 'number', '否', '使用门槛金额，如满200可用'],
-                            ['title', '标题', 'string', '是', '优惠券名称'],
-                            ['type', '类型', 'enum', '是', '券类型：1-满减券 2-折扣券 3-无门槛券'],
-                            ['start_time', '开始时间', 'string', '是', '有效期开始时间'],
-                            ['end_time', '结束时间', 'string', '是', '有效期结束时间'],
-                            ['scope', 'scope', 'string', '是', '使用范围说明'],
-                            ['status', '状态', 'enum', '是', '状态：0-未使用 1-已使用 2-已过期']
+                            ['coupon_id', 'number', '是', '优惠券唯一标识'],
+                            ['amount', 'number', '是', '优惠金额'],
+                            ['threshold', 'number', '否', '使用门槛金额，如满200可用'],
+                            ['title', 'string', '是', '优惠券名称'],
+                            ['type', 'enum', '是', '券类型：1-满减券 2-折扣券 3-无门槛券'],
+                            ['start_time', 'string', '是', '有效期开始时间'],
+                            ['end_time', 'string', '是', '有效期结束时间'],
+                            ['scope', 'string', '是', '使用范围说明'],
+                            ['status', 'enum', '是', '状态：0-未使用 1-已使用 2-已过期']
                         ]
                     }
                 ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>优惠券卡片 (.coupon-list)</strong></p>
-                <ul><li>左侧：大字金额（¥50）+使用条件（满200可用），上下半圆缺口</li><li>右侧：名称+有效期+使用范围+操作按钮</li><li>数据字段：<code>coupon_id</code>, <code>amount</code>, <code>threshold</code>, <code>title</code>, <code>start_time</code>, <code>end_time</code>, <code>scope</code>, <code>status</code></li></ul>`
-            },
-            {
-                title: '交互说明',
-                content: `<p><strong>券类型：</strong>满减券、折扣券、无门槛券</p>
-                <p><strong>有效期：</strong>固定日期或领取后+N天</p>`
             }
         ]
     },
@@ -2382,37 +2307,6 @@ const devDocs = {
                 title: '功能描述',
                 content: `<p><strong>核心功能：</strong>展示券包列表，支持购买和查看详情。</p>
                 <p><strong>页面模块：</strong>统计头部（2x2网格：券包数/最低折扣/累计节省/可用券数）、筛选Tab（全部/可使用/已过期）、可展开券包卡片（封面+名称+演出chips+价格+购买按钮）、确认弹窗</p>`
-            },
-            {
-                title: '核心字段',
-                noTableWrap: true,
-                tables: [
-                    {
-                        title: '券包统计字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['total_packages', '总packages', 'number', '是', '券包总数'],
-                            ['min_discount', '最低折扣', 'string', '是', '最低折扣信息'],
-                            ['total_saved', '总saved', 'number', '是', '累计节省金额'],
-                            ['available_coupons', 'available_coupons', 'number', '是', '可用券数量']
-                        ]
-                    },
-                    {
-                        title: '券包字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['package_id', '券包ID', 'number', '是', '券包唯一标识'],
-                            ['cover_image', '封面图片', 'string', '是', '券包封面图URL'],
-                            ['name', '名称', 'string', '是', '券包名称'],
-                            ['show_tags[]', '演出tags[]', 'array', '是', '适用演出标签数组'],
-                            ['original_price', '原价', 'number', '是', '原价'],
-                            ['sale_price', '售价', 'number', '是', '折扣价'],
-                            ['saved_amount', 'saved金额', 'number', '是', '节省金额'],
-                            ['status', '状态', 'enum', '是', '状态：0-可使用 1-已过期'],
-                            ['coupons[]', 'coupons[]', 'array', '是', '包含的优惠券列表']
-                        ]
-                    }
-                ]
             },
             {
                 title: '交互说明',
@@ -2433,6 +2327,37 @@ const devDocs = {
                     <li><strong>触发：</strong>点击"全部"/"可使用"/"已过期"Tab</li>
                     <li><strong>成功：</strong>列表按状态筛选刷新</li>
                 </ul>`
+            },
+            {
+                title: '核心字段',
+                noTableWrap: true,
+                tables: [
+                    {
+                        title: '券包统计字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['total_packages', 'number', '是', '券包总数'],
+                            ['min_discount', 'string', '是', '最低折扣信息'],
+                            ['total_saved', 'number', '是', '累计节省金额'],
+                            ['available_coupons', 'number', '是', '可用券数量']
+                        ]
+                    },
+                    {
+                        title: '券包字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['package_id', 'number', '是', '券包唯一标识'],
+                            ['cover_image', 'string', '是', '券包封面图URL'],
+                            ['name', 'string', '是', '券包名称'],
+                            ['show_tags[]', 'array', '是', '适用演出标签数组'],
+                            ['original_price', 'number', '是', '原价'],
+                            ['sale_price', 'number', '是', '折扣价'],
+                            ['saved_amount', 'number', '是', '节省金额'],
+                            ['status', 'enum', '是', '状态：0-可使用 1-已过期'],
+                            ['coupons[]', 'array', '是', '包含的优惠券列表']
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -2446,6 +2371,11 @@ const devDocs = {
                 content: `<p><strong>核心功能：</strong>展示积分余额2,580、会员等级进度、每日任务（签到+10/评论+50/分享+20/购买1元=1积分）、功能入口（积分兑换/抽奖/积分明细）</p>`
             },
             {
+                title: '交互说明',
+                content: `<p><strong>积分规则：</strong>1元=1积分，100积分=1元，生日双倍，次年12月31日过期</p>
+                <p><strong>签到：</strong>每日+10，连续第3天+5，第7天+20</p>`
+            },
+            {
                 title: '核心字段',
                 noTableWrap: true,
                 tables: [
@@ -2453,36 +2383,24 @@ const devDocs = {
                         title: '积分信息字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['available_points', 'available_points', 'number', '是', '可用积分余额'],
-                            ['member_level', '会员等级', 'enum', '是', '会员等级：0-普通 1-银卡 2-金卡 3-黑卡'],
-                            ['current_level_points', 'current_level_points', 'number', '是', '当前等级已获积分'],
-                            ['next_level_points', 'next_level_points', 'number', '是', '下一等级所需积分']
+                            ['available_points', 'number', '是', '可用积分余额'],
+                            ['member_level', 'enum', '是', '会员等级：0-普通 1-银卡 2-金卡 3-黑卡'],
+                            ['current_level_points', 'number', '是', '当前等级已获积分'],
+                            ['next_level_points', 'number', '是', '下一等级所需积分']
                         ]
                     },
                     {
                         title: '任务字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['task_id', 'taskID', 'number', '是', '任务唯一标识'],
-                            ["name", "名称", "string", "是", "任务名称，如\"每日签到\"\"评论演出\""],
-                            ['reward_points', 'reward_points', 'number', '是', '奖励积分数'],
-                            ['status', '状态', 'enum', '是', '状态：0-待完成 1-已完成'],
-                            ['action_url', 'actionURL', 'string', '否', '任务跳转链接']
+                            ['task_id', 'number', '是', '任务唯一标识'],
+                            ["name", "string", "是", "任务名称，如\"每日签到\"\"评论演出\""],
+                            ['reward_points', 'number', '是', '奖励积分数'],
+                            ['status', 'enum', '是', '状态：0-待完成 1-已完成'],
+                            ['action_url', 'string', '否', '任务跳转链接']
                         ]
                     }
                 ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>积分卡片 (.points-card)</strong></p>
-                <ul><li>深蓝到紫色渐变，大字"2,580"+会员等级+升级进度条</li><li>数据字段：<code>available_points</code>, <code>member_level</code>, <code>current_level_points</code>, <code>next_level_points</code></li></ul>
-                <p><strong>任务列表 (.task-list)</strong></p>
-                <ul><li>图标+名称+奖励积分+状态按钮（"去完成"/"已完成"）</li><li>签到直接完成并显示"+10"飞入动画</li><li>数据字段：<code>task_id</code>, <code>name</code>, <code>reward_points</code>, <code>status</code>, <code>action_url</code></li></ul>`
-            },
-            {
-                title: '交互说明',
-                content: `<p><strong>积分规则：</strong>1元=1积分，100积分=1元，生日双倍，次年12月31日过期</p>
-                <p><strong>签到：</strong>每日+10，连续第3天+5，第7天+20</p>`
             }
         ]
     },
@@ -2496,6 +2414,10 @@ const devDocs = {
                 content: `<p><strong>核心功能：</strong>展示积分收支流水，按时间筛选（全部/本月/近三月/近半年），汇总栏（累计收入/支出/余额），按日期分组列表（图标+标题+时间+金额+余额）</p>`
             },
             {
+                title: '交互说明',
+                content: `<p>按日期降序分组，收入绿色"+"，支出红色"-"，每条显示操作后余额，首次20条，上拉加载更多</p>`
+            },
+            {
                 title: '核心字段',
                 noTableWrap: true,
                 tables: [
@@ -2503,29 +2425,25 @@ const devDocs = {
                         title: '积分汇总字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['total_income', '总income', 'number', '是', '累计获得积分'],
-                            ['total_expend', '总expend', 'number', '是', '累计消耗积分'],
-                            ['current_points', 'current_points', 'number', '是', '当前积分余额']
+                            ['total_income', 'number', '是', '累计获得积分'],
+                            ['total_expend', 'number', '是', '累计消耗积分'],
+                            ['current_points', 'number', '是', '当前积分余额']
                         ]
                     },
                     {
                         title: '积分流水字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['flow_id', 'flowID', 'number', '是', '流水唯一标识'],
-                            ['type', '类型', 'enum', '是', '类型：1-收入 2-支出'],
-                            ["title", "标题", "string", "是", "流水标题，如\"购买演出\"\"每日签到\""],
-                            ['points', 'points', 'number', '是', '积分变动数量'],
-                            ['balance', 'balance', 'number', '是', '变动后余额'],
-                            ['create_time', '创建时间', 'string', '是', '变动时间'],
-                            ['time_range', 'time范围', 'string', '否', '筛选范围：全部/本月/近三月/近半年']
+                            ['flow_id', 'number', '是', '流水唯一标识'],
+                            ['type', 'enum', '是', '类型：1-收入 2-支出'],
+                            ["title", "string", "是", "流水标题，如\"购买演出\"\"每日签到\""],
+                            ['points', 'number', '是', '积分变动数量'],
+                            ['balance', 'number', '是', '变动后余额'],
+                            ['create_time', 'string', '是', '变动时间'],
+                            ['time_range', 'string', '否', '筛选范围：全部/本月/近三月/近半年']
                         ]
                     }
                 ]
-            },
-            {
-                title: '交互说明',
-                content: `<p>按日期降序分组，收入绿色"+"，支出红色"-"，每条显示操作后余额，首次20条，上拉加载更多</p>`
             }
         ]
     },
@@ -2539,6 +2457,11 @@ const devDocs = {
                 content: `<p><strong>核心功能：</strong>展示钱包余额¥1,280.00、冻结金额、累计充值/消费，快捷操作（充值/提现/交易记录），促销横幅"充值满500送50"，工具卡片（充值卡绑定+支付安全），充值弹窗（金额网格50/100/200/500+自定义输入）</p>`
             },
             {
+                title: '交互说明',
+                content: `<p><strong>充值优惠：</strong>满100送5/满500送30/满1000送80</p>
+                <p><strong>提现：</strong>50元起提，手续费1%，T+1到账</p>`
+            },
+            {
                 title: '核心字段',
                 noTableWrap: true,
                 tables: [
@@ -2546,34 +2469,22 @@ const devDocs = {
                         title: '钱包信息字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['balance', 'balance', 'number', '是', '可用余额'],
-                            ['frozen_balance', 'frozen_balance', 'number', '是', '冻结金额'],
-                            ['total_recharge', '总recharge', 'number', '是', '累计充值金额'],
-                            ['total_consume', '总consume', 'number', '是', '累计消费金额']
+                            ['balance', 'number', '是', '可用余额'],
+                            ['frozen_balance', 'number', '是', '冻结金额'],
+                            ['total_recharge', 'number', '是', '累计充值金额'],
+                            ['total_consume', 'number', '是', '累计消费金额']
                         ]
                     },
                     {
                         title: '充值字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['amount', '金额', 'number', '是', '充值金额'],
-                            ['bonus', 'bonus', 'number', '否', '赠送金额'],
-                            ['pay_method', 'pay方式', 'enum', '是', '支付方式：wechat-微信支付 alipay-支付宝']
+                            ['amount', 'number', '是', '充值金额'],
+                            ['bonus', 'number', '否', '赠送金额'],
+                            ['pay_method', 'enum', '是', '支付方式：wechat-微信支付 alipay-支付宝']
                         ]
                     }
                 ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>余额卡片 (.balance-card)</strong></p>
-                <ul><li>深蓝到深紫渐变，余额点击显示/隐藏（隐私保护）</li><li>数据字段：<code>balance</code>, <code>frozen_balance</code>, <code>total_recharge</code>, <code>total_consume</code></li></ul>
-                <p><strong>充值弹窗 (.recharge-popup)</strong></p>
-                <ul><li>4个预设金额按钮选中高亮+自定义输入+"立即充值"调起微信/支付宝</li><li>数据字段：<code>amount</code>, <code>pay_method</code></li></ul>`
-            },
-            {
-                title: '交互说明',
-                content: `<p><strong>充值优惠：</strong>满100送5/满500送30/满1000送80</p>
-                <p><strong>提现：</strong>50元起提，手续费1%，T+1到账</p>`
             }
         ]
     },
@@ -2585,34 +2496,6 @@ const devDocs = {
             {
                 title: '功能描述',
                 content: `<p><strong>核心功能：</strong>九宫格抽奖（8奖品格+中心"开始"按钮），旋转动画3-4秒，消耗50积分/次，中奖弹窗（彩纸动画+奖品信息+领取/继续抽奖按钮），费用提示+我的奖品+抽奖规则</p>`
-            },
-            {
-                title: '核心字段',
-                noTableWrap: true,
-                tables: [
-                    {
-                        title: '抽奖活动字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['activity_id', 'activityID', 'number', '是', '活动唯一标识'],
-                            ['cost_points', 'cost_points', 'number', '是', '每次抽奖消耗积分'],
-                            ['remaining_chances', 'remaining_chances', 'number', '是', '剩余抽奖次数'],
-                            ['total_chances', '总chances', 'number', '是', '总抽奖次数']
-                        ]
-                    },
-                    {
-                        title: '奖品字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['prize_id', '奖品ID', 'number', '是', '奖品唯一标识'],
-                            ['name', '名称', 'string', '是', '奖品名称'],
-                            ['icon', 'icon', 'string', '是', '奖品图标URL'],
-                            ['probability', 'probability', 'number', '是', '中奖概率（百分比）'],
-                            ['type', '类型', 'enum', '是', '奖品类型：coupon-优惠券 goods-实物 points-积分 thanks-谢谢参与'],
-                            ['is_winning', '是否winning', 'boolean', '是', '是否中奖']
-                        ]
-                    }
-                ]
             },
             {
                 title: '交互说明',
@@ -2633,6 +2516,34 @@ const devDocs = {
                     <li><strong>触发：</strong>点击"我的奖品"入口</li>
                     <li><strong>成功：</strong>跳转奖品记录页面</li>
                 </ul>`
+            },
+            {
+                title: '核心字段',
+                noTableWrap: true,
+                tables: [
+                    {
+                        title: '抽奖活动字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['activity_id', 'number', '是', '活动唯一标识'],
+                            ['cost_points', 'number', '是', '每次抽奖消耗积分'],
+                            ['remaining_chances', 'number', '是', '剩余抽奖次数'],
+                            ['total_chances', 'number', '是', '总抽奖次数']
+                        ]
+                    },
+                    {
+                        title: '奖品字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['prize_id', 'number', '是', '奖品唯一标识'],
+                            ['name', 'string', '是', '奖品名称'],
+                            ['icon', 'string', '是', '奖品图标URL'],
+                            ['probability', 'number', '是', '中奖概率（百分比）'],
+                            ['type', 'enum', '是', '奖品类型：coupon-优惠券 goods-实物 points-积分 thanks-谢谢参与'],
+                            ['is_winning', 'boolean', '是', '是否中奖']
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -2647,6 +2558,11 @@ const devDocs = {
                 <p><strong>页面模块：</strong>消息入口栏（铃铛+红点）、用户卡片（头像VIP徽章+昵称+金卡+编辑资料+代理商入口）、实名认证提示（黄色横幅）、资产概览（钱包/积分/优惠券/演出票）、我的订单（5类型入口含角标）、工具栏（3x2网格：收货地址/偏好设置/隐私设置/实名认证/充值卡绑定/实体卡申请）、其他服务（客服/关于我们）、底部Tab栏</p>`
             },
             {
+                title: '交互说明',
+                content: `<p><strong>实名认证：</strong>未认证黄色横幅/审核中灰色/已认证不显示</p>
+                <p><strong>消息红点：</strong>有未读显示红点，进入消息中心后清除</p>`
+            },
+            {
                 title: '核心字段',
                 noTableWrap: true,
                 tables: [
@@ -2654,38 +2570,33 @@ const devDocs = {
                         title: '用户信息字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['avatar', 'avatar', 'string', '是', '用户头像URL'],
-                            ['nickname', 'nickname', 'string', '是', '用户昵称'],
-                            ['member_level', '会员等级', 'enum', '是', '会员等级：0-普通 1-银卡 2-金卡 3-黑卡'],
-                            ['is_agent', '是否代理', 'boolean', '是', '是否为代理商'],
-                            ['real_name_status', 'real_name状态', 'enum', '是', '实名状态：0-未认证 1-审核中 2-已认证'],
-                            ['unread_message_count', 'unread_message数量', 'number', '是', '未读消息数']
+                            ['avatar', 'string', '是', '用户头像URL'],
+                            ['nickname', 'string', '是', '用户昵称'],
+                            ['member_level', 'enum', '是', '会员等级：0-普通 1-银卡 2-金卡 3-黑卡'],
+                            ['is_agent', 'boolean', '是', '是否为代理商'],
+                            ['real_name_status', 'enum', '是', '实名状态：0-未认证 1-审核中 2-已认证'],
+                            ['unread_message_count', 'number', '是', '未读消息数']
                         ]
                     },
                     {
                         title: '资产概览字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['balance', 'balance', 'number', '是', '钱包余额'],
-                            ['available_points', 'available_points', 'number', '是', '可用积分'],
-                            ['coupon_count', '优惠券数量', 'number', '是', '可用优惠券数量'],
-                            ['ticket_count', 'ticket数量', 'number', '是', '未使用演出票数量']
+                            ['balance', 'number', '是', '钱包余额'],
+                            ['available_points', 'number', '是', '可用积分'],
+                            ['coupon_count', 'number', '是', '可用优惠券数量'],
+                            ['ticket_count', 'number', '是', '未使用演出票数量']
                         ]
                     },
                     {
                         title: '订单入口字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['order_type', '订单类型', 'enum', '是', '订单类型：pending_pay-待付款 pending_verify-待核销 completed-已完成 refunded-已退款'],
-                            ['count', '数量', 'number', '是', '对应类型订单数量']
+                            ['order_type', 'enum', '是', '订单类型：pending_pay-待付款 pending_verify-待核销 completed-已完成 refunded-已退款'],
+                            ['count', 'number', '是', '对应类型订单数量']
                         ]
                     }
                 ]
-            },
-            {
-                title: '交互说明',
-                content: `<p><strong>实名认证：</strong>未认证黄色横幅/审核中灰色/已认证不显示</p>
-                <p><strong>消息红点：</strong>有未读显示红点，进入消息中心后清除</p>`
             }
         ]
     },
@@ -2697,24 +2608,6 @@ const devDocs = {
             {
                 title: '功能描述',
                 content: `<p><strong>核心功能：</strong>编辑个人资料。头像上传（拍照/相册，裁剪正方形，5MB限制，jpg/png）、表单（昵称可编辑1-20字符/真实姓名readonly/手机号readonly脱敏/性别picker/生日年月日联动select 1940-当前年）、底部保存按钮（loading状态+校验+成功返回）</p>`
-            },
-            {
-                title: '核心字段',
-                noTableWrap: true,
-                tables: [
-                    {
-                        title: '用户资料字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['avatar', 'avatar', 'string', '是', '头像URL，支持jpg/png，最大5MB'],
-                            ['nickname', 'nickname', 'string', '是', '昵称，1-20字符'],
-                            ['real_name', 'real名称', 'string', '否', '真实姓名（只读）'],
-                            ['phone', 'phone', 'string', '否', '手机号（只读，脱敏显示）'],
-                            ['gender', 'gender', 'enum', '否', '性别：male-男 female-女'],
-                            ['birthday', 'birthday', 'string', '否', '生日，格式YYYY-MM-DD']
-                        ]
-                    }
-                ]
             },
             {
                 title: '交互说明',
@@ -2732,6 +2625,24 @@ const devDocs = {
                     <li><strong>成功：</strong>显示"保存成功"并返回个人中心</li>
                     <li><strong>失败：</strong>校验失败显示具体错误提示</li>
                 </ul>`
+            },
+            {
+                title: '核心字段',
+                noTableWrap: true,
+                tables: [
+                    {
+                        title: '用户资料字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['avatar', 'string', '是', '头像URL，支持jpg/png，最大5MB'],
+                            ['nickname', 'string', '是', '昵称，1-20字符'],
+                            ['real_name', 'string', '否', '真实姓名（只读）'],
+                            ['phone', 'string', '否', '手机号（只读，脱敏显示）'],
+                            ['gender', 'enum', '否', '性别：male-男 female-女'],
+                            ['birthday', 'string', '否', '生日，格式YYYY-MM-DD']
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -2752,66 +2663,6 @@ const devDocs = {
                 </ul>`
             },
             {
-                title: '核心字段',
-                noTableWrap: true,
-                tables: [
-                    {
-                        title: '通知设置字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['marketing_notification', 'marketing_notification', 'boolean', '是', '营销通知开关'],
-                            ['show_promotion', '演出promotion', 'boolean', '是', '演出推广通知开关'],
-                            ['discount_notification', '折扣通知', 'boolean', '是', '优惠活动通知开关']
-                        ]
-                    },
-                    {
-                        title: '账户信息字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['phone', 'phone', 'string', '是', '手机号（脱敏显示）'],
-                            ['register_time', 'register时间', 'string', '是', '注册时间'],
-                            ['last_login_time', 'last_login时间', 'string', '是', '最近登录时间'],
-                            ['real_name_status', 'real_name状态', 'enum', '是', '实名认证状态：0-未认证 1-审核中 2-已认证']
-                        ]
-                    },
-                    {
-                        title: '隐私链接字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['privacy_policy_url', 'privacy_policyURL', 'string', '是', '隐私政策H5页面URL'],
-                            ['data_usage_url', 'data_usageURL', 'string', '是', '数据使用说明H5页面URL']
-                        ]
-                    }
-                ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>1. 通知开关 (.notification-switches)</strong></p>
-                <ul>
-                    <li>展示内容：列表形式，每项左侧图标+名称，右侧 toggle 开关。包括：营销通知（推送营销活动消息）、演出推广（推送新演出上线通知）、优惠活动（推送优惠券和折扣信息）</li>
-                    <li>交互行为：点击 toggle 开关切换通知状态；切换后立即调接口保存；开关有平滑过渡动画</li>
-                    <li>数据字段：<code>marketing_notification</code>, <code>show_promotion</code>, <code>discount_notification</code>（布尔值）</li>
-                </ul>
-                <p><strong>2. 隐私链接 (.privacy-links)</strong></p>
-                <ul>
-                    <li>展示内容：列表形式。隐私政策（图标+名称+">"）+ 数据使用说明（图标+名称+">"）</li>
-                    <li>交互行为：点击跳转对应 H5 页面（WebView 打开）</li>
-                    <li>数据字段：<code>privacy_policy_url</code>, <code>data_usage_url</code></li>
-                </ul>
-                <p><strong>3. 信息卡片 (.info-card)</strong></p>
-                <ul>
-                    <li>展示内容：卡片形式展示账户信息摘要。手机号（脱敏）、注册时间、最近登录时间、实名认证状态</li>
-                    <li>交互行为：纯展示</li>
-                    <li>数据字段：<code>phone</code>, <code>register_time</code>, <code>last_login_time</code>, <code>real_name_status</code></li>
-                </ul>
-                <p><strong>4. 危险区域 (.danger-zone)</strong></p>
-                <ul>
-                    <li>展示内容：红色文字"注销账号"按钮 + 说明文字"注销后数据不可恢复"</li>
-                    <li>交互行为：点击弹出二次确认弹窗（"确定要注销账号吗？注销后所有数据将被清除且不可恢复" + "确认注销"/"取消"按钮）；确认后需输入验证码验证身份；注销成功后清除本地数据并跳转登录页</li>
-                    <li>数据字段：无</li>
-                </ul>`
-            },
-            {
                 title: '交互说明',
                 content: `<p><strong>通知开关：</strong></p>
                 <ul>
@@ -2824,6 +2675,39 @@ const devDocs = {
                     <li>有未完成订单时禁止注销，提示"请先完成或取消未完成的订单"</li>
                     <li>有余额时提示"请先提现余额后再注销"</li>
                 </ul>`
+            },
+            {
+                title: '核心字段',
+                noTableWrap: true,
+                tables: [
+                    {
+                        title: '通知设置字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['marketing_notification', 'boolean', '是', '营销通知开关'],
+                            ['show_promotion', 'boolean', '是', '演出推广通知开关'],
+                            ['discount_notification', 'boolean', '是', '优惠活动通知开关']
+                        ]
+                    },
+                    {
+                        title: '账户信息字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['phone', 'string', '是', '手机号（脱敏显示）'],
+                            ['register_time', 'string', '是', '注册时间'],
+                            ['last_login_time', 'string', '是', '最近登录时间'],
+                            ['real_name_status', 'enum', '是', '实名认证状态：0-未认证 1-审核中 2-已认证']
+                        ]
+                    },
+                    {
+                        title: '隐私链接字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['privacy_policy_url', 'string', '是', '隐私政策H5页面URL'],
+                            ['data_usage_url', 'string', '是', '数据使用说明H5页面URL']
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -2843,52 +2727,6 @@ const devDocs = {
                 </ul>`
             },
             {
-                title: '核心字段',
-                noTableWrap: true,
-                tables: [
-                    {
-                        title: '偏好标签字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['interest_tags[]', 'interest_tags[]', 'array', '是', '兴趣标签ID数组，至少1个，最多5个'],
-                            ['tag_id', '标签ID', 'number', '是', '标签唯一标识'],
-                            ["tag_name", "tag名称", "string", "是", "标签名称，如\"演唱会\"\"话剧\"\"舞蹈\""]
-                        ]
-                    },
-                    {
-                        title: '通知偏好字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['priority_remind', '优先提醒', 'boolean', '是', '优先购票提醒开关'],
-                            ['birthday_offer', 'birthday_offer', 'boolean', '是', '生日专属优惠开关'],
-                            ['points_notification', 'points_notification', 'boolean', '是', '积分变动通知开关'],
-                            ['personalized_recommend', 'personalized_recommend', 'boolean', '是', '个性化推荐开关']
-                        ]
-                    }
-                ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>1. 兴趣标签 (.interest-tags)</strong></p>
-                <ul>
-                    <li>展示内容：标题"感兴趣的演出类型" + 标签组。标签包括：演唱会、话剧、舞蹈、音乐会、儿童剧、魔术、脱口秀、戏曲、音乐剧、歌剧。已选标签高亮（主题色背景+白色文字），未选标签灰色边框</li>
-                    <li>交互行为：点击标签切换选中/未选中状态；至少选择 1 个标签；最多选择 5 个标签；超出限制时提示"最多选择5个标签"</li>
-                    <li>数据字段：<code>interest_tags[]</code>（标签 ID 数组）</li>
-                </ul>
-                <p><strong>2. 会员权限开关 (.permission-switches)</strong></p>
-                <ul>
-                    <li>展示内容：标题"通知偏好" + 列表。每项左侧图标+名称+说明文字，右侧 toggle 开关。包括：优先购票提醒（新演出开票时提醒）、生日专属优惠（生日月推送专属优惠）、积分变动通知（积分到账/扣减时通知）、个性化推荐（根据偏好推荐演出）</li>
-                    <li>交互行为：点击 toggle 切换状态</li>
-                    <li>数据字段：<code>priority_remind</code>, <code>birthday_offer</code>, <code>points_notification</code>, <code>personalized_recommend</code></li>
-                </ul>
-                <p><strong>3. 底部保存按钮 (.save-btn)</strong></p>
-                <ul>
-                    <li>展示内容：固定底部全宽"保存"按钮</li>
-                    <li>交互行为：点击保存所有设置；校验至少选 1 个兴趣标签；保存成功提示并返回</li>
-                    <li>数据字段：提交全部标签和开关状态</li>
-                </ul>`
-            },
-            {
                 title: '交互说明',
                 content: `<p><strong>标签选择：</strong></p>
                 <ul>
@@ -2901,6 +2739,31 @@ const devDocs = {
                     <li>兴趣标签用于首页个性化推荐算法</li>
                     <li>通知开关控制推送消息类型</li>
                 </ul>`
+            },
+            {
+                title: '核心字段',
+                noTableWrap: true,
+                tables: [
+                    {
+                        title: '偏好标签字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['interest_tags[]', 'array', '是', '兴趣标签ID数组，至少1个，最多5个'],
+                            ['tag_id', 'number', '是', '标签唯一标识'],
+                            ["tag_name", "string", "是", "标签名称，如\"演唱会\"\"话剧\"\"舞蹈\""]
+                        ]
+                    },
+                    {
+                        title: '通知偏好字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['priority_remind', 'boolean', '是', '优先购票提醒开关'],
+                            ['birthday_offer', 'boolean', '是', '生日专属优惠开关'],
+                            ['points_notification', 'boolean', '是', '积分变动通知开关'],
+                            ['personalized_recommend', 'boolean', '是', '个性化推荐开关']
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -2921,51 +2784,6 @@ const devDocs = {
                 </ul>`
             },
             {
-                title: '核心字段',
-                noTableWrap: true,
-                tables: [
-                    {
-                        title: '认证信息字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['auth_status', 'auth状态', 'enum', '是', '认证状态：0-未认证 1-审核中 2-已认证 3-认证失败'],
-                            ['real_name', 'real名称', 'string', '是', '真实姓名，2-20字符'],
-                            ['id_card_number', 'id_card_number', 'string', '是', '身份证号，18位'],
-                            ['id_card_front_url', 'id_card_frontURL', 'string', '是', '身份证正面照片URL'],
-                            ['id_card_back_url', 'id_card_backURL', 'string', '是', '身份证反面照片URL'],
-                            ['fail_reason', 'fail原因', 'string', '否', '认证失败原因']
-                        ]
-                    }
-                ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>1. 认证状态卡片 (.auth-status-card)</strong></p>
-                <ul>
-                    <li>展示内容：根据认证状态显示不同内容。未认证：灰色图标+"未认证"+说明文字；审核中：橙色图标+"审核中"+"预计1-3个工作日"；已认证：绿色图标+"已认证"+真实姓名（脱敏）</li>
-                    <li>交互行为：已认证状态表单不可编辑；审核中状态表单不可编辑；未认证状态可编辑提交</li>
-                    <li>数据字段：<code>auth_status</code>(0-未认证/1-审核中/2-已认证/3-认证失败), <code>real_name</code>, <code>id_card</code></li>
-                </ul>
-                <p><strong>2. 表单 (.auth-form)</strong></p>
-                <ul>
-                    <li>展示内容：真实姓名输入框（placeholder："请输入真实姓名"）+ 身份证号输入框（placeholder："请输入18位身份证号"，仅允许数字输入）+ 身份证正面上传区（虚线框+示例图+拍照/相册按钮）+ 身份证反面上传区（同上）</li>
-                    <li>交互行为：真实姓名 2-20 字符；身份证号 18 位纯数字（最后一位可为 X）；证件照片支持拍照/相册选择，上传后显示预览图+重新上传按钮；已认证/审核中时表单置灰</li>
-                    <li>数据字段：<code>real_name</code>, <code>id_card_number</code>, <code>id_card_front_url</code>, <code>id_card_back_url</code></li>
-                </ul>
-                <p><strong>3. 认证须知 (.auth-notice)</strong></p>
-                <ul>
-                    <li>展示内容：折叠区域，标题"认证须知"，展开后显示：认证目的说明、个人信息保护承诺、审核时效说明</li>
-                    <li>交互行为：点击标题展开/收起</li>
-                    <li>数据字段：静态内容</li>
-                </ul>
-                <p><strong>4. 底部提交按钮 (.submit-btn)</strong></p>
-                <ul>
-                    <li>展示内容：固定底部全宽"提交认证"按钮</li>
-                    <li>交互行为：表单校验通过后可点击；提交后状态变为"审核中"；校验失败显示错误提示</li>
-                    <li>数据字段：提交全部表单字段</li>
-                </ul>`
-            },
-            {
                 title: '交互说明',
                 content: `<p><strong>表单校验：</strong></p>
                 <ul>
@@ -2983,6 +2801,24 @@ const devDocs = {
                     <li>未认证 -> 提交 -> 审核中 -> 已认证/认证失败</li>
                     <li>认证失败 -> 重新提交 -> 审核中</li>
                 </ul>`
+            },
+            {
+                title: '核心字段',
+                noTableWrap: true,
+                tables: [
+                    {
+                        title: '认证信息字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['auth_status', 'enum', '是', '认证状态：0-未认证 1-审核中 2-已认证 3-认证失败'],
+                            ['real_name', 'string', '是', '真实姓名，2-20字符'],
+                            ['id_card_number', 'string', '是', '身份证号，18位'],
+                            ['id_card_front_url', 'string', '是', '身份证正面照片URL'],
+                            ['id_card_back_url', 'string', '是', '身份证反面照片URL'],
+                            ['fail_reason', 'string', '否', '认证失败原因']
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -3005,77 +2841,6 @@ const devDocs = {
                 </ul>`
             },
             {
-                title: '核心字段',
-                noTableWrap: true,
-                tables: [
-                    {
-                        title: '消息字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['message_id', 'messageID', 'number', '是', '消息唯一标识'],
-                            ['type', '类型', 'enum', '是', '消息类型：system-系统通知 order-订单状态 points-积分变动'],
-                            ['title', '标题', 'string', '是', '消息标题'],
-                            ['content', '内容', 'string', '是', '消息正文（支持富文本）'],
-                            ['summary', 'summary', 'string', '否', '消息摘要'],
-                            ['icon_type', 'icon类型', 'string', '否', '图标类型'],
-                            ['create_time', '创建时间', 'string', '是', '消息创建时间'],
-                            ['is_read', '是否read', 'boolean', '是', '是否已读'],
-                            ['unread_count', 'unread数量', 'number', '是', '当前Tab未读数量']
-                        ]
-                    },
-                    {
-                        title: '消息详情字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['highlight', 'highlight', 'string', '否', '高亮提示文字'],
-                            ["action_text", "action文本", "string", "否", "操作按钮文字，如\"查看订单\""],
-                            ['action_url', 'actionURL', 'string', '否', '操作按钮跳转链接'],
-                            ['order_id', '排序ID', 'number', '否', '关联订单ID'],
-                            ['points', 'points', 'number', '否', '关联积分变动数量']
-                        ]
-                    }
-                ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>1. 导航栏 (.nav-bar)</strong></p>
-                <ul>
-                    <li>展示内容：左侧返回箭头 + 居中标题"消息中心" + 右侧"全部已读"文字按钮</li>
-                    <li>交互行为：返回按钮返回上一页；"全部已读"将当前 Tab 下所有消息标记为已读</li>
-                    <li>数据字段：无</li>
-                </ul>
-                <p><strong>2. 消息 Tab (.message-tabs)</strong></p>
-                <ul>
-                    <li>展示内容：3 个 Tab 项。系统通知（badge 显示未读数"2"）、订单状态（badge 显示未读数"3"）、积分变动（badge 显示未读数"2"）。选中 Tab 底部有指示条</li>
-                    <li>交互行为：点击切换 Tab，对应面板显示；切换时清除当前 Tab 的 badge</li>
-                    <li>数据字段：<code>type</code>(system/order/points), <code>unread_count</code></li>
-                </ul>
-                <p><strong>3. 系统通知面板 (.system-panel)</strong></p>
-                <ul>
-                    <li>展示内容：按日期分组（如"今天"/"昨天"/"更早"）的消息列表。每条消息：左侧金色渐变圆形图标 + 标题 + 时间 + 摘要文字。未读消息左侧有彩色竖条 + 右上角脉冲红点动画</li>
-                    <li>交互行为：点击消息进入详情视图并标记已读；左滑可删除消息</li>
-                    <li>数据字段：<code>message_id</code>, <code>title</code>, <code>content</code>, <code>summary</code>, <code>create_time</code>, <code>is_read</code>, <code>icon_type</code></li>
-                </ul>
-                <p><strong>4. 订单状态面板 (.order-panel)</strong></p>
-                <ul>
-                    <li>展示内容：按日期分组的订单消息列表。消息类型包括：购票成功（绿色图标）、退款到账（蓝色图标）、核销提醒（橙色图标）、配送发货（紫色图标）。每条显示订单摘要信息</li>
-                    <li>交互行为：点击跳转对应订单详情</li>
-                    <li>数据字段：<code>message_id</code>, <code>type</code>(purchase_success/refund/verify/shipping), <code>order_id</code>, <code>title</code>, <code>create_time</code>, <code>is_read</code></li>
-                </ul>
-                <p><strong>5. 积分变动面板 (.points-panel)</strong></p>
-                <ul>
-                    <li>展示内容：按日期分组的积分消息列表。消息类型包括：积分到账（绿色"+"图标）、即将到期（橙色警告图标）、消耗通知（红色"-"图标）、签到奖励（金色星星图标）。每条显示积分变动金额</li>
-                    <li>交互行为：点击跳转积分明细或关联订单</li>
-                    <li>数据字段：<code>message_id</code>, <code>type</code>(earn/expiring/consume/sign), <code>points</code>, <code>title</code>, <code>create_time</code>, <code>is_read</code></li>
-                </ul>
-                <p><strong>6. 消息详情视图 (.message-detail)</strong></p>
-                <ul>
-                    <li>展示内容：大图标（对应消息类型）+ 标题（大字加粗）+ 时间 + 正文内容（支持富文本）+ 高亮提示区（如"您的订单已出票，请在演出前到场核销"）+ 底部操作按钮（如"查看订单"/"立即使用"）</li>
-                    <li>交互行为：点击操作按钮跳转对应页面；返回按钮回到消息列表</li>
-                    <li>数据字段：<code>message_id</code>, <code>title</code>, <code>content</code>, <code>highlight</code>, <code>action_text</code>, <code>action_url</code></li>
-                </ul>`
-            },
-            {
                 title: '交互说明',
                 content: `<p><strong>消息状态：</strong></p>
                 <ul>
@@ -3092,6 +2857,38 @@ const devDocs = {
                     <li>支持下拉刷新获取最新消息</li>
                     <li>新消息到达时 badge 实时更新</li>
                 </ul>`
+            },
+            {
+                title: '核心字段',
+                noTableWrap: true,
+                tables: [
+                    {
+                        title: '消息字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['message_id', 'number', '是', '消息唯一标识'],
+                            ['type', 'enum', '是', '消息类型：system-系统通知 order-订单状态 points-积分变动'],
+                            ['title', 'string', '是', '消息标题'],
+                            ['content', 'string', '是', '消息正文（支持富文本）'],
+                            ['summary', 'string', '否', '消息摘要'],
+                            ['icon_type', 'string', '否', '图标类型'],
+                            ['create_time', 'string', '是', '消息创建时间'],
+                            ['is_read', 'boolean', '是', '是否已读'],
+                            ['unread_count', 'number', '是', '当前Tab未读数量']
+                        ]
+                    },
+                    {
+                        title: '消息详情字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['highlight', 'string', '否', '高亮提示文字'],
+                            ["action_text", "string", "否", "操作按钮文字，如\"查看订单\""],
+                            ['action_url', 'string', '否', '操作按钮跳转链接'],
+                            ['order_id', 'number', '否', '关联订单ID'],
+                            ['points', 'number', '否', '关联积分变动数量']
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -3110,73 +2907,6 @@ const devDocs = {
                     <li><strong>订单列表</strong>：订单卡片(订单号+状态/封面+演出信息/操作按钮)</li>
                     <li><strong>电子票夹</strong>：离线提示 + 电子票卡片(4种渐变主题，含QR码+撕裂线设计)</li>
                     <li><strong>空状态</strong></li>
-                </ul>`
-            },
-            {
-                title: '核心字段',
-                noTableWrap: true,
-                tables: [
-                    {
-                        title: '订单字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['order_id', '排序ID', 'number', '是', '订单唯一标识'],
-                            ['order_no', '订单编号', 'string', '是', '订单编号'],
-                            ['status', '状态', 'enum', '是', '状态：pending_pay-待付款 pending_verify-待核销 completed-已完成 refunded-已退款'],
-                            ['show_title', '演出标题', 'string', '是', '演出名称'],
-                            ['cover_image', '封面图片', 'string', '是', '演出封面图URL'],
-                            ['session_time', 'session时间', 'string', '是', '场次时间'],
-                            ['seats[]', 'seats[]', 'array', '是', '座位信息数组'],
-                            ['total_amount', '总额金额', 'number', '是', '订单总金额'],
-                            ['create_time', '创建时间', 'string', '是', '下单时间']
-                        ]
-                    },
-                    {
-                        title: '电子票字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['ticket_id', '票ID', 'number', '是', '电子票唯一标识'],
-                            ['qr_code', 'qr代码', 'string', '是', '二维码数据'],
-                            ['show_title', '演出标题', 'string', '是', '演出名称'],
-                            ['session_time', 'session时间', 'string', '是', '场次时间'],
-                            ["seat_info", "seat信息", "string", "是", "座位信息，如\"A区3排5座\""],
-                            ['viewer_name', 'viewer名称', 'string', '是', '观演人姓名'],
-                            ['theme', 'theme', 'enum', '是', '票面主题色：blue_purple/pink_orange/green_cyan/gold_brown']
-                        ]
-                    }
-                ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>1. 视图切换器 (.view-switcher)</strong></p>
-                <ul>
-                    <li>展示内容：顶部两个 Tab（"我的订单"/"电子票夹"），选中项高亮</li>
-                    <li>交互行为：点击切换"订单列表"和"电子票夹"两个视图</li>
-                    <li>数据字段：<code>view</code>(orders/tickets)</li>
-                </ul>
-                <p><strong>2. 订单 Tab (.order-tabs)</strong></p>
-                <ul>
-                    <li>展示内容：5 个 Tab（全部/待付款/待核销/已完成/已退款），部分 Tab 带数量角标（如待付款 badge:1）</li>
-                    <li>交互行为：点击切换筛选；角标实时更新</li>
-                    <li>数据字段：<code>status</code>(all/pending_pay/pending_verify/completed/refunded), <code>count</code></li>
-                </ul>
-                <p><strong>3. 订单列表 (.order-list)</strong></p>
-                <ul>
-                    <li>展示内容：垂直排列的订单卡片。每张卡片：顶部订单号+状态标签（如"待付款"红色/"已完成"绿色）+ 中间区域（左侧封面缩略图 + 右侧演出名称+场次时间+座位信息+数量）+ 底部金额（"合计: ¥360"）+ 操作按钮（"去支付"/"查看电子票"/"申请退款"/"去评价"）</li>
-                    <li>交互行为：点击卡片跳转订单详情；操作按钮根据订单状态显示不同功能</li>
-                    <li>数据字段：<code>order_id</code>, <code>order_no</code>, <code>status</code>, <code>show_title</code>, <code>cover_image</code>, <code>session_time</code>, <code>seats[]</code>, <code>total_amount</code>, <code>create_time</code></li>
-                </ul>
-                <p><strong>4. 电子票夹 (.ticket-holder)</strong></p>
-                <ul>
-                    <li>展示内容：顶部离线提示条（"电子票已保存，离线也可查看"）+ 电子票卡片列表。每张票：4 种渐变主题色随机分配（蓝紫/粉橙/绿青/金棕），上半部分 QR 码 + 演出名称 + 场次时间，中间撕裂线设计（锯齿状分割线），下半部分座位信息 + 观演人姓名</li>
-                    <li>交互行为：长按保存电子票到相册；点击 QR 码放大显示；离线状态下仍可查看已保存的电子票</li>
-                    <li>数据字段：<code>ticket_id</code>, <code>qr_code</code>, <code>show_title</code>, <code>session_time</code>, <code>seat_info</code>, <code>viewer_name</code>, <code>theme</code></li>
-                </ul>
-                <p><strong>5. 空状态 (.empty-state)</strong></p>
-                <ul>
-                    <li>展示内容：空状态插画 + "暂无订单"或"暂无电子票"提示</li>
-                    <li>交互行为：纯展示</li>
-                    <li>数据字段：无</li>
                 </ul>`
             },
             {
@@ -3201,6 +2931,40 @@ const devDocs = {
                     <li>离线状态下可查看已缓存的票</li>
                     <li>QR 码支持亮度调节</li>
                 </ul>`
+            },
+            {
+                title: '核心字段',
+                noTableWrap: true,
+                tables: [
+                    {
+                        title: '订单字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['order_id', 'number', '是', '订单唯一标识'],
+                            ['order_no', 'string', '是', '订单编号'],
+                            ['status', 'enum', '是', '状态：pending_pay-待付款 pending_verify-待核销 completed-已完成 refunded-已退款'],
+                            ['show_title', 'string', '是', '演出名称'],
+                            ['cover_image', 'string', '是', '演出封面图URL'],
+                            ['session_time', 'string', '是', '场次时间'],
+                            ['seats[]', 'array', '是', '座位信息数组'],
+                            ['total_amount', 'number', '是', '订单总金额'],
+                            ['create_time', 'string', '是', '下单时间']
+                        ]
+                    },
+                    {
+                        title: '电子票字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['ticket_id', 'number', '是', '电子票唯一标识'],
+                            ['qr_code', 'string', '是', '二维码数据'],
+                            ['show_title', 'string', '是', '演出名称'],
+                            ['session_time', 'string', '是', '场次时间'],
+                            ["seat_info", "string", "是", "座位信息，如\"A区3排5座\""],
+                            ['viewer_name', 'string', '是', '观演人姓名'],
+                            ['theme', 'enum', '是', '票面主题色：blue_purple/pink_orange/green_cyan/gold_brown']
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -3222,88 +2986,6 @@ const devDocs = {
                 </ul>`
             },
             {
-                title: '核心字段',
-                noTableWrap: true,
-                tables: [
-                    {
-                        title: '商品订单字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['order_id', '排序ID', 'number', '是', '订单唯一标识'],
-                            ['order_no', '订单编号', 'string', '是', '订单编号'],
-                            ['shop_name', 'shop名称', 'string', '是', '店铺名称'],
-                            ['status', '状态', 'enum', '是', '状态：pending_pay-待付款 pending_ship-待发货 completed-已完成'],
-                            ['items[]', 'items[]', 'array', '是', '商品列表'],
-                            ['total_amount', '总额金额', 'number', '是', '订单总金额'],
-                            ['create_time', '创建时间', 'string', '是', '下单时间']
-                        ]
-                    },
-                    {
-                        title: '订单商品字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['product_image', '商品图片', 'string', '是', '商品图片URL'],
-                            ['product_name', '商品名称', 'string', '是', '商品名称'],
-                            ['spec', 'spec', 'string', '否', '规格信息'],
-                            ['price', '价格', 'number', '是', '单价'],
-                            ['quantity', '数量', 'number', '是', '购买数量']
-                        ]
-                    },
-                    {
-                        title: '物流信息字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['express_company', '快递company', 'string', '是', '快递公司名称'],
-                            ['express_no', 'express编号', 'string', '是', '快递单号'],
-                            ['logistics[]', 'logistics[]', 'array', '否', '物流时间线'],
-                            ['time', 'time', 'string', '是', '物流节点时间'],
-                            ['description', '描述', 'string', '是', '物流节点描述'],
-                            ['is_current', '是否current', 'boolean', '否', '是否为最新节点']
-                        ]
-                    },
-                    {
-                        title: '订单详情字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['pay_method', 'pay方式', 'string', '否', '支付方式'],
-                            ['receiver_name', 'receiver名称', 'string', '是', '收件人姓名'],
-                            ['receiver_phone', 'receiver手机号', 'string', '是', '收件人电话'],
-                            ['receiver_address', 'receiver地址', 'string', '是', '收货地址'],
-                            ['freight', 'freight', 'number', '否', '运费'],
-                            ['discount', '折扣', 'number', '否', '优惠金额'],
-                            ['pay_amount', 'pay金额', 'number', '是', '实付金额']
-                        ]
-                    }
-                ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>1. 订单 Tab (.order-tabs)</strong></p>
-                <ul>
-                    <li>展示内容：4 个 Tab（全部/待付款/待发货/已完成），选中项高亮</li>
-                    <li>交互行为：点击切换筛选</li>
-                    <li>数据字段：<code>status</code>(all/pending_pay/pending_ship/completed)</li>
-                </ul>
-                <p><strong>2. 商品订单列表 (.order-list)</strong></p>
-                <ul>
-                    <li>展示内容：垂直排列的订单卡片。每张卡片：顶部店铺名+订单状态标签 + 商品信息区（商品图+名称+规格+单价+数量"x1"）+ 底部合计金额（"合计: ¥128"）+ 操作按钮（"去支付"/"确认收货"/"查看物流"/"再次购买"）</li>
-                    <li>交互行为：点击卡片弹出订单详情弹窗；操作按钮根据状态显示</li>
-                    <li>数据字段：<code>order_id</code>, <code>order_no</code>, <code>shop_name</code>, <code>status</code>, <code>items[]</code>(<code>product_image</code>, <code>product_name</code>, <code>spec</code>, <code>price</code>, <code>quantity</code>), <code>total_amount</code></li>
-                </ul>
-                <p><strong>3. 物流信息 (.logistics-info)</strong></p>
-                <ul>
-                    <li>展示内容：已发货/已完成的订单显示物流信息。快递公司名称 + 快递单号（可复制）+ 物流时间线（最近3条，最新一条高亮显示）</li>
-                    <li>交互行为：点击"查看物流"展开完整物流信息；长按快递单号复制</li>
-                    <li>数据字段：<code>express_company</code>, <code>express_no</code>, <code>logistics[]</code>(<code>time</code>, <code>description</code>, <code>is_current</code>)</li>
-                </ul>
-                <p><strong>4. 订单详情弹窗 (.order-detail-modal)</strong></p>
-                <ul>
-                    <li>展示内容：从底部滑出的弹窗。订单信息（订单号+下单时间+支付方式）+ 收货信息（收件人+电话+地址）+ 商品信息（商品列表+合计）+ 费用明细（商品金额+运费+优惠-xx=实付金额）</li>
-                    <li>交互行为：点击遮罩或下拉关闭弹窗</li>
-                    <li>数据字段：<code>order_no</code>, <code>create_time</code>, <code>pay_method</code>, <code>receiver_name</code>, <code>receiver_phone</code>, <code>receiver_address</code>, <code>items[]</code>, <code>freight</code>, <code>discount</code>, <code>pay_amount</code></li>
-                </ul>`
-            },
-            {
                 title: '交互说明',
                 content: `<p><strong>订单状态流转：</strong></p>
                 <ul>
@@ -3317,6 +2999,61 @@ const devDocs = {
                     <li>待收货：查看物流 / 确认收货</li>
                     <li>已完成：再次购买 / 去评价</li>
                 </ul>`
+            },
+            {
+                title: '核心字段',
+                noTableWrap: true,
+                tables: [
+                    {
+                        title: '商品订单字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['order_id', 'number', '是', '订单唯一标识'],
+                            ['order_no', 'string', '是', '订单编号'],
+                            ['shop_name', 'string', '是', '店铺名称'],
+                            ['status', 'enum', '是', '状态：pending_pay-待付款 pending_ship-待发货 completed-已完成'],
+                            ['items[]', 'array', '是', '商品列表'],
+                            ['total_amount', 'number', '是', '订单总金额'],
+                            ['create_time', 'string', '是', '下单时间']
+                        ]
+                    },
+                    {
+                        title: '订单商品字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['product_image', 'string', '是', '商品图片URL'],
+                            ['product_name', 'string', '是', '商品名称'],
+                            ['spec', 'string', '否', '规格信息'],
+                            ['price', 'number', '是', '单价'],
+                            ['quantity', 'number', '是', '购买数量']
+                        ]
+                    },
+                    {
+                        title: '物流信息字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['express_company', 'string', '是', '快递公司名称'],
+                            ['express_no', 'string', '是', '快递单号'],
+                            ['logistics[]', 'array', '否', '物流时间线'],
+                            ['time', 'string', '是', '物流节点时间'],
+                            ['description', 'string', '是', '物流节点描述'],
+                            ['is_current', 'boolean', '否', '是否为最新节点']
+                        ]
+                    },
+                    {
+                        title: '订单详情字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['pay_method', 'string', '否', '支付方式'],
+                            ['receiver_name', 'string', '是', '收件人姓名'],
+                            ['receiver_phone', 'string', '是', '收件人电话'],
+                            ['receiver_address', 'string', '是', '收货地址'],
+                            ['freight', 'number', '否', '运费'],
+                            ['discount', 'number', '否', '优惠金额'],
+                            ['pay_amount', 'number', '是', '实付金额']
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -3339,84 +3076,6 @@ const devDocs = {
                 </ul>`
             },
             {
-                title: '核心字段',
-                noTableWrap: true,
-                tables: [
-                    {
-                        title: '商品分类字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['category_id', '分类ID', 'number', '是', '分类唯一标识'],
-                            ["category_name", "category名称", "string", "是", "分类名称，如\"演出衍生品\"\"文创周边\""]
-                        ]
-                    },
-                    {
-                        title: '商品字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['product_id', '商品ID', 'number', '是', '商品唯一标识'],
-                            ['cover_image', '封面图片', 'string', '是', '商品封面图URL'],
-                            ['title', '标题', 'string', '是', '商品名称'],
-                            ['price', '价格', 'number', '是', '销售价格'],
-                            ['original_price', '原价', 'number', '否', '原价（划线价）'],
-                            ['sales_count', 'sales数量', 'number', '是', '已售数量'],
-                            ['images[]', 'images[]', 'array', '否', '商品详情图片列表'],
-                            ['specs[]', 'specs[]', 'array', '否', '规格选项列表'],
-                            ['stock', 'stock', 'number', '是', '库存数量'],
-                            ['description', '描述', 'string', '否', '商品详情富文本']
-                        ]
-                    },
-                    {
-                        title: '购物车字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['cart_id', 'cartID', 'number', '是', '购物车项唯一标识'],
-                            ['product_id', '商品ID', 'number', '是', '商品ID'],
-                            ['sku_id', 'skuID', 'number', '是', 'SKU标识'],
-                            ['selected', 'selected', 'boolean', '是', '是否选中'],
-                            ['quantity', '数量', 'number', '是', '购买数量'],
-                            ['product_name', '商品名称', 'string', '是', '商品名称'],
-                            ['spec', 'spec', 'string', '否', '已选规格'],
-                            ['price', '价格', 'number', '是', '单价'],
-                            ['cart_count', 'cart数量', 'number', '是', '购物车商品总数']
-                        ]
-                    }
-                ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>1. 商城头部 (.shop-header)</strong></p>
-                <ul>
-                    <li>展示内容：页面顶部，标题"商城" + 搜索输入框（placeholder："搜索商品"）+ 右侧购物车图标（红色角标显示商品数量）</li>
-                    <li>交互行为：点击搜索框跳转搜索页（携带 type=shop 参数）；点击购物车图标切换到购物车视图</li>
-                    <li>数据字段：<code>cart_count</code></li>
-                </ul>
-                <p><strong>2. Banner (.shop-banner)</strong></p>
-                <ul>
-                    <li>展示内容：全宽背景图 + 居中标题文字 + "立即探索"按钮</li>
-                    <li>交互行为：点击跳转推荐商品列表或活动页</li>
-                    <li>数据字段：<code>image_url</code>, <code>title</code>, <code>link_url</code></li>
-                </ul>
-                <p><strong>3. 分类侧边栏 + 商品网格 (.category-layout)</strong></p>
-                <ul>
-                    <li>展示内容：左侧固定宽度分类侧边栏（全部/演出衍生品/文创周边/纪念品/服装配饰），选中项高亮；右侧双列瀑布流商品网格。每个商品卡片：封面图 + 名称（2行截断）+ 价格（红色"¥68"）+ 销量（灰色"已售128"）</li>
-                    <li>交互行为：点击左侧分类筛选右侧商品列表；点击商品卡片进入商品详情视图；右侧商品列表上拉加载更多</li>
-                    <li>数据字段：<code>category_id</code>, <code>category_name</code>, <code>product_id</code>, <code>cover_image</code>, <code>title</code>, <code>price</code>, <code>sales_count</code></li>
-                </ul>
-                <p><strong>4. 商品详情视图 (.product-detail)</strong></p>
-                <ul>
-                    <li>展示内容：顶部图片轮播（多张商品图）+ 价格区（红色大字价格+原价删除线）+ 商品名称 + 规格选择器（如颜色/尺寸，点击展开选项）+ 配送方式（快递/自提）+ 商品详情图文（富文本）+ 底部操作栏（客服图标+"加入购物车"按钮+"立即购买"按钮）</li>
-                    <li>交互行为：图片左右滑动切换；规格选择后价格和库存联动；点击"加入购物车"成功后购物车角标+1；点击"立即购买"跳转结算页</li>
-                    <li>数据字段：<code>product_id</code>, <code>images[]</code>, <code>price</code>, <code>original_price</code>, <code>title</code>, <code>specs[]</code>(<code>name</code>, <code>options[]</code>), <code>stock</code>, <code>description</code></li>
-                </ul>
-                <p><strong>5. 购物车视图 (.cart-view)</strong></p>
-                <ul>
-                    <li>展示内容：标题"购物车" + 商品列表。每个商品：左侧勾选框 + 商品图 + 名称 + 规格 + 单价 + 数量控制（"-"按钮+数量+"+"按钮）+ 删除按钮。底部固定栏：全选勾选框 + "合计: ¥256" + "结算(2)"按钮</li>
-                    <li>交互行为：勾选/取消勾选商品；数量加减；左滑删除；全选/取消全选；合计金额实时计算；点击"结算"跳转确认订单页</li>
-                    <li>数据字段：<code>cart_id</code>, <code>product_id</code>, <code>sku_id</code>, <code>selected</code>, <code>quantity</code>, <code>product_name</code>, <code>spec</code>, <code>price</code></li>
-                </ul>`
-            },
-            {
                 title: '交互说明',
                 content: `<p><strong>分类联动：</strong></p>
                 <ul>
@@ -3429,6 +3088,51 @@ const devDocs = {
                     <li>数量加减实时更新合计金额</li>
                     <li>未选商品时结算按钮置灰</li>
                 </ul>`
+            },
+            {
+                title: '核心字段',
+                noTableWrap: true,
+                tables: [
+                    {
+                        title: '商品分类字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['category_id', 'number', '是', '分类唯一标识'],
+                            ["category_name", "string", "是", "分类名称，如\"演出衍生品\"\"文创周边\""]
+                        ]
+                    },
+                    {
+                        title: '商品字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['product_id', 'number', '是', '商品唯一标识'],
+                            ['cover_image', 'string', '是', '商品封面图URL'],
+                            ['title', 'string', '是', '商品名称'],
+                            ['price', 'number', '是', '销售价格'],
+                            ['original_price', 'number', '否', '原价（划线价）'],
+                            ['sales_count', 'number', '是', '已售数量'],
+                            ['images[]', 'array', '否', '商品详情图片列表'],
+                            ['specs[]', 'array', '否', '规格选项列表'],
+                            ['stock', 'number', '是', '库存数量'],
+                            ['description', 'string', '否', '商品详情富文本']
+                        ]
+                    },
+                    {
+                        title: '购物车字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['cart_id', 'number', '是', '购物车项唯一标识'],
+                            ['product_id', 'number', '是', '商品ID'],
+                            ['sku_id', 'number', '是', 'SKU标识'],
+                            ['selected', 'boolean', '是', '是否选中'],
+                            ['quantity', 'number', '是', '购买数量'],
+                            ['product_name', 'string', '是', '商品名称'],
+                            ['spec', 'string', '否', '已选规格'],
+                            ['price', 'number', '是', '单价'],
+                            ['cart_count', 'number', '是', '购物车商品总数']
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -3447,6 +3151,14 @@ const devDocs = {
                 </ul>`
             },
             {
+                title: '交互说明',
+                content: `<p><strong>展开/收起：</strong></p>
+                <ul>
+                    <li>点击券包卡片切换展开/收起</li>
+                    <li>展开动画：高度过渡 + 箭头旋转</li>
+                </ul>`
+            },
+            {
                 title: '核心字段',
                 noTableWrap: true,
                 tables: [
@@ -3454,49 +3166,26 @@ const devDocs = {
                         title: '已购券包字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['package_id', '券包ID', 'number', '是', '券包唯一标识'],
-                            ['name', '名称', 'string', '是', '券包名称'],
-                            ['coupon_count', '优惠券数量', 'number', '是', '包含券数量'],
-                            ['expire_date', 'expire日期', 'string', '是', '有效期截止时间'],
-                            ['status', '状态', 'enum', '是', '状态：active-可使用 expired-已过期']
+                            ['package_id', 'number', '是', '券包唯一标识'],
+                            ['name', 'string', '是', '券包名称'],
+                            ['coupon_count', 'number', '是', '包含券数量'],
+                            ['expire_date', 'string', '是', '有效期截止时间'],
+                            ['status', 'enum', '是', '状态：active-可使用 expired-已过期']
                         ]
                     },
                     {
                         title: '演出券字段',
                         headers: ['字段名', '类型', '必填', '说明'],
                         rows: [
-                            ['coupon_id', '优惠券ID', 'number', '是', '演出券唯一标识'],
-                            ['show_title', '演出标题', 'string', '是', '演出名称'],
-                            ['cover_image', '封面图片', 'string', '是', '演出封面缩略图URL'],
-                            ['session_time', 'session时间', 'string', '是', '场次时间'],
-                            ["seat_info", "seat信息", "string", "否", "座位信息，如\"A区3排5座\"或\"未选座\""],
-                            ['status', '状态', 'enum', '是', '状态：unused-未使用 used-已使用 expired-已过期']
+                            ['coupon_id', 'number', '是', '演出券唯一标识'],
+                            ['show_title', 'string', '是', '演出名称'],
+                            ['cover_image', 'string', '是', '演出封面缩略图URL'],
+                            ['session_time', 'string', '是', '场次时间'],
+                            ["seat_info", "string", "否", "座位信息，如\"A区3排5座\"或\"未选座\""],
+                            ['status', 'enum', '是', '状态：unused-未使用 used-已使用 expired-已过期']
                         ]
                     }
                 ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>1. 券包列表 (.package-list)</strong></p>
-                <ul>
-                    <li>展示内容：垂直排列的券包卡片。每张卡片：左侧图标 + 券包名称 + 券数量（如"含5张券"）+ 有效期 + 状态标签（"可使用"绿色/"已过期"灰色）+ 右侧展开箭头</li>
-                    <li>交互行为：点击卡片展开/收起，展开后显示包含的演出券列表</li>
-                    <li>数据字段：<code>package_id</code>, <code>name</code>, <code>coupon_count</code>, <code>expire_date</code>, <code>status</code>(active/expired)</li>
-                </ul>
-                <p><strong>2. 展开后 - 演出券列表 (.coupon-list)</strong></p>
-                <ul>
-                    <li>展示内容：展开区域内显示的演出券列表。每张券：封面缩略图 + 演出名称 + 场次时间 + 座位信息（如"A区3排5座"或"未选座"）+ 状态标签（"未使用"/"已使用"/"已过期"）+ "选座"按钮（仅未使用且未选座时显示）</li>
-                    <li>交互行为：点击"选座"跳转 seat-selection.html；点击演出券卡片查看详情</li>
-                    <li>数据字段：<code>coupon_id</code>, <code>show_title</code>, <code>cover_image</code>, <code>session_time</code>, <code>seat_info</code>, <code>status</code>(unused/used/expired)</li>
-                </ul>`
-            },
-            {
-                title: '交互说明',
-                content: `<p><strong>展开/收起：</strong></p>
-                <ul>
-                    <li>点击券包卡片切换展开/收起</li>
-                    <li>展开动画：高度过渡 + 箭头旋转</li>
-                </ul>`
             }
         ]
     },
@@ -3519,56 +3208,6 @@ const devDocs = {
                 </ul>`
             },
             {
-                title: '核心字段',
-                noTableWrap: true,
-                tables: [
-                    {
-                        title: '充值记录字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['balance', 'balance', 'number', '是', '当前余额'],
-                            ['amount', '金额', 'number', '是', '充值金额'],
-                            ['bonus', 'bonus', 'number', '否', '赠送金额'],
-                            ['custom_amount', 'custom金额', 'number', '否', '自定义充值金额（1-5000）'],
-                            ['pay_method', 'pay方式', 'enum', '是', '支付方式：wechat-微信支付 alipay-支付宝']
-                        ]
-                    }
-                ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>1. 余额显示 (.balance-display)</strong></p>
-                <ul>
-                    <li>展示内容：深色渐变背景卡片，显示"当前余额"标签 + 大字余额金额</li>
-                    <li>交互行为：纯展示</li>
-                    <li>数据字段：<code>balance</code></li>
-                </ul>
-                <p><strong>2. 充值金额选择 (.amount-grid)</strong></p>
-                <ul>
-                    <li>展示内容：3x2 网格金额按钮。¥50、¥100（标签"赠¥5"）、¥200（标签"赠¥15"）、¥500（标签"赠¥50"）、¥1000（标签"赠¥120"）、自定义（图标+文字"自定义"）</li>
-                    <li>交互行为：点击预设金额选中高亮；点击"自定义"显示自定义输入框</li>
-                    <li>数据字段：<code>amount</code>, <code>bonus</code></li>
-                </ul>
-                <p><strong>3. 自定义金额输入 (.custom-input)</strong></p>
-                <ul>
-                    <li>展示内容：输入框（placeholder："请输入充值金额"），仅允许数字输入</li>
-                    <li>交互行为：输入金额范围 1-5000；超出范围提示</li>
-                    <li>数据字段：<code>custom_amount</code></li>
-                </ul>
-                <p><strong>4. 支付方式 (.pay-methods)</strong></p>
-                <ul>
-                    <li>展示内容：两个支付方式单选项。微信支付（图标+名称+"推荐"标签，默认选中）+ 支付宝（图标+名称）</li>
-                    <li>交互行为：点击切换支付方式</li>
-                    <li>数据字段：<code>pay_method</code>(wechat/alipay)</li>
-                </ul>
-                <p><strong>5. 底部立即充值按钮 (.recharge-btn)</strong></p>
-                <ul>
-                    <li>展示内容：固定底部全宽"立即充值"按钮（含金额文字如"充值 ¥100"）</li>
-                    <li>交互行为：未选金额时按钮置灰；选金额后可点击，调起对应支付方式</li>
-                    <li>数据字段：<code>amount</code>, <code>pay_method</code></li>
-                </ul>`
-            },
-            {
                 title: '交互说明',
                 content: `<p><strong>充值优惠：</strong></p>
                 <ul>
@@ -3581,6 +3220,23 @@ const devDocs = {
                 <ul>
                     <li>选择金额 -> 选择支付方式 -> 点击充值 -> 调起支付 -> 支付成功 -> 余额更新</li>
                 </ul>`
+            },
+            {
+                title: '核心字段',
+                noTableWrap: true,
+                tables: [
+                    {
+                        title: '充值记录字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['balance', 'number', '是', '当前余额'],
+                            ['amount', 'number', '是', '充值金额'],
+                            ['bonus', 'number', '否', '赠送金额'],
+                            ['custom_amount', 'number', '否', '自定义充值金额（1-5000）'],
+                            ['pay_method', 'enum', '是', '支付方式：wechat-微信支付 alipay-支付宝']
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -3599,39 +3255,6 @@ const devDocs = {
                 </ul>`
             },
             {
-                title: '核心字段',
-                noTableWrap: true,
-                tables: [
-                    {
-                        title: '充值卡字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['card_number', '卡number', 'string', '是', '充值卡号，16位数字'],
-                            ['card_id', '卡ID', 'number', '是', '已绑定卡片唯一标识'],
-                            ['card_last_four', '卡last_four', 'string', '是', '卡号后4位'],
-                            ['bind_time', 'bind时间', 'string', '是', '绑定时间'],
-                            ['amount', '金额', 'number', '是', '面额金额'],
-                            ['status', '状态', 'enum', '是', '状态：activated-已激活 used-已使用 expired-已过期']
-                        ]
-                    }
-                ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>1. 绑定新卡 (.bind-card)</strong></p>
-                <ul>
-                    <li>展示内容：输入框（placeholder："请输入16位充值卡号"，限制16位数字）+ "绑定充值卡"按钮</li>
-                    <li>交互行为：输入满16位后按钮可点击；绑定成功后提示并刷新列表；绑定失败显示错误原因</li>
-                    <li>数据字段：<code>card_number</code>（16位数字）</li>
-                </ul>
-                <p><strong>2. 已绑定充值卡列表 (.card-list)</strong></p>
-                <ul>
-                    <li>展示内容：垂直排列的卡片列表。每张卡片：充值卡图标 + 卡号后4位（如"**** **** **** 8888"）+ 绑定时间 + 面额金额 + 状态标签（"已激活"绿色/"已使用"灰色/"已过期"红色）</li>
-                    <li>交互行为：纯展示</li>
-                    <li>数据字段：<code>card_id</code>, <code>card_last_four</code>, <code>bind_time</code>, <code>amount</code>, <code>status</code>(activated/used/expired)</li>
-                </ul>`
-            },
-            {
                 title: '交互说明',
                 content: `<p><strong>绑定校验：</strong></p>
                 <ul>
@@ -3639,6 +3262,24 @@ const devDocs = {
                     <li>重复绑定提示"该卡已绑定"</li>
                     <li>无效卡号提示"充值卡号无效"</li>
                 </ul>`
+            },
+            {
+                title: '核心字段',
+                noTableWrap: true,
+                tables: [
+                    {
+                        title: '充值卡字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['card_number', 'string', '是', '充值卡号，16位数字'],
+                            ['card_id', 'number', '是', '已绑定卡片唯一标识'],
+                            ['card_last_four', 'string', '是', '卡号后4位'],
+                            ['bind_time', 'string', '是', '绑定时间'],
+                            ['amount', 'number', '是', '面额金额'],
+                            ['status', 'enum', '是', '状态：activated-已激活 used-已使用 expired-已过期']
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -3661,76 +3302,6 @@ const devDocs = {
                 </ul>`
             },
             {
-                title: '核心字段',
-                noTableWrap: true,
-                tables: [
-                    {
-                        title: '申请信息字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['member_level', '会员等级', 'enum', '是', '当前会员等级：0-普通 1-银卡 2-金卡 3-黑卡'],
-                            ["level_name", "level名称", "string", "是", "等级名称，如\"金卡会员\""],
-                            ['vip_level', 'vip等级', 'number', '是', 'VIP等级数字'],
-                            ['card_type', '卡类型', 'enum', '是', '申请卡片类型：gold-金卡 diamond-钻石卡'],
-                            ['is_unlocked', '是否unlocked', 'boolean', '是', '卡片类型是否已解锁'],
-                            ['name', '名称', 'string', '是', '收件人姓名，2-20字符'],
-                            ['phone', 'phone', 'string', '是', '收件人手机号，11位'],
-                            ['province', 'province', 'string', '是', '省份'],
-                            ['city', 'city', 'string', '是', '城市'],
-                            ['address', '地址', 'string', '是', '详细地址，5-100字符']
-                        ]
-                    },
-                    {
-                        title: '权益字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['benefit_id', 'benefitID', 'number', '是', '权益唯一标识'],
-                            ['name', '名称', 'string', '是', '权益名称'],
-                            ['description', '描述', 'string', '是', '权益说明']
-                        ]
-                    }
-                ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>1. 当前等级横幅 (.level-banner)</strong></p>
-                <ul>
-                    <li>展示内容：深色渐变背景横幅，显示"金卡会员" + "VIP 3"等级标识</li>
-                    <li>交互行为：纯展示</li>
-                    <li>数据字段：<code>member_level</code>, <code>level_name</code>, <code>vip_level</code></li>
-                </ul>
-                <p><strong>2. 卡片类型选择 (.card-type)</strong></p>
-                <ul>
-                    <li>展示内容：两种卡片类型并排。金卡（可选，当前等级对应卡片，有选中边框）+ 钻石卡（锁定状态，灰色蒙层+锁图标，显示"累计消费满20000元可申请"）</li>
-                    <li>交互行为：金卡可点击选中；钻石卡不可点击</li>
-                    <li>数据字段：<code>card_type</code>(gold/diamond), <code>is_unlocked</code></li>
-                </ul>
-                <p><strong>3. 权益展示 (.benefits-grid)</strong></p>
-                <ul>
-                    <li>展示内容：2x2 网格权益卡片。购票折扣（9折）、优先购票（提前24小时）、生日礼遇（专属优惠券）、专属客服（1对1服务）。每项含图标+名称+说明</li>
-                    <li>交互行为：纯展示</li>
-                    <li>数据字段：<code>benefit_id</code>, <code>name</code>, <code>description</code></li>
-                </ul>
-                <p><strong>4. 申请表单 (.apply-form)</strong></p>
-                <ul>
-                    <li>展示内容：姓名输入框 + 手机号输入框 + 所在地区（省/市二级联动 select）+ 详细地址输入框</li>
-                    <li>交互行为：姓名和手机号自动填充用户信息；地区选择器点击弹出 picker；详细地址手动输入</li>
-                    <li>数据字段：<code>name</code>, <code>phone</code>, <code>province</code>, <code>city</code>, <code>address</code></li>
-                </ul>
-                <p><strong>5. 申请记录入口 (.apply-record)</strong></p>
-                <ul>
-                    <li>展示内容："查看申请记录 >"链接</li>
-                    <li>交互行为：点击跳转申请记录列表页</li>
-                    <li>数据字段：无</li>
-                </ul>
-                <p><strong>6. 底部提交按钮 + 成功弹窗</strong></p>
-                <ul>
-                    <li>展示内容：固定底部"提交申请"按钮；提交成功后弹出成功弹窗（图标+"申请成功"+预计发货时间+"确定"按钮）</li>
-                    <li>交互行为：表单校验通过后可点击；提交成功弹窗点击"确定"返回</li>
-                    <li>数据字段：提交全部表单字段</li>
-                </ul>`
-            },
-            {
                 title: '交互说明',
                 content: `<p><strong>表单校验：</strong></p>
                 <ul>
@@ -3744,6 +3315,37 @@ const devDocs = {
                     <li>每种卡片类型只能申请一次</li>
                     <li>已有审核中的申请不可重复提交</li>
                 </ul>`
+            },
+            {
+                title: '核心字段',
+                noTableWrap: true,
+                tables: [
+                    {
+                        title: '申请信息字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['member_level', 'enum', '是', '当前会员等级：0-普通 1-银卡 2-金卡 3-黑卡'],
+                            ["level_name", "string", "是", "等级名称，如\"金卡会员\""],
+                            ['vip_level', 'number', '是', 'VIP等级数字'],
+                            ['card_type', 'enum', '是', '申请卡片类型：gold-金卡 diamond-钻石卡'],
+                            ['is_unlocked', 'boolean', '是', '卡片类型是否已解锁'],
+                            ['name', 'string', '是', '收件人姓名，2-20字符'],
+                            ['phone', 'string', '是', '收件人手机号，11位'],
+                            ['province', 'string', '是', '省份'],
+                            ['city', 'string', '是', '城市'],
+                            ['address', 'string', '是', '详细地址，5-100字符']
+                        ]
+                    },
+                    {
+                        title: '权益字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['benefit_id', 'number', '是', '权益唯一标识'],
+                            ['name', 'string', '是', '权益名称'],
+                            ['description', 'string', '是', '权益说明']
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -3763,56 +3365,6 @@ const devDocs = {
                 </ul>`
             },
             {
-                title: '核心字段',
-                noTableWrap: true,
-                tables: [
-                    {
-                        title: '交易汇总字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['total_income', '总income', 'number', '是', '累计收入金额'],
-                            ['total_expend', '总expend', 'number', '是', '累计支出金额'],
-                            ['current_balance', 'current_balance', 'number', '是', '当前余额'],
-                            ['time_range', 'time范围', 'enum', '是', '筛选范围：all-全部 month-本月 quarter-近三月 half_year-近半年']
-                        ]
-                    },
-                    {
-                        title: '交易流水字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['record_id', '记录ID', 'number', '是', '流水唯一标识'],
-                            ['type', '类型', 'enum', '是', '类型：recharge-充值 consume-消费 refund-退款 withdraw-提现'],
-                            ["title", "标题", "string", "是", "交易标题，如\"微信充值\"\"购买演出-xxx\""],
-                            ['amount', '金额', 'number', '是', '交易金额'],
-                            ['balance', 'balance', 'number', '是', '交易后余额'],
-                            ['create_time', '创建时间', 'string', '是', '交易时间'],
-                            ['order_id', '排序ID', 'number', '否', '关联订单ID']
-                        ]
-                    }
-                ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>1. 筛选标签 (.filter-tabs)</strong></p>
-                <ul>
-                    <li>展示内容：4 个标签（全部/本月/近三月/近半年），选中项高亮</li>
-                    <li>交互行为：点击切换时间范围，列表和汇总数据刷新</li>
-                    <li>数据字段：<code>time_range</code>(all/month/quarter/half_year)</li>
-                </ul>
-                <p><strong>2. 汇总栏 (.summary-bar)</strong></p>
-                <ul>
-                    <li>展示内容：3 个数据项横排。累计收入（绿色"+3,000"）、累计支出（红色"-1,670"）、当前余额（黑色"¥1,280.00"）</li>
-                    <li>交互行为：纯展示，数据随筛选条件变化</li>
-                    <li>数据字段：<code>total_income</code>, <code>total_expend</code>, <code>current_balance</code></li>
-                </ul>
-                <p><strong>3. 交易列表 (.transaction-list)</strong></p>
-                <ul>
-                    <li>展示内容：按月份分组（如"2024年6月"）的交易列表。每条记录：左侧图标（收入绿色向上箭头/支出红色向下箭头）+ 标题（如"微信充值"/"购买演出-xxx"/"退款到账"）+ 时间（如"06-15 14:30"）+ 右侧金额（收入绿色"+500.00"/支出红色"-180.00"）+ 余额（灰色小字"余额: ¥1,280.00"）</li>
-                    <li>交互行为：上拉加载更多；点击记录可跳转关联订单</li>
-                    <li>数据字段：<code>record_id</code>, <code>type</code>(recharge/consume/refund/withdraw), <code>title</code>, <code>amount</code>, <code>balance</code>, <code>create_time</code>, <code>order_id</code></li>
-                </ul>`
-            },
-            {
                 title: '交互说明',
                 content: `<p><strong>列表展示：</strong></p>
                 <ul>
@@ -3827,6 +3379,35 @@ const devDocs = {
                     <li>上拉触底加载更多</li>
                     <li>切换筛选条件重置分页</li>
                 </ul>`
+            },
+            {
+                title: '核心字段',
+                noTableWrap: true,
+                tables: [
+                    {
+                        title: '交易汇总字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['total_income', 'number', '是', '累计收入金额'],
+                            ['total_expend', 'number', '是', '累计支出金额'],
+                            ['current_balance', 'number', '是', '当前余额'],
+                            ['time_range', 'enum', '是', '筛选范围：all-全部 month-本月 quarter-近三月 half_year-近半年']
+                        ]
+                    },
+                    {
+                        title: '交易流水字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['record_id', 'number', '是', '流水唯一标识'],
+                            ['type', 'enum', '是', '类型：recharge-充值 consume-消费 refund-退款 withdraw-提现'],
+                            ["title", "string", "是", "交易标题，如\"微信充值\"\"购买演出-xxx\""],
+                            ['amount', 'number', '是', '交易金额'],
+                            ['balance', 'number', '是', '交易后余额'],
+                            ['create_time', 'string', '是', '交易时间'],
+                            ['order_id', 'number', '否', '关联订单ID']
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -3846,47 +3427,6 @@ const devDocs = {
                 </ul>`
             },
             {
-                title: '核心字段',
-                noTableWrap: true,
-                tables: [
-                    {
-                        title: '剧院字段',
-                        headers: ['字段名', '类型', '必填', '说明'],
-                        rows: [
-                            ['theater_id', '剧院ID', 'number', '是', '剧院唯一标识'],
-                            ['image', '图片', 'string', '是', '剧院封面图URL'],
-                            ['city', 'city', 'string', '是', '所在城市'],
-                            ['city_name', 'city名称', 'string', '是', '城市名称'],
-                            ['name', '名称', 'string', '是', '剧院名称'],
-                            ['address', '地址', 'string', '是', '剧院地址'],
-                            ['show_count', '演出数量', 'number', '是', '当前演出场次数'],
-                            ['seat_count', 'seat数量', 'number', '是', '座位总数']
-                        ]
-                    }
-                ]
-            },
-            {
-                title: '页面模块详细说明',
-                content: `<p><strong>1. 城市筛选 (.city-tabs)</strong></p>
-                <ul>
-                    <li>展示内容：水平滚动城市标签栏。标签包括：全部、海口、三亚、琼海、万宁、儋州。选中标签底部有主题色指示条</li>
-                    <li>交互行为：水平滚动切换城市；点击标签筛选对应城市的剧院列表</li>
-                    <li>数据字段：<code>city</code>, <code>city_name</code></li>
-                </ul>
-                <p><strong>2. 剧院列表 (.theater-list)</strong></p>
-                <ul>
-                    <li>展示内容：垂直排列的剧院卡片。每张卡片：大图封面 + 左上角城市定位标签（蓝色"海口"）+ 剧院名称（白色大字覆盖在图片上）+ 底部信息区（地址图标+地址文字 + 演出场次"3场演出" + 座位数"800座"）</li>
-                    <li>交互行为：点击卡片跳转剧院详情页（显示演出列表和座位图）</li>
-                    <li>数据字段：<code>theater_id</code>, <code>image</code>, <code>city</code>, <code>name</code>, <code>address</code>, <code>show_count</code>, <code>seat_count</code></li>
-                </ul>
-                <p><strong>3. 空状态 (.empty-state)</strong></p>
-                <ul>
-                    <li>展示内容：空状态插画 + "该城市暂无剧院"提示</li>
-                    <li>交互行为：纯展示</li>
-                    <li>数据字段：无</li>
-                </ul>`
-            },
-            {
                 title: '交互说明',
                 content: `<p><strong>城市筛选：</strong></p>
                 <ul>
@@ -3900,6 +3440,26 @@ const devDocs = {
                     <li>上拉加载更多</li>
                     <li>无数据时显示空状态</li>
                 </ul>`
+            },
+            {
+                title: '核心字段',
+                noTableWrap: true,
+                tables: [
+                    {
+                        title: '剧院字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['theater_id', 'number', '是', '剧院唯一标识'],
+                            ['image', 'string', '是', '剧院封面图URL'],
+                            ['city', 'string', '是', '所在城市'],
+                            ['city_name', 'string', '是', '城市名称'],
+                            ['name', 'string', '是', '剧院名称'],
+                            ['address', 'string', '是', '剧院地址'],
+                            ['show_count', 'number', '是', '当前演出场次数'],
+                            ['seat_count', 'number', '是', '座位总数']
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -4340,39 +3900,39 @@ const devDocs = {
                     title: '管理员信息字段',
                     headers: ['字段名', '中文名', '类型', '必填', '说明'],
                     rows: [
-                        ['admin_id', 'adminID', 'number', '是', '管理员唯一标识'],
-                        ['name', '名称', 'string', '是', '管理员姓名'],
-                        ['avatar', 'avatar', 'string', '否', '管理员头像URL'],
-                        ['role', 'role', 'string', '是', '管理员角色/职位'],
-                        ['theater_name', '剧院名称', 'string', '是', '所属场馆名称']
+                        ['admin_id', 'number', '是', '管理员唯一标识'],
+                        ['name', 'string', '是', '管理员姓名'],
+                        ['avatar', 'string', '否', '管理员头像URL'],
+                        ['role', 'string', '是', '管理员角色/职位'],
+                        ['theater_name', 'string', '是', '所属场馆名称']
                     ]
                 },
                 {
                     title: '场次字段',
                     headers: ['字段名', '中文名', '类型', '必填', '说明'],
                     rows: [
-                        ['session_id', '会话ID', 'number', '是', '场次唯一标识'],
-                        ['show_name', '演出名称', 'string', '是', '演出名称'],
-                        ['session_time', 'session时间', 'string', '是', '场次时间'],
-                        ['theater_name', '剧院名称', 'string', '是', '场馆名称'],
-                        ['hall_name', 'hall名称', 'string', '否', '厅/场名称'],
-                        ['status', '状态', 'enum', '是', '场次状态：待开场/进行中/已结束']
+                        ['session_id', 'number', '是', '场次唯一标识'],
+                        ['show_name', 'string', '是', '演出名称'],
+                        ['session_time', 'string', '是', '场次时间'],
+                        ['theater_name', 'string', '是', '场馆名称'],
+                        ['hall_name', 'string', '否', '厅/场名称'],
+                        ['status', 'enum', '是', '场次状态：待开场/进行中/已结束']
                     ]
                 },
                 {
                     title: '验票字段',
                     headers: ['字段名', '中文名', '类型', '必填', '说明'],
                     rows: [
-                        ['ticket_id', '票ID', 'number', '是', '门票唯一标识'],
-                        ['ticket_no', 'ticket编号', 'string', '是', '票号'],
-                        ['verify_status', 'verify状态', 'enum', '是', '验票结果：验票成功/验票失败'],
-                        ['fail_reason', 'fail原因', 'string', '否', '失败原因（如票已核销/无效票）'],
-                        ['show_name', '演出名称', 'string', '是', '关联演出名称'],
-                        ['session_time', 'session时间', 'string', '是', '场次时间'],
-                        ['seat_info', 'seat信息', 'string', '是', '座位信息'],
-                        ['verify_time', 'verify时间', 'string', '是', '核验时间'],
-                        ['operator_id', '运营商ID', 'number', '是', '核验操作员ID'],
-                        ['today_verified_count', 'today_verified数量', 'number', '是', '今日已扫码数量']
+                        ['ticket_id', 'number', '是', '门票唯一标识'],
+                        ['ticket_no', 'string', '是', '票号'],
+                        ['verify_status', 'enum', '是', '验票结果：验票成功/验票失败'],
+                        ['fail_reason', 'string', '否', '失败原因（如票已核销/无效票）'],
+                        ['show_name', 'string', '是', '关联演出名称'],
+                        ['session_time', 'string', '是', '场次时间'],
+                        ['seat_info', 'string', '是', '座位信息'],
+                        ['verify_time', 'string', '是', '核验时间'],
+                        ['operator_id', 'number', '是', '核验操作员ID'],
+                        ['today_verified_count', 'number', '是', '今日已扫码数量']
                     ]
                 }
             ]
@@ -4431,11 +3991,11 @@ const devDocs = {
                     title: '登录表单字段',
                     headers: ['字段名', '中文名', '类型', '必填', '说明'],
                     rows: [
-                        ['username', 'username', 'string', '是', '管理员登录账号，4-20字符，支持字母/数字/下划线'],
-                        ['password', 'password', 'string', '是', '登录密码，6-20字符，前端加密传输'],
-                        ['captcha_code', 'captcha代码', 'string', '是', '图形验证码，4位字母数字，不区分大小写，点击刷新'],
-                        ['remember_me', 'remember_me', 'boolean', '否', '记住登录状态，勾选后凭证有效期7天，否则24小时'],
-                        ['login_status', 'login状态', 'enum', '是', '登录结果状态：success/账号不存在/密码错误/验证码错误/账号被禁用/登录频繁']
+                        ['username', 'string', '是', '管理员登录账号，4-20字符，支持字母/数字/下划线'],
+                        ['password', 'string', '是', '登录密码，6-20字符，前端加密传输'],
+                        ['captcha_code', 'string', '是', '图形验证码，4位字母数字，不区分大小写，点击刷新'],
+                        ['remember_me', 'boolean', '否', '记住登录状态，勾选后凭证有效期7天，否则24小时'],
+                        ['login_status', 'enum', '是', '登录结果状态：success/账号不存在/密码错误/验证码错误/账号被禁用/登录频繁']
                     ]
                 }
             ]
@@ -4470,19 +4030,19 @@ const devDocs = {
                     title: '账号登录字段',
                     headers: ['字段名', '中文名', '类型', '必填', '说明'],
                     rows: [
-                        ['username', 'username', 'string', '是', '管理员登录账号，4-20字符'],
-                        ['password', 'password', 'string', '是', '登录密码，6-20字符，前端加密传输'],
-                        ['captcha_code', 'captcha代码', 'string', '是', '图形验证码，不区分大小写'],
-                        ['captcha_token', 'captcha令牌', 'string', '是', '验证码token，用于服务端校验']
+                        ['username', 'string', '是', '管理员登录账号，4-20字符'],
+                        ['password', 'string', '是', '登录密码，6-20字符，前端加密传输'],
+                        ['captcha_code', 'string', '是', '图形验证码，不区分大小写'],
+                        ['captcha_token', 'string', '是', '验证码token，用于服务端校验']
                     ]
                 },
                 {
                     title: '手机登录字段',
                     headers: ['字段名', '中文名', '类型', '必填', '说明'],
                     rows: [
-                        ['phone', 'phone', 'string', '是', '管理员绑定手机号，11位手机号格式'],
-                        ['sms_code', 'sms代码', 'string', '是', '短信验证码，6位数字，有效期5分钟'],
-                        ['sms_token', 'sms令牌', 'string', '是', '短信发送token，用于防刷校验']
+                        ['phone', 'string', '是', '管理员绑定手机号，11位手机号格式'],
+                        ['sms_code', 'string', '是', '短信验证码，6位数字，有效期5分钟'],
+                        ['sms_token', 'string', '是', '短信发送token，用于防刷校验']
                     ]
                 }
             ]
@@ -7409,48 +6969,48 @@ const devDocs = {
                     title: '用户画像字段',
                     headers: ['字段名', '中文名', '类型', '必填', '说明'],
                     rows: [
-                        ['user_id', '用户ID', 'number', '是', '用户唯一标识'],
-                        ['age_group', 'age分组', 'string', '是', '年龄段（如18-24/25-34/35-44等）'],
-                        ['gender', 'gender', 'enum', '是', '性别：男/女/未知'],
-                        ['city', 'city', 'string', '是', '所在城市'],
-                        ['interest_tags', 'interest_tags', 'array', '是', '兴趣偏好标签（演出类型偏好）'],
-                        ['consume_level', 'consume等级', 'enum', '是', '消费能力等级：低/中/高/极高'],
-                        ['user_group', '用户分组', 'string', '否', '用户群体标签（如音乐发烧友/话剧爱好者等）'],
-                        ['last_active_time', 'last_active时间', 'string', '是', '最近活跃时间'],
-                        ['total_consume', '总consume', 'number', '是', '累计消费金额'],
-                        ['order_count', '订单数量', 'number', '是', '累计订单数']
+                        ['user_id', 'number', '是', '用户唯一标识'],
+                        ['age_group', 'string', '是', '年龄段（如18-24/25-34/35-44等）'],
+                        ['gender', 'enum', '是', '性别：男/女/未知'],
+                        ['city', 'string', '是', '所在城市'],
+                        ['interest_tags', 'array', '是', '兴趣偏好标签（演出类型偏好）'],
+                        ['consume_level', 'enum', '是', '消费能力等级：低/中/高/极高'],
+                        ['user_group', 'string', '否', '用户群体标签（如音乐发烧友/话剧爱好者等）'],
+                        ['last_active_time', 'string', '是', '最近活跃时间'],
+                        ['total_consume', 'number', '是', '累计消费金额'],
+                        ['order_count', 'number', '是', '累计订单数']
                     ]
                 },
                 {
                     title: '推送字段',
                     headers: ['字段名', '中文名', '类型', '必填', '说明'],
                     rows: [
-                        ['push_id', '推送ID', 'number', '是', '推送任务唯一标识'],
-                        ['target_group', 'target分组', 'enum', '是', '目标群体：全部用户/新用户/VIP会员/沉睡用户/音乐爱好者/优惠券敏感用户'],
-                        ['channel', 'channel', 'enum', '是', '推送渠道：微信推送/短信推送'],
-                        ['title', '标题', 'string', '是', '推送标题，最多30字'],
-                        ['content', '内容', 'string', '是', '推送内容，最多200字，支持变量插入'],
-                        ['push_time', '推送时间', 'string', '是', '推送时间：立即发送/定时发送'],
-                        ['jump_page', '跳转页面', 'enum', '是', '跳转页面：演出详情/优惠券/首页/自定义链接'],
-                        ['related_show_id', 'related_showID', 'number', '否', '关联演出ID'],
-                        ['push_count', '推送数量', 'number', '是', '推送触达人数'],
-                        ['open_rate', 'open比例', 'number', '否', '打开率（百分比）'],
-                        ['conversion_rate', 'conversion比例', 'number', '否', '转化率（百分比）']
+                        ['push_id', 'number', '是', '推送任务唯一标识'],
+                        ['target_group', 'enum', '是', '目标群体：全部用户/新用户/VIP会员/沉睡用户/音乐爱好者/优惠券敏感用户'],
+                        ['channel', 'enum', '是', '推送渠道：微信推送/短信推送'],
+                        ['title', 'string', '是', '推送标题，最多30字'],
+                        ['content', 'string', '是', '推送内容，最多200字，支持变量插入'],
+                        ['push_time', 'string', '是', '推送时间：立即发送/定时发送'],
+                        ['jump_page', 'enum', '是', '跳转页面：演出详情/优惠券/首页/自定义链接'],
+                        ['related_show_id', 'number', '否', '关联演出ID'],
+                        ['push_count', 'number', '是', '推送触达人数'],
+                        ['open_rate', 'number', '否', '打开率（百分比）'],
+                        ['conversion_rate', 'number', '否', '转化率（百分比）']
                     ]
                 },
                 {
                     title: '效果追踪字段',
                     headers: ['字段名', '中文名', '类型', '必填', '说明'],
                     rows: [
-                        ['campaign_name', 'campaign名称', 'string', '是', '营销活动名称'],
-                        ['push_time', '推送时间', 'string', '是', '推送时间'],
-                        ['push_count', '推送数量', 'number', '是', '推送人数'],
-                        ['open_count', 'open数量', 'number', '是', '打开人数'],
-                        ['open_rate', 'open比例', 'number', '是', '打开率（百分比）'],
-                        ['order_count', '订单数量', 'number', '是', '转化订单数'],
-                        ['conversion_rate', 'conversion比例', 'number', '是', '转化率（百分比）'],
-                        ['revenue', 'revenue', 'number', '是', '活动营收金额'],
-                        ['channel', 'channel', 'enum', '是', '渠道来源：微信推送/短信推送']
+                        ['campaign_name', 'string', '是', '营销活动名称'],
+                        ['push_time', 'string', '是', '推送时间'],
+                        ['push_count', 'number', '是', '推送人数'],
+                        ['open_count', 'number', '是', '打开人数'],
+                        ['open_rate', 'number', '是', '打开率（百分比）'],
+                        ['order_count', 'number', '是', '转化订单数'],
+                        ['conversion_rate', 'number', '是', '转化率（百分比）'],
+                        ['revenue', 'number', '是', '活动营收金额'],
+                        ['channel', 'enum', '是', '渠道来源：微信推送/短信推送']
                     ]
                 }
             ]
@@ -7599,18 +7159,18 @@ const devDocs = {
                     title: '轮播图字段',
                     headers: ['字段名', '中文名', '类型', '必填', '说明'],
                     rows: [
-                        ['banner_id', '轮播图ID', 'number', '是', '轮播图唯一标识'],
-                        ['image_url', '图片URL', 'string', '是', '轮播图片URL'],
-                        ['title', '标题', 'string', '是', '轮播图标题，最多20字'],
-                        ['description', '描述', 'string', '否', '轮播图描述，最多50字'],
-                        ['jump_type', '跳转类型', 'enum', '是', '跳转类型：演出详情/商品详情/外部链接/无跳转'],
-                        ['jump_target', '跳转目标', 'string', '否', '跳转目标（演出ID/商品ID/链接URL）'],
-                        ['terminal', 'terminal', 'enum', '是', '展示终端：小程序/PC端/全部'],
-                        ['page_position', 'page位置', 'enum', '是', '页面位置：首页顶部/首页中部/演出列表/个人中心/其他'],
-                        ['sort_order', 'sort_order', 'number', '是', '排序权重，越小越靠前'],
-                        ['start_time', '开始时间', 'string', '是', '展示开始时间'],
-                        ['end_time', '结束时间', 'string', '是', '展示结束时间'],
-                        ['status', '状态', 'enum', '是', '状态：待生效/启用/停用/已过期']
+                        ['banner_id', 'number', '是', '轮播图唯一标识'],
+                        ['image_url', 'string', '是', '轮播图片URL'],
+                        ['title', 'string', '是', '轮播图标题，最多20字'],
+                        ['description', 'string', '否', '轮播图描述，最多50字'],
+                        ['jump_type', 'enum', '是', '跳转类型：演出详情/商品详情/外部链接/无跳转'],
+                        ['jump_target', 'string', '否', '跳转目标（演出ID/商品ID/链接URL）'],
+                        ['terminal', 'enum', '是', '展示终端：小程序/PC端/全部'],
+                        ['page_position', 'enum', '是', '页面位置：首页顶部/首页中部/演出列表/个人中心/其他'],
+                        ['sort_order', 'number', '是', '排序权重，越小越靠前'],
+                        ['start_time', 'string', '是', '展示开始时间'],
+                        ['end_time', 'string', '是', '展示结束时间'],
+                        ['status', 'enum', '是', '状态：待生效/启用/停用/已过期']
                     ]
                 }
             ]
@@ -7682,37 +7242,37 @@ const devDocs = {
                     title: '商品字段',
                     headers: ['字段名', '中文名', '类型', '必填', '说明'],
                     rows: [
-                        ['product_id', '商品ID', 'number', '是', '商品唯一标识'],
-                        ['name', '名称', 'string', '是', '商品名称，最多50字'],
-                        ['code', 'code', 'string', '否', '商品编码'],
-                        ['category', '分类', 'string', '是', '商品分类（支持3级分类）'],
-                        ['cover_image', '封面图片', 'string', '是', '商品主图URL'],
-                        ['images', 'images', 'array', '否', '轮播图列表，最多5张'],
-                        ['description', '描述', 'string', '否', '商品简介，最多200字'],
-                        ['detail', 'detail', 'string', '否', '商品详情（富文本）'],
-                        ['original_price', '原价', 'number', '否', '原价/划线价'],
-                        ['sale_price', '售价', 'number', '是', '销售价格'],
-                        ['cost_price', 'cost价格', 'number', '否', '成本价'],
-                        ['stock', 'stock', 'number', '是', '库存数量'],
-                        ['stock_warning', 'stock_warning', 'number', '是', '库存预警值，默认10'],
-                        ['status', '状态', 'enum', '是', '商品状态：草稿/上架中/已下架/售罄'],
-                        ['sort_order', 'sort_order', 'number', '否', '排序权重'],
-                        ['skus', 'skus', 'array', '否', 'SKU规格列表（规格名/规格值/价格/库存）']
+                        ['product_id', 'number', '是', '商品唯一标识'],
+                        ['name', 'string', '是', '商品名称，最多50字'],
+                        ['code', 'string', '否', '商品编码'],
+                        ['category', 'string', '是', '商品分类（支持3级分类）'],
+                        ['cover_image', 'string', '是', '商品主图URL'],
+                        ['images', 'array', '否', '轮播图列表，最多5张'],
+                        ['description', 'string', '否', '商品简介，最多200字'],
+                        ['detail', 'string', '否', '商品详情（富文本）'],
+                        ['original_price', 'number', '否', '原价/划线价'],
+                        ['sale_price', 'number', '是', '销售价格'],
+                        ['cost_price', 'number', '否', '成本价'],
+                        ['stock', 'number', '是', '库存数量'],
+                        ['stock_warning', 'number', '是', '库存预警值，默认10'],
+                        ['status', 'enum', '是', '商品状态：草稿/上架中/已下架/售罄'],
+                        ['sort_order', 'number', '否', '排序权重'],
+                        ['skus', 'array', '否', 'SKU规格列表（规格名/规格值/价格/库存）']
                     ]
                 },
                 {
                     title: '客服会话字段',
                     headers: ['字段名', '中文名', '类型', '必填', '说明'],
                     rows: [
-                        ['session_id', '会话ID', 'number', '是', '会话唯一标识'],
-                        ['user_id', '用户ID', 'number', '是', '用户ID'],
-                        ['user_nickname', '用户昵称', 'string', '是', '用户昵称'],
-                        ['status', '状态', 'enum', '是', '会话状态：等待中/处理中/已关闭'],
-                        ['last_message', 'last消息', 'string', '否', '最近一条消息内容'],
-                        ['last_time', 'last时间', 'string', '是', '最近消息时间'],
-                        ['agent_id', '代理ID', 'number', '否', '接入客服ID'],
-                        ['is_ai', '是否ai', 'boolean', '否', '是否AI客服处理'],
-                        ['create_time', '创建时间', 'string', '是', '会话创建时间']
+                        ['session_id', 'number', '是', '会话唯一标识'],
+                        ['user_id', 'number', '是', '用户ID'],
+                        ['user_nickname', 'string', '是', '用户昵称'],
+                        ['status', 'enum', '是', '会话状态：等待中/处理中/已关闭'],
+                        ['last_message', 'string', '否', '最近一条消息内容'],
+                        ['last_time', 'string', '是', '最近消息时间'],
+                        ['agent_id', 'number', '否', '接入客服ID'],
+                        ['is_ai', 'boolean', '否', '是否AI客服处理'],
+                        ['create_time', 'string', '是', '会话创建时间']
                     ]
                 }
             ]
@@ -8130,50 +7690,50 @@ Tab切换交互：
                     title: '代理字段',
                     headers: ['字段名', '中文名', '类型', '必填', '说明'],
                     rows: [
-                        ['agent_id', '代理ID', 'number', '是', '代理唯一标识'],
-                        ['avatar', 'avatar', 'string', '否', '代理头像URL'],
-                        ['nickname', 'nickname', 'string', '是', '代理昵称'],
-                        ['phone', 'phone', 'string', '是', '手机号'],
-                        ['wechat', 'wechat', 'string', '否', '微信号'],
-                        ['level', 'level', 'enum', '是', '代理等级：普通代理/铜牌/银牌/金牌/钻石'],
-                        ['status', '状态', 'enum', '是', '代理状态：待审核/正常/冻结/已拒绝/已注销'],
-                        ['register_time', 'register时间', 'string', '是', '注册时间'],
-                        ['promo_code', 'promo代码', 'string', '是', '推广码'],
-                        ['promo_link', 'promo链接', 'string', '是', '推广链接'],
-                        ['total_orders', '总orders', 'number', '是', '累计推广订单数'],
-                        ['total_amount', '总额金额', 'number', '是', '累计推广金额'],
-                        ['total_commission', '总佣金', 'number', '是', '累计佣金收入'],
-                        ['settled_commission', 'settled_commission', 'number', '是', '已结算佣金'],
-                        ['pending_commission', '待处理佣金', 'number', '是', '待结算佣金']
+                        ['agent_id', 'number', '是', '代理唯一标识'],
+                        ['avatar', 'string', '否', '代理头像URL'],
+                        ['nickname', 'string', '是', '代理昵称'],
+                        ['phone', 'string', '是', '手机号'],
+                        ['wechat', 'string', '否', '微信号'],
+                        ['level', 'enum', '是', '代理等级：普通代理/铜牌/银牌/金牌/钻石'],
+                        ['status', 'enum', '是', '代理状态：待审核/正常/冻结/已拒绝/已注销'],
+                        ['register_time', 'string', '是', '注册时间'],
+                        ['promo_code', 'string', '是', '推广码'],
+                        ['promo_link', 'string', '是', '推广链接'],
+                        ['total_orders', 'number', '是', '累计推广订单数'],
+                        ['total_amount', 'number', '是', '累计推广金额'],
+                        ['total_commission', 'number', '是', '累计佣金收入'],
+                        ['settled_commission', 'number', '是', '已结算佣金'],
+                        ['pending_commission', 'number', '是', '待结算佣金']
                     ]
                 },
                 {
                     title: '佣金配置字段',
                     headers: ['字段名', '中文名', '类型', '必填', '说明'],
                     rows: [
-                        ['config_id', 'configID', 'number', '是', '佣金配置唯一标识'],
-                        ['default_rate', 'default比例', 'number', '是', '默认佣金比例（百分比），默认5%'],
-                        ['type_rates', 'type_rates', 'object', '否', '按演出类型佣金比例（如{音乐会:8, 话剧:6}）'],
-                        ['show_rates', '演出rates', 'object', '否', '按单个演出佣金比例（show_id: rate）'],
-                        ['settlement_cycle', 'settlement_cycle', 'enum', '是', '结算周期：日结/周结/月结'],
-                        ['min_settle_amount', 'min_settle金额', 'number', '是', '最低结算金额，默认100元'],
-                        ['confirm_days', '确认days', 'number', '是', '订单确认天数，默认7天'],
-                        ['settle_mode', 'settle模式', 'enum', '是', '结算方式：自动结算/手动结算']
+                        ['config_id', 'number', '是', '佣金配置唯一标识'],
+                        ['default_rate', 'number', '是', '默认佣金比例（百分比），默认5%'],
+                        ['type_rates', 'object', '否', '按演出类型佣金比例（如{音乐会:8, 话剧:6}）'],
+                        ['show_rates', 'object', '否', '按单个演出佣金比例（show_id: rate）'],
+                        ['settlement_cycle', 'enum', '是', '结算周期：日结/周结/月结'],
+                        ['min_settle_amount', 'number', '是', '最低结算金额，默认100元'],
+                        ['confirm_days', 'number', '是', '订单确认天数，默认7天'],
+                        ['settle_mode', 'enum', '是', '结算方式：自动结算/手动结算']
                     ]
                 },
                 {
                     title: '代理等级字段',
                     headers: ['字段名', '中文名', '类型', '必填', '说明'],
                     rows: [
-                        ['level_id', '等级ID', 'number', '是', '等级唯一标识'],
-                        ['level_name', 'level名称', 'string', '是', '等级名称（如普通代理/铜牌/银牌/金牌/钻石）'],
-                        ['icon', 'icon', 'string', '否', '等级图标URL'],
-                        ['color', 'color', 'string', '否', '等级颜色标识'],
-                        ['upgrade_condition', '升级condition', 'object', '是', '升级条件（累计推广额/订单数/佣金/月活跃等）'],
-                        ['commission_bonus', '佣金bonus', 'number', '是', '等级佣金加成比例（百分比）'],
-                        ['exclusive_activity', 'exclusive_activity', 'boolean', '否', '是否享有专属活动'],
-                        ['priority_settle', '优先settle', 'boolean', '否', '是否优先结算'],
-                        ['exclusive_service', 'exclusive服务', 'boolean', '否', '是否享有专属客服']
+                        ['level_id', 'number', '是', '等级唯一标识'],
+                        ['level_name', 'string', '是', '等级名称（如普通代理/铜牌/银牌/金牌/钻石）'],
+                        ['icon', 'string', '否', '等级图标URL'],
+                        ['color', 'string', '否', '等级颜色标识'],
+                        ['upgrade_condition', 'object', '是', '升级条件（累计推广额/订单数/佣金/月活跃等）'],
+                        ['commission_bonus', 'number', '是', '等级佣金加成比例（百分比）'],
+                        ['exclusive_activity', 'boolean', '否', '是否享有专属活动'],
+                        ['priority_settle', 'boolean', '否', '是否优先结算'],
+                        ['exclusive_service', 'boolean', '否', '是否享有专属客服']
                     ]
                 }
             ]
@@ -8304,28 +7864,28 @@ Tab切换交互：
                     title: '票房统计字段',
                     headers: ['字段名', '中文名', '类型', '必填', '说明'],
                     rows: [
-                        ['show_id', '演出ID', 'number', '是', '演出ID'],
-                        ['show_name', '演出名称', 'string', '是', '演出名称'],
-                        ['show_type', '演出类型', 'string', '是', '演出类型'],
-                        ['total_box', '总box', 'number', '是', '总票房收入'],
-                        ['total_tickets', '总tickets', 'number', '是', '总出票数量'],
-                        ['avg_occupancy', 'avg_occupancy', 'number', '是', '平均上座率（百分比）'],
-                        ['avg_price', '平均价格', 'number', '是', '平均客单价'],
-                        ['refund_count', 'refund数量', 'number', '是', '退票数量'],
-                        ['refund_rate', 'refund比例', 'number', '是', '退票率（百分比）'],
-                        ['date', 'date', 'string', '是', '统计日期']
+                        ['show_id', 'number', '是', '演出ID'],
+                        ['show_name', 'string', '是', '演出名称'],
+                        ['show_type', 'string', '是', '演出类型'],
+                        ['total_box', 'number', '是', '总票房收入'],
+                        ['total_tickets', 'number', '是', '总出票数量'],
+                        ['avg_occupancy', 'number', '是', '平均上座率（百分比）'],
+                        ['avg_price', 'number', '是', '平均客单价'],
+                        ['refund_count', 'number', '是', '退票数量'],
+                        ['refund_rate', 'number', '是', '退票率（百分比）'],
+                        ['date', 'string', '是', '统计日期']
                     ]
                 },
                 {
                     title: '渠道统计字段',
                     headers: ['字段名', '中文名', '类型', '必填', '说明'],
                     rows: [
-                        ['channel', 'channel', 'enum', '是', '销售渠道：小程序/PC/窗口售票/代理'],
-                        ['total_orders', '总orders', 'number', '是', '该渠道订单数量'],
-                        ['total_sales', '总sales', 'number', '是', '该渠道销售额'],
-                        ['channel_ratio', 'channel_ratio', 'number', '是', '渠道占比（百分比）'],
-                        ['avg_price', '平均价格', 'number', '是', '该渠道平均客单价'],
-                        ['date', 'date', 'string', '是', '统计日期']
+                        ['channel', 'enum', '是', '销售渠道：小程序/PC/窗口售票/代理'],
+                        ['total_orders', 'number', '是', '该渠道订单数量'],
+                        ['total_sales', 'number', '是', '该渠道销售额'],
+                        ['channel_ratio', 'number', '是', '渠道占比（百分比）'],
+                        ['avg_price', 'number', '是', '该渠道平均客单价'],
+                        ['date', 'string', '是', '统计日期']
                     ]
                 }
             ]
