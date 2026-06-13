@@ -2026,9 +2026,7 @@
 
   // 计算折扣后价格
   function getDiscountedPrice(originalPrice, tier) {
-    if (tier === 'vip') return originalPrice; // VIP区不参与折扣
-    const discount = getCurrentDiscount();
-    return Math.round(originalPrice * discount / 100);
+    return originalPrice; // 早鸟票只做展示，不影响实际价格
   }
 
   // 渲染政策横幅
@@ -2047,10 +2045,10 @@
         <div class="policy-banner early-bird">
           <div class="policy-icon">🐦</div>
           <div class="policy-content">
-            <div class="policy-title">早鸟特惠 ${discount}折</div>
+            <div class="policy-title">早鸟特惠 9.5折</div>
             <div class="policy-desc">剩余${daysLeft}天 · 每人限购${limit}张</div>
           </div>
-          <div class="policy-badge">-${100 - discount}%</div>
+          <div class="policy-badge">-5%</div>
         </div>
       `;
       banner.style.display = 'block';
@@ -2084,19 +2082,9 @@
     banner.style.display = 'none';
   }
 
-  // 更新票档价格显示（折扣后）
+  // 更新票档价格显示（早鸟票只做展示，不显示折扣价）
   function updateTierPrices() {
-    const discount = getCurrentDiscount();
-    const priceElements = document.querySelectorAll('.tier-price');
-
-    priceElements.forEach(el => {
-      const originalPrice = parseInt(el.getAttribute('data-original'));
-      const seatTier = el.getAttribute('data-tier');
-      if (originalPrice && discount < 100 && seatTier !== 'vip') {
-        const discountedPrice = getDiscountedPrice(originalPrice, seatTier);
-        el.innerHTML = `¥${discountedPrice}<span class="original-price">¥${originalPrice}</span>`;
-      }
-    });
+    // 早鸟票只做展示，标签栏价格保持原价不变
   }
 
   // 更新限购提示
@@ -2630,6 +2618,7 @@
   function updatePackageEntry() {
     const text = document.getElementById('packageEntryText');
     const arrow = document.getElementById('packageEntryArrow');
+    if (!text || !arrow) return;
     if (selectedVouchers.length > 0) {
       const totalDeduct = selectedVouchers.reduce((sum, v) => sum + v.amount, 0);
       text.textContent = `已选${selectedVouchers.length}张观演券 -¥${totalDeduct}`;
@@ -2705,10 +2694,10 @@
     const discSumForMember = selectedSeats.reduce((sum, s) => sum + s.price, 0);
     let memberDiscount = Math.floor(discSumForMember * 0.1);
 
-    // 票品折扣行：只在无套票时显示
-    if (selectedVouchers.length === 0 && earlyBirdDeduct > 0) {
+    // 票品折扣行：早鸟票只做展示，始终显示9.5折
+    if (isEarlyBirdPeriod()) {
       earlyBirdRow.style.display = 'flex';
-      document.getElementById('priceEarlyBirdDiscount').textContent = `-¥${earlyBirdDeduct}`;
+      document.getElementById('priceEarlyBirdDiscount').textContent = '9.5折';
     } else {
       earlyBirdRow.style.display = 'none';
     }
