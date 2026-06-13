@@ -687,9 +687,14 @@
         <span class="label" id="ticketDiscountLabel">票品折扣</span>
         <span class="value minus" id="ticketDiscountValue">-¥0</span>
       </div>
+      <!-- 早鸟票折扣行 -->
+      <div class="discount-row" id="earlyBirdDiscountRow" style="display:none;">
+        <span class="label">票品折扣（早鸟票9.5折）</span>
+        <span class="value minus" id="earlyBirdDiscountValue">-¥0</span>
+      </div>
       <!-- 会员折扣行 -->
       <div class="discount-row" id="memberDiscountRow" style="display:none;">
-        <span class="label">会员折扣</span>
+        <span class="label" id="memberDiscountLabel">黄金会员9折</span>
         <span class="value minus" id="memberDiscountValue">-¥0</span>
       </div>
       <!-- 优惠券行 -->
@@ -881,8 +886,15 @@
   const discountedTotal = seatsData.reduce((sum, s) => sum + s.price, 0);
   ticketDiscount = Math.max(0, subtotal - discountedTotal);
 
-  // 模拟会员折扣（白金会员9折）
-  const memberLevel = '白金会员';
+  // 早鸟票折扣（非VIP座位原价的5%，即9.5折）
+  let earlyBirdDiscount = 0;
+  const nonVipOriginalTotal = seatsData
+    .filter(s => s.tier !== 'vip')
+    .reduce((sum, s) => sum + (s.originalPrice || s.price), 0);
+  earlyBirdDiscount = Math.round(nonVipOriginalTotal * 0.05);
+
+  // 模拟会员折扣（黄金会员9折）
+  const memberLevel = '黄金会员';
   const memberDiscountRate = 0.9;
   memberDiscount = Math.round(discountedTotal * (1 - memberDiscountRate));
 
@@ -989,11 +1001,20 @@
       ticketRow.style.display = 'none';
     }
 
+    // 早鸟票折扣
+    const earlyBirdRow = document.getElementById('earlyBirdDiscountRow');
+    if (earlyBirdDiscount > 0) {
+      earlyBirdRow.style.display = 'flex';
+      document.getElementById('earlyBirdDiscountValue').textContent = '-¥' + earlyBirdDiscount.toLocaleString();
+    } else {
+      earlyBirdRow.style.display = 'none';
+    }
+
     // 会员折扣（模拟）
     const memberRow = document.getElementById('memberDiscountRow');
     if (memberDiscount > 0) {
       memberRow.style.display = 'flex';
-      document.getElementById('memberDiscountLabel').textContent = memberLevel + (memberDiscountRate * 10) + '折 -¥' + memberDiscount.toLocaleString();
+      document.getElementById('memberDiscountLabel').textContent = '黄金会员9折';
       document.getElementById('memberDiscountValue').textContent = '-¥' + memberDiscount.toLocaleString();
     } else {
       memberRow.style.display = 'none';
