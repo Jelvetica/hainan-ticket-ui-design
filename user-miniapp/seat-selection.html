@@ -1805,23 +1805,14 @@
           <span class="price-label">早鸟优惠</span>
           <span class="price-value discount" id="priceEarlyBirdDiscount" style="color:var(--coral-orange);">-¥0</span>
         </div>
-        <div class="price-row" id="couponDiscountRow" style="display:none;">
-          <span class="price-label">优惠减免</span>
-          <span class="price-value discount" id="priceCouponDiscount">-¥0</span>
-        </div>
         <div class="price-row" id="packageDiscountRow" style="display:none;">
           <span class="price-label">套票抵扣</span>
           <span class="price-value discount" id="pricePackageDiscount" style="color:var(--coral-orange);">-¥0</span>
         </div>
-      </div>
-
-      <!-- Coupon entry -->
-      <div class="entry-row" id="couponEntry" onclick="openCouponSheet()">
-        <div class="entry-left">
-          <div class="entry-icon coupon"><i class="fas fa-ticket" style="font-size:13px"></i></div>
-          <span class="entry-text" id="couponEntryText">使用优惠券</span>
+        <div class="price-row" id="couponHintRow" style="display:none;">
+          <span class="price-label" style="color:var(--text-secondary);font-size:11px;"><i class="fas fa-info-circle" style="margin-right:4px;"></i>优惠券可在确认订单页使用</span>
+          <span class="price-value" id="couponHintText" style="color:var(--coral-orange);font-size:11px;font-weight:600;">最高可减¥0</span>
         </div>
-        <span class="entry-arrow" id="couponEntryArrow">›</span>
       </div>
 
       <!-- Package (套票) entry -->
@@ -1904,7 +1895,7 @@
   let currentZoom = 1;
   let currentTier = 'all';
 
-  // ========== Coupon Data ==========
+  // ========== Coupon Data (for hint only) ==========
   const COUPONS = [
     { id: 1, amount: 50, minAmount: 300, name: '满300减50', scope: '全场通用', expire: '2026-06-30', disabled: false, reason: '' },
     { id: 2, amount: 30, minAmount: 200, name: '满200减30', scope: '仅限演出票', expire: '2026-05-31', disabled: false, reason: '' },
@@ -1912,8 +1903,6 @@
     { id: 4, amount: 20, minAmount: 100, name: '满100减20', scope: '全场通用', expire: '2025-12-31', disabled: true, reason: '已过期' },
     { id: 5, amount: 80, minAmount: 500, name: '满500减80', scope: '全场通用', expire: '2026-08-31', disabled: true, reason: '不满足金额条件' }
   ];
-
-  let selectedCoupon = null;
 
   // ========== Show Data ==========
   const SHOWS = {
@@ -2389,7 +2378,7 @@
     const showDate = document.querySelector('.show-date')?.textContent || '';
     const showVenue = document.querySelector('.show-venue')?.textContent || '';
     const seatsData = selectedSeats.map(function(s) {
-      return { zone: s.zone, row: s.row, col: s.col, price: s.price };
+      return { tier: s.tier, tierName: s.tierName, row: s.row, col: s.col, price: s.price, originalPrice: s.originalPrice };
     });
     const params = new URLSearchParams();
     params.set('show', showName);
@@ -2418,99 +2407,6 @@
   function getOriginalPriceTotal() {
     // 返回原始总价（折扣前）
     return selectedSeats.reduce((sum, s) => sum + (s.originalPrice || s.price), 0);
-  }
-
-  function openCouponSheet() {
-    const overlay = document.getElementById('couponOverlay');
-    const sheet = document.getElementById('couponSheet');
-    const list = document.getElementById('couponList');
-
-    // 恢复sheet标题
-    document.querySelector('.coupon-sheet-title').textContent = '选择优惠券';
-
-    const originalTotal = getOriginalTotal();
-    if (originalTotal === 0) {
-      showToast('请先选择座位');
-      return;
-    }
-
-    // Build coupon list
-    list.innerHTML = '';
-    COUPONS.forEach(coupon => {
-      // Check if disabled due to amount condition
-      let isDisabled = coupon.disabled;
-      let reason = coupon.reason;
-
-      if (!isDisabled && originalTotal < coupon.minAmount) {
-        isDisabled = true;
-        reason = `需满¥${coupon.minAmount}可用`;
-      }
-
-      const card = document.createElement('div');
-      card.className = 'coupon-card';
-      if (isDisabled) card.classList.add('disabled');
-      if (selectedCoupon && selectedCoupon.id === coupon.id) card.classList.add('selected');
-
-      card.innerHTML = `
-        <div class="coupon-amount">
-          <span class="amount-value">¥${coupon.amount}</span>
-          <span class="amount-unit">满${coupon.minAmount}可用</span>
-        </div>
-        <div class="coupon-info">
-          <div class="coupon-name">${coupon.name}</div>
-          <div class="coupon-condition">${coupon.scope}</div>
-          <div class="coupon-expire">有效期至 ${coupon.expire}</div>
-          ${isDisabled && reason ? `<div class="coupon-disabled-reason">${reason}</div>` : ''}
-        </div>
-      `;
-
-      if (!isDisabled) {
-        card.addEventListener('click', () => selectCoupon(coupon));
-      }
-
-      list.appendChild(card);
-    });
-
-    // "Don't use coupon" button
-    const noneBtn = document.createElement('div');
-    noneBtn.className = 'coupon-none-btn';
-    noneBtn.textContent = selectedCoupon ? '不使用优惠券' : '不使用优惠券';
-    noneBtn.addEventListener('click', () => {
-      selectedCoupon = null;
-      closeCouponSheet();
-      updateCouponEntry();
-      recalcPrice();
-    });
-    list.appendChild(noneBtn);
-
-    overlay.classList.add('show');
-    sheet.classList.add('show');
-  }
-
-  function closeCouponSheet() {
-    document.getElementById('couponOverlay').classList.remove('show');
-    document.getElementById('couponSheet').classList.remove('show');
-  }
-
-  function selectCoupon(coupon) {
-    selectedCoupon = coupon;
-    closeCouponSheet();
-    updateCouponEntry();
-    recalcPrice();
-  }
-
-  function updateCouponEntry() {
-    const text = document.getElementById('couponEntryText');
-    const arrow = document.getElementById('couponEntryArrow');
-    if (selectedCoupon) {
-      text.textContent = `已选 -¥${selectedCoupon.amount}`;
-      text.style.color = 'var(--coral-orange)';
-      arrow.textContent = '›';
-    } else {
-      text.textContent = '使用优惠券';
-      text.style.color = '';
-      arrow.textContent = '›';
-    }
   }
 
   // ========== Package (套票) Logic ==========
@@ -2732,7 +2628,6 @@
   // ========== Price Calculation ==========
   function recalcPrice() {
     const originalTotal = getOriginalTotal();
-    const couponDeduct = selectedCoupon ? selectedCoupon.amount : 0;
     // 套票观演券减免：多张观演券分别减免对应座位
     let packageDeduct = 0;
     selectedVouchers.forEach(v => {
@@ -2741,12 +2636,12 @@
         packageDeduct += selectedSeats[seatIndex].price;
       }
     });
-    const finalTotal = Math.max(0, originalTotal - couponDeduct - packageDeduct);
+    const finalTotal = Math.max(0, originalTotal - packageDeduct);
 
     // Update discount rows visibility
     const earlyBirdRow = document.getElementById('earlyBirdDiscountRow');
-    const couponRow = document.getElementById('couponDiscountRow');
     const packageRow = document.getElementById('packageDiscountRow');
+    const couponHintRow = document.getElementById('couponHintRow');
 
     // 计算早鸟票折扣金额
     let earlyBirdDeduct = 0;
@@ -2763,13 +2658,7 @@
       earlyBirdRow.style.display = 'none';
     }
 
-    if (selectedCoupon && couponDeduct > 0) {
-      couponRow.style.display = 'flex';
-      document.getElementById('priceCouponDiscount').textContent = `-¥${couponDeduct}`;
-    } else {
-      couponRow.style.display = 'none';
-    }
-
+    // 套票抵扣
     if (selectedVouchers.length > 0 && packageDeduct > 0) {
       packageRow.style.display = 'flex';
       const seatLabels = selectedVouchers.map(v => {
@@ -2785,14 +2674,33 @@
       packageRow.style.display = 'none';
     }
 
+    // 优惠券提示：计算当前可用优惠券的最大减免金额
+    const maxCouponDiscount = getMaxAvailableCouponDiscount(originalTotal);
+    if (maxCouponDiscount > 0) {
+      couponHintRow.style.display = 'flex';
+      document.getElementById('couponHintText').textContent = `最高可减¥${maxCouponDiscount}`;
+    } else {
+      couponHintRow.style.display = 'none';
+    }
+
     // Update total
     const totalEl = document.getElementById('totalAmount');
     totalEl.textContent = finalTotal.toFixed(2);
   }
 
+  // 计算当前可用优惠券的最大减免金额
+  function getMaxAvailableCouponDiscount(total) {
+    let max = 0;
+    COUPONS.forEach(c => {
+      if (!c.disabled && total >= c.minAmount && c.amount > max) {
+        max = c.amount;
+      }
+    });
+    return max;
+  }
+
   function getFinalTotal() {
     const originalTotal = getOriginalTotal();
-    const couponDeduct = selectedCoupon ? selectedCoupon.amount : 0;
     let packageDeduct = 0;
     selectedVouchers.forEach(v => {
       const seatIndex = voucherSeatMap[v.id];
@@ -2800,7 +2708,7 @@
         packageDeduct += selectedSeats[seatIndex].price;
       }
     });
-    return Math.max(0, originalTotal - couponDeduct - packageDeduct);
+    return Math.max(0, originalTotal - packageDeduct);
   }
 
   // ========== Shake Animation (injected) ==========
