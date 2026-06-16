@@ -131,6 +131,58 @@
       vertical-align: middle;
     }
 
+    /* ========== Shipping Card ========== */
+    .shipping-section {
+      padding: 16px;
+      animation: fadeInUp 0.4s ease 0.05s both;
+    }
+    .shipping-card {
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(10,22,40,0.06);
+    }
+    .shipping-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid #F0F1F5;
+    }
+    .shipping-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #EBF0FF, #D6E0FF);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #4A7AFF;
+      flex-shrink: 0;
+    }
+    .shipping-card-info { flex: 1; min-width: 0; }
+    .shipping-card-title { font-size: 14px; font-weight: 700; color: #1A1A2E; }
+    .shipping-card-status { font-size: 12px; color: #8E95A9; margin-top: 1px; }
+    .shipping-card-badge {
+      background: rgba(74,122,255,0.1);
+      color: #4A7AFF;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+    .shipping-card-body { padding: 12px 16px 16px; }
+    .shipping-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0;
+    }
+    .shipping-row .shipping-label { font-size: 13px; color: #8E95A9; }
+    .shipping-row .shipping-value { font-size: 13px; color: #1A1A2E; font-weight: 500; }
+
     /* ========== Card Selection Section ========== */
     .card-select-section {
       padding: 20px 16px 0;
@@ -232,6 +284,35 @@
       display: none;
     }
 
+    .card-option.applied {
+      border-color: rgba(0,201,167,0.3);
+      background: linear-gradient(135deg, #F0FFF9, #E6FFF5);
+      cursor: default;
+    }
+
+    .card-option.applied:active {
+      transform: none;
+    }
+
+    .card-option .applied-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: #00C9A7;
+      background: rgba(0,201,167,0.1);
+      padding: 3px 10px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    .card-option .applied-badge i {
+      font-size: 10px;
+    }
+
     .card-option .lock-overlay {
       position: absolute;
       top: 12px;
@@ -274,6 +355,13 @@
     .card-thumb.diamond {
       background: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
     }
+
+    .card-thumb.silver {
+      background: linear-gradient(135deg, #A8B4C0, #C8D0D8);
+    }
+
+    .card-thumb.silver .card-label { color: #5A6178; }
+    .card-thumb.silver .card-chip { background: #B0B8C0; }
 
     .card-thumb .card-label {
       font-size: 11px;
@@ -631,7 +719,7 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
   <!-- Top Nav -->
   <div class="top-nav">
     <a class="back-btn" href="javascript:void(0)" onclick="goBack('member-center.html')"><i class="fas fa-chevron-left"></i></a>
-    >申请实体卡</span>
+    <span class="nav-title">申请实体卡</span>
   </div>
 
   <!-- Current Level Banner -->
@@ -643,6 +731,34 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
       <div class="level-text">
         <div class="level-label">当前会员等级</div>
         <div class="level-name">金卡会员 <span class="badge">VIP 3</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shipping Card -->
+  <div class="shipping-section">
+    <div class="shipping-card">
+      <div class="shipping-card-header">
+        <div class="shipping-card-icon"><i class="fas fa-box"></i></div>
+        <div class="shipping-card-info">
+          <div class="shipping-card-title">金卡已寄出</div>
+          <div class="shipping-card-status">运输中</div>
+        </div>
+        <span class="shipping-card-badge">在途</span>
+      </div>
+      <div class="shipping-card-body">
+        <div class="shipping-row">
+          <span class="shipping-label">快递类型</span>
+          <span class="shipping-value">顺丰速运</span>
+        </div>
+        <div class="shipping-row">
+          <span class="shipping-label">快递单号</span>
+          <span class="shipping-value" style="color:#4A7AFF;cursor:pointer;" onclick="showToast('单号已复制')">SF1234567890123</span>
+        </div>
+        <div class="shipping-row">
+          <span class="shipping-label">备注</span>
+          <span class="shipping-value">请签收时核对身份信息</span>
+        </div>
       </div>
     </div>
   </div>
@@ -665,17 +781,17 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
         </div>
       </div>
 
-      <!-- Diamond Card - Locked -->
-      <div class="card-option locked" id="card-diamond">
-        <div class="lock-overlay"><i class="fas fa-lock"></i> 升级后可申请</div>
-        <div class="card-thumb diamond">
+      <!-- Silver Card - Applied -->
+      <div class="card-option applied" id="card-silver">
+        <div class="applied-badge"><i class="fas fa-check"></i> 已申请</div>
+        <div class="card-thumb silver">
           <span class="card-label">HAINAN ARTS</span>
           <div class="card-chip"></div>
         </div>
         <div class="card-detail">
-          <div class="card-detail-name">钻石卡</div>
-          <div class="card-detail-req" style="color: #8E95A9;"><i class="fas fa-lock"></i> 需钻石会员等级</div>
-          <div class="card-detail-benefits">全场9折、VIP专属座位、免费演出票、1对1管家服务</div>
+          <div class="card-detail-name">银卡</div>
+          <div class="card-detail-req" style="color: #00C9A7;"><i class="fas fa-paper-plane"></i> 已申请，制作中</div>
+          <div class="card-detail-benefits">全场95折、优先购票、生日礼品、专属客服</div>
         </div>
       </div>
     </div>
@@ -752,20 +868,6 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
     </div>
   </div>
 
-  <!-- Apply Records -->
-  <div class="records-section">
-    <div class="record-entry" onclick="viewRecords()">
-      <div class="record-left">
-        <div class="record-icon"><i class="fas fa-history"></i></div>
-        <div>
-          <div class="record-text">申请记录</div>
-          <div class="record-desc">查看历史申请及物流状态</div>
-        </div>
-      </div>
-      <span class="record-arrow"><i class="fas fa-chevron-right"></i></span>
-    </div>
-  </div>
-
   <!-- Submit Button -->
   <div class="submit-section">
     <button class="submit-btn" id="submitBtn" onclick="submitApply()">提交申请</button>
@@ -797,10 +899,10 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
       level: '金卡会员',
       benefits: '专属折扣95折、优先购票、生日礼品、专属客服'
     },
-    diamond: {
-      name: '钻石卡',
-      level: '钻石会员',
-      benefits: '全场9折、VIP专属座位、免费演出票、1对1管家服务'
+    silver: {
+      name: '银卡',
+      level: '银卡会员',
+      benefits: '全场95折、优先购票、生日礼品、专属客服'
     }
   };
 

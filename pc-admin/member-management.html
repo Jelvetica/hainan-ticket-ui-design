@@ -1395,6 +1395,18 @@ html {
             margin-top: 2px;
         }
 
+        .lcc-level-badge {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 2px 8px;
+            background: rgba(255,255,255,0.25);
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #fff;
+            vertical-align: middle;
+        }
+
         /* Level card actions - edit/delete buttons */
         .lcc-header .lcc-action-btn {
             position: absolute;
@@ -4579,7 +4591,7 @@ select.form-select-sm,
                     <div class="level-cards" id="levelCards">
                         <div class="level-config-card" data-level="normal">
                             <div class="lcc-header">
-                                <div class="lcc-level">普通会员</div>
+                                <div class="lcc-level">普通会员<span class="lcc-level-badge">L1</span></div>
                                 <div class="lcc-range">成长值 0 - 999</div>
                                 <button class="lcc-action-btn lcc-action-btn--delete" title="删除" onclick="deleteLevel(this)"><i class="fas fa-trash-alt"></i></button>
                                 <button class="lcc-action-btn lcc-action-btn--edit" title="编辑" onclick="openEditLevelModal(this)"><i class="fas fa-pen"></i></button>
@@ -4587,15 +4599,13 @@ select.form-select-sm,
                             <div class="lcc-body">
                                 <div class="lcc-discount">购票折扣 <strong>9.8</strong> 折</div>
                                 <ul class="lcc-benefits">
-                                    <li><i class="fas fa-check"></i> 基础积分获取</li>
-                                    <li><i class="fas fa-check"></i> 每日签到积分</li>
-                                    <li><i class="fas fa-check"></i> 生日祝福短信</li>
+                                    <li><i class="fas fa-star" style="color:#F59E0B;"></i> 1.0倍积分加成</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="level-config-card" data-level="silver">
                             <div class="lcc-header">
-                                <div class="lcc-level">银卡会员</div>
+                                <div class="lcc-level">银卡会员<span class="lcc-level-badge">L2</span></div>
                                 <div class="lcc-range">成长值 1,000 - 4,999</div>
                                 <button class="lcc-action-btn lcc-action-btn--delete" title="删除" onclick="deleteLevel(this)"><i class="fas fa-trash-alt"></i></button>
                                 <button class="lcc-action-btn lcc-action-btn--edit" title="编辑" onclick="openEditLevelModal(this)"><i class="fas fa-pen"></i></button>
@@ -4603,16 +4613,16 @@ select.form-select-sm,
                             <div class="lcc-body">
                                 <div class="lcc-discount">购票折扣 <strong>9.5</strong> 折</div>
                                 <ul class="lcc-benefits">
-                                    <li><i class="fas fa-check"></i> 1.2倍积分加成</li>
-                                    <li><i class="fas fa-check"></i> 优先选座权限</li>
-                                    <li><i class="fas fa-check"></i> 每月专属优惠券</li>
-                                    <li><i class="fas fa-check"></i> 生日月双倍积分</li>
+                                    <li><i class="fas fa-star" style="color:#F59E0B;"></i> 1.2倍积分加成</li>
+                                    <li><i class="fas fa-star" style="color:#F59E0B;"></i> 每月1张优惠券</li>
+                                    <li><i class="fas fa-star" style="color:#F59E0B;"></i> 生日500积分</li>
+                                    <li><i class="fas fa-ticket-alt" style="color:#3B82F6;"></i> 优先购票</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="level-config-card" data-level="gold">
                             <div class="lcc-header">
-                                <div class="lcc-level">金卡会员</div>
+                                <div class="lcc-level">金卡会员<span class="lcc-level-badge">L3</span></div>
                                 <div class="lcc-range">成长值 5,000 - 19,999</div>
                                 <button class="lcc-action-btn lcc-action-btn--delete" title="删除" onclick="deleteLevel(this)"><i class="fas fa-trash-alt"></i></button>
                                 <button class="lcc-action-btn lcc-action-btn--edit" title="编辑" onclick="openEditLevelModal(this)"><i class="fas fa-pen"></i></button>
@@ -4620,49 +4630,55 @@ select.form-select-sm,
                             <div class="lcc-body">
                                 <div class="lcc-discount">购票折扣 <strong>9.0</strong> 折</div>
                                 <ul class="lcc-benefits">
-                                    <li><i class="fas fa-check"></i> 1.5倍积分加成</li>
-                                    <li><i class="fas fa-check"></i> VIP专属通道入场</li>
-                                    <li><i class="fas fa-check"></i> 免费改签1次/月</li>
-                                    <li><i class="fas fa-check"></i> 新演出优先购票</li>
-                                    <li><i class="fas fa-check"></i> 专属客服通道</li>
+                                    <li><i class="fas fa-star" style="color:#F59E0B;"></i> 1.5倍积分加成</li>
+                                    <li><i class="fas fa-star" style="color:#F59E0B;"></i> 每月2张优惠券</li>
+                                    <li><i class="fas fa-star" style="color:#F59E0B;"></i> 生日800积分</li>
+                                    <li><i class="fas fa-ticket-alt" style="color:#3B82F6;"></i> 优先购票</li>
+                                    <li><i class="fas fa-headset" style="color:#8B5CF6;"></i> 专属客服</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="level-config-card" data-level="diamond">
                             <div class="lcc-header">
-                                <div class="lcc-level">钻石会员</div>
-                                <div class="lcc-range">成长值 20,000+</div>
+                                <div class="lcc-level">钻石会员<span class="lcc-level-badge">L4</span></div>
+                                <div class="lcc-range">成长值 20,000 - 49,999</div>
                                 <button class="lcc-action-btn lcc-action-btn--delete" title="删除" onclick="deleteLevel(this)"><i class="fas fa-trash-alt"></i></button>
                                 <button class="lcc-action-btn lcc-action-btn--edit" title="编辑" onclick="openEditLevelModal(this)"><i class="fas fa-pen"></i></button>
                             </div>
                             <div class="lcc-body">
                                 <div class="lcc-discount">购票折扣 <strong>8.5</strong> 折</div>
                                 <ul class="lcc-benefits">
-                                    <li><i class="fas fa-check"></i> 2.0倍积分加成</li>
-                                    <li><i class="fas fa-check"></i> 所有金卡权益</li>
-                                    <li><i class="fas fa-check"></i> 免费演出门票/季度</li>
-                                    <li><i class="fas fa-check"></i> 后台参观体验</li>
-                                    <li><i class="fas fa-check"></i> 年度答谢晚宴邀请</li>
-                                    <li><i class="fas fa-check"></i> 专属会员卡寄送</li>
+                                    <li><i class="fas fa-star" style="color:#F59E0B;"></i> 2.0倍积分加成</li>
+                                    <li><i class="fas fa-star" style="color:#F59E0B;"></i> 每月3张优惠券</li>
+                                    <li><i class="fas fa-star" style="color:#F59E0B;"></i> 生日1000积分</li>
+                                    <li><i class="fas fa-ticket-alt" style="color:#3B82F6;"></i> 优先购票</li>
+                                    <li><i class="fas fa-headset" style="color:#8B5CF6;"></i> 专属客服</li>
+                                    <li><i class="fas fa-headset" style="color:#8B5CF6;"></i> VIP入场通道</li>
+                                    <li><i class="fas fa-headset" style="color:#8B5CF6;"></i> 会员卡寄送</li>
+                                    <li><i class="fas fa-gem" style="color:#EC4899;"></i> 后台参观</li>
+                                    <li><i class="fas fa-gem" style="color:#EC4899;"></i> 年度答谢活动</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="level-config-card" data-level="annual">
                             <div class="lcc-header">
-                                <div class="lcc-level">充值年卡</div>
-                                <div class="lcc-range">年费 &#165;2,999</div>
+                                <div class="lcc-level">尊享会员<span class="lcc-level-badge">L5</span></div>
+                                <div class="lcc-range">成长值 50,000+</div>
                                 <button class="lcc-action-btn lcc-action-btn--delete" title="删除" onclick="deleteLevel(this)"><i class="fas fa-trash-alt"></i></button>
                                 <button class="lcc-action-btn lcc-action-btn--edit" title="编辑" onclick="openEditLevelModal(this)"><i class="fas fa-pen"></i></button>
                             </div>
                             <div class="lcc-body">
                                 <div class="lcc-discount">购票折扣 <strong>8.0</strong> 折</div>
                                 <ul class="lcc-benefits">
-                                    <li><i class="fas fa-check"></i> 2.0倍积分加成</li>
-                                    <li><i class="fas fa-check"></i> 赠送&#165;500余额</li>
-                                    <li><i class="fas fa-check"></i> 全年免费改签</li>
-                                    <li><i class="fas fa-check"></i> 每月2张赠票额度</li>
-                                    <li><i class="fas fa-check"></i> 专属实体会员卡</li>
-                                    <li><i class="fas fa-check"></i> 一对一管家服务</li>
+                                    <li><i class="fas fa-star" style="color:#F59E0B;"></i> 3.0倍积分加成</li>
+                                    <li><i class="fas fa-star" style="color:#F59E0B;"></i> 每月5张优惠券</li>
+                                    <li><i class="fas fa-star" style="color:#F59E0B;"></i> 生日2000积分</li>
+                                    <li><i class="fas fa-ticket-alt" style="color:#3B82F6;"></i> 优先购票</li>
+                                    <li><i class="fas fa-headset" style="color:#8B5CF6;"></i> 专属客服</li>
+                                    <li><i class="fas fa-headset" style="color:#8B5CF6;"></i> VIP入场通道</li>
+                                    <li><i class="fas fa-headset" style="color:#8B5CF6;"></i> 会员卡寄送</li>
+                                    <li><i class="fas fa-gem" style="color:#EC4899;"></i> 后台参观</li>
+                                    <li><i class="fas fa-gem" style="color:#EC4899;"></i> 年度答谢活动</li>
                                 </ul>
                             </div>
                         </div>
@@ -5361,6 +5377,22 @@ select.form-select-sm,
                 <div class="level-form-section">
                     <div class="level-form-section-title"><i class="fas fa-crown"></i> 基本信息</div>
                     <div class="form-group">
+                        <label class="form-label">选择会员等级</label>
+                        <select class="form-input" id="editLevelSelect" onchange="onEditLevelSelect()">
+                            <option value="">-- 请选择等级 --</option>
+                            <option value="L1">L1</option>
+                            <option value="L2">L2</option>
+                            <option value="L3">L3</option>
+                            <option value="L4">L4</option>
+                            <option value="L5">L5</option>
+                            <option value="L6">L6</option>
+                            <option value="L7">L7</option>
+                            <option value="L8">L8</option>
+                            <option value="L9">L9</option>
+                            <option value="L10">L10</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label class="form-label">等级名称<span class="required">*</span></label>
                         <div class="form-input-wrap">
                             <i class="fas fa-crown input-icon"></i>
@@ -5464,7 +5496,7 @@ select.form-select-sm,
                                 </div>
                             </div>
                             <div class="benefit-row">
-                                <div class="benefit-name">会员卡申请</div>
+                                <div class="benefit-name">会员卡寄送</div>
                                 <div class="benefit-control">
                                     <label class="benefit-toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
                                 </div>
@@ -5523,17 +5555,6 @@ select.form-select-sm,
                 </button>
             </div>
             <div class="modal-body" style="padding: 24px;">
-                <!-- Preview Card -->
-                <div id="levelPreview" style="border:1px solid var(--border-light);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:20px;">
-                    <div id="previewHeader">
-                        <div id="previewName">等级名称预览</div>
-                        <div id="previewRange">成长值范围</div>
-                    </div>
-                    <div class="preview-body">
-                        <div class="preview-discount">购票折扣 <strong id="previewDiscount">9.0</strong> 折</div>
-                        <ul id="previewBenefits" class="preview-benefits"><li class="preview-benefit-item"><i class="fas fa-check preview-benefit-icon"></i> 等级权益预览</li></ul>
-                    </div>
-                </div>
                 <!-- Basic Info Section -->
                 <div class="level-form-section">
                     <div class="level-form-section-title"><i class="fas fa-crown"></i> 基本信息</div>
@@ -5541,23 +5562,23 @@ select.form-select-sm,
                         <label class="form-label">等级名称<span class="required">*</span></label>
                         <div class="form-input-wrap">
                             <i class="fas fa-crown input-icon"></i>
-                            <input type="text" class="form-input" id="newLevelName" placeholder="例如：黑金会员" oninput="updateLevelPreview()">
+                            <input type="text" class="form-input" id="newLevelName" placeholder="例如：黑金会员">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">成长值下限<span class="required">*</span></label>
-                            <input type="number" class="form-input" id="newLevelMin" placeholder="0" oninput="updateLevelPreview()">
+                            <input type="number" class="form-input" id="newLevelMin" placeholder="0">
                         </div>
                         <div class="form-group">
                             <label class="form-label">成长值上限</label>
-                            <input type="number" class="form-input" id="newLevelMax" placeholder="不填则无上限" oninput="updateLevelPreview()">
+                            <input type="number" class="form-input" id="newLevelMax" placeholder="不填则无上限">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">购票折扣<span class="required">*</span></label>
                         <div style="display:flex;align-items:center;gap:8px;">
-                            <input type="number" class="form-input" id="newLevelDiscount" placeholder="9.0" step="0.1" min="1" max="10" style="max-width:120px;" oninput="updateLevelPreview()">
+                            <input type="number" class="form-input" id="newLevelDiscount" placeholder="9.0" step="0.1" min="1" max="10" style="max-width:120px;">
                             <span style="font-size:13px;color:var(--text-secondary);">折</span>
                         </div>
                     </div>
@@ -5583,8 +5604,16 @@ select.form-select-sm,
                                 <div class="benefit-name">每月优惠券</div>
                                 <div class="benefit-control">
                                     <label class="benefit-toggle"><input type="checkbox" onchange="toggleBenefitInput(this)"><span class="toggle-slider"></span></label>
-                                    <input type="number" class="benefit-input benefit-sub" value="2" style="width:60px;">
-                                    <span class="benefit-unit">张</span>
+                                    <select class="benefit-input benefit-sub" style="width:160px;">
+                                        <option value="">选择优惠券</option>
+                                        <option value="coupon1">6元无门槛优惠券</option>
+                                        <option value="coupon2">满100减15优惠券</option>
+                                        <option value="coupon3">满200减30优惠券</option>
+                                        <option value="coupon4">8折演出优惠券</option>
+                                        <option value="coupon5">买一送一优惠券</option>
+                                    </select>
+                                    <span class="benefit-unit">张/月</span>
+                                    <input type="number" class="benefit-input benefit-sub" value="2" style="width:50px;">
                                 </div>
                             </div>
                             <div class="benefit-row">
@@ -5606,22 +5635,6 @@ select.form-select-sm,
                         <div class="benefit-category-body">
                             <div class="benefit-row">
                                 <div class="benefit-name">优先购票</div>
-                                <div class="benefit-control">
-                                    <label class="benefit-toggle"><input type="checkbox" onchange="toggleBenefitInput(this)"><span class="toggle-slider"></span></label>
-                                    <input type="number" class="benefit-input benefit-sub" value="48" style="width:60px;">
-                                    <span class="benefit-unit">小时</span>
-                                </div>
-                            </div>
-                            <div class="benefit-row">
-                                <div class="benefit-name">免费改签</div>
-                                <div class="benefit-control">
-                                    <label class="benefit-toggle"><input type="checkbox" onchange="toggleBenefitInput(this)"><span class="toggle-slider"></span></label>
-                                    <input type="number" class="benefit-input benefit-sub" value="2" style="width:60px;">
-                                    <span class="benefit-unit">次/月</span>
-                                </div>
-                            </div>
-                            <div class="benefit-row">
-                                <div class="benefit-name">专属选座区</div>
                                 <div class="benefit-control">
                                     <label class="benefit-toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
                                 </div>
@@ -5663,14 +5676,6 @@ select.form-select-sm,
                         </div>
                         <div class="benefit-category-body">
                             <div class="benefit-row">
-                                <div class="benefit-name">赠票额度</div>
-                                <div class="benefit-control">
-                                    <label class="benefit-toggle"><input type="checkbox" onchange="toggleBenefitInput(this)"><span class="toggle-slider"></span></label>
-                                    <input type="number" class="benefit-input benefit-sub" value="1" style="width:60px;">
-                                    <span class="benefit-unit">张/月</span>
-                                </div>
-                            </div>
-                            <div class="benefit-row">
                                 <div class="benefit-name">后台参观</div>
                                 <div class="benefit-control">
                                     <label class="benefit-toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
@@ -5689,11 +5694,11 @@ select.form-select-sm,
                 <div class="level-form-section">
                     <div class="level-form-section-title"><i class="fas fa-palette"></i> 颜色选择</div>
                     <div class="color-picker">
-                        <label class="color-option" data-color="#6b7280"><input type="radio" name="levelColor" value="#6b7280" checked onchange="updateLevelPreview()" style="display:none;"> <span class="color-dot" style="background:#6b7280;"></span> <span class="color-label">灰色</span></label>
-                        <label class="color-option" data-color="#3B82F6"><input type="radio" name="levelColor" value="#3B82F6" onchange="updateLevelPreview()" style="display:none;"> <span class="color-dot" style="background:#3B82F6;"></span> <span class="color-label">蓝色</span></label>
-                        <label class="color-option" data-color="#8B5CF6"><input type="radio" name="levelColor" value="#8B5CF6" onchange="updateLevelPreview()" style="display:none;"> <span class="color-dot" style="background:#8B5CF6;"></span> <span class="color-label">紫色</span></label>
-                        <label class="color-option" data-color="#EC4899"><input type="radio" name="levelColor" value="#EC4899" onchange="updateLevelPreview()" style="display:none;"> <span class="color-dot" style="background:#EC4899;"></span> <span class="color-label">粉色</span></label>
-                        <label class="color-option" data-color="#D4A853"><input type="radio" name="levelColor" value="#D4A853" onchange="updateLevelPreview()" style="display:none;"> <span class="color-dot" style="background:#D4A853;"></span> <span class="color-label">金色</span></label><label class="color-option" data-color="#F97316"><input type="radio" name="levelColor" value="#F97316" onchange="updateLevelPreview()" style="display:none;"> <span class="color-dot" style="background:#F97316;"></span> <span class="color-label">橘色</span></label><label class="color-option" data-color="#06B6D4"><input type="radio" name="levelColor" value="#06B6D4" onchange="updateLevelPreview()" style="display:none;"> <span class="color-dot" style="background:#06B6D4;"></span> <span class="color-label">青色</span></label><label class="color-option" data-color="#EF4444"><input type="radio" name="levelColor" value="#EF4444" onchange="updateLevelPreview()" style="display:none;"> <span class="color-dot" style="background:#EF4444;"></span> <span class="color-label">红色</span></label><label class="color-option" data-color="#F59E0B"><input type="radio" name="levelColor" value="#F59E0B" onchange="updateLevelPreview()" style="display:none;"> <span class="color-dot" style="background:#F59E0B;"></span> <span class="color-label">橙色</span></label><label class="color-option" data-color="#10B981"><input type="radio" name="levelColor" value="#10B981" onchange="updateLevelPreview()" style="display:none;"> <span class="color-dot" style="background:#10B981;"></span> <span class="color-label">绿色</span></label>
+                        <label class="color-option" data-color="#6b7280"><input type="radio" name="levelColor" value="#6b7280" checked style="display:none;"> <span class="color-dot" style="background:#6b7280;"></span> <span class="color-label">灰色</span></label>
+                        <label class="color-option" data-color="#3B82F6"><input type="radio" name="levelColor" value="#3B82F6" style="display:none;"> <span class="color-dot" style="background:#3B82F6;"></span> <span class="color-label">蓝色</span></label>
+                        <label class="color-option" data-color="#8B5CF6"><input type="radio" name="levelColor" value="#8B5CF6" style="display:none;"> <span class="color-dot" style="background:#8B5CF6;"></span> <span class="color-label">紫色</span></label>
+                        <label class="color-option" data-color="#EC4899"><input type="radio" name="levelColor" value="#EC4899" style="display:none;"> <span class="color-dot" style="background:#EC4899;"></span> <span class="color-label">粉色</span></label>
+                        <label class="color-option" data-color="#D4A853"><input type="radio" name="levelColor" value="#D4A853" style="display:none;"> <span class="color-dot" style="background:#D4A853;"></span> <span class="color-label">金色</span></label><label class="color-option" data-color="#F97316"><input type="radio" name="levelColor" value="#F97316" style="display:none;"> <span class="color-dot" style="background:#F97316;"></span> <span class="color-label">橘色</span></label><label class="color-option" data-color="#06B6D4"><input type="radio" name="levelColor" value="#06B6D4" style="display:none;"> <span class="color-dot" style="background:#06B6D4;"></span> <span class="color-label">青色</span></label><label class="color-option" data-color="#EF4444"><input type="radio" name="levelColor" value="#EF4444" style="display:none;"> <span class="color-dot" style="background:#EF4444;"></span> <span class="color-label">红色</span></label><label class="color-option" data-color="#F59E0B"><input type="radio" name="levelColor" value="#F59E0B" style="display:none;"> <span class="color-dot" style="background:#F59E0B;"></span> <span class="color-label">橙色</span></label><label class="color-option" data-color="#10B981"><input type="radio" name="levelColor" value="#10B981" style="display:none;"> <span class="color-dot" style="background:#10B981;"></span> <span class="color-label">绿色</span></label>
                     </div>
                 </div>
             </div>
@@ -6198,13 +6203,15 @@ select.form-select-sm,
         document.getElementById('addLevelModal').style.display = 'none';
     }
     // Helper: build level card HTML from data
-    function buildLevelCard(name, rangeText, discount, benefitsList, color) {
+    function buildLevelCard(name, rangeText, discount, benefitsList, color, levelParam) {
+        var lp = levelParam || '';
+        var levelBadge = lp ? '<span class="lcc-level-badge">' + lp + '</span>' : '';
         var benefitsHtml = benefitsList.length
             ? benefitsList.map(function(b) { return '<li><i class="fas fa-check"></i> ' + b + '</li>'; }).join('')
             : '<li><i class="fas fa-check"></i> 基础权益</li>';
         return '<div class="level-config-card">' +
             '<div class="lcc-header" style="background: linear-gradient(135deg, ' + color + ', ' + color + 'aa);">' +
-            '<div class="lcc-level">' + name + '</div>' +
+            '<div class="lcc-level">' + name + levelBadge + '</div>' +
             '<div class="lcc-range">' + rangeText + '</div>' +
             '<button class="action-btn delete" title="删除" onclick="deleteLevel(this)"><i class="fas fa-trash-alt"></i> 删除</button>' +
             '<button class="action-btn edit" title="编辑" onclick="openEditLevelModal(this)"><i class="fas fa-pen"></i> 编辑</button>' +
@@ -6232,30 +6239,40 @@ select.form-select-sm,
         var benefitsList = benefits ? benefits.split('\n').filter(function(b) { return b.trim(); }) : [];
 
         document.getElementById('levelCards').insertAdjacentHTML('beforeend',
-            buildLevelCard(name, rangeText, discount, benefitsList, color));
+            buildLevelCard(name, rangeText, discount, benefitsList, color, ''));
         closeAddLevelModal();
         showToast('success', '会员等级「' + name + '」已添加');
     }
 
-    // ==================== Level Preview ====================
-    function updateLevelPreview() {
-        var name = document.getElementById('newLevelName').value.trim() || '等级名称预览';
-        var minVal = document.getElementById('newLevelMin').value.trim() || '0';
-        var maxVal = document.getElementById('newLevelMax').value.trim();
-        var discount = document.getElementById('newLevelDiscount').value.trim() || '9.0';
-        var benefits = collectBenefitsText('new');
-        var color = document.querySelector('input[name="levelColor"]:checked').value;
-        document.getElementById('previewName').textContent = name;
-        document.getElementById('previewRange').textContent = maxVal
-            ? '成长值 ' + parseInt(minVal).toLocaleString() + ' - ' + parseInt(maxVal).toLocaleString()
-            : '成长值 ' + parseInt(minVal).toLocaleString() + '+';
-        document.getElementById('previewDiscount').textContent = discount;
-        document.getElementById('previewHeader').style.background = 'linear-gradient(135deg, ' + color + ', ' + color + 'aa)';
-        var benefitsList = benefits ? benefits.split('\n').filter(function(b) { return b.trim(); }) : [];
-        var benefitsHtml = benefitsList.map(function(b) {
-            return '<li class="preview-benefit-item"><i class="fas fa-check preview-benefit-icon"></i> ' + b + '</li>';
-        }).join('');
-        document.getElementById('previewBenefits').innerHTML = benefitsHtml || '<li class="preview-benefit-item"><i class="fas fa-check preview-benefit-icon"></i> 等级权益预览</li>';
+    // ========== Edit Level Select ==========
+    function onEditLevelSelect() {
+        var select = document.getElementById('editLevelSelect');
+        var val = select.value;
+        if (!val) return;
+
+        var presets = {
+            L1:  { name: '普通会员', min: 0, max: 999, discount: 9.8, color: '#6b7280', points: 1.0 },
+            L2:  { name: '银卡会员', min: 1000, max: 4999, discount: 9.5, color: '#94a3b8', points: 1.2 },
+            L3:  { name: '金卡会员', min: 5000, max: 19999, discount: 9.0, color: '#D4A853', points: 1.5 },
+            L4:  { name: '钻石会员', min: 20000, max: 49999, discount: 8.5, color: '#6366f1', points: 2.0 },
+            L5:  { name: '尊享会员', min: 50000, max: '', discount: 8.0, color: '#FF6B4A', points: 3.0 },
+            L6:  { name: '至尊会员', min: 100000, max: '', discount: 7.5, color: '#EF4444', points: 4.0 },
+            L7:  { name: '荣耀会员', min: 200000, max: '', discount: 7.0, color: '#8B5CF6', points: 5.0 },
+            L8:  { name: '传奇会员', min: 500000, max: '', discount: 6.5, color: '#EC4899', points: 6.0 },
+            L9:  { name: '神话会员', min: 1000000, max: '', discount: 6.0, color: '#F59E0B', points: 8.0 },
+            L10: { name: '永恒会员', min: 5000000, max: '', discount: 5.0, color: '#10B981', points: 10.0 }
+        };
+
+        var p = presets[val];
+        if (!p) return;
+
+        document.getElementById('editLevelName').value = p.name;
+        document.getElementById('editLevelMin').value = p.min;
+        document.getElementById('editLevelMax').value = p.max;
+        document.getElementById('editLevelDiscount').value = p.discount;
+
+        var colorRadio = document.querySelector('input[name="editLevelColor"][value="' + p.color + '"]');
+        if (colorRadio) colorRadio.checked = true;
     }
 
     // ==================== Edit Level ====================

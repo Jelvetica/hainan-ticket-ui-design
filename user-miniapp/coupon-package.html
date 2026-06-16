@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>超值券包 - 海南演艺票务系统</title>
+  <title>超值套票 - 海南演艺票务系统</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
@@ -940,7 +940,7 @@
     <a class="nav-back" onclick="window.location.href='home.html'">
       <i class="fas fa-chevron-left"></i>
     </a>
-    <span class="nav-title">超值券包</span>
+    <span class="nav-title">超值套票</span>
   </div>
 
   <!-- Page Header -->
@@ -948,7 +948,7 @@
     <div class="page-header-content">
       <div class="page-header-title">
         <i class="fas fa-gift"></i>
-        超值券包
+        超值套票
       </div>
       <div class="page-header-desc">精选多场演出组合，一次购买尽享优惠</div>
       <div class="page-header-stats">
@@ -958,7 +958,7 @@
           </div>
           <div class="stat-text">
             <span class="stat-value">4</span>
-            <span class="stat-label">精选券包</span>
+            <span class="stat-label">精选套票</span>
           </div>
         </div>
         <div class="stat-item">
@@ -981,15 +981,6 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- Filter Tabs -->
-  <div class="filter-bar animate-in delay-2">
-    <div class="filter-tab active">全部</div>
-    <div class="filter-tab">热卖推荐</div>
-    <div class="filter-tab">新品上线</div>
-    <div class="filter-tab">亲子家庭</div>
-    <div class="filter-tab">周末休闲</div>
   </div>
 
   <!-- Package List -->
@@ -1147,7 +1138,7 @@
       <div class="modal-shows-list" id="modalShows"></div>
       <div class="modal-divider"></div>
       <div class="modal-price-row">
-        <span class="modal-price-label">券包价格</span>
+        <span class="modal-price-label">套票价格</span>
         <div class="modal-price-value">
           <span class="modal-price-current" id="modalPrice"></span>
           <span class="modal-price-original" id="modalOriginal"></span>
@@ -1252,7 +1243,7 @@
 
     document.getElementById('modalPrice').innerHTML = '<span class="yen">¥</span>' + pkg.price;
     document.getElementById('modalOriginal').textContent = '¥' + pkg.original;
-    document.getElementById('modalSave').textContent = '购买此券包可节省 ¥' + pkg.save;
+    document.getElementById('modalSave').textContent = '购买此套票可节省 ¥' + pkg.save;
 
     // Show modal
     document.getElementById('modalOverlay').classList.add('show');

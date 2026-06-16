@@ -3871,6 +3871,11 @@ select.form-select-sm,
                 <option>折扣券</option>
               </select>
               <select class="filter-select">
+                <option>全部渠道</option>
+                <option>扫码领取</option>
+                <option>会员权益</option>
+              </select>
+              <select class="filter-select">
                 <option>全部状态</option>
                 <option>未开始</option>
                 <option>进行中</option>
@@ -3891,6 +3896,7 @@ select.form-select-sm,
                   <th>面值/折扣</th>
                   <th>使用条件</th>
                   <th>适用范围</th>
+                  <th>发券渠道</th>
                   <th>已发放/已使用</th>
                   <th>有效期</th>
                   <th>状态</th>
@@ -3911,6 +3917,7 @@ select.form-select-sm,
                   <td style="color:var(--text-secondary); font-size:12px">
                     <span style="display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-theater-masks" style="font-size:11px;"></i>指定3场演出</span>
                   </td>
+                  <td><span class="value-tag" style="background:rgba(74,122,255,0.1);color:#4A7AFF;">扫码领取</span></td>
                   <td>
                     <div>
                       <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
@@ -3944,6 +3951,7 @@ select.form-select-sm,
                   <td style="color:var(--text-secondary); font-size:12px">
                     <span style="display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-globe" style="font-size:11px;"></i>全部演出</span>
                   </td>
+                  <td><span class="value-tag" style="background:rgba(0,201,167,0.1);color:#00C9A7;">会员权益</span></td>
                   <td>
                     <div>
                       <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
@@ -3977,6 +3985,7 @@ select.form-select-sm,
                   <td style="color:var(--text-secondary); font-size:12px">
                     <span style="display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-theater-masks" style="font-size:11px;"></i>指定5场演出</span>
                   </td>
+                  <td><span class="value-tag" style="background:rgba(74,122,255,0.1);color:#4A7AFF;">扫码领取</span></td>
                   <td>
                     <div>
                       <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
@@ -4010,6 +4019,7 @@ select.form-select-sm,
                   <td style="color:var(--text-secondary); font-size:12px">
                     <span style="display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-globe" style="font-size:11px;"></i>全部演出</span>
                   </td>
+                  <td><span class="value-tag" style="background:rgba(74,122,255,0.1);color:#4A7AFF;">扫码领取</span></td>
                   <td>
                     <div>
                       <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
@@ -4041,6 +4051,7 @@ select.form-select-sm,
                   <td style="color:var(--text-secondary); font-size:12px">
                     <span style="display:inline-flex; align-items:center; gap:4px;"><i class="fas fa-globe" style="font-size:11px;"></i>全部演出</span>
                   </td>
+                  <td><span class="value-tag" style="background:rgba(0,201,167,0.1);color:#00C9A7;">会员权益</span></td>
                   <td>
                     <div>
                       <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
@@ -5317,6 +5328,17 @@ select.form-select-sm,
         <label class="form-label">券名称<span class="required">*</span></label>
         <input type="text" class="form-input" placeholder="例如：五一演出专享券">
       </div>
+      <div class="form-group">
+        <label class="form-label">发券渠道<span class="required">*</span></label>
+        <div style="display:flex; gap:16px; margin-bottom:12px;">
+          <label class="checkbox-label">
+            <input type="radio" name="coupon-channel" value="scan" checked onchange="toggleCouponChannel('new')"> 扫码领取
+          </label>
+          <label class="checkbox-label">
+            <input type="radio" name="coupon-channel" value="member" onchange="toggleCouponChannel('new')"> 会员权益
+          </label>
+        </div>
+      </div>
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">券类型<span class="required">*</span></label>
@@ -5352,9 +5374,9 @@ select.form-select-sm,
           </div>
           <div class="form-hint">用户订单金额需满足此条件方可使用，0 或不填表示无门槛</div>
         </div>
-        <div class="form-group">
+        <div class="form-group" id="coupon-quantity-group">
           <label class="form-label">发放数量<span class="required">*</span></label>
-          <input type="number" class="form-input" placeholder="请输入发放数量">
+          <input type="number" class="form-input" id="coupon-quantity-input" placeholder="请输入发放数量">
         </div>
       </div>
 
@@ -5364,11 +5386,11 @@ select.form-select-sm,
       </h4>
       <div class="form-group">
         <div style="display:flex; gap:16px; margin-bottom:12px;">
-          <label class="checkbox-label">
-            <input type="radio" name="coupon-scope" value="all" checked onchange="toggleScopeFields('all')"> 全部演出可用
+          <label class="checkbox-label" id="coupon-scope-all-label">
+            <input type="radio" name="coupon-scope" value="all" checked onchange="toggleScopeFields('all')" id="coupon-scope-all"> 全部演出可用
           </label>
-          <label class="checkbox-label">
-            <input type="radio" name="coupon-scope" value="specific" onchange="toggleScopeFields('specific')"> 指定演出/场次
+          <label class="checkbox-label" id="coupon-scope-specific-label">
+            <input type="radio" name="coupon-scope" value="specific" onchange="toggleScopeFields('specific')" id="coupon-scope-specific"> 指定演出/场次
           </label>
         </div>
       </div>
@@ -5470,11 +5492,11 @@ select.form-select-sm,
       </h4>
       <div class="form-group">
         <div style="display:flex; gap:16px; margin-bottom:12px;">
-          <label class="checkbox-label">
-            <input type="radio" name="coupon-time" value="fixed" checked onchange="switchCouponTimeMode('new')"> 固定日期
+          <label class="checkbox-label" id="coupon-time-fixed-label">
+            <input type="radio" name="coupon-time" value="fixed" checked onchange="switchCouponTimeMode('new')" id="coupon-time-fixed"> 固定日期
           </label>
-          <label class="checkbox-label">
-            <input type="radio" name="coupon-time" value="relative" onchange="switchCouponTimeMode('new')"> 领取后N天
+          <label class="checkbox-label" id="coupon-time-relative-label">
+            <input type="radio" name="coupon-time" value="relative" onchange="switchCouponTimeMode('new')" id="coupon-time-relative"> 领取后N天
           </label>
         </div>
       </div>
@@ -5653,6 +5675,17 @@ select.form-select-sm,
       <div class="form-group disabled">
         <label class="form-label">券名称</label>
         <input type="text" class="form-input" value="新会员欢迎券" disabled>
+      </div>
+      <div class="form-group disabled">
+        <label class="form-label">发券渠道</label>
+        <div style="display:flex; gap:16px;">
+          <label class="checkbox-label" style="opacity:0.6;">
+            <input type="radio" name="edit-coupon-channel" value="scan" checked disabled> 扫码领取
+          </label>
+          <label class="checkbox-label" style="opacity:0.6;">
+            <input type="radio" name="edit-coupon-channel" value="member" disabled> 会员权益
+          </label>
+        </div>
       </div>
       <div class="form-row">
         <div class="form-group disabled">
@@ -6146,6 +6179,75 @@ select.form-select-sm,
     } else {
       cashField.style.display = '';
       discountField.style.display = 'none';
+    }
+  }
+
+  // ========== Coupon Channel Toggle ==========
+  function toggleCouponChannel(context) {
+    var radioName = (context === 'edit') ? 'edit-coupon-channel' : 'coupon-channel';
+    var radios = document.getElementsByName(radioName);
+    var isMember = false;
+    for (var i = 0; i < radios.length; i++) {
+      if (radios[i].checked && radios[i].value === 'member') {
+        isMember = true;
+        break;
+      }
+    }
+    
+    // 发放数量
+    var qtyGroup = document.getElementById('coupon-quantity-group');
+    var qtyInput = document.getElementById('coupon-quantity-input');
+    if (qtyGroup && qtyInput) {
+      if (isMember) {
+        qtyInput.value = '';
+        qtyInput.placeholder = '不限';
+        qtyInput.disabled = true;
+        qtyInput.style.background = '#f3f4f6';
+        qtyInput.style.color = '#9ca3af';
+      } else {
+        qtyInput.placeholder = '请输入发放数量';
+        qtyInput.disabled = false;
+        qtyInput.style.background = '';
+        qtyInput.style.color = '';
+      }
+    }
+    
+    // 适用范围 - 会员权益只能选全部演出
+    var scopeAll = document.getElementById('coupon-scope-all');
+    var scopeSpecific = document.getElementById('coupon-scope-specific');
+    var scopeAllLabel = document.getElementById('coupon-scope-all-label');
+    var scopeSpecificLabel = document.getElementById('coupon-scope-specific-label');
+    var scopeSpecificFields = document.getElementById('scope-specific-fields');
+    if (scopeAll && scopeSpecific) {
+      if (isMember) {
+        scopeAll.checked = true;
+        scopeSpecific.disabled = true;
+        if (scopeSpecificLabel) scopeSpecificLabel.style.opacity = '0.4';
+        if (scopeSpecificFields) scopeSpecificFields.style.display = 'none';
+      } else {
+        scopeSpecific.disabled = false;
+        if (scopeSpecificLabel) scopeSpecificLabel.style.opacity = '1';
+      }
+    }
+    
+    // 有效期 - 会员权益只能选领取后N天
+    var timeFixed = document.getElementById('coupon-time-fixed');
+    var timeRelative = document.getElementById('coupon-time-relative');
+    var timeFixedLabel = document.getElementById('coupon-time-fixed-label');
+    var timeRelativeLabel = document.getElementById('coupon-time-relative-label');
+    var fixedTimeEl = document.getElementById('coupon-new-fixed-time');
+    var relativeTimeEl = document.getElementById('coupon-new-relative-days');
+    if (timeFixed && timeRelative) {
+      if (isMember) {
+        timeRelative.checked = true;
+        timeFixed.disabled = true;
+        if (timeFixedLabel) timeFixedLabel.style.opacity = '0.4';
+        if (fixedTimeEl) fixedTimeEl.style.display = 'none';
+        if (relativeTimeEl) relativeTimeEl.style.display = '';
+      } else {
+        timeFixed.disabled = false;
+        if (timeFixedLabel) timeFixedLabel.style.opacity = '1';
+      }
     }
   }
 
