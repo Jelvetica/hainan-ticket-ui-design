@@ -8019,6 +8019,18 @@ const changelogData = [
         ]
     },
     {
+        date: '2026-06-18',
+        entries: [
+            {
+                page: 'index.html',
+                pageName: '设计总览',
+                module: '设计总览',
+                time: '01:00',
+                content: `流程图弹窗新增"成长值与积分获取及退款扣除流程"导航项，图片使用原图不压缩渲染`
+            }
+        ]
+    },
+    {
         date: '2026-06-17',
         entries: [
             {

@@ -1532,6 +1532,9 @@
     display: block;
     box-shadow: 0 8px 32px rgba(0,0,0,0.15);
     border-radius: 4px;
+    image-rendering: auto;
+    image-rendering: crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
 }
 .flowchart-empty-state {
     position: absolute;
@@ -2347,6 +2350,13 @@ const flowchartData = [
         desc: '小程序 + 窗口售票 + 优惠计算 + 锁座释放',
         icon: '🎫',
         image: 'ticket-fulfillment-flow.png'
+    },
+    {
+        id: 'growth-points-flowchart',
+        title: '成长值与积分获取及退款扣除流程',
+        desc: '购票核销发放 + 退款按比例扣除 + 线上线下区分 + 等级升降级',
+        icon: '⭐',
+        image: 'growth-points-flowchart.png'
     }
 ];
 
@@ -2408,10 +2418,10 @@ function selectFlowchart(id) {
     flowchartOffsetY = 0;
     updateFlowchartTransform();
 
-    // 加载图片（加时间戳参数防止缓存）
+    // 加载图片（加时间戳参数防止缓存，图片不压缩）
     const wrapper = document.getElementById('flowchartImageWrapper');
     const ts = Date.now();
-    wrapper.innerHTML = `<img src="${currentFlowchart.image}?t=${ts}" alt="${currentFlowchart.title}" onload="onFlowchartImageLoad()" onerror="onFlowchartImageError()">`;
+    wrapper.innerHTML = `<img src="${currentFlowchart.image}?t=${ts}" alt="${currentFlowchart.title}" style="image-rendering: auto; image-rendering: crisp-edges; image-rendering: -webkit-optimize-contrast;" onload="onFlowchartImageLoad()" onerror="onFlowchartImageError()">`;
 }
 
 function onFlowchartImageLoad() {
