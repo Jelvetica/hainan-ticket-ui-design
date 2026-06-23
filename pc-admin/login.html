@@ -484,12 +484,16 @@
       color: #07C160;
     }
 
-    /* ========== Copyright ========== */
-    .copyright {
+    .brand-tech-support {
+      position: absolute;
+      bottom: 28px;
+      left: 0;
+      right: 0;
       text-align: center;
-      font-size: 11px;
-      color: rgba(255,255,255,0.2);
-      letter-spacing: 0.5px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 1px;
+      z-index: 2;
     }
 
     /* ========== Background Light Effects ========== */
@@ -693,6 +697,8 @@
           </div>
         </div>
       </div>
+      <!-- Tech Support -->
+      <p class="brand-tech-support">海南蓝点计算机网络工程有限公司 &middot; 技术支持</p>
       <!-- Decorative Glows -->
       <div class="glow glow-1"></div>
       <div class="glow glow-2"></div>
@@ -737,10 +743,9 @@
         </div>
 
         <button class="login-btn" onclick="handleLogin()">登录</button>
-
-        <p class="copyright">&copy; 2026 海南省演艺集团 &middot; 艺术演出院线数字服务系统</p>
       </div>
     </div>
+
   </div>
 
   <script>

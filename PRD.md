@@ -404,8 +404,11 @@
 
 ## 页面名称对照表
 
+### 用户小程序
+
 | page (URL键名) | pageName |
 |----------------|----------|
+| user-miniapp/login.html | 登录 |
 | user-miniapp/home.html | 首页 |
 | user-miniapp/show-list-detail.html | 演出列表 |
 | user-miniapp/show-detail.html | 演出详情 |
@@ -413,7 +416,9 @@
 | user-miniapp/search.html | 搜索 |
 | user-miniapp/member-center.html | 会员中心 |
 | user-miniapp/coupons.html | 优惠券 |
+| user-miniapp/coupon-receive.html | 领取优惠券 |
 | user-miniapp/coupon-package.html | 券包详情 |
+| user-miniapp/my-packages.html | 我的券包 |
 | user-miniapp/points.html | 积分体系 |
 | user-miniapp/points-flow.html | 积分明细 |
 | user-miniapp/wallet.html | 钱包 |
@@ -425,12 +430,13 @@
 | user-miniapp/real-name-auth.html | 实名认证 |
 | user-miniapp/message-service.html | 消息服务 |
 | user-miniapp/order-ticket.html | 票务订单 |
+| user-miniapp/order-detail.html | 订单详情 |
+| user-miniapp/order-success.html | 订单成功 |
+| user-miniapp/order-confirm.html | 确认订单 |
 | user-miniapp/product-order.html | 商品订单 |
 | user-miniapp/shop.html | 商城 |
 | user-miniapp/theater-list.html | 剧院列表 |
 | user-miniapp/theater-detail.html | 剧院详情 |
-| user-miniapp/order-confirm.html | 确认订单 |
-| user-miniapp/my-packages.html | 我的券包 |
 | user-miniapp/physical-card-apply.html | 实体卡申请 |
 | user-miniapp/recharge-card-bind.html | 充值卡绑定 |
 | user-miniapp/transaction-record.html | 交易记录 |
@@ -442,9 +448,14 @@
 | user-miniapp/agent-miniapp-rules.html | 代理规则 |
 | user-miniapp/agent-miniapp-stats.html | 代理统计 |
 | user-miniapp/agent-miniapp-withdraw.html | 提现 |
-| pc-admin/dashboard.html | 数据看板 |
+
+### PC管理后台
+
+| page (URL键名) | pageName |
+|----------------|----------|
 | pc-admin/login.html | 登录 |
 | pc-admin/login-v2.html | 登录V2 |
+| pc-admin/dashboard.html | 数据看板 |
 | pc-admin/show-management.html | 演出管理 |
 | pc-admin/ticket-sales.html | 售票管理 |
 | pc-admin/order-management.html | 订单管理 |
@@ -456,13 +467,23 @@
 | pc-admin/activity-decoration.html | 运营活动 |
 | pc-admin/statistics.html | 数据统计 |
 | pc-admin/agent-management.html | 代理管理 |
-| pc-admin/agent-miniapp.html | 代理小程序 |
-| pc-admin/agent-miniapp-commission.html | 代理佣金 |
-| pc-admin/agent-miniapp-poster.html | 代理海报 |
-| pc-admin/agent-miniapp-qrcode.html | 代理二维码 |
-| pc-admin/agent-miniapp-rules.html | 代理规则 |
-| pc-admin/agent-miniapp-stats.html | 代理统计 |
-| pc-admin/agent-miniapp-withdraw.html | 代理提现 |
+
+### 管理员小程序
+
+| page (URL键名) | pageName |
+|----------------|----------|
+| admin-miniapp/login.html | 管理员登录 |
 | admin-miniapp/admin-home-verify.html | 核验首页 |
-| admin-miniapp/scan-verify.html | 扫码验票 |
+
+### 自助服务终端
+
+| page (URL键名) | pageName |
+|----------------|----------|
+| kiosk/index.html | 自助出票首页 |
+| kiosk/scan.html | 扫码出票 |
+
+### 总览
+
+| page (URL键名) | pageName |
+|----------------|----------|
 | index.html | 设计总览 |

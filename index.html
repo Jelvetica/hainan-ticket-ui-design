@@ -104,6 +104,7 @@
         .nav-tab.pc { border-left: 3px solid var(--green); }
         .nav-tab.user { border-left: 3px solid var(--accent); }
         .nav-tab.admin { border-left: 3px solid var(--gold); }
+        .nav-tab.kiosk { border-left: 3px solid #8B5CF6; }
 
         .nav-mode-toggle {
             display: flex;
@@ -159,7 +160,7 @@
             background: #fff;
             border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            min-width: 320px;
+            min-width: 380px;
             max-height: 70vh;
             overflow: hidden;
             display: none;
@@ -266,6 +267,7 @@
         .dropdown-item-icon.pc { background: rgba(0, 201, 167, 0.15); }
         .dropdown-item-icon.user { background: rgba(255, 107, 74, 0.15); }
         .dropdown-item-icon.admin { background: rgba(212, 168, 83, 0.15); }
+        .dropdown-item-icon.kiosk { background: rgba(139, 92, 246, 0.15); }
 
         .dropdown-item-text {
             flex: 1;
@@ -387,6 +389,7 @@
         .section-icon.user { background: linear-gradient(135deg, var(--accent), #FF8A6A); }
         .section-icon.admin { background: linear-gradient(135deg, var(--gold), #E8C06A); }
         .section-icon.pc { background: linear-gradient(135deg, var(--green), #3DD9B6); }
+        .section-icon.kiosk { background: linear-gradient(135deg, #8B5CF6, #A78BFA); }
 
         .section-title {
             font-size: 20px;
@@ -446,6 +449,7 @@
         .card-preview.user-preview { background: linear-gradient(135deg, #0A1628 0%, #1A2D4A 50%, #0F2035 100%); }
         .card-preview.admin-preview { background: linear-gradient(135deg, #1A1408 0%, #2A2010 50%, #1A1408 100%); }
         .card-preview.pc-preview { background: linear-gradient(135deg, #081A16 0%, #0A2A22 50%, #081A16 100%); }
+        .card-preview.kiosk-preview { background: linear-gradient(135deg, #12082A 0%, #1A0F3A 50%, #12082A 100%); }
 
         .card-preview-icon { font-size: 36px; opacity: 0.3; }
 
@@ -1592,6 +1596,7 @@
             <button class="nav-tab pc active" data-category="pc" onclick="filterCategory('pc')">🖥️ PC管理后台</button>
             <button class="nav-tab user" data-category="user" onclick="filterCategory('user')">📱 用户小程序</button>
             <button class="nav-tab admin" data-category="admin" onclick="filterCategory('admin')">🔧 管理员小程序</button>
+            <button class="nav-tab kiosk" data-category="kiosk" onclick="filterCategory('kiosk')">🎫 自助机</button>
         </div>
 
         <div class="page-dropdown">
@@ -1624,12 +1629,12 @@
         <!-- Hero -->
         <div class="hero">
             <div class="hero-content">
-                <div class="hero-badge">UI/UX DESIGN v5.0</div>
+                <div class="hero-badge">UI/UX DESIGN v6.0</div>
                 <h1>海南演艺票务系统<br><span>全端界面设计总览</span></h1>
-                <p>涵盖用户端小程序、代理端小程序、管理员端小程序、PC端管理后台四大端的完整UI/UX设计方案</p>
+                <p>涵盖用户端小程序、代理端小程序、管理员端小程序、PC端管理后台、自助服务终端五大端的完整UI/UX设计方案</p>
                 <div class="hero-stats">
-                    <div class="hero-stat"><div class="hero-stat-num">57</div><div class="hero-stat-label">设计页面</div></div>
-                    <div class="hero-stat"><div class="hero-stat-num">4</div><div class="hero-stat-label">终端平台</div></div>
+                    <div class="hero-stat"><div class="hero-stat-num">60</div><div class="hero-stat-label">设计页面</div></div>
+                    <div class="hero-stat"><div class="hero-stat-num">5</div><div class="hero-stat-label">终端平台</div></div>
                     <div class="hero-stat"><div class="hero-stat-num">5</div><div class="hero-stat-label">色彩规范</div></div>
                 </div>
             </div>
@@ -1640,7 +1645,7 @@
             <div class="section-header">
                 <div class="section-icon pc">🖥️</div>
                 <div><div class="section-title">PC端管理后台</div><div class="section-desc">面向平台运营团队</div></div>
-                <div class="section-count">21 个页面</div>
+                <div class="section-count">14 个页面</div>
             </div>
             <div class="card-grid" id="pcGrid"></div>
         </div>
@@ -1650,7 +1655,7 @@
             <div class="section-header">
                 <div class="section-icon user">📱</div>
                 <div><div class="section-title">用户端小程序</div><div class="section-desc">面向C端购票用户</div></div>
-                <div class="section-count">35 个页面</div>
+                <div class="section-count">36 个页面</div>
             </div>
             <div class="card-grid" id="userGrid"></div>
         </div>
@@ -1660,13 +1665,23 @@
             <div class="section-header">
                 <div class="section-icon admin">🔧</div>
                 <div><div class="section-title">管理员端小程序</div><div class="section-desc">面向场馆管理人员</div></div>
-                <div class="section-count">1 个页面</div>
+                <div class="section-count">2 个页面</div>
             </div>
             <div class="card-grid" id="adminGrid"></div>
         </div>
 
+        <!-- Kiosk Section -->
+        <div class="section" data-section="kiosk">
+            <div class="section-header">
+                <div class="section-icon kiosk">🎫</div>
+                <div><div class="section-title">自助服务终端</div><div class="section-desc">面向现场取票用户（23寸触摸屏）</div></div>
+                <div class="section-count">2 个页面</div>
+            </div>
+            <div class="card-grid" id="kioskGrid"></div>
+        </div>
+
         <footer class="footer">
-            海南演艺票务系统 UI/UX 设计方案 v5.0 · 深海蓝 #0A1628 · 珊瑚橙 #FF6B4A · 金色 #D4A853 · 翡翠绿 #00C9A7
+            海南演艺票务系统 UI/UX 设计方案 v6.0 · 深海蓝 #0A1628 · 珊瑚橙 #FF6B4A · 金色 #D4A853 · 翡翠绿 #00C9A7
         </footer>
     </div>
 
@@ -1727,6 +1742,7 @@ const pagesData = {
         { name: '确认订单', url: 'user-miniapp/order-confirm.html', icon: '📝', desc: '演出信息、已选座位、费用明细、混合支付', tags: ['确认订单', '混合支付'] },
         { name: '票务订单', url: 'user-miniapp/order-ticket.html', icon: '🎫', desc: '订单列表、电子票夹、评论', tags: ['订单', '电子票', '评论'] },
         { name: '订单详情', url: 'user-miniapp/order-detail.html', icon: '📋', desc: '订单状态、费用明细、座位信息', tags: ['订单详情', '支付'] },
+        { name: '订单成功', url: 'user-miniapp/order-success.html', icon: '✅', desc: '下单成功、查看电子票', tags: ['订单成功', '电子票'] },
         { name: '地址管理', url: 'user-miniapp/address-manage.html', icon: '📍', desc: '收货地址增删改查', tags: ['地址', '配送'] },
         { name: '剧院列表', url: 'user-miniapp/theater-list.html', icon: '🏛️', desc: '剧院搜索、详情查看', tags: ['剧院'] },
         { name: '剧院详情', url: 'user-miniapp/theater-detail.html', icon: '🎭', desc: '剧院信息、演出厅、当前演出', tags: ['剧院详情', '演出厅'] },
@@ -1761,8 +1777,11 @@ const pagesData = {
     ],
     admin: [
         { name: '管理员登录', url: 'admin-miniapp/login.html', icon: '🔐', desc: '账号密码登录、图形验证码', tags: ['登录', '验证码'] },
-        { name: '数据看板 & 扫码验票', url: 'admin-miniapp/admin-home-verify.html', icon: '📊', desc: '场馆数据、扫码验票', tags: ['数据看板', '扫码验票'] },
-        { name: '扫码验票', url: 'admin-miniapp/scan-verify.html', icon: '📷', desc: '扫码验票、座位核销', tags: ['扫码', '验票'] }
+        { name: '数据看板 & 扫码验票', url: 'admin-miniapp/admin-home-verify.html', icon: '📊', desc: '场馆数据、扫码验票', tags: ['数据看板', '扫码验票'] }
+    ],
+    kiosk: [
+        { name: '自助出票首页', url: 'kiosk/index.html', icon: '🎫', desc: '功能选择、品牌展示、屏保模式', tags: ['自助出票', '触摸屏'] },
+        { name: '扫码出票', url: 'kiosk/scan.html', icon: '📷', desc: '二维码扫描、手动输入取票码、出票结果', tags: ['扫码', '取票码', '出票结果'] }
     ]
 };
 
@@ -1782,14 +1801,15 @@ function renderAllCards() {
     renderCards('pc', 'pcGrid');
     renderCards('user', 'userGrid');
     renderCards('admin', 'adminGrid');
+    renderCards('kiosk', 'kioskGrid');
 }
 
 // 渲染卡片
 function renderCards(category, containerId) {
     const container = document.getElementById(containerId);
     const pages = pagesData[category];
-    const previewClass = category === 'pc' ? 'pc-preview' : (category === 'user' ? 'user-preview' : 'admin-preview');
-    const label = category === 'pc' ? '1440 × 900' : '375 × 812';
+    const previewClass = category === 'pc' ? 'pc-preview' : (category === 'user' ? 'user-preview' : (category === 'admin' ? 'admin-preview' : 'kiosk-preview'));
+    const label = category === 'pc' ? '1440 × 900' : (category === 'kiosk' ? '1920 × 1080' : '375 × 812');
 
     container.innerHTML = pages.map(page => `
         <div class="card" data-url="${page.url}" onclick="handleCardClick('${page.url}')">
@@ -1826,7 +1846,8 @@ function renderDropdown() {
     const categories = [
         { key: 'pc', name: 'PC管理后台', icon: '🖥️' },
         { key: 'user', name: '用户小程序', icon: '📱' },
-        { key: 'admin', name: '管理员小程序', icon: '🔧' }
+        { key: 'admin', name: '管理员小程序', icon: '🔧' },
+        { key: 'kiosk', name: '自助机', icon: '🎫' }
     ];
 
     container.innerHTML = `
@@ -1967,7 +1988,7 @@ function initIframeListener() {
             key = key.split('?')[0].split('#')[0];
             
             // 兼容各种路径前缀（ui-design/、__virtual_fs__/xxx/ 等）
-            const knownPrefixes = ['user-miniapp/', 'pc-admin/', 'admin-miniapp/'];
+            const knownPrefixes = ['user-miniapp/', 'pc-admin/', 'admin-miniapp/', 'kiosk/'];
             let matched = false;
             for (const prefix of knownPrefixes) {
                 const idx = key.indexOf(prefix);
@@ -2207,7 +2228,7 @@ function updateDropdownButton(url) {
 
     const btn = document.querySelector('.dropdown-btn span:first-child');
     if (currentPage) {
-        const catIcon = currentCategory === 'pc' ? '🖥️' : (currentCategory === 'user' ? '📱' : '🔧');
+        const catIcon = currentCategory === 'pc' ? '🖥️' : (currentCategory === 'user' ? '📱' : (currentCategory === 'admin' ? '🔧' : '🎫'));
         btn.textContent = `${catIcon} ${currentPage.name}`;
     } else {
         btn.textContent = '📄 页面导航';
@@ -2267,7 +2288,7 @@ function renderChangelogModal() {
         // 组内按 time 倒序
         const entries = grouped[date].sort((a, b) => (b.time || '').localeCompare(a.time || ''));
         entries.forEach((entry, idx) => {
-            const platformPrefix = entry.page.startsWith('pc-admin/') ? '后台' : entry.page.startsWith('user-miniapp/') ? '小程序' : entry.page.startsWith('admin-miniapp/') ? '管理端' : '';
+            const platformPrefix = entry.page.startsWith('pc-admin/') ? '后台' : entry.page.startsWith('user-miniapp/') ? '小程序' : entry.page.startsWith('admin-miniapp/') ? '管理端' : entry.page.startsWith('kiosk/') ? '自助机' : '';
             const platformTag = platformPrefix ? `${platformPrefix}-` : '';
             const dateCell = idx === 0 ? `<td rowspan="${entries.length}" class="changelog-date">${date}</td>` : '';
             html += `<tr>${dateCell}<td class="changelog-time">${entry.time || '-'}</td><td><div class="changelog-entry"><span class="changelog-page-tag">${platformTag}${entry.pageName}</span>${entry.content}</div></td></tr>`;

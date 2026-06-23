@@ -7642,12 +7642,153 @@ Tab切换交互：
 - 佣金统计：佣金产生/结算/待结算金额`
         }
     ]
-  }
+    },
+
+    // ========== 自助服务终端 ==========
+    'kiosk/index.html': {
+        title: '自助出票首页',
+        subtitle: '自助服务终端 - 功能选择',
+        sections: [
+            {
+                title: '功能描述',
+                content: `<p><strong>核心功能：</strong>自助服务终端（23寸触摸屏，16:9比例）的首屏页面，提供自助出票入口。页面采用深色沉浸式设计风格，中央展示品牌Logo、系统名称"海南省演艺集团"和子系统名称"艺术演出院线数字服务系统"，下方提供唯一的操作按钮"自助出票"。</p>
+<p><strong>业务说明：</strong></p>
+<ul>
+  <li><strong>设备规格：</strong>23寸触摸屏，分辨率1920×1080，16:9比例</li>
+  <li><strong>品牌展示：</strong>Logo居中（带drop-shadow发光效果），系统名称使用大字号+宽字距，金色分割线，子系统名称使用轻字重</li>
+  <li><strong>出票按钮：</strong>大尺寸触摸按钮（clamp尺寸自适应），珊瑚色渐变背景，自定义SVG打印机图标，脉冲呼吸动画+光晕环，点击涟漪效果</li>
+  <li><strong>屏保模式：</strong>3分钟无操作自动激活屏保（Logo放大浮动+呼吸文字），触摸屏保任意位置恢复主界面</li>
+  <li><strong>系统状态：</strong>左上角绿色指示灯+系统运行状态文字，右上角实时时钟（时间+日期+星期）</li>
+  <li><strong>底部信息：</strong>技术支持信息"海南蓝点计算机网络工程有限公司 · 技术支持"</li>
+  <li><strong>页面特效：</strong>背景网格纹理（径向渐变遮罩）、三个光球漂浮动画（珊瑚/金色/翡翠色）、入场分层动画</li>
+</ul>`
+            },
+            {
+                title: '交互说明',
+                content: `<p><strong>点击自助出票</strong></p>
+<ul>
+  <li><strong>触发：</strong>点击"自助出票"按钮</li>
+  <li><strong>执行中：</strong>按钮涟漪效果→页面跳转至 scan.html</li>
+  <li><strong>成功：</strong>进入扫码出票页面</li>
+</ul>
+<p><strong>屏保激活</strong></p>
+<ul>
+  <li><strong>触发：</strong>3分钟无触摸操作</li>
+  <li><strong>执行中：</strong>主界面淡出→屏保界面淡入（Logo放大+浮动+呼吸文字"轻触屏幕开始操作"）</li>
+  <li><strong>恢复：</strong>触摸屏保任意位置→屏保淡出→主界面淡入</li>
+</ul>`
+            },
+            {
+                title: '设计规范',
+                content: `<p><strong>设计参数：</strong></p>
+<ul>
+  <li><strong>屏幕比例：</strong>16:9（1920×1080）</li>
+  <li><strong>主色调：</strong>深海蓝 #0A1628</li>
+  <li><strong>按钮色：</strong>珊瑚橙 #FF6B4A 渐变</li>
+  <li><strong>辅助色：</strong>金色 #D4A853、翡翠绿 #00C9A7</li>
+  <li><strong>字体：</strong>Noto Sans SC + Playfair Display（时钟）</li>
+  <li><strong>触摸目标：</strong>按钮最小 80px 高度</li>
+  <li><strong>禁用选择：</strong>user-select: none（防止误触选中文字）</li>
+</ul>`
+            }
+        ]
+    },
+    'kiosk/scan.html': {
+        title: '扫码出票',
+        subtitle: '自助服务终端 - 二维码扫描/手动输入',
+        sections: [
+            {
+                title: '功能描述',
+                content: `<p><strong>核心功能：</strong>自助出票的扫码页面，用户在此页面出示电子票二维码进行扫描出票，或手动输入取票码。页面中央展示扫描区域（珊瑚色角标+扫描线动画），下方提供手动输入取票码按钮。</p>
+<p><strong>业务说明：</strong></p>
+<ul>
+  <li><strong>扫描区域：</strong>圆角矩形框，珊瑚色四角角标，内部半透明背景，QR码图标水印，扫描线上下往复动画</li>
+  <li><strong>操作指引：</strong>标题"请出示门票二维码"，副标题说明操作步骤（手机电子票/纸质票二维码）</li>
+  <li><strong>手动输入：</strong>备选入口按钮，点击后可手动输入取票码（当前演示为触发失败弹窗）</li>
+  <li><strong>出票成功：</strong>全屏遮罩+结果卡片（翡翠绿勾选图标+标题+说明+完成按钮），8秒自动关闭</li>
+  <li><strong>出票失败：</strong>全屏遮罩+结果卡片（红色X图标+标题+故障排查说明+重新尝试按钮），8秒自动关闭</li>
+  <li><strong>返回按钮：</strong>固定在左下角（position: fixed），避免触摸屏够不到的问题</li>
+  <li><strong>Demo控制：</strong>底部中央提供"模拟出票成功"和"模拟出票失败"按钮用于测试</li>
+</ul>`
+            },
+            {
+                title: '交互说明',
+                content: `<p><strong>扫码出票（正常流程）</strong></p>
+<ul>
+  <li><strong>触发：</strong>扫描设备识别到有效二维码</li>
+  <li><strong>执行中：</strong>验证二维码→调用出票接口→打印纸质票</li>
+  <li><strong>成功：</strong>显示"出票成功"结果弹窗，提示用户从取票口取票</li>
+  <li><strong>失败：</strong>显示"出票失败"结果弹窗，列出故障排查建议</li>
+</ul>
+<p><strong>手动输入取票码</strong></p>
+<ul>
+  <li><strong>触发：</strong>点击"手动输入取票码"按钮</li>
+  <li><strong>执行中：</strong>弹出取票码输入界面（待实现）</li>
+</ul>
+<p><strong>返回首页</strong></p>
+<ul>
+  <li><strong>触发：</strong>点击左下角"返回首页"按钮</li>
+  <li><strong>执行中：</strong>返回 kiosk/index.html</li>
+</ul>`
+            },
+            {
+                title: '设计规范',
+                content: `<p><strong>与首页保持一致的设计语言：</strong></p>
+<ul>
+  <li><strong>扫描框尺寸：</strong>clamp(200px, 28vh, 320px) 正方形</li>
+  <li><strong>角标颜色：</strong>珊瑚橙 #FF6B4A</li>
+  <li><strong>扫描线：</strong>珊瑚色渐变+发光阴影，2.5秒循环</li>
+  <li><strong>结果弹窗：</strong>毛玻璃背景（blur 8px），卡片入场动画</li>
+  <li><strong>返回按钮：</strong>固定左下角 bottom: 3vh, left: 3vw</li>
+</ul>`
+            }
+        ]
+    }
 };
 // ===== 更新日志数据 =====
 // 每次更新原型时，在此数组前面插入新记录
 // entries.page 对应 devDocs 中的页面URL键名
 const changelogData = [
+    {
+        date: '2026-06-24',
+        entries: [
+            {
+                page: 'kiosk/index.html',
+                pageName: '自助出票首页',
+                module: '自助机',
+                time: '14:00',
+                content: `新增自助服务终端首页：23寸触摸屏16:9比例，深色沉浸式设计，品牌Logo+系统名称展示，自助出票按钮（自定义SVG打印机图标+脉冲呼吸动画），屏保模式（3分钟空闲自动激活），实时时钟显示，系统状态指示灯，底部技术支持信息`
+            },
+            {
+                page: 'kiosk/scan.html',
+                pageName: '扫码出票',
+                module: '自助机',
+                time: '14:00',
+                content: `新增扫码出票页面：二维码扫描区域（珊瑚色角标+扫描线动画），手动输入取票码入口，出票成功/失败结果弹窗（自动8秒关闭），返回按钮固定在左下角（触摸屏友好），Demo控制按钮用于测试`
+            },
+            {
+                page: 'pc-admin/login.html',
+                pageName: 'PC管理后台登录',
+                module: '登录页',
+                time: '13:00',
+                content: `技术支持文字移至页面底部固定位置（page-footer），copyright同步调整`
+            },
+            {
+                page: 'user-miniapp/login.html',
+                pageName: '用户端登录',
+                module: '登录页',
+                time: '13:00',
+                content: `底部新增"海南蓝点计算机网络工程有限公司 · 技术支持"文字`
+            },
+            {
+                page: 'admin-miniapp/login.html',
+                pageName: '管理员端登录',
+                module: '登录页',
+                time: '13:00',
+                content: `底部新增"海南蓝点计算机网络工程有限公司 · 技术支持"文字`
+            }
+        ]
+    },
     {
         date: '2026-06-23',
         entries: [
