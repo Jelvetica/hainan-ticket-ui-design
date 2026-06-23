@@ -639,7 +639,6 @@ table { border-collapse: collapse; width: 100%; }
   border: 1px solid var(--border-color);
   border-radius: 10px;
   overflow: hidden;
-  min-width: 900px;
 }
 
 .data-table thead {
@@ -3950,6 +3949,26 @@ table { border-collapse: collapse; width: 100%; }
 .status-tag.off-shelf { background: rgba(107,114,128,0.1); color: #6B7280; }
 .status-tag.off-shelf .dot { background: #9CA3AF; }
 
+/* Session sale toggle button */
+.action-btn.stop-sale {
+  background: rgba(239,68,68,0.08);
+  color: #EF4444;
+  border: 1px solid rgba(239,68,68,0.2);
+}
+.action-btn.stop-sale:hover {
+  background: rgba(239,68,68,0.15);
+  transform: translateY(-1px);
+}
+.action-btn.start-sale {
+  background: rgba(0,201,167,0.08);
+  color: #00A88A;
+  border: 1px solid rgba(0,201,167,0.2);
+}
+.action-btn.start-sale:hover {
+  background: rgba(0,201,167,0.15);
+  transform: translateY(-1px);
+}
+
 /* Session data modal - chart */
 .session-chart-container {
   width: 100%;
@@ -5515,38 +5534,36 @@ table { border-collapse: collapse; width: 100%; }
 }
 .session-table-scroll table {
   width: 100%;
-  min-width: 100%;
-  table-layout: fixed;
-  box-sizing: border-box;
+  table-layout: auto;
+  border-collapse: collapse;
 }
 .session-table-scroll th,
 .session-table-scroll td {
   box-sizing: border-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  padding: 10px 12px;
+  vertical-align: middle;
+}
+.session-table-scroll td {
+  white-space: normal;
+  word-break: break-all;
+}
+.session-table-scroll th {
   white-space: nowrap;
 }
-/* Session table column widths - flexible */
-.session-table-scroll th:nth-child(1),
-.session-table-scroll td:nth-child(1) { width: 40px; min-width: 40px; max-width: 40px; }
-.session-table-scroll th:nth-child(2),
-.session-table-scroll td:nth-child(2) { min-width: 120px; }
-.session-table-scroll th:nth-child(3),
-.session-table-scroll td:nth-child(3) { min-width: 110px; }
-.session-table-scroll th:nth-child(4),
-.session-table-scroll td:nth-child(4) { min-width: 100px; }
-.session-table-scroll th:nth-child(5),
-.session-table-scroll td:nth-child(5) { width: 60px; min-width: 50px; text-align: center; }
-.session-table-scroll th:nth-child(6),
-.session-table-scroll td:nth-child(6) { width: 80px; min-width: 70px; }
-.session-table-scroll th:nth-child(7),
-.session-table-scroll td:nth-child(7) { min-width: 80px; }
-.session-table-scroll th:nth-child(8),
-.session-table-scroll td:nth-child(8) { width: 80px; min-width: 70px; text-align: center; }
-.session-table-scroll th:nth-child(9),
-.session-table-scroll td:nth-child(9) { width: 80px; min-width: 70px; text-align: center; }
-.session-table-scroll th:nth-child(10),
-.session-table-scroll td:nth-child(10) { width: 120px; min-width: 100px; text-align: center; }
+.session-table-scroll td:nth-child(1),
+.session-table-scroll th:nth-child(1) {
+  text-align: center;
+}
+.session-table-scroll td:last-child,
+.session-table-scroll th:last-child {
+  text-align: center;
+}
+.session-table-scroll .action-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+}
 .session-table-scroll::-webkit-scrollbar {
   height: 6px;
 }
@@ -5784,9 +5801,7 @@ table { border-collapse: collapse; width: 100%; }
     margin: 0 -12px;
     padding: 0 12px;
   }
-  .data-table {
-    min-width: 600px;
-  }
+
   .filter-bar {
     flex-direction: column;
     gap: 10px;
@@ -7271,11 +7286,11 @@ select.form-select-sm,
             <div class="ss-value coral">48</div>
           </div>
           <div class="session-stat-card">
-            <div class="ss-label">已开票</div>
+            <div class="ss-label">未开票</div>
             <div class="ss-value blue">32</div>
           </div>
           <div class="session-stat-card">
-            <div class="ss-label">进行中</div>
+            <div class="ss-label">售票中</div>
             <div class="ss-value emerald">5</div>
           </div>
           <div class="session-stat-card">
@@ -7289,7 +7304,7 @@ select.form-select-sm,
           <table>
             <thead>
               <tr>
-                <th style="width:40px;"><input type="checkbox"></th>
+                <th><input type="checkbox"></th>
                 <th>演出名称</th>
                 <th>场次时间</th>
                 <th>开票时间</th>
@@ -7298,7 +7313,7 @@ select.form-select-sm,
                 <th>上座率</th>
                 <th>票房金额</th>
                 <th>状态</th>
-                <th style="width:200px;">操作</th>
+                <th>操作</th>
               </tr>
             </thead>
             <tbody>
@@ -7321,6 +7336,7 @@ select.form-select-sm,
                   <div class="action-btns">
                     <button class="action-btn edit" onclick="openEditSession(this)"><i class="fas fa-edit"></i> 编辑</button>
                     <button class="action-btn view" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i> 数据</button>
+                    <button class="action-btn stop-sale" onclick="toggleSessionSaleBtn(this)"><i class="fas fa-pause-circle"></i> 停售</button>
                   </div>
                 </td>
               </tr>
@@ -7343,6 +7359,7 @@ select.form-select-sm,
                   <div class="action-btns">
                     <button class="action-btn edit" onclick="openEditSession(this)"><i class="fas fa-edit"></i> 编辑</button>
                     <button class="action-btn view" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i> 数据</button>
+                    <button class="action-btn stop-sale" onclick="toggleSessionSaleBtn(this)"><i class="fas fa-pause-circle"></i> 停售</button>
                   </div>
                 </td>
               </tr>
@@ -7365,6 +7382,7 @@ select.form-select-sm,
                   <div class="action-btns">
                     <button class="action-btn edit" onclick="openEditSession(this)"><i class="fas fa-edit"></i> 编辑</button>
                     <button class="action-btn view" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i> 数据</button>
+                    <button class="action-btn stop-sale" onclick="toggleSessionSaleBtn(this)"><i class="fas fa-pause-circle"></i> 停售</button>
                   </div>
                 </td>
               </tr>
@@ -7387,6 +7405,7 @@ select.form-select-sm,
                   <div class="action-btns">
                     <button class="action-btn edit" onclick="openEditSession(this)"><i class="fas fa-edit"></i> 编辑</button>
                     <button class="action-btn view" onclick="openModal('modalSessionData')"><i class="fas fa-chart-bar"></i> 数据</button>
+                    <button class="action-btn stop-sale" onclick="toggleSessionSaleBtn(this)"><i class="fas fa-pause-circle"></i> 停售</button>
                   </div>
                 </td>
               </tr>
@@ -9150,14 +9169,6 @@ select.form-select-sm,
         <div id="sessionAllTimes" style="padding:12px;background:#F8FAFC;border-radius:8px;border:1px solid #E2E8F0;font-size:13px;color:#475569;max-height:120px;overflow-y:auto;">
           <!-- 由JS填充 -->
         </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">状态</label>
-        <select class="form-select" id="sessionStatusSelect" onchange="checkSessionStatusChange(this)">
-          <option value="not-opened">未开票</option>
-          <option value="on-sale">售票中</option>
-          <option value="paused">已暂停</option>
-        </select>
       </div>
     </div>
     <div class="modal-footer">
