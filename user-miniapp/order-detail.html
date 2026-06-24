@@ -594,14 +594,18 @@ body {
 
 /* Modal wallet input */
 .modal-wallet-input-area {
-  margin: 0 20px 8px;
-  padding: 14px 16px;
-  background: #F8F9FC;
+  margin-top: -8px;
+  padding: 16px 16px 14px;
+  background: #F5F6FA;
   border-radius: 0 0 12px 12px;
   display: none;
-  border-top: 1px solid rgba(0,0,0,0.04);
+  border: 2px solid transparent;
+  border-top: none;
 }
-.modal-wallet-input-area.show { display: block; }
+.modal-wallet-input-area.show {
+  display: block;
+  border-color: rgba(255,107,74,0.35);
+}
 .modal-wallet-input-row {
   display: flex;
   align-items: center;
@@ -613,7 +617,7 @@ body {
   display: flex;
   align-items: center;
   height: 42px;
-  border: 1.5px solid #E8E9ED;
+  border: 1.5px solid #E0E2E8;
   border-radius: 10px;
   padding: 0 12px;
   background: #fff;
@@ -626,7 +630,7 @@ body {
 .modal-wallet-input-prefix {
   font-size: 15px;
   font-weight: 600;
-  color: #1A1A2E;
+  color: #8E95A9;
   margin-right: 4px;
 }
 .modal-wallet-input {
@@ -662,14 +666,18 @@ body {
 
 /* Modal recharge card list */
 .modal-card-list-area {
-  margin: 0 20px 8px;
-  padding: 14px 16px;
-  background: #F8F9FC;
+  margin-top: -8px;
+  padding: 16px 16px 14px;
+  background: #F5F6FA;
   border-radius: 0 0 12px 12px;
   display: none;
-  border-top: 1px solid rgba(0,0,0,0.04);
+  border: 2px solid transparent;
+  border-top: none;
 }
-.modal-card-list-area.show { display: block; }
+.modal-card-list-area.show {
+  display: block;
+  border-color: rgba(212,168,83,0.35);
+}
 .modal-card-list {
   display: flex;
   flex-direction: column;
@@ -1443,7 +1451,16 @@ function toggleModalWallet() {
   var check = document.getElementById('modalCheckWallet');
   if (check) check.classList.toggle('checked', _modalWallet);
   var opt = document.getElementById('modalOptWallet');
-  if (opt) opt.classList.toggle('selected-border-wallet', _modalWallet);
+  if (opt) {
+    opt.classList.toggle('selected-border-wallet', _modalWallet);
+    if (_modalWallet) {
+      opt.style.borderRadius = '12px 12px 0 0';
+      opt.style.borderBottom = 'none';
+    } else {
+      opt.style.borderRadius = '12px';
+      opt.style.borderBottom = '';
+    }
+  }
   var inputArea = document.getElementById('modalWalletInputArea');
   if (inputArea) inputArea.classList.toggle('show', _modalWallet);
   if (!_modalWallet) {
@@ -1497,7 +1514,16 @@ function toggleModalCard() {
   var check = document.getElementById('modalCheckCard');
   if (check) check.classList.toggle('checked', _modalCard);
   var opt = document.getElementById('modalOptCard');
-  if (opt) opt.classList.toggle('selected-border-card', _modalCard);
+  if (opt) {
+    opt.classList.toggle('selected-border-card', _modalCard);
+    if (_modalCard) {
+      opt.style.borderRadius = '12px 12px 0 0';
+      opt.style.borderBottom = 'none';
+    } else {
+      opt.style.borderRadius = '12px';
+      opt.style.borderBottom = '';
+    }
+  }
   var listArea = document.getElementById('modalCardListArea');
   if (listArea) listArea.classList.toggle('show', _modalCard);
   if (!_modalCard) {
