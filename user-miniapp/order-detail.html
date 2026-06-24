@@ -384,6 +384,251 @@ body {
   letter-spacing: -0.5px;
 }
 
+/* ========== Payment Method Modal ========== */
+.pay-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,22,40,0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 200;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.pay-modal-overlay.show { opacity: 1; }
+.pay-modal-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  width: 100%;
+  max-width: 375px;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  z-index: 201;
+  transition: transform 0.35s cubic-bezier(0.32,0.72,0,1);
+  max-height: 78vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 24px 20px calc(24px + env(safe-area-inset-bottom));
+  box-shadow: 0 -8px 40px rgba(10,22,40,0.12);
+}
+.pay-modal-sheet.show {
+  transform: translateX(-50%) translateY(0);
+}
+.pay-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.pay-modal-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1A1A2E;
+}
+.pay-modal-close {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #F5F6FA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #8E95A9;
+  font-size: 14px;
+  border: none;
+  font-family: inherit;
+}
+.pay-modal-close:active { opacity: 0.7; }
+.pay-modal-price {
+  text-align: center;
+  padding: 8px 0 16px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  margin-bottom: 16px;
+}
+.pay-modal-price-label {
+  font-size: 12px;
+  color: #8E95A9;
+  margin-bottom: 4px;
+}
+.pay-modal-price-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #FF6B4A;
+  letter-spacing: -1px;
+}
+.pay-modal-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  cursor: pointer;
+}
+.pay-modal-option:last-child { border-bottom: none; }
+.pay-modal-option.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.pay-modal-option-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pay-modal-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #fff;
+  flex-shrink: 0;
+}
+.pay-modal-icon.wechat { background: linear-gradient(135deg, #07C160, #06AD56); }
+.pay-modal-icon.wallet { background: linear-gradient(135deg, #FF6B4A, #FF8A6E); }
+.pay-modal-icon.card { background: linear-gradient(135deg, #D4A853, #E8C878); }
+.pay-modal-info { display: flex; flex-direction: column; gap: 2px; }
+.pay-modal-name { font-size: 14px; font-weight: 600; color: #1A1A2E; }
+.pay-modal-desc { font-size: 11px; color: #8E95A9; }
+.pay-modal-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #C4CAD6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s;
+  flex-shrink: 0;
+  background: transparent;
+}
+.pay-modal-check.checked {
+  background: #FF6B4A;
+  border-color: #FF6B4A;
+  color: #fff;
+  font-size: 11px;
+}
+.pay-modal-check i { display: none; }
+.pay-modal-check.checked i { display: block; }
+.pay-modal-btn {
+  width: 100%;
+  height: 48px;
+  background: linear-gradient(135deg, #FF6B4A, #FF8A6A);
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: 16px;
+  box-shadow: 0 4px 16px rgba(255,107,74,0.3);
+}
+.pay-modal-btn:active { opacity: 0.9; }
+
+/* Modal wallet input */
+.modal-wallet-input-area {
+  padding: 0 0 10px 50px;
+  display: none;
+}
+.modal-wallet-input-area.show { display: block; }
+.modal-wallet-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.modal-wallet-input {
+  flex: 1;
+  height: 40px;
+  border: 1.5px solid #E8E9ED;
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 13px;
+  color: #1A1A2E;
+  background: #F6F7FA;
+  font-family: inherit;
+}
+.modal-wallet-input:focus {
+  outline: none;
+  border-color: #FF6B4A;
+  background: #fff;
+}
+.modal-wallet-use-all {
+  padding: 0 14px;
+  height: 40px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #FF6B4A, #FF8A6E);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.modal-wallet-deduct {
+  font-size: 12px;
+  color: #FF6B4A;
+  font-weight: 600;
+  padding-top: 6px;
+}
+
+/* Modal recharge card list */
+.modal-card-list-area {
+  padding: 0 0 10px 50px;
+  display: none;
+}
+.modal-card-list-area.show { display: block; }
+.modal-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.modal-card-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #F6F7FA;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: all 0.25s;
+}
+.modal-card-item.selected { border-color: #D4A853; }
+.modal-card-checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #C4CAD6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.25s;
+  background: transparent;
+}
+.modal-card-checkbox i { display: none; font-size: 9px; color: #fff; }
+.modal-card-item.selected .modal-card-checkbox {
+  background: #D4A853;
+  border-color: #D4A853;
+}
+.modal-card-item.selected .modal-card-checkbox i { display: block; }
+.modal-card-info { flex: 1; min-width: 0; }
+.modal-card-name { font-size: 12px; font-weight: 600; color: #1A1A2E; }
+.modal-card-no { font-size: 10px; color: #8E95A9; margin-top: 1px; }
+.modal-card-balance { font-size: 13px; font-weight: 700; color: #D4A853; }
+.modal-card-deduct {
+  font-size: 12px;
+  color: #D4A853;
+  font-weight: 600;
+  padding-top: 6px;
+}
+
 /* ========== Payment Detail Foldable ========== */
 .payment-detail-toggle {
   display: flex;
@@ -953,12 +1198,418 @@ function cancelOrder() {
 }
 
 function payNow() {
-  showToast('正在跳转支付...');
+  showPaymentModal();
 }
 
 function viewTicket() { showToast('即将跳转电子票'); }
 function buyAgain() { showToast('即将跳转演出详情'); }
 function applyRefund() { showToast('即将跳转退款申请'); }
+
+// ========== Payment Method Modal (Full feature, same as order-confirm) ==========
+var _payModalOverlay = null;
+var _payModalSheet = null;
+
+// Modal payment state
+var _modalWechat = true;
+var _modalWallet = false;
+var _modalWalletUsed = 0;
+var _modalCard = false;
+var _modalSelectedCards = new Set();
+
+// Constants (same as order-confirm)
+var MODAL_AVAILABLE_BALANCE = 1280.00;
+var MODAL_RECHARGE_CARDS = [
+  { id: 'rc001', name: 'VIP充值卡', balance: 500, cardNo: '8888****1234' },
+  { id: 'rc002', name: '礼品卡', balance: 200, cardNo: '8888****5678' },
+  { id: 'rc003', name: '会员储值卡', balance: 1000, cardNo: '8888****9012' }
+];
+
+function getModalPayable() {
+  var el = document.querySelector('.fee-row.total .fee-value');
+  var val = el ? el.textContent.replace(/[¥,]/g, '') : '1038';
+  return parseFloat(val) || 1038;
+}
+
+function showPaymentModal() {
+  var payable = getModalPayable();
+
+  var overlay = document.createElement('div');
+  overlay.className = 'pay-modal-overlay';
+  _payModalOverlay = overlay;
+
+  var sheet = document.createElement('div');
+  sheet.className = 'pay-modal-sheet';
+  _payModalSheet = sheet;
+
+  // Build recharge card list HTML
+  var cardListHtml = '';
+  MODAL_RECHARGE_CARDS.forEach(function(card) {
+    var isSelected = _modalSelectedCards.has(card.id);
+    cardListHtml +=
+      '<div class="modal-card-item ' + (isSelected ? 'selected' : '') + '" onclick="event.stopPropagation(); toggleModalCardItem(\'' + card.id + '\')">' +
+        '<div class="modal-card-checkbox"><i class="fas fa-check"></i></div>' +
+        '<div class="modal-card-info">' +
+          '<div class="modal-card-name">' + card.name + '</div>' +
+          '<div class="modal-card-no">' + card.cardNo + '</div>' +
+        '</div>' +
+        '<div class="modal-card-balance">¥' + card.balance + '</div>' +
+      '</div>';
+  });
+
+  var html = '<div class="pay-modal-header">' +
+    '<span class="pay-modal-title">选择支付方式</span>' +
+    '<button class="pay-modal-close" onclick="closePaymentModal()"><i class="fas fa-times"></i></button>' +
+    '</div>' +
+    '<div class="pay-modal-price">' +
+    '<div class="pay-modal-price-label">应付金额</div>' +
+    '<div class="pay-modal-price-value">¥' + payable.toLocaleString() + '</div>' +
+    '</div>' +
+    '<div class="pay-modal-option" id="modalOptWechat" onclick="toggleModalWechat()">' +
+    '<div class="pay-modal-option-left">' +
+    '<div class="pay-modal-icon wechat"><i class="fab fa-weixin"></i></div>' +
+    '<div class="pay-modal-info"><span class="pay-modal-name">微信支付</span><span class="pay-modal-desc" id="modalWechatDesc">剩余应付 ¥' + payable.toLocaleString() + '</span></div>' +
+    '</div>' +
+    '<div class="pay-modal-check checked" id="modalCheckWechat"><i class="fas fa-check"></i></div>' +
+    '</div>' +
+    '<div class="pay-modal-option" id="modalOptWallet" onclick="toggleModalWallet()">' +
+    '<div class="pay-modal-option-left">' +
+    '<div class="pay-modal-icon wallet"><i class="fas fa-wallet"></i></div>' +
+    '<div class="pay-modal-info"><span class="pay-modal-name">钱包支付</span><span class="pay-modal-desc" id="modalWalletDesc">可用余额 ¥' + MODAL_AVAILABLE_BALANCE.toFixed(2) + '</span></div>' +
+    '</div>' +
+    '<div class="pay-modal-check" id="modalCheckWallet"><i class="fas fa-check"></i></div>' +
+    '</div>' +
+    '<div class="modal-wallet-input-area" id="modalWalletInputArea">' +
+    '<div class="modal-wallet-input-row">' +
+    '<input type="number" class="modal-wallet-input" id="modalWalletInput" placeholder="输入使用金额" min="0" step="0.01" oninput="onModalWalletInput()">' +
+    '<button class="modal-wallet-use-all" onclick="event.stopPropagation(); useModalAllWallet()">全部使用</button>' +
+    '</div>' +
+    '<div class="modal-wallet-deduct" id="modalWalletDeduct">抵扣 ¥0.00</div>' +
+    '</div>' +
+    '<div class="pay-modal-option" id="modalOptCard" onclick="toggleModalCard()">' +
+    '<div class="pay-modal-option-left">' +
+    '<div class="pay-modal-icon card"><i class="fas fa-credit-card"></i></div>' +
+    '<div class="pay-modal-info"><span class="pay-modal-name">充值卡支付</span><span class="pay-modal-desc" id="modalCardDesc">可用 ¥1,700.00</span></div>' +
+    '</div>' +
+    '<div class="pay-modal-check" id="modalCheckCard"><i class="fas fa-check"></i></div>' +
+    '</div>' +
+    '<div class="modal-card-list-area" id="modalCardListArea">' +
+    '<div class="modal-card-list">' + cardListHtml + '</div>' +
+    '<div class="modal-card-deduct" id="modalCardDeduct">抵扣 ¥0.00</div>' +
+    '</div>' +
+    '<button class="pay-modal-btn" id="modalPayBtn" onclick="confirmModalPay()">确认支付</button>';
+
+  sheet.innerHTML = html;
+  document.body.appendChild(overlay);
+  document.body.appendChild(sheet);
+
+  requestAnimationFrame(function() {
+    overlay.classList.add('show');
+    sheet.classList.add('show');
+  });
+
+  overlay.onclick = closePaymentModal;
+  updateModalPayState();
+}
+
+function closePaymentModal() {
+  if (_payModalOverlay) _payModalOverlay.classList.remove('show');
+  if (_payModalSheet) _payModalSheet.classList.remove('show');
+  setTimeout(function() {
+    if (_payModalOverlay) _payModalOverlay.remove();
+    if (_payModalSheet) _payModalSheet.remove();
+    _payModalOverlay = null;
+    _payModalSheet = null;
+  }, 300);
+}
+
+// ========== WeChat Pay Toggle ==========
+function toggleModalWechat() {
+  _modalWechat = !_modalWechat;
+  var check = document.getElementById('modalCheckWechat');
+  if (check) check.classList.toggle('checked', _modalWechat);
+  updateModalPayState();
+}
+
+// ========== Wallet Pay Toggle ==========
+function toggleModalWallet() {
+  _modalWallet = !_modalWallet;
+  var check = document.getElementById('modalCheckWallet');
+  if (check) check.classList.toggle('checked', _modalWallet);
+  var inputArea = document.getElementById('modalWalletInputArea');
+  if (inputArea) inputArea.classList.toggle('show', _modalWallet);
+  if (!_modalWallet) {
+    _modalWalletUsed = 0;
+    var input = document.getElementById('modalWalletInput');
+    if (input) input.value = '';
+    var deduct = document.getElementById('modalWalletDeduct');
+    if (deduct) deduct.textContent = '抵扣 ¥0.00';
+  }
+  updateModalPayState();
+}
+
+function onModalWalletInput() {
+  var input = document.getElementById('modalWalletInput');
+  var val = parseFloat(input.value) || 0;
+  var payable = getModalPayable();
+  var cardDeduct = getModalCardDeduct();
+  var remaining = Math.max(0, payable - cardDeduct);
+  var maxUsable = Math.min(MODAL_AVAILABLE_BALANCE, remaining);
+
+  if (val > maxUsable) {
+    val = maxUsable;
+    input.value = val.toFixed(2);
+  }
+  if (val < 0) {
+    val = 0;
+    input.value = '';
+  }
+  _modalWalletUsed = val;
+  var deduct = document.getElementById('modalWalletDeduct');
+  if (deduct) deduct.textContent = '抵扣 ¥' + _modalWalletUsed.toFixed(2);
+  updateModalPayState();
+}
+
+function useModalAllWallet() {
+  var payable = getModalPayable();
+  var cardDeduct = getModalCardDeduct();
+  var remaining = Math.max(0, payable - cardDeduct);
+  var maxUsable = Math.min(MODAL_AVAILABLE_BALANCE, remaining);
+  _modalWalletUsed = maxUsable;
+  var input = document.getElementById('modalWalletInput');
+  if (input) input.value = _modalWalletUsed.toFixed(2);
+  var deduct = document.getElementById('modalWalletDeduct');
+  if (deduct) deduct.textContent = '抵扣 ¥' + _modalWalletUsed.toFixed(2);
+  updateModalPayState();
+}
+
+// ========== Recharge Card Toggle ==========
+function toggleModalCard() {
+  _modalCard = !_modalCard;
+  var check = document.getElementById('modalCheckCard');
+  if (check) check.classList.toggle('checked', _modalCard);
+  var listArea = document.getElementById('modalCardListArea');
+  if (listArea) listArea.classList.toggle('show', _modalCard);
+  if (!_modalCard) {
+    _modalSelectedCards.clear();
+    renderModalCardList();
+  } else {
+    renderModalCardList();
+  }
+  updateModalPayState();
+}
+
+function renderModalCardList() {
+  var list = document.querySelector('.modal-card-list');
+  if (!list) return;
+  var html = '';
+  MODAL_RECHARGE_CARDS.forEach(function(card) {
+    var isSelected = _modalSelectedCards.has(card.id);
+    html +=
+      '<div class="modal-card-item ' + (isSelected ? 'selected' : '') + '" onclick="event.stopPropagation(); toggleModalCardItem(\'' + card.id + '\')">' +
+        '<div class="modal-card-checkbox"><i class="fas fa-check"></i></div>' +
+        '<div class="modal-card-info">' +
+          '<div class="modal-card-name">' + card.name + '</div>' +
+          '<div class="modal-card-no">' + card.cardNo + '</div>' +
+        '</div>' +
+        '<div class="modal-card-balance">¥' + card.balance + '</div>' +
+      '</div>';
+  });
+  list.innerHTML = html;
+  var deduct = document.getElementById('modalCardDeduct');
+  if (deduct) deduct.textContent = '抵扣 ¥' + getModalCardDeduct().toFixed(2);
+}
+
+function toggleModalCardItem(cardId) {
+  if (_modalSelectedCards.has(cardId)) {
+    _modalSelectedCards.delete(cardId);
+  } else {
+    var payable = getModalPayable();
+    var currentDeduct = getModalCardDeduct();
+    var remaining = Math.max(0, payable - _modalWalletUsed - currentDeduct);
+    if (remaining <= 0) {
+      showToast('已全额抵扣，无需继续选择');
+      return;
+    }
+    _modalSelectedCards.add(cardId);
+  }
+  renderModalCardList();
+  updateModalPayState();
+}
+
+function getModalCardDeduct() {
+  var totalCardBalance = MODAL_RECHARGE_CARDS
+    .filter(function(c) { return _modalSelectedCards.has(c.id); })
+    .reduce(function(sum, c) { return sum + c.balance; }, 0);
+  var remaining = Math.max(0, getModalPayable() - _modalWalletUsed);
+  return Math.min(totalCardBalance, remaining);
+}
+
+// ========== Update UI State ==========
+function updateModalPayState() {
+  var payable = getModalPayable();
+  var cardDeduct = getModalCardDeduct();
+
+  // WeChat desc
+  var wechatDesc = document.getElementById('modalWechatDesc');
+  if (wechatDesc) {
+    if (!_modalWechat) {
+      wechatDesc.textContent = '未启用';
+    } else {
+      var wechatRemain = Math.max(0, payable - _modalWalletUsed - cardDeduct);
+      wechatDesc.textContent = wechatRemain > 0 ? '需补足 ¥' + wechatRemain.toFixed(2) : '已全额抵扣，无需微信支付';
+    }
+  }
+
+  // Wallet desc
+  var walletDesc = document.getElementById('modalWalletDesc');
+  if (walletDesc) {
+    if (_modalWallet && _modalWalletUsed > 0) {
+      walletDesc.textContent = '已用 ¥' + _modalWalletUsed.toFixed(2);
+    } else {
+      walletDesc.textContent = '可用余额 ¥' + MODAL_AVAILABLE_BALANCE.toFixed(2);
+    }
+  }
+
+  // Card desc
+  var cardDesc = document.getElementById('modalCardDesc');
+  if (cardDesc) {
+    if (_modalSelectedCards.size > 0 && cardDeduct > 0) {
+      cardDesc.textContent = '已选' + _modalSelectedCards.size + '张，抵扣¥' + cardDeduct.toFixed(2);
+    } else if (_modalSelectedCards.size > 0) {
+      cardDesc.textContent = '已选' + _modalSelectedCards.size + '张';
+    } else {
+      var total = MODAL_RECHARGE_CARDS.reduce(function(sum, c) { return sum + c.balance; }, 0);
+      cardDesc.textContent = '可用 ¥' + total.toFixed(2);
+    }
+  }
+
+  // Disable options when fully deducted
+  var optWechat = document.getElementById('modalOptWechat');
+  var optWallet = document.getElementById('modalOptWallet');
+  var optCard = document.getElementById('modalOptCard');
+  var totalDeduct = _modalWalletUsed + cardDeduct;
+  var isFullyDeducted = totalDeduct >= payable;
+
+  if (optWechat) optWechat.classList.toggle('disabled', isFullyDeducted && !_modalWechat);
+  if (optWallet) optWallet.classList.toggle('disabled', isFullyDeducted && !_modalWallet);
+  if (optCard) optCard.classList.toggle('disabled', isFullyDeducted && !_modalCard);
+
+  // Update button text
+  var btn = document.getElementById('modalPayBtn');
+  if (btn) {
+    var multiCount = (_modalWechat ? 1 : 0) + (_modalWallet && _modalWalletUsed > 0 ? 1 : 0) + (_modalCard && _modalSelectedCards.size > 0 ? 1 : 0);
+    btn.textContent = multiCount >= 2 ? '组合支付' : '确认支付';
+  }
+}
+
+// ========== Confirm Payment ==========
+function confirmModalPay() {
+  var types = [];
+  if (_modalWechat) types.push('微信支付');
+  if (_modalWallet && _modalWalletUsed > 0) types.push('钱包支付');
+  if (_modalCard && _modalSelectedCards.size > 0) types.push('充值卡支付');
+  if (types.length === 0) {
+    showToast('请至少选择一种支付方式');
+    return;
+  }
+
+  // 未选微信支付且选了钱包支付时，弹出钱包密码弹窗
+  if (!_modalWechat && _modalWallet && _modalWalletUsed > 0) {
+    closePaymentModal();
+    showWalletPasswordModal();
+    return;
+  }
+
+  closePaymentModal();
+  if (types.length >= 2) {
+    showToast('正在发起组合支付...');
+  } else {
+    showToast('正在跳转支付...');
+  }
+}
+
+// ========== Wallet Password Modal (reused from order-confirm) ==========
+function showWalletPasswordModal() {
+  var overlay = document.createElement('div');
+  overlay.className = 'pay-modal-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(10,22,40,0.5);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:200;opacity:0;transition:opacity 0.3s ease;';
+
+  var sheet = document.createElement('div');
+  sheet.className = 'wallet-password-sheet';
+  sheet.style.cssText = 'position:fixed;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);width:100%;max-width:375px;background:#fff;border-radius:20px 20px 0 0;z-index:201;transition:transform 0.35s cubic-bezier(0.32,0.72,0,1);max-height:78vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:24px 20px calc(24px + env(safe-area-inset-bottom));box-shadow:0 -8px 40px rgba(10,22,40,0.12);';
+
+  var html = '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">' +
+    '<span style="font-size:17px;font-weight:700;color:#1A1A2E;">验证钱包密码</span>' +
+    '<span style="width:28px;height:28px;border-radius:50%;background:#F5F6FA;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#8E95A9;font-size:14px;" onclick="closeWalletPasswordModal()"><i class="fas fa-times"></i></span>' +
+    '</div>';
+  html += '<div style="font-size:13px;color:#8E95A9;text-align:center;margin-bottom:20px;">请输入钱包支付密码以完成支付</div>';
+  html += '<div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:24px;">';
+  for (var i = 0; i < 6; i++) {
+    html += '<div class="wallet-pwd-dot" data-idx="' + i + '" style="width:40px;height:40px;border:1.5px solid #E8E9ED;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#1A1A2E;background:#fff;transition:border-color 0.2s;"></div>';
+  }
+  html += '</div>';
+  html += '<button style="width:100%;height:48px;background:linear-gradient(135deg,#FF6B4A,#FF8A6A);color:#fff;border:none;border-radius:24px;font-size:16px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:0 4px 16px rgba(255,107,74,0.3);" onclick="confirmWalletPassword()">确认支付</button>';
+
+  sheet.innerHTML = html;
+  document.body.appendChild(overlay);
+  document.body.appendChild(sheet);
+
+  window._walletPwdValue = '';
+  window._walletPwdOverlay = overlay;
+  window._walletPwdSheet = sheet;
+
+  requestAnimationFrame(function() {
+    overlay.style.opacity = '1';
+    sheet.style.transform = 'translateX(-50%) translateY(0)';
+  });
+  overlay.onclick = closeWalletPasswordModal;
+}
+
+function closeWalletPasswordModal() {
+  if (window._walletPwdOverlay) window._walletPwdOverlay.remove();
+  if (window._walletPwdSheet) window._walletPwdSheet.remove();
+  window._walletPwdValue = '';
+}
+
+function confirmWalletPassword() {
+  if (!window._walletPwdValue || window._walletPwdValue.length < 6) {
+    showToast('请输入完整的6位密码');
+    return;
+  }
+  closeWalletPasswordModal();
+  showToast('正在发起组合支付...');
+}
+
+// 钱包密码弹窗键盘监听
+document.addEventListener('keydown', function(e) {
+  if (!window._walletPwdOverlay || !window._walletPwdOverlay.parentElement) return;
+  if (e.key >= '0' && e.key <= '9') {
+    e.preventDefault();
+    if (window._walletPwdValue.length < 6) {
+      window._walletPwdValue += e.key;
+      updateWalletPwdDots();
+    }
+  } else if (e.key === 'Backspace') {
+    e.preventDefault();
+    window._walletPwdValue = window._walletPwdValue.slice(0, -1);
+    updateWalletPwdDots();
+  }
+});
+
+function updateWalletPwdDots() {
+  var dots = document.querySelectorAll('.wallet-pwd-dot');
+  dots.forEach(function(dot, i) {
+    if (i < (window._walletPwdValue || '').length) {
+      dot.style.borderColor = '#FF6B4A';
+      dot.style.background = '#FFF5F2';
+      dot.textContent = window._walletPwdValue[i];
+    } else {
+      dot.style.borderColor = '#E8E9ED';
+      dot.style.background = '#fff';
+      dot.textContent = '';
+    }
+  });
+}
 
 // ========== Payment Detail Toggle ==========
 function togglePaymentDetail() {
@@ -1040,6 +1691,14 @@ function togglePaymentDetail() {
     }
   }
   
+  // For pending-pay, hide payment detail section
+  if (status === 'pending-pay') {
+    var paymentToggle = document.getElementById('paymentToggle');
+    var paymentContent = document.getElementById('paymentDetailContent');
+    if (paymentToggle) paymentToggle.style.display = 'none';
+    if (paymentContent) paymentContent.style.display = 'none';
+  }
+
   // For pending-pay, update nav title
   document.querySelector('.title').textContent = '订单详情';
 })();
