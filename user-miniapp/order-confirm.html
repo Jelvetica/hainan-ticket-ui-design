@@ -291,6 +291,55 @@
       gap: 8px;
     }
     .payment-card-title i { font-size: 13px; color: var(--coral); }
+
+    /* ===== Payment Combo Summary ===== */
+    .payment-combo-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 10px 12px;
+      background: linear-gradient(135deg, rgba(255,107,74,0.06), rgba(212,168,83,0.04));
+      border-radius: var(--radius-md);
+      margin-bottom: 12px;
+      border: 1px solid rgba(255,107,74,0.1);
+    }
+    .payment-combo-bar .combo-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-right: 4px;
+    }
+    .payment-combo-bar .combo-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #fff;
+      white-space: nowrap;
+    }
+    .payment-combo-bar .combo-tag.wechat { background: linear-gradient(135deg, #07C160, #06AD56); }
+    .payment-combo-bar .combo-tag.wallet { background: linear-gradient(135deg, var(--coral), var(--coral-light)); }
+    .payment-combo-bar .combo-tag.card { background: linear-gradient(135deg, var(--gold), var(--gold-light)); }
+    .payment-combo-bar .combo-tag.points { background: linear-gradient(135deg, #8B5CF6, #A78BFA); }
+    .payment-combo-bar .combo-tag i { font-size: 9px; }
+    .payment-combo-bar .combo-match {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--coral);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .payment-combo-bar .combo-match.matched { color: #07C160; }
+    .payment-combo-bar .combo-match svg {
+      width: 14px;
+      height: 14px;
+    }
     .payment-option {
       display: flex;
       align-items: center;
@@ -302,6 +351,11 @@
     }
     .payment-option:active { opacity: 0.7; }
     .payment-option:last-of-type { border-bottom: none; }
+    .payment-option.disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
     .payment-option-left {
       display: flex;
       align-items: center;
@@ -437,13 +491,16 @@
       justify-content: center;
       flex-shrink: 0;
       transition: all 0.25s;
+      background: transparent;
     }
+    .recharge-card-checkbox i { display: none; }
     .recharge-card-item.selected .recharge-card-checkbox {
       background: var(--gold);
       border-color: var(--gold);
       color: #fff;
       font-size: 10px;
     }
+    .recharge-card-item.selected .recharge-card-checkbox i { display: block; }
     .recharge-card-info { flex: 1; }
     .recharge-card-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
     .recharge-card-no { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
@@ -771,8 +828,20 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
     <div class="payment-card">
       <div class="payment-card-title"><i class="fas fa-credit-card"></i> 支付方式</div>
 
-      <!-- WeChat Pay (always shown, auto pays remainder) -->
-      <div class="payment-option" style="cursor:default;">
+      <!-- Payment Combo Summary Bar -->
+      <div class="payment-combo-bar" id="paymentComboBar">
+        <span class="combo-label">支付组合</span>
+        <span class="combo-tag wechat" id="comboTagWechat" style="display:none;"><i class="fab fa-weixin"></i> 微信 ¥0</span>
+        <span class="combo-tag wallet" id="comboTagWallet" style="display:none;"><i class="fas fa-wallet"></i> 钱包 ¥0</span>
+        <span class="combo-tag card" id="comboTagCard" style="display:none;"><i class="fas fa-credit-card"></i> 充值卡 ¥0</span>
+        <span class="combo-match" id="comboMatch">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          待补足
+        </span>
+      </div>
+
+      <!-- WeChat Pay -->
+      <div class="payment-option" id="optionWechat" onclick="toggleWechatPay()">
         <div class="payment-option-left">
           <div class="payment-icon wechat"><i class="fab fa-weixin"></i></div>
           <div class="payment-info">
@@ -780,11 +849,11 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
             <span class="payment-desc" id="wechatDesc">剩余应付 ¥1,034.00</span>
           </div>
         </div>
-        <div class="payment-check checked" style="pointer-events:none;"><i class="fas fa-check"></i></div>
+        <div class="payment-check checked" id="checkWechat"><i class="fas fa-check"></i></div>
       </div>
 
       <!-- Wallet Pay -->
-      <div class="payment-option" onclick="toggleWallet()">
+      <div class="payment-option" id="optionWallet" onclick="toggleWallet()">
         <div class="payment-option-left">
           <div class="payment-icon wallet"><i class="fas fa-wallet"></i></div>
           <div class="payment-info">
@@ -803,7 +872,7 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
       </div>
 
       <!-- Recharge Card -->
-      <div class="payment-option" onclick="toggleRechargeCard()">
+      <div class="payment-option" id="optionRechargeCard" onclick="toggleRechargeCard()">
         <div class="payment-option-left">
           <div class="payment-icon card"><i class="fas fa-credit-card"></i></div>
           <div class="payment-info">
@@ -931,6 +1000,7 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
   const POINTS_RATE = 0.01;
   const POINTS_MAX_PERCENT = 0.10;
 
+  let wechatEnabled = true;
   let walletEnabled = false;
   let walletUsed = 0;
   let rechargeCardEnabled = false;
@@ -1041,8 +1111,8 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
     document.getElementById('finalAmount').textContent = '¥' + final.toLocaleString();
     document.getElementById('totalPrice').textContent = '¥' + final.toLocaleString();
 
-    // 更新优惠提示
-    const totalDeduct = ticketDiscount + memberDiscount + packageDeduction + couponDeduction + pointsDeduction + walletUsed + getRechargeCardDeduct();
+    // 更新优惠提示（仅包含折扣、优惠券、积分、观演券，不含钱包和充值卡）
+    const totalDeduct = ticketDiscount + memberDiscount + packageDeduction + couponDeduction + pointsDeduction;
     const priceDetail = document.getElementById('priceDetail');
     if (totalDeduct > 0) {
       priceDetail.textContent = '已优惠¥' + totalDeduct.toLocaleString();
@@ -1103,7 +1173,7 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
 
     requestAnimationFrame(() => {
       overlay.style.opacity = '1';
-      sheet.style.transform = 'translateY(0)';
+      sheet.style.transform = 'translateX(-50%) translateY(0)';
     });
 
     overlay.onclick = closeCouponSheet;
@@ -1312,6 +1382,12 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
   };
 
   // ========== Toggle Functions ==========
+  function toggleWechatPay() {
+    wechatEnabled = !wechatEnabled;
+    document.getElementById('checkWechat').classList.toggle('checked', wechatEnabled);
+    recalcTotal();
+  }
+
   function toggleWallet() {
     walletEnabled = !walletEnabled;
     document.getElementById('checkWallet').classList.toggle('checked', walletEnabled);
@@ -1460,6 +1536,13 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
     if (selectedRechargeCards.has(cardId)) {
       selectedRechargeCards.delete(cardId);
     } else {
+      // 检查是否已全额抵扣
+      const currentDeduct = getRechargeCardDeduct();
+      const remaining = Math.max(0, currentPayable - couponDeduction - pointsDeduction - currentDeduct - walletUsed);
+      if (remaining <= 0) {
+        showToast('已全额抵扣，无需继续选择');
+        return;
+      }
       selectedRechargeCards.add(cardId);
     }
     renderRechargeCards();
@@ -1470,7 +1553,10 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
     const totalCardBalance = RECHARGE_CARDS
       .filter(c => selectedRechargeCards.has(c.id))
       .reduce((sum, c) => sum + c.balance, 0);
-    return Math.min(totalCardBalance, currentPayable);
+    // 实际抵扣 = min(已选卡总额, 当前应付 - 其他已抵扣)
+    const otherDeduct = couponDeduction + pointsDeduction + walletUsed;
+    const remaining = Math.max(0, currentPayable - otherDeduct);
+    return Math.min(totalCardBalance, remaining);
   }
 
   function updateRechargeCardDesc() {
@@ -1541,6 +1627,88 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
     return Math.max(0, remaining);
   }
 
+  // ========== Payment Combo Summary Update ==========
+  function updatePaymentComboSummary() {
+    const comboWechat = document.getElementById('comboTagWechat');
+    const comboWallet = document.getElementById('comboTagWallet');
+    const comboCard = document.getElementById('comboTagCard');
+    const comboMatch = document.getElementById('comboMatch');
+
+    // 计算各支付方式金额
+    let wechatAmount = currentPayable;
+    let walletAmount = walletEnabled ? walletUsed : 0;
+    let cardAmount = rechargeCardEnabled ? getRechargeCardDeduct() : 0;
+
+    // 扣除优惠券
+    if (selectedCoupon && couponDeduction > 0) {
+      wechatAmount = Math.max(0, wechatAmount - couponDeduction);
+    }
+    // 扣除充值卡
+    if (rechargeCardEnabled && selectedRechargeCards.size > 0) {
+      wechatAmount = Math.max(0, wechatAmount - cardAmount);
+    }
+    // 扣除钱包
+    if (walletEnabled && walletUsed > 0) {
+      wechatAmount = Math.max(0, wechatAmount - walletAmount);
+    }
+
+    // 更新标签显示
+    if (wechatEnabled && wechatAmount > 0) {
+      comboWechat.style.display = 'inline-flex';
+      comboWechat.innerHTML = '<i class="fab fa-weixin"></i> 微信 ¥' + wechatAmount.toFixed(2);
+    } else {
+      comboWechat.style.display = 'none';
+    }
+
+    if (walletAmount > 0) {
+      comboWallet.style.display = 'inline-flex';
+      comboWallet.innerHTML = '<i class="fas fa-wallet"></i> 钱包 ¥' + walletAmount.toFixed(2);
+    } else {
+      comboWallet.style.display = 'none';
+    }
+
+    if (cardAmount > 0) {
+      comboCard.style.display = 'inline-flex';
+      comboCard.innerHTML = '<i class="fas fa-credit-card"></i> 充值卡 ¥' + cardAmount.toFixed(2);
+    } else {
+      comboCard.style.display = 'none';
+    }
+
+    // 更新匹配状态
+    const totalDeduct = walletAmount + cardAmount + (selectedCoupon ? couponDeduction : 0);
+    // 已全额抵扣（微信金额<=0 且 有其他抵扣）
+    if (wechatAmount <= 0 && totalDeduct > 0) {
+      comboMatch.classList.add('matched');
+      comboMatch.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 已全额抵扣';
+    } else if (wechatEnabled) {
+      // 选了微信支付，不显示待补足
+      comboMatch.classList.remove('matched');
+      comboMatch.innerHTML = '';
+    } else if (!wechatEnabled && (walletAmount + cardAmount) > 0) {
+      // 未选微信，有钱包/充值卡，计算还差多少
+      const gap = currentPayable - (selectedCoupon ? couponDeduction : 0) - pointsDeduction - walletAmount - cardAmount;
+      if (gap > 0) {
+        comboMatch.classList.remove('matched');
+        comboMatch.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 待补足 ¥' + gap.toFixed(2);
+      } else {
+        comboMatch.classList.add('matched');
+        comboMatch.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 已全额抵扣';
+      }
+    } else {
+      comboMatch.classList.remove('matched');
+      comboMatch.innerHTML = '';
+    }
+
+    // 更新底部按钮文字：多重支付方式时显示"组合支付"
+    const btn = document.querySelector('.bottom-btn');
+    const multiPayment = (wechatEnabled ? 1 : 0) + (walletEnabled && walletUsed > 0 ? 1 : 0) + (rechargeCardEnabled && selectedRechargeCards.size > 0 ? 1 : 0);
+    if (multiPayment >= 2) {
+      btn.textContent = '组合支付';
+    } else {
+      btn.textContent = '确认支付';
+    }
+  }
+
   // ========== Price Recalculation ==========
   function recalcTotal() {
     // 计算可用积分（不受其他优惠影响）
@@ -1575,9 +1743,18 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
       finalTotal = Math.max(0, finalTotal - walletUsed);
     }
 
-    // finalTotal 即为微信支付需补足的金额
-    document.getElementById('totalPrice').textContent = '¥' + finalTotal.toFixed(2);
-    document.getElementById('wechatDesc').textContent = finalTotal > 0 ? `需补足 ¥${finalTotal.toFixed(2)}` : '已全额抵扣，无需微信支付';
+    // 底栏应付金额始终与费用明细的应付金额一致，不受支付方式选择影响
+    let bottomPayable = currentPayable;
+    if (selectedCoupon && couponDeduction > 0) bottomPayable = Math.max(0, bottomPayable - couponDeduction);
+    if (pointsEnabled && pointsUsed > 0) bottomPayable = Math.max(0, bottomPayable - pointsUsed * POINTS_RATE);
+    document.getElementById('totalPrice').textContent = '¥' + bottomPayable.toFixed(2);
+
+    // 微信支付描述
+    if (!wechatEnabled) {
+      document.getElementById('wechatDesc').textContent = '未启用';
+    } else {
+      document.getElementById('wechatDesc').textContent = finalTotal > 0 ? `需补足 ¥${finalTotal.toFixed(2)}` : '已全额抵扣，无需微信支付';
+    }
 
     // 更新费用明细
     renderDiscountList();
@@ -1585,6 +1762,37 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
     // 更新描述
     updateWalletDesc();
     updateRechargeCardDesc();
+
+    // 更新支付组合总览
+    updatePaymentComboSummary();
+
+    // 更新支付方式禁用状态
+    updatePaymentDisabled();
+  }
+
+  // ========== Payment Disabled State ==========
+  function updatePaymentDisabled() {
+    const optionWechat = document.getElementById('optionWechat');
+    const optionWallet = document.getElementById('optionWallet');
+    const optionRechargeCard = document.getElementById('optionRechargeCard');
+
+    // 计算当前总抵扣金额（不含微信支付）
+    let totalDeduct = 0;
+    if (couponDeduction > 0) totalDeduct += couponDeduction;
+    if (pointsEnabled && pointsUsed > 0) totalDeduct += pointsUsed * POINTS_RATE;
+    if (rechargeCardEnabled && selectedRechargeCards.size > 0) totalDeduct += getRechargeCardDeduct();
+    if (walletEnabled && walletUsed > 0) totalDeduct += walletUsed;
+
+    const isFullyDeducted = totalDeduct >= currentPayable;
+
+    // 微信支付：已全额抵扣时禁用
+    optionWechat.classList.toggle('disabled', isFullyDeducted && !wechatEnabled);
+
+    // 钱包支付：已全额抵扣时禁用
+    optionWallet.classList.toggle('disabled', isFullyDeducted && !walletEnabled);
+
+    // 充值卡支付：已全额抵扣时禁用
+    optionRechargeCard.classList.toggle('disabled', isFullyDeducted && !rechargeCardEnabled);
   }
 
   function showToast(msg) {
@@ -1595,6 +1803,12 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
   }
 
   function submitOrder() {
+    // 未选微信支付且选了钱包支付时，弹出钱包密码弹窗
+    if (!wechatEnabled && walletEnabled && walletUsed > 0) {
+      showWalletPasswordModal();
+      return;
+    }
+
     // 模拟生成订单号
     const orderNo = 'HN' + Date.now().toString().slice(-10) + Math.floor(Math.random() * 100).toString().padStart(2, '0');
     // 计算最终支付金额
@@ -1612,12 +1826,110 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
     window.location.href = 'order-success.html?' + params.toString();
   }
 
+  // ========== Wallet Password Modal ==========
+  function showWalletPasswordModal() {
+    const overlay = document.createElement('div');
+    overlay.className = 'coupon-overlay';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(10,22,40,0.5);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:200;opacity:0;transition:opacity 0.3s ease;';
+
+    const sheet = document.createElement('div');
+    sheet.className = 'wallet-password-sheet';
+    sheet.style.cssText = 'position:fixed;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);width:100%;max-width:375px;background:#fff;border-radius:20px 20px 0 0;z-index:201;transition:transform 0.35s cubic-bezier(0.32,0.72,0,1);max-height:78vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:24px 20px calc(24px + env(safe-area-inset-bottom));box-shadow:0 -8px 40px rgba(10,22,40,0.12);';
+
+    let html = '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">' +
+      '<span style="font-size:17px;font-weight:700;color:#0A1628;">验证钱包密码</span>' +
+      '<span style="width:28px;height:28px;border-radius:50%;background:#F5F6FA;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#8E95A9;font-size:14px;" onclick="closeWalletPasswordModal()"><i class="fas fa-times"></i></span>' +
+      '</div>';
+    html += '<div style="font-size:13px;color:#8E95A9;text-align:center;margin-bottom:20px;">请输入钱包支付密码以完成支付</div>';
+    html += '<div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:24px;">';
+    for (let i = 0; i < 6; i++) {
+      html += '<div class="wallet-pwd-dot" data-idx="' + i + '" style="width:40px;height:40px;border:1.5px solid #E8E9ED;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#0A1628;background:#fff;transition:border-color 0.2s;"></div>';
+    }
+    html += '</div>';
+    html += '<button style="width:100%;height:48px;background:linear-gradient(135deg,#FF6B4A,#FF8A6A);color:#fff;border:none;border-radius:24px;font-size:16px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:0 4px 16px rgba(255,107,74,0.3);" onclick="confirmWalletPassword()">确认支付</button>';
+
+    sheet.innerHTML = html;
+    document.body.appendChild(overlay);
+    document.body.appendChild(sheet);
+
+    window._walletPwdValue = '';
+    window._walletPwdOverlay = overlay;
+    window._walletPwdSheet = sheet;
+
+    requestAnimationFrame(() => {
+      overlay.style.opacity = '1';
+      sheet.style.transform = 'translateX(-50%) translateY(0)';
+    });
+    overlay.onclick = closeWalletPasswordModal;
+  }
+
+  window.closeWalletPasswordModal = function() {
+    if (window._walletPwdOverlay) window._walletPwdOverlay.remove();
+    if (window._walletPwdSheet) window._walletPwdSheet.remove();
+    window._walletPwdValue = '';
+  };
+
+  window.confirmWalletPassword = function() {
+    if (!window._walletPwdValue || window._walletPwdValue.length < 6) {
+      showToast('请输入完整的6位密码');
+      return;
+    }
+    closeWalletPasswordModal();
+    // 密码验证通过后继续提交订单
+    const orderNo = 'HN' + Date.now().toString().slice(-10) + Math.floor(Math.random() * 100).toString().padStart(2, '0');
+    const finalTotal = Math.max(0, currentPayable - couponDeduction - pointsDeduction - walletUsed - getRechargeCardDeduct());
+    const seatInfo = seatsData.map(s => s.row + '排' + s.col + '座').join('、');
+    const params = new URLSearchParams({
+      orderNo: orderNo,
+      show: showName,
+      date: showDate,
+      venue: showVenue,
+      seats: seatInfo,
+      amount: finalTotal.toFixed(2)
+    });
+    window.location.href = 'order-success.html?' + params.toString();
+  };
+
+  // 钱包密码弹窗键盘监听
+  document.addEventListener('keydown', function(e) {
+    if (!window._walletPwdOverlay || !window._walletPwdOverlay.parentElement) return;
+    if (e.key >= '0' && e.key <= '9') {
+      e.preventDefault();
+      if (window._walletPwdValue.length < 6) {
+        window._walletPwdValue += e.key;
+        updateWalletPwdDots();
+      }
+    } else if (e.key === 'Backspace') {
+      e.preventDefault();
+      window._walletPwdValue = window._walletPwdValue.slice(0, -1);
+      updateWalletPwdDots();
+    }
+  });
+
+  function updateWalletPwdDots() {
+    const dots = document.querySelectorAll('.wallet-pwd-dot');
+    dots.forEach((dot, i) => {
+      if (i < (window._walletPwdValue || '').length) {
+        dot.classList.add('filled');
+        dot.style.borderColor = '#FF6B4A';
+        dot.style.background = '#FFF5F2';
+        dot.textContent = window._walletPwdValue[i];
+      } else {
+        dot.classList.remove('filled');
+        dot.style.borderColor = '#E8E9ED';
+        dot.style.background = '#fff';
+        dot.textContent = '';
+      }
+    });
+  }
+
   // Init
   renderSeats();
   updatePackageEntry();
   updateCouponEntry();
   renderDiscountList();
   renderRechargeCards();
+  updatePaymentComboSummary();
 </script>
 </body>
 </html>

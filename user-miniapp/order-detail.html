@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>订单详情 - 海南演艺</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 /* ========== Reset & Base ========== */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -315,6 +316,25 @@ body {
   font-size: 15px;
   font-weight: 700;
   color: #FF6B4A;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.seat-item-price .price-original {
+  text-decoration: line-through;
+  color: #8E95A9;
+  font-size: 12px;
+  font-weight: 400;
+}
+.seat-item-voucher {
+  margin-left: 6px;
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #D4A853, #E8C878);
+  color: #fff;
+  letter-spacing: 0.2px;
 }
 
 /* ========== Fee Breakdown ========== */
@@ -362,6 +382,78 @@ body {
   color: #FF6B4A;
   font-size: 22px;
   letter-spacing: -0.5px;
+}
+
+/* ========== Payment Detail Foldable ========== */
+.payment-detail-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.payment-detail-toggle:active { opacity: 0.7; }
+.payment-detail-toggle .toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #5A607A;
+  font-weight: 500;
+}
+.payment-detail-toggle .toggle-label svg {
+  width: 16px;
+  height: 16px;
+  color: #07C160;
+}
+.payment-detail-toggle .toggle-arrow {
+  width: 20px;
+  height: 20px;
+  color: #8E95A9;
+  transition: transform 0.3s ease;
+}
+.payment-detail-toggle.expanded .toggle-arrow {
+  transform: rotate(180deg);
+}
+.payment-detail-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, opacity 0.25s ease;
+  opacity: 0;
+}
+.payment-detail-content.expanded {
+  max-height: 300px;
+  opacity: 1;
+}
+.payment-detail-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 0;
+  font-size: 13px;
+}
+.payment-detail-item .pay-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #5A607A;
+}
+.payment-detail-item .pay-label .pay-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #fff;
+  flex-shrink: 0;
+}
+.payment-detail-item .pay-value {
+  color: #1A1A2E;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ========== Order Info ========== */
@@ -652,8 +744,9 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
           <div class="seat-item-left">
             <span class="seat-item-tag">VIP区</span>
             <span class="seat-item-pos">3排 5座</span>
+            <span class="seat-item-voucher">观演券抵扣</span>
           </div>
-          <div class="seat-item-price">&yen;640</div>
+          <div class="seat-item-price"><span class="price-original">&yen;640</span>&yen;0</div>
         </div>
         <div class="seat-item">
           <div class="seat-item-left">
@@ -691,6 +784,49 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
           <span class="fee-label">优惠券抵扣</span>
           <span class="fee-value minus">-&yen;50</span>
         </div>
+        <div class="fee-row">
+          <span class="fee-label">积分抵扣（3800积分）</span>
+          <span class="fee-value minus">-&yen;38</span>
+        </div>
+        <div class="fee-divider"></div>
+
+        <!-- Payment Detail Toggle -->
+        <div class="payment-detail-toggle" id="paymentToggle" onclick="togglePaymentDetail()">
+          <span class="toggle-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+              <line x1="1" y1="10" x2="23" y2="10"/>
+            </svg>
+            支付明细
+          </span>
+          <svg class="toggle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+        <div class="payment-detail-content" id="paymentDetailContent">
+          <div class="payment-detail-item">
+            <span class="pay-label">
+              <span class="pay-icon" style="background: linear-gradient(135deg, #07C160, #06AD56);"><i class="fab fa-weixin" style="font-size:10px;"></i></span>
+              微信支付
+            </span>
+            <span class="pay-value">&yen;500.00</span>
+          </div>
+          <div class="payment-detail-item">
+            <span class="pay-label">
+              <span class="pay-icon" style="background: linear-gradient(135deg, #FF6B4A, #FF8A6E);"><i class="fas fa-wallet" style="font-size:10px;"></i></span>
+              钱包支付
+            </span>
+            <span class="pay-value">&yen;300.00</span>
+          </div>
+          <div class="payment-detail-item">
+            <span class="pay-label">
+              <span class="pay-icon" style="background: linear-gradient(135deg, #D4A853, #E8C878);"><i class="fas fa-credit-card" style="font-size:10px;"></i></span>
+              充值卡支付
+            </span>
+            <span class="pay-value">&yen;200.00</span>
+          </div>
+        </div>
+
         <div class="fee-divider"></div>
         <div class="fee-row total">
           <span class="fee-label">实付金额</span>
@@ -722,7 +858,7 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
         </div>
         <div class="info-row">
           <span class="info-label">支付方式</span>
-          <span class="info-value">微信支付</span>
+          <span class="info-value">组合支付</span>
         </div>
         <div class="info-row">
           <span class="info-label">支付时间</span>
@@ -823,6 +959,14 @@ function payNow() {
 function viewTicket() { showToast('即将跳转电子票'); }
 function buyAgain() { showToast('即将跳转演出详情'); }
 function applyRefund() { showToast('即将跳转退款申请'); }
+
+// ========== Payment Detail Toggle ==========
+function togglePaymentDetail() {
+  var toggle = document.getElementById('paymentToggle');
+  var content = document.getElementById('paymentDetailContent');
+  toggle.classList.toggle('expanded');
+  content.classList.toggle('expanded');
+}
 
 // ========== Status-based Rendering ==========
 (function() {

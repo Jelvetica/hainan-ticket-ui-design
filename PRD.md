@@ -428,6 +428,7 @@
 | user-miniapp/privacy-settings.html | 隐私设置 |
 | user-miniapp/preference-settings.html | 偏好设置 |
 | user-miniapp/real-name-auth.html | 实名认证 |
+| user-miniapp/address-manage.html | 地址管理 |
 | user-miniapp/message-service.html | 消息服务 |
 | user-miniapp/order-ticket.html | 票务订单 |
 | user-miniapp/order-detail.html | 订单详情 |
