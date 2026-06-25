@@ -7822,6 +7822,29 @@ Tab切换交互：
 // entries.page 对应 devDocs 中的页面URL键名
 const changelogData = [
     {
+        date: '2026-06-25',
+        entries: [
+            {
+                page: 'pc-admin/show-management.html',
+                pageName: '演出管理',
+                module: '演出项目',
+                content: '统计卡片flex-wrap换行；新增待发布状态，发布按钮文字改为"发布"，颜色珊瑚红(#FF6B4A)突出；非待发布发布按钮禁用样式，显示开票时间(yy-dd开票)；编辑弹窗非待发布状态场馆/演出厅/票价/场次disabled；删除按钮改为自定义确认弹窗；操作按钮低分辨率居中适配；列表低分辨率横向滚动；非待发布编辑时所有字段disabled；已结束和售票中发布按钮显示"yy-dd开票"无disabled'
+            },
+            {
+                page: 'pc-admin/marketing-center.html',
+                pageName: '营销中心',
+                module: '票品折扣',
+                content: '暂停按钮改为自定义确认弹窗，提示暂停后折扣不再生效，已领取券不受影响'
+            },
+            {
+                page: 'pc-admin/order-management.html',
+                pageName: '订单管理',
+                module: '票务订单',
+                content: '申请退款弹窗增加选择座位部分退款功能(checkbox多选)，根据选中座位实时计算退款金额；退款提示更新为原路退回规则(优先钱包/充值卡，最后微信/支付宝，不退优惠券，现金窗口退)'
+            },
+        ]
+    },
+    {
         date: '2026-06-24',
         entries: [
             {

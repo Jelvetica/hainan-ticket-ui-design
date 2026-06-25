@@ -886,6 +886,48 @@ table { border-collapse: collapse; width: 100%; }
   flex: 0 0 calc(33.333% - 6px);
   min-width: 0;
   justify-content: center;
+  text-align: center;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Publish show button */
+.action-btn.publish {
+  background: rgba(255,107,74,0.12);
+  color: #FF6B4A;
+  border: 1px solid rgba(255,107,74,0.25);
+}
+.action-btn.publish:hover {
+  background: rgba(255,107,74,0.2);
+  transform: translateY(-1px);
+}
+/* Published state - non-draft shows */
+.action-btn.published {
+  background: rgba(239,68,68,0.08);
+  color: #EF4444;
+  border: 1px solid rgba(239,68,68,0.15);
+  cursor: default;
+}
+.action-btn.published:hover {
+  transform: none;
+}
+.action-btn.published[disabled],
+.action-btn.published.disabled-style {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+  background: rgba(156,163,175,0.1);
+  color: #9CA3AF;
+  border: 1px solid rgba(156,163,175,0.2);
 }
 
 #panel-shows .data-table td:nth-child(4) .status-tag {
@@ -3784,12 +3826,14 @@ table { border-collapse: collapse; width: 100%; }
 
 /* ========== Show Stats Cards ========== */
 .show-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   margin-bottom: 20px;
 }
 .show-stat-card {
+  flex: 1 1 180px;
+  min-width: 150px;
   background: #fff;
   border: 1px solid var(--border-color);
   border-radius: 12px;
@@ -3948,6 +3992,8 @@ table { border-collapse: collapse; width: 100%; }
 .status-tag.ended .dot { background: #9CA3AF; }
 .status-tag.off-shelf { background: rgba(107,114,128,0.1); color: #6B7280; }
 .status-tag.off-shelf .dot { background: #9CA3AF; }
+.status-tag.draft { background: rgba(156,163,175,0.1); color: #6B7280; }
+.status-tag.draft .dot { background: #9CA3AF; }
 
 /* Session sale toggle button */
 .action-btn.stop-sale {
@@ -5814,6 +5860,14 @@ table { border-collapse: collapse; width: 100%; }
   .session-stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  #panel-shows .data-table td:nth-child(5) .action-btns .action-btn {
+    flex: 0 0 calc(50% - 4px);
+    min-width: 60px;
+    font-size: 11px;
+    padding: 4px 6px;
+    text-align: center;
+    justify-content: center;
+  }
   .pagination-bar {
     flex-direction: column;
     gap: 10px;
@@ -6731,8 +6785,15 @@ select.form-select-sm,
           <div class="show-stat-card">
             <div class="show-stat-icon total"><i class="fas fa-ticket"></i></div>
             <div class="show-stat-info">
-              <div class="stat-value">12</div>
+              <div class="stat-value">14</div>
               <div class="stat-label">总演出数</div>
+            </div>
+          </div>
+          <div class="show-stat-card">
+            <div class="show-stat-icon draft" style="background:rgba(156,163,175,0.1);color:#9CA3AF;"><i class="fas fa-file-pen"></i></div>
+            <div class="show-stat-info">
+              <div class="stat-value" style="color:#9CA3AF;">2</div>
+              <div class="stat-label">待发布</div>
             </div>
           </div>
           <div class="show-stat-card">
@@ -6770,6 +6831,7 @@ select.form-select-sm,
         <div class="filter-bar">
           <div class="status-filters">
             <button class="status-filter-btn active">全部</button>
+            <button class="status-filter-btn">待发布</button>
             <button class="status-filter-btn">未开票</button>
             <button class="status-filter-btn">售票中</button>
             <button class="status-filter-btn">已结束</button>
@@ -6845,12 +6907,12 @@ select.form-select-sm,
             <i class="fas fa-search"></i>
             <input type="text" placeholder="搜索演出名称...">
           </div>
-          <button class="btn btn-primary"><i class="fas fa-plus"></i> 新建演出</button>
+          <button class="btn btn-primary" onclick="openModal('modalNewShow')"><i class="fas fa-plus"></i> 新建演出</button>
         </div>
 
         <!-- Data Table -->
-        <div class="data-table-wrapper">
-          <div class="data-table">
+        <div class="data-table-wrapper" style="overflow-x:auto;">
+          <div class="data-table" style="min-width:1100px;">
             <table>
             <thead>
               <tr>
@@ -6904,10 +6966,10 @@ select.form-select-sm,
                   <div class="action-btns">
                     <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
                     <button class="action-btn view" onclick="switchToSessions('《天涯故事》大型歌舞秀')"><i class="fas fa-calendar-days"></i> 场次</button>
-                    <button class="action-btn discount" onclick="goToShowDiscount('《天涯故事》大型歌舞秀')"><i class="fas fa-percent"></i> 票品折扣</button>
+                    <button class="action-btn published" disabled title="开票时间：2026-04-10 10:00"><i class="fas fa-ticket"></i> 4-10开票</button>
                     <button class="action-btn tag has-tag" style="--tag-color:#FF6B4A;--tag-bg:rgba(255,107,74,0.1);" onclick="openTagModal(this)"><i class="fas fa-tag"></i> 热门</button>
                     <button class="action-btn on-shelf" data-sold="180" onclick="toggleShowStatus(this)"><i class="fas fa-toggle-on"></i> 下架</button>
-                    <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
+                    <button class="action-btn delete" onclick="openDeleteShowModal(this)"><i class="fas fa-trash"></i> 删除</button>
                   </div>
                 </td>
               </tr>
@@ -6953,10 +7015,10 @@ select.form-select-sm,
                   <div class="action-btns">
                     <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
                     <button class="action-btn view" onclick="switchToSessions('椰风海韵·交响音乐会')"><i class="fas fa-calendar-days"></i> 场次</button>
-                    <button class="action-btn discount" onclick="goToShowDiscount('椰风海韵·交响音乐会')"><i class="fas fa-percent"></i> 票品折扣</button>
+                    <button class="action-btn published" disabled title="开票时间：2026-04-28 10:00"><i class="fas fa-ticket"></i> 4-28开票</button>
                     <button class="action-btn tag has-tag" style="--tag-color:#10B981;--tag-bg:rgba(16,185,129,0.1);" onclick="openTagModal(this)"><i class="fas fa-tag"></i> 推荐</button>
                     <button class="action-btn on-shelf" data-sold="360" onclick="toggleShowStatus(this)" disabled style="opacity:0.4;cursor:not-allowed;"><i class="fas fa-toggle-on"></i> 下架</button>
-                    <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
+                    <button class="action-btn delete" onclick="openDeleteShowModal(this)"><i class="fas fa-trash"></i> 删除</button>
                   </div>
                 </td>
               </tr>
@@ -7002,10 +7064,57 @@ select.form-select-sm,
                   <div class="action-btns">
                     <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
                     <button class="action-btn view" onclick="switchToSessions('黎苗风情·民族舞蹈专场')"><i class="fas fa-calendar-days"></i> 场次</button>
-                    <button class="action-btn discount" onclick="goToShowDiscount('黎苗风情·民族舞蹈专场')"><i class="fas fa-percent"></i> 票品折扣</button>
+                    <button class="action-btn published" disabled title="开票时间：2026-03-15 10:00"><i class="fas fa-ticket"></i> 3-15开票</button>
                     <button class="action-btn tag" onclick="openTagModal(this)"><i class="fas fa-tag"></i> 标签</button>
                     <button class="action-btn on-shelf" data-sold="0" onclick="toggleShowStatus(this)" disabled style="opacity:0.4;cursor:not-allowed;"><i class="fas fa-toggle-on"></i> 下架</button>
-                    <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
+                    <button class="action-btn delete" onclick="openDeleteShowModal(this)"><i class="fas fa-trash"></i> 删除</button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 3.5: 待发布 -->
+              <tr>
+                <td>
+                  <div class="show-cell">
+                    <img class="show-thumb" src="https://picsum.photos/seed/show8/112/144" alt="">
+                    <div class="show-info">
+                      <div class="show-name">《南海奇缘》沉浸式舞台剧</div>
+                      <span class="type-tag" style="margin-top:4px;">话剧</span>
+                      <div class="show-venue"><i class="fas fa-location-dot"></i>三亚艺术中心 · 多功能厅</div>
+                      <div class="show-date-range"><i class="fas fa-calendar"></i>2026-08-01 至 2026-08-15</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="zone-prices">
+                    <div class="zone-price-item"><span class="zone-label">VIP</span>¥880</div>
+                    <div class="zone-price-item"><span class="zone-label">A区</span>¥480</div>
+                    <div class="zone-price-item"><span class="zone-label">B区</span>¥280</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="revenue-section-label">累计</div>
+                  <div class="revenue-main">¥0</div>
+                  <div class="ticket-detail">
+                    <span class="ticket-sold">已售 0</span>
+                    <span class="ticket-total">/ 800</span>
+                    <span class="ticket-pct">0%</span>
+                  </div>
+                  <div class="progress-bar-inline-wrap" style="margin-top:4px;">
+                    <div class="progress-bar-inline">
+                      <div class="progress-bar-fill" style="width:0%;height:6px;"></div>
+                    </div>
+                  </div>
+                  <hr class="revenue-divider">
+                  <div class="revenue-section-label">尚未开票</div>
+                  <div class="revenue-sub">待设置开票时间</div>
+                </td>
+                <td><span class="status-tag draft"><span class="dot"></span>待发布</span></td>
+                <td>
+                  <div class="action-btns">
+                    <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
+                    <button class="action-btn publish" onclick="openPublishShowModal(this)"><i class="fas fa-rocket"></i> 发布</button>
+                    <button class="action-btn delete" onclick="openDeleteShowModal(this)"><i class="fas fa-trash"></i> 删除</button>
                   </div>
                 </td>
               </tr>
@@ -7047,15 +7156,14 @@ select.form-select-sm,
                   <div class="revenue-section-label">开票时间</div>
                   <div class="revenue-sub">2026-07-01 10:00</div>
                 </td>
-                <td><span class="status-tag not-opened"><span class="dot"></span>未开票</span></td>
+                <td><span class="status-tag draft"><span class="dot"></span>待发布</span></td>
                 <td>
                   <div class="action-btns">
                     <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
                     <button class="action-btn view" onclick="switchToSessions('海南国际杂技艺术节')"><i class="fas fa-calendar-days"></i> 场次</button>
-                    <button class="action-btn discount" onclick="goToShowDiscount('海南国际杂技艺术节')"><i class="fas fa-percent"></i> 票品折扣</button>
+                    <button class="action-btn publish" onclick="openPublishShowModal(this)"><i class="fas fa-rocket"></i> 发布</button>
                     <button class="action-btn tag" onclick="openTagModal(this)"><i class="fas fa-tag"></i> 标签</button>
-                    <button class="action-btn on-shelf" data-sold="0" onclick="toggleShowStatus(this)"><i class="fas fa-toggle-on"></i> 下架</button>
-                    <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
+                    <button class="action-btn delete" onclick="openDeleteShowModal(this)"><i class="fas fa-trash"></i> 删除</button>
                   </div>
                 </td>
               </tr>
@@ -7103,10 +7211,10 @@ select.form-select-sm,
                   <div class="action-btns">
                     <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
                     <button class="action-btn view" onclick="switchToSessions('爵士之夜·国际爵士音乐节')"><i class="fas fa-calendar-days"></i> 场次</button>
-                    <button class="action-btn discount" onclick="goToShowDiscount('爵士之夜·国际爵士音乐节')"><i class="fas fa-percent"></i> 票品折扣</button>
+                    <button class="action-btn published" disabled title="开票时间：2026-03-01 10:00"><i class="fas fa-ticket"></i> 3-01开票</button>
                     <button class="action-btn tag has-tag" style="--tag-color:#F59E0B;--tag-bg:rgba(245,158,11,0.1);" onclick="openTagModal(this)"><i class="fas fa-tag"></i> 限时</button>
                     <button class="action-btn on-shelf" data-sold="120" onclick="toggleShowStatus(this)" disabled style="opacity:0.4;cursor:not-allowed;"><i class="fas fa-toggle-on"></i> 下架</button>
-                    <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
+                    <button class="action-btn delete" onclick="openDeleteShowModal(this)"><i class="fas fa-trash"></i> 删除</button>
                   </div>
                 </td>
               </tr>
@@ -7151,9 +7259,9 @@ select.form-select-sm,
                   <div class="action-btns">
                     <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
                     <button class="action-btn view" onclick="switchToSessions('儿童剧《海底总动员》')"><i class="fas fa-calendar-days"></i> 场次</button>
-                    <button class="action-btn discount" onclick="goToShowDiscount('儿童剧《海底总动员》')"><i class="fas fa-percent"></i> 票品折扣</button>
+                    <button class="action-btn published" disabled title="开票时间：2026-02-20 10:00"><i class="fas fa-ticket"></i> 2-20开票</button>
                     <button class="action-btn tag" onclick="openTagModal(this)"><i class="fas fa-tag"></i> 标签</button>
-                    <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
+                    <button class="action-btn delete" onclick="openDeleteShowModal(this)"><i class="fas fa-trash"></i> 删除</button>
                   </div>
                 </td>
               </tr>
@@ -7200,10 +7308,10 @@ select.form-select-sm,
                   <div class="action-btns">
                     <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
                     <button class="action-btn view" onclick="switchToSessions('《红色娘子军》芭蕾舞剧')"><i class="fas fa-calendar-days"></i> 场次</button>
-                    <button class="action-btn discount" onclick="goToShowDiscount('《红色娘子军》芭蕾舞剧')"><i class="fas fa-percent"></i> 票品折扣</button>
+                    <button class="action-btn published" disabled title="开票时间：2026-02-10 10:00"><i class="fas fa-ticket"></i> 2-10开票</button>
                     <button class="action-btn tag" onclick="openTagModal(this)"><i class="fas fa-tag"></i> 标签</button>
                     <button class="action-btn on-shelf" data-sold="0" onclick="toggleShowStatus(this)" disabled style="opacity:0.4;cursor:not-allowed;"><i class="fas fa-toggle-on"></i> 下架</button>
-                    <button class="action-btn delete"><i class="fas fa-trash"></i> 删除</button>
+                    <button class="action-btn delete" onclick="openDeleteShowModal(this)"><i class="fas fa-trash"></i> 删除</button>
                   </div>
                 </td>
               </tr>
@@ -7215,7 +7323,7 @@ select.form-select-sm,
         <!-- Pagination -->
         <div class="pagination-bar">
           <div class="pagination-info">
-            共 <strong>12</strong> 条记录，当前第 <strong>1</strong> / <strong>2</strong> 页
+            共 <strong>14</strong> 条记录，当前第 <strong>1</strong> / <strong>2</strong> 页
           </div>
           <div class="pagination">
             <button class="page-btn" disabled><i class="fas fa-chevron-left"></i></button>
@@ -8387,37 +8495,6 @@ select.form-select-sm,
       <div class="step-content" id="showStep3">
         <div class="form-section-title"><i class="fas fa-tags"></i>票务策略</div>
 
-        <!-- 上架与开票 -->
-        <div class="ticket-policy-card">
-          <div class="ticket-policy-header">
-            <div class="ticket-policy-title">
-              <i class="fas fa-clock"></i>
-              <span>上架与开票</span>
-              <span class="required" style="margin-left:4px;">*</span>
-            </div>
-          </div>
-          <div class="ticket-policy-body">
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">统一开票时间</label>
-                <input type="datetime-local" class="form-input" id="ticketOpenTime" value="2026-04-20T10:00">
-                <div class="form-hint">所有场次统一在此时间开售票务</div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">上下架状态</label>
-                <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#F5F6FA;border-radius:8px;">
-                  <label class="toggle-switch">
-                    <input type="checkbox" id="newShowOnSaleToggle" checked onchange="toggleNewShowOnSale()">
-                    <span class="toggle-slider"></span>
-                  </label>
-                  <span id="newShowOnSaleLabel" style="font-size:13px;color:var(--text-secondary);">上架</span>
-                </div>
-                <div class="form-hint">上架后用户可在小程序端查看和购买该演出</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <!-- 会员优先购设置 -->
         <div class="ticket-policy-card">
           <div class="ticket-policy-header">
@@ -8522,6 +8599,19 @@ select.form-select-sm,
         <div class="form-group">
           <label class="form-label">演出名称<span class="required">*</span></label>
           <input type="text" class="form-input" id="editShowName" placeholder="请输入演出名称">
+        </div>
+        <div class="form-group">
+          <label class="form-label">演出日期范围<span class="required">*</span></label>
+          <div class="form-row">
+            <div class="form-group">
+              <input type="date" class="form-input" id="editShowStartDate" placeholder="开始日期">
+              <div class="form-hint">开始日期</div>
+            </div>
+            <div class="form-group">
+              <input type="date" class="form-input" id="editShowEndDate" placeholder="结束日期">
+              <div class="form-hint">结束日期</div>
+            </div>
+          </div>
         </div>
         <div class="form-row">
           <div class="form-group">
@@ -8669,19 +8759,6 @@ select.form-select-sm,
             <div class="rich-editor-body" contenteditable="true" id="editShowNotice" style="min-height:100px;"></div>
           </div>
         </div>
-        <div class="form-group">
-          <label class="form-label">演出日期范围<span class="required">*</span></label>
-          <div class="form-row">
-            <div class="form-group">
-              <input type="date" class="form-input" id="editShowStartDate" placeholder="开始日期">
-              <div class="form-hint">开始日期</div>
-            </div>
-            <div class="form-group">
-              <input type="date" class="form-input" id="editShowEndDate" placeholder="结束日期">
-              <div class="form-hint">结束日期</div>
-            </div>
-          </div>
-        </div>
       </div>
       <!-- Step 2: 票价与场次（只读展示） -->
       <div class="step-content" id="editShowStep2">
@@ -8737,37 +8814,6 @@ select.form-select-sm,
       <!-- Step 3: 上架与策略 -->
       <div class="step-content" id="editShowStep3">
         <div class="form-section-title"><i class="fas fa-tags"></i>票务策略</div>
-
-        <!-- 上架与开票 -->
-        <div class="ticket-policy-card">
-          <div class="ticket-policy-header">
-            <div class="ticket-policy-title">
-              <i class="fas fa-clock"></i>
-              <span>上架与开票</span>
-              <span class="required" style="margin-left:4px;">*</span>
-            </div>
-          </div>
-          <div class="ticket-policy-body">
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">统一开票时间</label>
-                <input type="datetime-local" class="form-input" id="editTicketOpenTime" value="2026-04-20T10:00">
-                <div class="form-hint">所有场次统一在此时间开售票务</div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">上下架状态</label>
-                <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#F5F6FA;border-radius:8px;">
-                  <label class="toggle-switch">
-                    <input type="checkbox" id="editShowOnSaleToggle" checked>
-                    <span class="toggle-slider"></span>
-                  </label>
-                  <span id="editShowOnSaleLabel" style="font-size:13px;color:var(--text-secondary);">上架</span>
-                </div>
-                <div class="form-hint">上架后用户可在小程序端查看和购买该演出</div>
-              </div>
-            </div>
-          </div>
-        </div>
 
         <!-- 会员优先购设置 -->
         <div class="ticket-policy-card">
@@ -9404,6 +9450,9 @@ function openEditShow(btn) {
   var showDate = row.querySelector('.show-date-range');
   var typeTag = row.querySelector('.type-tag');
   var thumb = row.querySelector('.show-thumb');
+  var statusTag = row.querySelector('.status-tag');
+  var statusText = statusTag ? statusTag.textContent.trim() : '';
+  var isDraft = statusText.indexOf('待发布') !== -1;
 
   if (showName) document.getElementById('editShowName').value = showName.textContent.trim();
   if (typeTag) document.getElementById('editShowType').value = typeTag.textContent.trim();
@@ -9421,6 +9470,34 @@ function openEditShow(btn) {
       document.getElementById('editShowEndDate').value = dateMatch[1];
     }
   }
+
+  // 非待发布状态下，场馆、演出厅、票价、场次不可编辑
+  var venueSelect = document.getElementById('editShowVenue');
+  var hallSelect = document.getElementById('editShowHall');
+  var tierInputs = document.querySelectorAll('#editTierTable tbody input[type="number"]');
+  var sessionInputs = document.querySelectorAll('#editSessionList input');
+
+  if (venueSelect) {
+    venueSelect.disabled = !isDraft;
+    venueSelect.style.opacity = !isDraft ? '0.6' : '';
+    venueSelect.style.cursor = !isDraft ? 'not-allowed' : '';
+  }
+  if (hallSelect) {
+    hallSelect.disabled = !isDraft;
+    hallSelect.style.opacity = !isDraft ? '0.6' : '';
+    hallSelect.style.cursor = !isDraft ? 'not-allowed' : '';
+  }
+  tierInputs.forEach(function(input) {
+    input.disabled = !isDraft;
+    input.style.opacity = !isDraft ? '0.6' : '';
+    input.style.cursor = !isDraft ? 'not-allowed' : '';
+  });
+  sessionInputs.forEach(function(input) {
+    input.disabled = !isDraft;
+    input.style.opacity = !isDraft ? '0.6' : '';
+    input.style.cursor = !isDraft ? 'not-allowed' : '';
+  });
+
   currentEditShowStep = 1;
   updateEditShowStepUI();
   openModal('modalEditShow');
@@ -10479,6 +10556,66 @@ function goToShowDiscount(showName) {
   localStorage.setItem('_pendingDiscountShow', showName);
   // Navigate to marketing center page
   window.location.href = 'marketing-center.html?tab=discount&show=' + encodeURIComponent(showName);
+}
+
+// Open delete show confirmation modal
+function openDeleteShowModal(btn) {
+  var row = btn.closest('tr');
+  if (!row) return;
+  var showName = row.querySelector('.show-name');
+  if (showName) document.getElementById('deleteShowName').textContent = showName.textContent.trim();
+  window._pendingDeleteRow = row;
+  openModal('modalDeleteShow');
+}
+
+function confirmDeleteShow() {
+  var row = window._pendingDeleteRow;
+  if (row) {
+    row.remove();
+    showToast('演出已删除');
+  }
+  closeModal('modalDeleteShow');
+  window._pendingDeleteRow = null;
+}
+
+// Open publish show modal
+function openPublishShowModal(btn) {
+  var row = btn.closest('tr');
+  if (!row) return;
+  var showName = row.querySelector('.show-name');
+  if (showName) document.getElementById('publishShowName').textContent = showName.textContent.trim();
+  window._pendingPublishRow = row;
+  openModal('modalPublishShow');
+}
+
+function confirmPublishShow() {
+  var row = window._pendingPublishRow;
+  if (row) {
+    var statusTag = row.querySelector('.status-tag');
+    if (statusTag) {
+      statusTag.className = 'status-tag selling';
+      statusTag.innerHTML = '<span class="dot"></span>售票中';
+    }
+    var publishBtn = row.querySelector('.action-btn.publish');
+    if (publishBtn) {
+      var openTimeVal = document.getElementById('publishOpenTime').value;
+      var dateLabel = '';
+      if (openTimeVal) {
+        var parts = openTimeVal.split('T')[0].split('-');
+        if (parts.length === 3) {
+          dateLabel = parseInt(parts[1], 10) + '-' + parseInt(parts[2], 10) + '开票';
+        }
+      }
+      publishBtn.className = 'action-btn published';
+      publishBtn.disabled = false;
+      publishBtn.title = '开票时间：' + (openTimeVal || '');
+      publishBtn.innerHTML = '<i class="fas fa-check-circle"></i> 已发布' + (dateLabel ? ' ' + dateLabel : '');
+      publishBtn.onclick = null;
+    }
+    showToast('演出已发布');
+  }
+  closeModal('modalPublishShow');
+  window._pendingPublishRow = null;
 }
 
 function confirmForceOffShelf() {
@@ -14142,6 +14279,57 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="modal-footer">
       <button class="btn btn-cancel" onclick="clearTag()">清除标签</button>
       <button class="btn btn-confirm" onclick="saveTag()">确认</button>
+    </div>
+  </div>
+</div>
+
+<!-- 删除演出确认弹窗 -->
+<div class="modal-overlay" id="modalDeleteShow">
+  <div class="modal-container modal-sm">
+    <div class="modal-header">
+      <h3>确认删除</h3>
+      <button class="modal-close" onclick="closeModal('modalDeleteShow')"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:12px 16px;display:flex;align-items:flex-start;gap:8px;">
+        <i class="fas fa-exclamation-triangle" style="color:#DC2626;font-size:16px;margin-top:2px;"></i>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:#991B1B;margin-bottom:4px;">删除后不可查看演出</div>
+          <div style="font-size:13px;color:#7F1D1D;">已有订单的演出不可删除。确认删除 "<span id="deleteShowName"></span>"？</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal('modalDeleteShow')">取消</button>
+      <button class="btn-confirm" style="background:#DC2626;" onclick="confirmDeleteShow()">确认删除</button>
+    </div>
+  </div>
+</div>
+
+<!-- 发布演出弹窗 -->
+<div class="modal-overlay" id="modalPublishShow">
+  <div class="modal-container modal-sm">
+    <div class="modal-header">
+      <h3>发布演出</h3>
+      <button class="modal-close" onclick="closeModal('modalPublishShow')"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div style="background:#ECFDF5;border:1px solid #A7F3D0;border-radius:8px;padding:12px 16px;display:flex;align-items:flex-start;gap:8px;margin-bottom:16px;">
+        <i class="fas fa-info-circle" style="color:#059669;font-size:16px;margin-top:2px;"></i>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:#065F46;margin-bottom:4px;">即将发布演出</div>
+          <div style="font-size:13px;color:#047857;">"<span id="publishShowName"></span>" 发布后用户可在小程序端查看和购买该演出。</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">统一开票时间 <span class="required">*</span></label>
+        <input type="datetime-local" class="form-input" id="publishOpenTime" value="2026-07-01T10:00">
+        <div class="form-hint">所有场次统一在此时间开售票务</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal('modalPublishShow')">取消</button>
+      <button class="btn-confirm" style="background:#059669;" onclick="confirmPublishShow()">确认发布</button>
     </div>
   </div>
 </div>

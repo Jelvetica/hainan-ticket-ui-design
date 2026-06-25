@@ -3759,7 +3759,7 @@ select.form-select-sm,
                     <div class="actions-cell">
                       <button class="action-btn edit" onclick="openDiscountEdit(1)"><i class="fas fa-pen"></i> 编辑</button>
                       <button class="action-btn view" onclick="openDiscountData(1)"><i class="fas fa-chart-bar"></i> 数据</button>
-                      <button class="action-btn offline" style="color:#dc2626" onclick="stopDiscountActivity(this)"><i class="fas fa-stop-circle"></i> 停止</button>
+                      <button class="action-btn offline" style="color:#dc2626" onclick="pauseDiscountActivity(this)"><i class="fas fa-pause-circle"></i> 暂停</button>
                     </div>
                   </td>
                 </tr>
@@ -3775,7 +3775,7 @@ select.form-select-sm,
                     <div class="actions-cell">
                       <button class="action-btn edit" onclick="openDiscountEdit(2)"><i class="fas fa-pen"></i> 编辑</button>
                       <button class="action-btn view" onclick="openDiscountData(2)"><i class="fas fa-chart-bar"></i> 数据</button>
-                      <button class="action-btn offline" style="color:#dc2626" onclick="stopDiscountActivity(this)"><i class="fas fa-stop-circle"></i> 停止</button>
+                      <button class="action-btn offline" style="color:#dc2626" onclick="pauseDiscountActivity(this)"><i class="fas fa-pause-circle"></i> 暂停</button>
                     </div>
                   </td>
                 </tr>
@@ -3807,7 +3807,7 @@ select.form-select-sm,
                     <div class="actions-cell">
                       <button class="action-btn edit" onclick="openDiscountEdit(4)"><i class="fas fa-pen"></i> 编辑</button>
                       <button class="action-btn view" onclick="openDiscountData(4)"><i class="fas fa-chart-bar"></i> 数据</button>
-                      <button class="action-btn offline" style="color:#dc2626" onclick="stopDiscountActivity(this)"><i class="fas fa-stop-circle"></i> 停止</button>
+                      <button class="action-btn offline" style="color:#dc2626" onclick="pauseDiscountActivity(this)"><i class="fas fa-pause-circle"></i> 暂停</button>
                     </div>
                   </td>
                 </tr>
@@ -3823,7 +3823,7 @@ select.form-select-sm,
                     <div class="actions-cell">
                       <button class="action-btn edit" onclick="openDiscountEdit(5)"><i class="fas fa-pen"></i> 编辑</button>
                       <button class="action-btn view" onclick="openDiscountData(5)"><i class="fas fa-chart-bar"></i> 数据</button>
-                      <button class="action-btn offline" style="color:#dc2626" onclick="stopDiscountActivity(this)"><i class="fas fa-stop-circle"></i> 停止</button>
+                      <button class="action-btn offline" style="color:#dc2626" onclick="pauseDiscountActivity(this)"><i class="fas fa-pause-circle"></i> 暂停</button>
                     </div>
                   </td>
                 </tr>
@@ -5053,6 +5053,27 @@ select.form-select-sm,
     <div class="modal-footer" style="justify-content:center; gap:12px;">
       <button class="btn btn-secondary" onclick="closeModal('modal-unfreeze-confirm')" style="min-width:100px;">取消</button>
       <button class="btn btn-primary" onclick="closeModal('modal-unfreeze-confirm'); showToast('success', '批次已解冻')" style="min-width:100px; background:linear-gradient(135deg, #16a34a, #15803d);"><i class="fas fa-check-circle"></i> 确认解冻</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: 暂停折扣确认 -->
+<div class="modal-overlay" id="modal-discount-pause-confirm">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fas fa-pause-circle" style="color:#dc2626;"></i> 确认暂停</span>
+      <button class="modal-close" onclick="closeModal('modal-discount-pause-confirm')"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" style="text-align:center; padding:32px 24px;">
+      <div style="width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg, #fee2e2, #fecaca); display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
+        <i class="fas fa-pause-circle" style="font-size:28px; color:#dc2626;"></i>
+      </div>
+      <div style="font-size:16px; font-weight:600; color:var(--text-primary); margin-bottom:8px;">是否确认暂停？</div>
+      <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">暂停后该折扣将不再生效<br>已领取的折扣券不受影响</div>
+    </div>
+    <div class="modal-footer" style="justify-content:center; gap:12px;">
+      <button class="btn btn-secondary" onclick="closeModal('modal-discount-pause-confirm')" style="min-width:100px;">取消</button>
+      <button class="btn btn-primary" onclick="closeModal('modal-discount-pause-confirm'); doPauseDiscount()" style="min-width:100px; background:linear-gradient(135deg, #dc2626, #b91c1c);"><i class="fas fa-pause-circle"></i> 确认暂停</button>
     </div>
   </div>
 </div>
@@ -6407,6 +6428,7 @@ select.form-select-sm,
   };
 
   let currentEditingDiscountId = null;
+  let currentPauseBtn = null;
 
   function onDiscountShowChange(select) {
     const showId = select.value;
@@ -6617,14 +6639,21 @@ select.form-select-sm,
     closeModal('modal-discount-new');
   }
 
-  function stopDiscountActivity(btn) {
-    if (!confirm('确定要停止该折扣活动吗？停止后用户将无法继续使用。')) return;
+  function pauseDiscountActivity(btn) {
+    currentPauseBtn = btn;
+    openModal('modal-discount-pause-confirm');
+  }
+
+  function doPauseDiscount() {
+    if (!currentPauseBtn) return;
+    var btn = currentPauseBtn;
     var row = btn.closest('tr');
     if (!row) return;
     var statusCell = row.querySelector('td:nth-child(7)');
-    if (statusCell) statusCell.innerHTML = '<span class="status status-inactive">已停止</span>';
+    if (statusCell) statusCell.innerHTML = '<span class="status status-inactive">已暂停</span>';
     btn.outerHTML = '<button class="action-btn toggle" onclick="restartDiscountActivity(this)"><i class="fas fa-play-circle"></i> 重启</button>';
-    showToast('warning', '折扣活动已停止');
+    showToast('warning', '已暂停');
+    currentPauseBtn = null;
   }
 
   function restartDiscountActivity(btn) {
@@ -6632,7 +6661,7 @@ select.form-select-sm,
     if (!row) return;
     var statusCell = row.querySelector('td:nth-child(7)');
     if (statusCell) statusCell.innerHTML = '<span class="status status-active">进行中</span>';
-    btn.outerHTML = '<button class="action-btn offline" style="color:#dc2626" onclick="stopDiscountActivity(this)"><i class="fas fa-stop-circle"></i> 停止</button>';
+    btn.outerHTML = '<button class="action-btn offline" style="color:#dc2626" onclick="pauseDiscountActivity(this)"><i class="fas fa-pause-circle"></i> 暂停</button>';
     showToast('success', '折扣活动已重启');
   }
 

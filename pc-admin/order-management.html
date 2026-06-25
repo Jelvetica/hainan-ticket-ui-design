@@ -1667,6 +1667,65 @@ table { border-collapse: collapse; width: 100%; }
   border-top: 1px solid var(--border-gray);
   background: #FAFBFC;
 }
+.refund-seat-list {
+  border: 1px solid var(--border-gray);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-top: 8px;
+}
+.refund-seat-select-all {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  background: #FAFBFC;
+  border-bottom: 1px solid var(--border-gray);
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+.refund-seat-select-all input[type="checkbox"] {
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--coral-orange);
+}
+.refund-seat-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-gray);
+  font-size: 13px;
+  cursor: pointer;
+  transition: var(--transition);
+  user-select: none;
+}
+.refund-seat-item:last-child { border-bottom: none; }
+.refund-seat-item:hover { background: var(--light-gray); }
+.refund-seat-item input[type="checkbox"] {
+  margin-right: 10px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--coral-orange);
+  flex-shrink: 0;
+}
+.refund-seat-info {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.refund-seat-name { color: var(--text-primary); font-weight: 500; }
+.refund-seat-price {
+  color: var(--danger);
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
 
 /* ==================== Import Modal ==================== */
 .import-upload-area {
@@ -5471,6 +5530,7 @@ document.getElementById('printModal').addEventListener('click', function(e) {
 // ==================== Refund Modal ====================
 var currentRefundOrder = null;
 var selectedRefundReasons = [];
+var selectedRefundSeatIndices = [];
 
 function openRefundModal(orderId) {
   var order = orders.find(function(o) { return o.id === orderId; });
@@ -5478,16 +5538,37 @@ function openRefundModal(orderId) {
   currentRefundOrder = order;
   selectedRefundReasons = [];
   currentRefundFeeRate = 0.1;
+  selectedRefundSeatIndices = order.seats.map(function(_, i) { return i; });
+
+  var selectedTotal = order.seats.reduce(function(sum, s) { return sum + s.price; }, 0);
+  var fee = Math.round(selectedTotal * currentRefundFeeRate);
+  var actual = selectedTotal - fee;
 
   var body = '';
   body += '<div class="refund-order-summary">';
   body += '<div class="ros-row"><span class="ros-label">订单号</span><span class="ros-value mono">' + order.id + '</span></div>';
   body += '<div class="ros-row"><span class="ros-label">演出名称</span><span class="ros-value">' + order.show + '</span></div>';
-  body += '<div class="ros-row"><span class="ros-label">票数</span><span class="ros-value">' + order.qty + '张</span></div>';
-  body += '<div class="ros-row"><span class="ros-label">实付金额</span><span class="ros-value">¥' + order.actualPay.toLocaleString() + '.00</span></div>';
-  body += '<div class="ros-row"><span class="ros-label">手续费</span><span class="ros-value" id="refundFeeDisplay" style="color:var(--danger);">-¥' + Math.round(order.actualPay * 0.1).toLocaleString() + '.00</span></div>';
-  body += '<div class="ros-row ros-total"><span class="ros-label">实际退款</span><span class="ros-value" id="actualRefundDisplay">¥' + Math.round(order.actualPay * 0.9).toLocaleString() + '.00</span></div>';
+  body += '<div class="ros-row"><span class="ros-label">已选票数</span><span class="ros-value" id="refundTicketCount">' + selectedRefundSeatIndices.length + '/' + order.qty + '张</span></div>';
+  body += '<div class="ros-row"><span class="ros-label">选中金额</span><span class="ros-value" id="refundSelectedAmount">¥' + selectedTotal.toLocaleString() + '.00</span></div>';
+  body += '<div class="ros-row"><span class="ros-label">手续费</span><span class="ros-value" id="refundFeeDisplay" style="color:var(--danger);">-¥' + fee.toLocaleString() + '.00</span></div>';
+  body += '<div class="ros-row ros-total"><span class="ros-label">实际退款</span><span class="ros-value" id="actualRefundDisplay">¥' + actual.toLocaleString() + '.00</span></div>';
   body += '</div>';
+
+  body += '<div class="refund-reason-group"><label>选择退款座位（共' + order.seats.length + '张，已选<span id="refundSeatCount">' + selectedRefundSeatIndices.length + '</span>张）</label>';
+  body += '<div class="refund-seat-list">';
+  body += '<div class="refund-seat-select-all" onclick="toggleRefundSelectAllFromLabel(this)">';
+  body += '<input type="checkbox" id="refundSelectAll" checked onchange="event.stopPropagation();toggleRefundSelectAll(this.checked)"><span>全选</span>';
+  body += '</div>';
+  order.seats.forEach(function(s, i) {
+    body += '<div class="refund-seat-item" onclick="toggleRefundSeatFromRow(' + i + ', this)">';
+    body += '<input type="checkbox" checked data-idx="' + i + '" onchange="event.stopPropagation();toggleRefundSeat(' + i + ', this.checked)">';
+    body += '<div class="refund-seat-info">';
+    body += '<span class="refund-seat-name">' + s.seat + '（' + s.tier + '）</span>';
+    body += '<span class="refund-seat-price">¥' + s.price.toLocaleString() + '.00</span>';
+    body += '</div>';
+    body += '</div>';
+  });
+  body += '</div></div>';
 
   body += '<div class="refund-reason-group"><label>退款手续费比例</label><div class="refund-fee-options">';
   body += '<div class="refund-fee-option active" data-rate="0" onclick="selectRefundFeeRate(this,0)">0%</div>';
@@ -5503,7 +5584,7 @@ function openRefundModal(orderId) {
 
   body += '<div class="refund-reason-group"><label>退票说明</label><textarea class="refund-textarea" id="refundRemark" placeholder="请输入退票说明（选填）"></textarea></div>';
 
-  body += '<div class="refund-fee-info"><i class="fas fa-exclamation-triangle" style="color:var(--warning);"></i>退款仅返还实付金额、钱包余额、充值卡金额，不返还任何优惠券、券包或积分。</div>';
+  body += '<div class="refund-fee-info"><i class="fas fa-exclamation-triangle" style="color:var(--warning);"></i>退款将原路退回：微信、支付宝、钱包、充值卡。部分退款默认优先退还钱包余额和充值卡，最后退还微信、支付宝。不分退款不退优惠券。现金退款由窗口工作人员现场支出现金。</div>';
 
   document.getElementById('refundModalBody').innerHTML = body;
   document.getElementById('refundModal').classList.add('show');
@@ -5521,12 +5602,67 @@ function selectRefundFeeRate(el, rate) {
   currentRefundFeeRate = rate;
   document.querySelectorAll('.refund-fee-option').forEach(function(e) { e.classList.remove('active'); });
   el.classList.add('active');
+  updateRefundCalculation();
+}
+
+function updateRefundCalculation() {
   var order = currentRefundOrder;
   if (!order) return;
-  var fee = Math.round(order.actualPay * rate);
-  var actual = order.actualPay - fee;
+  var selectedTotal = 0;
+  order.seats.forEach(function(s, i) {
+    if (selectedRefundSeatIndices.indexOf(i) > -1) {
+      selectedTotal += s.price;
+    }
+  });
+  var fee = Math.round(selectedTotal * currentRefundFeeRate);
+  var actual = selectedTotal - fee;
   document.getElementById('refundFeeDisplay').textContent = '-¥' + fee.toLocaleString() + '.00';
   document.getElementById('actualRefundDisplay').textContent = '¥' + actual.toLocaleString() + '.00';
+  var countEl = document.getElementById('refundSeatCount');
+  if (countEl) countEl.textContent = selectedRefundSeatIndices.length;
+  var ticketCountEl = document.getElementById('refundTicketCount');
+  if (ticketCountEl) ticketCountEl.textContent = selectedRefundSeatIndices.length + '/' + order.qty + '张';
+  var amountEl = document.getElementById('refundSelectedAmount');
+  if (amountEl) amountEl.textContent = '¥' + selectedTotal.toLocaleString() + '.00';
+}
+
+function toggleRefundSeat(index, checked) {
+  var idx = selectedRefundSeatIndices.indexOf(index);
+  if (checked) {
+    if (idx === -1) selectedRefundSeatIndices.push(index);
+  } else {
+    if (idx > -1) selectedRefundSeatIndices.splice(idx, 1);
+  }
+  var selectAllCb = document.getElementById('refundSelectAll');
+  if (selectAllCb) {
+    selectAllCb.checked = selectedRefundSeatIndices.length === currentRefundOrder.seats.length;
+  }
+  updateRefundCalculation();
+}
+
+function toggleRefundSeatFromRow(index, el) {
+  var cb = el.querySelector('input[type="checkbox"]');
+  cb.checked = !cb.checked;
+  toggleRefundSeat(index, cb.checked);
+}
+
+function toggleRefundSelectAll(checked) {
+  if (!currentRefundOrder) return;
+  if (checked) {
+    selectedRefundSeatIndices = currentRefundOrder.seats.map(function(_, i) { return i; });
+  } else {
+    selectedRefundSeatIndices = [];
+  }
+  document.querySelectorAll('.refund-seat-item input[type="checkbox"]').forEach(function(cb) {
+    cb.checked = checked;
+  });
+  updateRefundCalculation();
+}
+
+function toggleRefundSelectAllFromLabel(el) {
+  var cb = el.querySelector('input[type="checkbox"]');
+  cb.checked = !cb.checked;
+  toggleRefundSelectAll(cb.checked);
 }
 
 function toggleRefundReason(el, reason) {
@@ -5538,6 +5674,10 @@ function toggleRefundReason(el, reason) {
 
 function confirmRefund() {
   if (!currentRefundOrder) return;
+  if (selectedRefundSeatIndices.length === 0) {
+    showToast('error', '请选择要退款的座位');
+    return;
+  }
   if (selectedRefundReasons.length === 0) {
     showToast('error', '请至少选择一个退票原因');
     return;
@@ -5545,7 +5685,11 @@ function confirmRefund() {
 
   currentRefundOrder.status = '退款中';
   currentRefundOrder.statusClass = 'status-refund';
-  currentRefundOrder.seats.forEach(function(s) { s.status = '已退票'; });
+  currentRefundOrder.seats.forEach(function(s, i) {
+    if (selectedRefundSeatIndices.indexOf(i) > -1) {
+      s.status = '已退票';
+    }
+  });
 
   renderOrderTable(orders);
   closeRefundModal();
