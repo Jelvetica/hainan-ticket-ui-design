@@ -2320,6 +2320,24 @@ table { border-collapse: collapse; width: 100%; }
   padding-right: 32px;
   cursor: pointer;
 }
+/* Disabled state - obvious visual indication */
+.form-input:disabled,
+.form-select:disabled,
+.form-textarea:disabled,
+.form-input[disabled],
+.form-select[disabled],
+.form-textarea[disabled] {
+  background: #F3F4F6 !important;
+  border-color: #E5E7EB !important;
+  color: #9CA3AF !important;
+  cursor: not-allowed !important;
+  opacity: 0.65 !important;
+  box-shadow: none !important;
+}
+.form-input:disabled::placeholder,
+.form-textarea:disabled::placeholder {
+  color: #D1D5DB;
+}
 .form-row {
   display: flex;
   gap: 16px;
@@ -6964,7 +6982,7 @@ select.form-select-sm,
                 <td><span class="status-tag selling"><span class="dot"></span>售票中</span></td>
                 <td>
                   <div class="action-btns">
-                    <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-eye"></i> 查看</button>
+                    <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
                     <button class="action-btn view" onclick="switchToSessions('《天涯故事》大型歌舞秀')"><i class="fas fa-calendar-days"></i> 场次</button>
                     <button class="action-btn published" disabled title="开票时间：2026-04-10 10:00"><i class="fas fa-ticket"></i> 4-10开票</button>
                     <button class="action-btn tag has-tag" style="--tag-color:#FF6B4A;--tag-bg:rgba(255,107,74,0.1);" onclick="openTagModal(this)"><i class="fas fa-tag"></i> 热门</button>
@@ -9479,8 +9497,6 @@ function openEditShow(btn) {
     var allEditInputs = document.querySelectorAll('#modalEditShow input, #modalEditShow select, #modalEditShow textarea');
     allEditInputs.forEach(function(input) {
       input.disabled = true;
-      input.style.opacity = '0.6';
-      input.style.cursor = 'not-allowed';
     });
   } else if (!isDraft) {
     // 非待发布（售票中）：仅场馆/演出厅/票价/场次不可编辑
@@ -9488,17 +9504,15 @@ function openEditShow(btn) {
     var hallSelect = document.getElementById('editShowHall');
     var tierInputs = document.querySelectorAll('#editTierTable tbody input[type="number"]');
     var sessionInputs = document.querySelectorAll('#editSessionList input');
-    if (venueSelect) { venueSelect.disabled = true; venueSelect.style.opacity = '0.6'; venueSelect.style.cursor = 'not-allowed'; }
-    if (hallSelect) { hallSelect.disabled = true; hallSelect.style.opacity = '0.6'; hallSelect.style.cursor = 'not-allowed'; }
-    tierInputs.forEach(function(input) { input.disabled = true; input.style.opacity = '0.6'; input.style.cursor = 'not-allowed'; });
-    sessionInputs.forEach(function(input) { input.disabled = true; input.style.opacity = '0.6'; input.style.cursor = 'not-allowed'; });
+    if (venueSelect) venueSelect.disabled = true;
+    if (hallSelect) hallSelect.disabled = true;
+    tierInputs.forEach(function(input) { input.disabled = true; });
+    sessionInputs.forEach(function(input) { input.disabled = true; });
     // 其他字段恢复可编辑
     var otherInputs = document.querySelectorAll('#modalEditShow input:not([id="editShowVenue"]):not([id="editShowHall"]), #modalEditShow select:not([id="editShowVenue"]):not([id="editShowHall"]), #modalEditShow textarea');
     otherInputs.forEach(function(input) {
       if (!input.closest('#editTierTable') && !input.closest('#editSessionList')) {
         input.disabled = false;
-        input.style.opacity = '';
-        input.style.cursor = '';
       }
     });
   } else {
@@ -9506,8 +9520,6 @@ function openEditShow(btn) {
     var allInputs = document.querySelectorAll('#modalEditShow input, #modalEditShow select, #modalEditShow textarea');
     allInputs.forEach(function(input) {
       input.disabled = false;
-      input.style.opacity = '';
-      input.style.cursor = '';
     });
   }
 
