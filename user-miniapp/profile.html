@@ -948,6 +948,19 @@
         <span class="tool-arrow">&rsaquo;</span>
       </a>
 
+      <!-- 心愿单 -->
+      <a class="tool-item" href="wishlist.html?from=profile.html" style="text-decoration:none;color:inherit;">
+        <div class="tool-icon purple">
+          <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </div>
+        <div class="tool-content">
+          <div class="tool-name">心愿单</div>
+          <div class="tool-desc">收藏想看的演出</div>
+        </div>
+        <span class="tool-extra">5个</span>
+        <span class="tool-arrow">&rsaquo;</span>
+      </a>
+
       <!-- 实名认证 -->
       <a class="tool-item" href="real-name-auth.html?from=profile.html" style="text-decoration:none;color:inherit;">
         <div class="tool-icon green">
@@ -1028,6 +1041,18 @@
         <span class="other-arrow">&rsaquo;</span>
       </div>
 
+      <!-- 电话客服 -->
+      <div class="other-item" onclick="callCustomerService()">
+        <div class="other-icon red">
+          <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        </div>
+        <div class="other-content">
+          <div class="other-name">电话客服</div>
+        </div>
+        <span class="tool-extra" style="font-size:12px;color:#8E95A9;">400-888-6666</span>
+        <span class="other-arrow">&rsaquo;</span>
+      </div>
+
       <!-- 关于我们 -->
       <div class="other-item">
         <div class="other-icon indigo">
@@ -1069,5 +1094,10 @@
 
 </div>
 
+<script>
+function callCustomerService() {
+    window.location.href = 'tel:4008886666';
+}
+</script>
 </body>
 </html>

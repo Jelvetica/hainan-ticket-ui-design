@@ -1075,6 +1075,64 @@ const devDocs = {
         ]
     },
 
+    'user-miniapp/wishlist.html': {
+        title: '心愿单',
+        subtitle: '收藏演出列表 + 删除 + 清空',
+        sections: [
+            {
+                title: '功能描述',
+                content: `<p><strong>核心功能：</strong>展示用户收藏的演出列表，每条包含演出封面、名称、日期、场馆和票价区间。支持单条删除和清空全部操作，删除后实时更新收藏数量。空状态时显示引导页面。</p>
+                <p><strong>业务说明：</strong></p>
+                <ul>
+                  <li><strong>前置条件：</strong>用户已登录</li>
+                  <li><strong>功能实现逻辑：</strong>
+                    <ul>
+                      <li>进入页面时请求用户收藏的演出列表</li>
+                      <li>支持单条删除（带滑出动画）和清空全部（二次确认）</li>
+                      <li>全部删除后自动切换到空状态引导页</li>
+                    </ul>
+                  </li>
+                  <li><strong>权限控制：</strong>仅登录用户可访问</li>
+                  <li><strong>数据约束：</strong>收藏数量实时同步</li>
+                  <li><strong>能力边界：</strong>仅展示收藏列表，不支持直接购票</li>
+                </ul>`
+            },
+            {
+                title: '交互说明',
+                content: `<p><strong>删除单条收藏</strong></p>
+                <ul>
+                  <li><strong>触发：</strong>点击演出卡片右上角删除按钮</li>
+                  <li><strong>成功：</strong>卡片滑出动画后移除，顶部数量统计更新</li>
+                </ul>
+                <p><strong>清空心愿单</strong></p>
+                <ul>
+                  <li><strong>触发：</strong>点击底部"清空心愿单"按钮</li>
+                  <li><strong>执行中：</strong>弹出二次确认弹窗</li>
+                  <li><strong>成功：</strong>清空所有收藏，切换到空状态引导页</li>
+                </ul>`
+            },
+            {
+                title: '核心字段',
+                noTableWrap: true,
+                tables: [
+                    {
+                        title: '心愿单字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['show_id', 'string', '是', '演出ID'],
+                            ['show_name', 'string', '是', '演出名称'],
+                            ['show_cover', 'string', '是', '演出封面图URL'],
+                            ['show_date', 'string', '是', '演出日期'],
+                            ['venue_name', 'string', '是', '场馆名称'],
+                            ['price_range', 'string', '是', '票价区间'],
+                            ['collect_time', 'string', '是', '收藏时间']
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+
     'user-miniapp/coupons.html': {
         title: '我的优惠券',
         subtitle: '优惠券列表 + 状态筛选 + 使用',
@@ -1668,6 +1726,16 @@ const devDocs = {
                   <li><strong>触发：</strong>点击我的订单区域各状态入口</li>
                   <li><strong>成功：</strong>跳转订单与电子票页面并自动切换到对应Tab</li>
                   <li><strong>边界条件：</strong>商品订单入口跳转商品订单页面</li>
+                </ul>
+                <p><strong>心愿单</strong></p>
+                <ul>
+                  <li><strong>触发：</strong>点击常用工具中的"心愿单"入口</li>
+                  <li><strong>成功：</strong>跳转心愿单页面，展示已收藏的演出列表</li>
+                </ul>
+                <p><strong>电话客服</strong></p>
+                <ul>
+                  <li><strong>触发：</strong>点击其他服务中的"电话客服"项</li>
+                  <li><strong>成功：</strong>通过tel:协议调起手机拨号界面，号码400-888-6666</li>
                 </ul>`
             },
             {
@@ -1712,11 +1780,11 @@ const devDocs = {
 
     'user-miniapp/profile-edit.html': {
         title: '编辑资料',
-        subtitle: '头像上传 + 信息编辑 + 保存',
+        subtitle: '头像上传 + 信息编辑 + 特殊证件 + 保存',
         sections: [
             {
                 title: '功能描述',
-                content: `<p><strong>核心功能：</strong>允许用户编辑个人资料信息，包括头像上传、昵称修改、性别选择和生日设置。真实姓名和手机号为只读字段，由实名认证和注册信息自动填充。编辑完成后通过保存操作将变更同步到服务端。</p>
+                content: `<p><strong>核心功能：</strong>允许用户编辑个人资料信息，包括头像上传、昵称修改、性别选择和生日设置。真实姓名和手机号为只读字段，由实名认证和注册信息自动填充。支持上传特殊证件（学生证/教师证/老年证/退伍军人证）享受优惠票价，证件经后台审核后生效。编辑完成后通过保存操作将变更同步到服务端。</p>
                 <p><strong>业务说明：</strong></p>
                 <ul>
                   <li><strong>前置条件：</strong>用户已登录</li>
@@ -1726,11 +1794,12 @@ const devDocs = {
                       <li>头像上传时校验文件类型和大小，通过后上传至OSS并返回URL</li>
                       <li>昵称变更时实时校验长度（1-20字符）和非法字符</li>
                       <li>点击保存时汇总所有变更字段，调用更新接口同步数据</li>
+                      <li>特殊证件上传后状态为待审核，后台审核通过/拒绝后同步状态</li>
                     </ul>
                   </li>
                   <li><strong>权限控制：</strong>仅允许修改当前登录用户自己的资料</li>
-                  <li><strong>数据约束：</strong>昵称1-20字符，不允许空值；头像仅支持jpg/png，最大5MB；生日年份范围1950-当前年</li>
-                  <li><strong>能力边界：</strong>真实姓名和手机号不可编辑；头像上传无裁剪功能</li>
+                  <li><strong>数据约束：</strong>昵称1-20字符，不允许空值；头像仅支持jpg/png，最大5MB；生日年份范围1950-当前年；证件照片仅支持jpg/png，最大5MB</li>
+                  <li><strong>能力边界：</strong>真实姓名和手机号不可编辑；头像上传无裁剪功能；每种证件类型仅可上传一张</li>
                 </ul>`
             },
             {
@@ -1750,6 +1819,15 @@ const devDocs = {
                   <li><strong>成功：</strong>显示"资料保存成功"toast提示，不自动返回</li>
                   <li><strong>失败：</strong>校验失败显示对应toast错误提示（如"昵称不能为空"）；接口失败显示"保存失败，请重试"</li>
                   <li><strong>边界条件：</strong>无任何修改时点击保存仍提示"资料保存成功"</li>
+                </ul>
+                <p><strong>特殊证件上传</strong></p>
+                <ul>
+                  <li><strong>触发：</strong>点击"特殊证件"一行入口</li>
+                  <li><strong>执行中：</strong>打开上传弹窗，选择证件类型（学生证/教师证/老年证/退伍军人证），输入证件号码，上传证件照片</li>
+                  <li><strong>状态展示：</strong>证件类型按钮上直接显示审核状态徽章（待审核黄色/已通过绿色/审核失败红色），已通过显示证件号，审核失败显示"点击重新上传"</li>
+                  <li><strong>审核失败回显：</strong>点击审核失败的证件类型，自动回显证件号码和照片到表单，可直接修改后重新提交</li>
+                  <li><strong>成功：</strong>显示"证件上传成功"或"证件已重新提交审核"toast，证件状态更新为待审核</li>
+                  <li><strong>边界条件：</strong>每种证件类型仅可上传一张；证件号码、照片三项必填</li>
                 </ul>`
             },
             {
@@ -1766,6 +1844,16 @@ const devDocs = {
                             ['phone', 'string', '否', '手机号（只读，脱敏显示）'],
                             ['gender', 'enum', '否', '性别：male-男 female-女 secret-保密'],
                             ['birthday', 'string', '否', '生日，格式YYYY-MM-DD，年份范围1950-当前年']
+                        ]
+                    },
+                    {
+                        title: '特殊证件字段',
+                        headers: ['字段名', '类型', '必填', '说明'],
+                        rows: [
+                            ['cert_type', 'enum', '是', '证件类型：student-学生证 teacher-教师证 elder-老年证 veteran-退伍军人证'],
+                            ['cert_number', 'string', '是', '证件号码'],
+                            ['cert_photo', 'string', '是', '证件照片URL，支持jpg/png，最大5MB'],
+                            ['cert_status', 'enum', '是', '审核状态：pending-待审核 approved-已通过 rejected-审核失败']
                         ]
                     }
                 ]
@@ -7738,6 +7826,76 @@ Tab切换交互：
 // 每次更新原型时，在此数组前面插入新记录
 // entries.page 对应 devDocs 中的页面URL键名
 const changelogData = [
+    {
+        date: '2026-06-27',
+        entries: [
+            {
+                page: 'pc-admin/show-management.html',
+                pageName: '演出管理',
+                module: '剧评管理',
+                content: '评论管理tab更名为剧评管理，搜索框和分页信息同步更新；每条剧评增加点赞数显示（fa-thumbs-up图标+数量）'
+            },
+            {
+                page: 'pc-admin/member-management.html',
+                pageName: '会员管理',
+                module: '会员列表',
+                content: '会员详情弹窗特殊证件tab改造为审核界面：证件照片缩略图点击查看大图，展示证件号/上传时间/审核时间，待审核证件增加审核通过和审核拒绝按钮，审核后状态实时更新'
+            },
+            {
+                page: 'user-miniapp/profile.html',
+                pageName: '个人中心',
+                module: '个人中心',
+                content: '常用工具第二项增加心愿单入口（紫色心形图标），显示收藏数量，点击跳转心愿单页面'
+            },
+            {
+                page: 'user-miniapp/wishlist.html',
+                pageName: '心愿单',
+                module: '心愿单',
+                content: '新建心愿单页面：展示已收藏演出列表（封面/名称/日期/场馆/票价），支持单条删除和清空，空状态引导页，底部固定操作栏'
+            },
+            {
+                page: 'user-miniapp/profile-edit.html',
+                pageName: '个人资料编辑',
+                module: '个人资料编辑',
+                content: '特殊证件入口改为一行紧凑布局（标题+摘要+箭头）；弹窗移除独立已上传证件区块，审核状态直接显示在证件类型选择按钮上（待审核黄色/已通过绿色/审核失败红色），已通过显示证件号，审核失败显示"点击重新上传"并自动回显数据'
+            },
+        ]
+    },
+    {
+        date: '2026-06-26',
+        entries: [
+            {
+                page: 'user-miniapp/profile-edit.html',
+                pageName: '个人资料编辑',
+                module: '个人资料编辑',
+                content: '新增特殊证件上传功能：4种证件类型（学生证/教师证/老年证/退伍军人证），支持证件号码输入和照片上传预览，上传后显示已上传证件卡片'
+            },
+            {
+                page: 'user-miniapp/show-detail.html',
+                pageName: '演出详情',
+                module: '剧评',
+                content: '评论tab更名为剧评，已审核剧评增加点赞功能（fa-thumbs-up图标+点赞数），点击切换点赞状态并增减计数'
+            },
+            {
+                page: 'user-miniapp/profile.html',
+                pageName: '个人中心',
+                module: '个人中心',
+                content: '在线客服下方增加电话客服入口，显示号码400-888-6666，点击通过tel:协议跳转手机拨号界面'
+            },
+            {
+                page: 'pc-admin/member-management.html',
+                pageName: '会员管理',
+                module: '会员列表',
+                content: '会员详情弹窗新增特殊证件tab，展示4种证件卡片（学生证/教师证已验证，老年证/退伍军人证未上传）'
+            },
+            {
+                page: 'index.html',
+                pageName: '首页',
+                module: '首页',
+                content: '删除轮播图管理页面入口，同步移除data.js中轮播图管理的详细数据'
+            },
+        ]
+    },
     {
         date: '2026-06-25',
         entries: [

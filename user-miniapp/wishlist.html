@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>心愿单 - 海南演艺</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    a { text-decoration: none; color: inherit; }
+
+    body {
+      background: #E8EAF0;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 375px;
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: #F5F6FA;
+      position: relative;
+      overflow-x: hidden;
+      padding-bottom: 96px;
+    }
+
+    /* ========== Header (deep-blue gradient) ========== */
+    .header {
+      background: linear-gradient(135deg, #0A1628 0%, #132240 60%, #1B2F50 100%);
+      padding-bottom: 22px;
+      position: relative;
+      border-bottom-left-radius: 22px;
+      border-bottom-right-radius: 22px;
+      box-shadow: 0 6px 24px rgba(10, 22, 40, 0.18);
+    }
+
+    .top-nav {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 0 16px;
+    }
+
+    .top-nav .back-btn {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #fff;
+      font-size: 18px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background 0.2s;
+    }
+
+    .top-nav .back-btn:hover { background: rgba(255, 255, 255, 0.1); }
+    .top-nav .nav-title { color: #fff; font-size: 17px; font-weight: 500; letter-spacing: 0.5px; }
+
+    /* summary row */
+    .summary {
+      padding: 6px 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .summary .heart-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #D4A853, #E8C547);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #0A1628;
+      font-size: 19px;
+      box-shadow: 0 4px 12px rgba(212, 168, 83, 0.35);
+      flex-shrink: 0;
+    }
+
+    .summary .meta { display: flex; flex-direction: column; }
+    .summary .meta .top-line { display: flex; align-items: baseline; gap: 6px; }
+    .summary .meta .count { font-size: 22px; font-weight: 700; color: #D4A853; line-height: 1.1; }
+    .summary .meta .unit { font-size: 12px; color: rgba(255, 255, 255, 0.65); }
+    .summary .meta .sub { font-size: 12px; color: rgba(255, 255, 255, 0.6); margin-top: 2px; }
+
+    /* ========== List ========== */
+    .wishlist-list { padding: 16px 16px 8px; }
+
+    .section-tip {
+      font-size: 12px;
+      color: #8E95A9;
+      padding: 0 4px 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .section-tip i { color: #D4A853; font-size: 11px; }
+
+    .wish-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(10, 22, 40, 0.06);
+      margin-bottom: 14px;
+      overflow: hidden;
+      display: flex;
+      padding: 12px;
+      gap: 12px;
+      position: relative;
+      transition: transform 0.25s, box-shadow 0.25s, opacity 0.3s;
+    }
+
+    .wish-card:hover { box-shadow: 0 6px 22px rgba(10, 22, 40, 0.12); transform: translateY(-1px); }
+    .wish-card.removing { opacity: 0; transform: translateX(60px); }
+
+    .wish-card .cover {
+      width: 88px;
+      height: 116px;
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+      position: relative;
+      background: #EEF0F4;
+    }
+
+    .wish-card .cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .wish-card .cover .wish-flag {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FF5C8A;
+      font-size: 11px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    }
+
+    .wish-card .info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2px 30px 2px 0;
+    }
+
+    .wish-card .name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0A1628;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .wish-card .row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #6B7280;
+      margin-top: 4px;
+    }
+
+    .wish-card .row i { font-size: 10px; width: 12px; text-align: center; }
+    .wish-card .row.venue i { color: #FF6B4A; }
+    .wish-card .row.date i { color: #00C9A7; }
+
+    .wish-card .bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-top: 6px;
+    }
+
+    .wish-card .price {
+      font-size: 18px;
+      font-weight: 700;
+      color: #FF6B4A;
+    }
+    .wish-card .price .yuan { font-size: 12px; font-weight: 500; }
+    .wish-card .price .sep { font-size: 12px; font-weight: 500; color: #9CA3AF; margin: 0 1px; }
+    .wish-card .price .max { font-size: 13px; font-weight: 600; }
+
+    .wish-card .go-btn {
+      padding: 6px 14px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #D4A853, #E8C547);
+      color: #0A1628;
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: 0 3px 10px rgba(212, 168, 83, 0.3);
+      transition: transform 0.15s;
+    }
+    .wish-card .go-btn:active { transform: scale(0.95); }
+
+    /* delete button */
+    .wish-card .del-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #F0F1F5;
+      color: #8E95A9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      border: none;
+    }
+    .wish-card .del-btn:hover { background: #FFE8F0; color: #FF5C8A; }
+    .wish-card .del-btn:active { transform: scale(0.9); }
+
+    /* ========== Empty State ========== */
+    .empty-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 70px 24px 40px;
+      text-align: center;
+    }
+    .empty-state.show { display: flex; }
+    .empty-state .empty-icon {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FFF8E7, #FFEDC2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #D4A853;
+      font-size: 36px;
+      margin-bottom: 18px;
+    }
+    .empty-state .empty-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #0A1628;
+      margin-bottom: 6px;
+    }
+    .empty-state .empty-desc { font-size: 13px; color: #8E95A9; margin-bottom: 22px; }
+    .empty-state .empty-btn {
+      padding: 11px 28px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #D4A853, #E8C547);
+      color: #0A1628;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 4px 14px rgba(212, 168, 83, 0.35);
+    }
+
+    /* ========== Bottom Bar ========== */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 375px;
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      display: flex;
+      gap: 12px;
+      z-index: 50;
+    }
+
+    .bottom-bar .clear-btn {
+      flex: 1;
+      height: 46px;
+      border-radius: 23px;
+      border: 1.5px solid #E5E7EB;
+      background: #fff;
+      color: #6B7280;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .bottom-bar .clear-btn:hover { border-color: #FF5C8A; color: #FF5C8A; }
+    .bottom-bar .clear-btn:active { transform: scale(0.98); }
+    .bottom-bar .clear-btn:disabled { opacity: 0.5; }
+
+    .bottom-bar .browse-btn {
+      flex: 1;
+      height: 46px;
+      border-radius: 23px;
+      border: none;
+      background: linear-gradient(135deg, #0A1628, #1B2F50);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .bottom-bar .browse-btn:hover { box-shadow: 0 6px 18px rgba(10, 22, 40, 0.3); }
+    .bottom-bar .browse-btn:active { transform: scale(0.98); }
+
+    /* toast */
+    .toast {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      background: rgba(10, 22, 40, 0.92);
+      color: #fff;
+      padding: 12px 22px;
+      border-radius: 12px;
+      font-size: 13px;
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+      max-width: 260px;
+      text-align: center;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+    /* confirm modal */
+    .modal-mask {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 22, 40, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 300;
+      padding: 24px;
+    }
+    .modal-mask.show { display: flex; }
+    .modal-box {
+      width: 100%;
+      max-width: 300px;
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      animation: pop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes pop { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .modal-body { padding: 26px 22px 14px; text-align: center; }
+    .modal-body .m-icon {
+      width: 50px; height: 50px; border-radius: 50%;
+      background: linear-gradient(135deg, #FFE8F0, #FFD6E4);
+      color: #FF5C8A; font-size: 22px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 12px;
+    }
+    .modal-body .m-title { font-size: 16px; font-weight: 700; color: #0A1628; margin-bottom: 6px; }
+    .modal-body .m-desc { font-size: 13px; color: #8E95A9; line-height: 1.5; }
+    .modal-actions { display: flex; border-top: 1px solid #EEF0F4; }
+    .modal-actions button {
+      flex: 1; height: 48px; border: none; background: #fff;
+      font-size: 15px; cursor: pointer; transition: background 0.15s;
+    }
+    .modal-actions button.cancel { color: #8E95A9; }
+    .modal-actions button.cancel:hover { background: #F5F6FA; }
+    .modal-actions button.confirm { color: #FF5C8A; font-weight: 600; }
+    .modal-actions button.confirm:hover { background: #FFF5F8; }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="top-nav">
+      <a class="back-btn" href="javascript:void(0)" onclick="goBack('profile.html')"><i class="fas fa-chevron-left"></i></a>
+      <span class="nav-title">心愿单</span>
+    </div>
+    <div class="summary">
+      <div class="heart-badge"><i class="fas fa-heart"></i></div>
+      <div class="meta">
+        <div class="top-line">
+          <span class="count" id="wishCount">4</span><span class="unit">场演出</span>
+        </div>
+        <div class="sub">已收藏想看的演出，开票时将提醒你</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- List -->
+  <div class="wishlist-list" id="wishList">
+    <div class="section-tip"><i class="fas fa-star"></i> 点击「购票」可前往演出详情</div>
+
+    <!-- Card 1 -->
+    <div class="wish-card" data-id="1">
+      <button class="del-btn" onclick="removeWish(this)" aria-label="删除"><i class="fas fa-times"></i></button>
+      <div class="cover">
+        <img src="assets/cover-cats.jpg" alt="演出封面" onerror="this.src='https://picsum.photos/seed/show-cats/176/232'">
+        <span class="wish-flag"><i class="fas fa-heart"></i></span>
+      </div>
+      <div class="info">
+        <div>
+          <div class="name">百老汇经典音乐剧《猫》中文版</div>
+          <div class="row date"><i class="far fa-calendar"></i> 2026年7月15日 周三 19:30</div>
+          <div class="row venue"><i class="fas fa-map-marker-alt"></i> 海口湾演艺中心大剧场</div>
+        </div>
+        <div class="bottom">
+          <div class="price"><span class="yuan">&yen;</span>180<span class="sep">-</span><span class="max">880</span></div>
+          <a class="go-btn" href="show-detail.html?from=wishlist.html">购票</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="wish-card" data-id="2">
+      <button class="del-btn" onclick="removeWish(this)" aria-label="删除"><i class="fas fa-times"></i></button>
+      <div class="cover">
+        <img src="assets/cover-symphony.jpg" alt="演出封面" onerror="this.src='https://picsum.photos/seed/show-symphony/176/232'">
+        <span class="wish-flag"><i class="fas fa-heart"></i></span>
+      </div>
+      <div class="info">
+        <div>
+          <div class="name">南海之歌·大型交响音乐会</div>
+          <div class="row date"><i class="far fa-calendar"></i> 2026年8月20日 周四 20:00</div>
+          <div class="row venue"><i class="fas fa-map-marker-alt"></i> 三亚海棠湾演艺中心</div>
+        </div>
+        <div class="bottom">
+          <div class="price"><span class="yuan">&yen;</span>120<span class="sep">-</span><span class="max">580</span></div>
+          <a class="go-btn" href="show-detail.html?from=wishlist.html">购票</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="wish-card" data-id="3">
+      <button class="del-btn" onclick="removeWish(this)" aria-label="删除"><i class="fas fa-times"></i></button>
+      <div class="cover">
+        <img src="assets/cover-redarmy.jpg" alt="演出封面" onerror="this.src='https://picsum.photos/seed/show-redarmy/176/232'">
+        <span class="wish-flag"><i class="fas fa-heart"></i></span>
+      </div>
+      <div class="info">
+        <div>
+          <div class="name">红色经典·长征组歌大型合唱音乐会</div>
+          <div class="row date"><i class="far fa-calendar"></i> 2026年7月1日 周二 19:30</div>
+          <div class="row venue"><i class="fas fa-map-marker-alt"></i> 海南省歌舞剧院</div>
+        </div>
+        <div class="bottom">
+          <div class="price"><span class="yuan">&yen;</span>80<span class="sep">-</span><span class="max">380</span></div>
+          <a class="go-btn" href="show-detail.html?from=wishlist.html">购票</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="wish-card" data-id="4">
+      <button class="del-btn" onclick="removeWish(this)" aria-label="删除"><i class="fas fa-times"></i></button>
+      <div class="cover">
+        <img src="assets/cover-nanhai.jpg" alt="演出封面" onerror="this.src='https://picsum.photos/seed/show-nanhai/176/232'">
+        <span class="wish-flag"><i class="fas fa-heart"></i></span>
+      </div>
+      <div class="info">
+        <div>
+          <div class="name">《天涯情》海南民俗风情歌舞晚会</div>
+          <div class="row date"><i class="far fa-calendar"></i> 2026年9月10日 周三 19:30</div>
+          <div class="row venue"><i class="fas fa-map-marker-alt"></i> 海口湾演艺中心小剧场</div>
+        </div>
+        <div class="bottom">
+          <div class="price"><span class="yuan">&yen;</span>100<span class="sep">-</span><span class="max">300</span></div>
+          <a class="go-btn" href="show-detail.html?from=wishlist.html">购票</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" id="emptyState">
+    <div class="empty-icon"><i class="far fa-heart"></i></div>
+    <div class="empty-title">心愿单还是空的</div>
+    <div class="empty-desc">把想看的演出收藏到这里，开票时第一时间提醒你</div>
+    <a class="empty-btn" href="show-list-detail.html?from=wishlist.html">去发现演出</a>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="bottom-bar" id="bottomBar">
+    <button class="clear-btn" id="clearBtn" onclick="confirmClear()"><i class="far fa-trash-alt"></i> 清空心愿单</button>
+    <a class="browse-btn" href="show-list-detail.html?from=wishlist.html"><i class="fas fa-compass"></i> 浏览演出</a>
+  </div>
+
+</div>
+
+<!-- Confirm Modal -->
+<div class="modal-mask" id="modalMask">
+  <div class="modal-box">
+    <div class="modal-body">
+      <div class="m-icon"><i class="far fa-trash-alt"></i></div>
+      <div class="m-title" id="modalTitle">清空心愿单</div>
+      <div class="m-desc" id="modalDesc">确定要清空全部收藏吗？此操作不可恢复。</div>
+    </div>
+    <div class="modal-actions">
+      <button class="cancel" onclick="closeModal()">取消</button>
+      <button class="confirm" id="modalConfirm">确定清空</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // Back navigation: respect ?from= param
+  function goBack(fallback){
+    var m = location.search.match(/[?&]from=([^&]+)/);
+    if (m) location.href = decodeURIComponent(m[1]);
+    else location.href = fallback;
+  }
+
+  // ---- toast ----
+  var toastTimer = null;
+  function toast(msg){
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 1600);
+  }
+
+  // ---- count & empty state ----
+  function refreshState(){
+    var cards = document.querySelectorAll('#wishList .wish-card');
+    var count = cards.length;
+    document.getElementById('wishCount').textContent = count;
+    var empty = document.getElementById('emptyState');
+    var list = document.getElementById('wishList');
+    var bottomBar = document.getElementById('bottomBar');
+    if (count === 0){
+      empty.classList.add('show');
+      list.style.display = 'none';
+      bottomBar.style.display = 'none';
+    } else {
+      empty.classList.remove('show');
+      list.style.display = '';
+      bottomBar.style.display = '';
+    }
+  }
+
+  // ---- remove single ----
+  function removeWish(btn){
+    var card = btn.closest('.wish-card');
+    var name = card.querySelector('.name').textContent;
+    card.classList.add('removing');
+    setTimeout(function(){
+      card.remove();
+      refreshState();
+      toast('已移除「' + name + '」');
+    }, 260);
+  }
+
+  // ---- clear all with confirm modal ----
+  var pendingAction = null;
+  function confirmClear(){
+    var count = document.querySelectorAll('#wishList .wish-card').length;
+    if (count === 0) return;
+    openModal('清空心愿单', '确定要清空全部 ' + count + ' 项收藏吗？此操作不可恢复。', function(){
+      var list = document.getElementById('wishList');
+      list.innerHTML = '';
+      refreshState();
+      toast('已清空心愿单');
+    });
+  }
+
+  function openModal(title, desc, onConfirm){
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalDesc').textContent = desc;
+    document.getElementById('modalMask').classList.add('show');
+    pendingAction = onConfirm;
+  }
+  function closeModal(){
+    document.getElementById('modalMask').classList.remove('show');
+    pendingAction = null;
+  }
+  document.getElementById('modalConfirm').addEventListener('click', function(){
+    closeModal();
+    if (pendingAction) pendingAction();
+  });
+  document.getElementById('modalMask').addEventListener('click', function(e){
+    if (e.target === this) closeModal();
+  });
+
+  // init
+  refreshState();
+</script>
+
+</body>
+</html>

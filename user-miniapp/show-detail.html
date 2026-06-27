@@ -875,6 +875,45 @@ body {
   color: var(--text-secondary);
 }
 
+/* 剧评点赞 */
+.review-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 16px;
+}
+
+.like-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-light);
+  transition: all 0.2s;
+  padding: 4px 10px;
+  border-radius: 16px;
+  background: var(--light-gray);
+}
+
+.like-btn:hover { background: rgba(255,107,74,0.08); }
+
+.like-btn.liked {
+  color: var(--coral-orange);
+  background: rgba(255,107,74,0.1);
+}
+
+.like-btn.liked i {
+  color: var(--coral-orange);
+  transform: scale(1.1);
+}
+
+.like-btn i {
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.like-count { font-weight: 500; }
+
 /* Notice Tab */
 .notice-section {
   margin-bottom: 20px;
@@ -1378,7 +1417,7 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
       <div class="detail-tabs">
         <div class="tabs-header">
           <button class="tab-btn active" onclick="switchTab(this, 'tabDetail')">详情</button>
-          <button class="tab-btn" onclick="switchTab(this, 'tabReview')">评论</button>
+          <button class="tab-btn" onclick="switchTab(this, 'tabReview')">剧评</button>
           <button class="tab-btn" onclick="switchTab(this, 'tabNotice')">须知</button>
         </div>
 
@@ -1464,6 +1503,12 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
               <img src="https://picsum.photos/seed/review-img2/144/144" alt="评论图片">
               <img src="https://picsum.photos/seed/review-img3/144/144" alt="评论图片">
             </div>
+            <div class="review-actions">
+              <div class="like-btn" onclick="toggleLike(this)">
+                <i class="far fa-thumbs-up"></i>
+                <span class="like-count">12</span>
+              </div>
+            </div>
             <div class="reply-card">
               <div class="reply-avatar"><img src="https://raw.githubusercontent.com/andylalex/hainan-ticket-ui-design/main/assets/official-avatar.jpg" alt="官方"></div>
               <div class="reply-bubble">
@@ -1485,6 +1530,12 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
               <div class="review-time">5天前</div>
             </div>
             <div class="review-text">带家人一起来的，现场氛围特别好，美食区的东西也很有海南特色。孩子玩得很开心，强烈推荐亲子家庭来体验！</div>
+            <div class="review-actions">
+              <div class="like-btn" onclick="toggleLike(this)">
+                <i class="far fa-thumbs-up"></i>
+                <span class="like-count">8</span>
+              </div>
+            </div>
             <div class="reply-card">
               <div class="reply-avatar"><img src="https://raw.githubusercontent.com/andylalex/hainan-ticket-ui-design/main/assets/official-avatar.jpg" alt="官方"></div>
               <div class="reply-bubble">
@@ -1506,6 +1557,12 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
               <div class="review-time">1周前</div>
             </div>
             <div class="review-text">阵容很强大，舞台设计很有创意。唯一不足的是交通稍微不太方便，建议提前规划好出行路线。整体来说还是很值得的体验。</div>
+            <div class="review-actions">
+              <div class="like-btn" onclick="toggleLike(this)">
+                <i class="far fa-thumbs-up"></i>
+                <span class="like-count">25</span>
+              </div>
+            </div>
             <div class="reply-card">
               <div class="reply-avatar"><img src="https://raw.githubusercontent.com/andylalex/hainan-ticket-ui-design/main/assets/official-avatar.jpg" alt="官方"></div>
               <div class="reply-bubble">
@@ -1530,6 +1587,12 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
             <div class="review-images">
               <img src="https://picsum.photos/seed/review-img4/144/144" alt="评论图片">
               <img src="https://picsum.photos/seed/review-img5/144/144" alt="评论图片">
+            </div>
+            <div class="review-actions">
+              <div class="like-btn" onclick="toggleLike(this)">
+                <i class="far fa-thumbs-up"></i>
+                <span class="like-count">15</span>
+              </div>
             </div>
             <div class="reply-card">
               <div class="reply-avatar"><img src="https://raw.githubusercontent.com/andylalex/hainan-ticket-ui-design/main/assets/official-avatar.jpg" alt="官方"></div>
@@ -1666,6 +1729,24 @@ function toggleWishlist(el) {
     icon.classList.remove('fas');
     icon.classList.add('far');
     showToast('已移出心愿单');
+  }
+}
+
+// ========== Review Like ==========
+function toggleLike(el) {
+  el.classList.toggle('liked');
+  const icon = el.querySelector('i');
+  const count = el.querySelector('.like-count');
+  let num = parseInt(count.textContent);
+  if (el.classList.contains('liked')) {
+    icon.classList.remove('far');
+    icon.classList.add('fas');
+    count.textContent = num + 1;
+    showToast('点赞成功');
+  } else {
+    icon.classList.remove('fas');
+    icon.classList.add('far');
+    count.textContent = num - 1;
   }
 }
 

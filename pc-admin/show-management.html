@@ -2009,6 +2009,23 @@ table { border-collapse: collapse; width: 100%; }
   line-height: 1.6;
 }
 
+.review-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-light);
+}
+.review-likes {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.review-likes i {
+  font-size: 13px;
+}
+
 .review-actions {
   display: flex;
   flex-direction: column;
@@ -6792,7 +6809,7 @@ select.form-select-sm,
         </a>
         <a class="tab-item" data-tab="reviews" href="javascript:void(0)">
           <i class="fas fa-comments"></i>
-          <span>评论管理</span>
+          <span>剧评管理</span>
         </a>
       </nav>
 
@@ -7803,7 +7820,7 @@ select.form-select-sm,
           </button>
         </div>
       </div>
-      <!-- ===== Tab 5: 评论管理 ===== -->
+      <!-- ===== Tab 5: 剧评管理 ===== -->
       <div class="tab-panel" id="panel-reviews">
         <div class="filter-bar">
           <div class="status-filters">
@@ -7822,7 +7839,7 @@ select.form-select-sm,
           </select>
           <div class="filter-search">
             <i class="fas fa-search"></i>
-            <input type="text" placeholder="搜索评论内容...">
+            <input type="text" placeholder="搜索剧评内容...">
           </div>
         </div>
 
@@ -7837,6 +7854,10 @@ select.form-select-sm,
                 <span class="review-time">2026-04-09 18:32</span>
               </div>
               <div class="review-content">非常精彩的演出！舞台效果震撼，演员们的表演充满激情，尤其是第二幕的海浪舞蹈，美到让人屏住呼吸。强烈推荐！</div>
+              <div class="review-meta">
+                <span class="review-likes"><i class="far fa-thumbs-up"></i> 12</span>
+                <span class="review-date">2026-04-09</span>
+              </div>
               <div class="review-reply-section" id="reply-section-1" style="display:none;">
                 <div class="review-reply-list"></div>
                 <div class="review-reply-input">
@@ -7865,6 +7886,10 @@ select.form-select-sm,
                 <span class="review-time">2026-04-09 15:20</span>
               </div>
               <div class="review-content">交响乐的演奏水平很高，指挥家的功力深厚。不过场馆的空调有点冷，建议下次来多带件外套。整体体验还是很棒的。</div>
+              <div class="review-meta">
+                <span class="review-likes"><i class="far fa-thumbs-up"></i> 8</span>
+                <span class="review-date">2026-04-09</span>
+              </div>
               <div class="review-reply-section" id="reply-section-2" style="display:none;">
                 <div class="review-reply-list"></div>
                 <div class="review-reply-input">
@@ -7893,6 +7918,10 @@ select.form-select-sm,
                 <span class="review-time">2026-04-08 21:45</span>
               </div>
               <div class="review-content">带孩子去看的，非常有教育意义！黎族和苗族的文化通过舞蹈展现得淋漓尽致，孩子看得津津有味，回来还学着跳呢。票价也很亲民，值得一看。</div>
+              <div class="review-meta">
+                <span class="review-likes"><i class="far fa-thumbs-up"></i> 25</span>
+                <span class="review-date">2026-04-08</span>
+              </div>
               <div class="review-reply-section" id="reply-section-3" style="display:none;">
                 <div class="review-reply-list"></div>
                 <div class="review-reply-input">
@@ -7921,6 +7950,10 @@ select.form-select-sm,
                 <span class="review-time">2026-04-08 14:10</span>
               </div>
               <div class="review-content">音乐节的氛围很好，海滨的场地很有特色。但是音响效果一般，后排几乎听不清细节。而且停车不太方便，希望主办方下次能改善。</div>
+              <div class="review-meta">
+                <span class="review-likes"><i class="far fa-thumbs-up"></i> 3</span>
+                <span class="review-date">2026-04-08</span>
+              </div>
               <div class="review-reply-section" id="reply-section-4" style="display:none;">
                 <div class="review-reply-list"></div>
                 <div class="review-reply-input">
@@ -7949,6 +7982,10 @@ select.form-select-sm,
                 <span class="review-time">2026-04-07 09:55</span>
               </div>
               <div class="review-content">经典就是经典！红色娘子军的芭蕾舞剧在海南演出别有一番意义，舞者们的技巧和情感表达都达到了极高的水准。作为海南人感到非常自豪！</div>
+              <div class="review-meta">
+                <span class="review-likes"><i class="far fa-thumbs-up"></i> 31</span>
+                <span class="review-date">2026-04-07</span>
+              </div>
               <div class="review-reply-section" id="reply-section-5" style="display:none;">
                 <div class="review-reply-list"></div>
                 <div class="review-reply-input">
@@ -7971,7 +8008,7 @@ select.form-select-sm,
         <!-- Pagination -->
         <div class="pagination-bar" style="margin-top:20px;">
           <div class="pagination-info">
-            共 <strong>28</strong> 条评论，当前第 <strong>1</strong> / <strong>6</strong> 页
+            共 <strong>28</strong> 条剧评，当前第 <strong>1</strong> / <strong>6</strong> 页
           </div>
           <div class="pagination">
             <button class="page-btn" disabled><i class="fas fa-chevron-left"></i></button>

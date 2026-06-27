@@ -386,12 +386,302 @@
 
         .avatar-section { animation: fadeInUp 0.4s ease both; }
         .section:nth-of-type(1) { animation: fadeInUp 0.4s ease 0.1s both; }
-    
-    
-    
-    
-    
-    
+        .section:nth-of-type(2) { animation: fadeInUp 0.4s ease 0.2s both; }
+
+        /* ========== Certificate Section ========== */
+        #certSummary {
+            transition: all 0.2s;
+        }
+
+        /* ========== Modal ========== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 22, 40, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 100%;
+            max-width: 375px;
+            max-height: 90vh;
+            background: linear-gradient(135deg, #0A1628 0%, #132240 100%);
+            border-radius: 20px 20px 0 0;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 -8px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .modal-header {
+            padding: 18px 20px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .modal-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-title i {
+            color: #D4A853;
+        }
+
+        .modal-close {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(255,255,255,0.08);
+            transition: background 0.2s;
+            font-size: 14px;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .modal-body {
+            padding: 18px 20px;
+            overflow-y: auto;
+            flex: 1;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .modal-field {
+            margin-bottom: 18px;
+        }
+
+        .modal-field:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-field-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .cert-type-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .cert-type-card {
+            padding: 14px 10px;
+            border-radius: 12px;
+            border: 1.5px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.04);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            position: relative;
+        }
+
+        .cert-type-card i {
+            font-size: 22px;
+        }
+
+        .cert-type-card span {
+            font-size: 12px;
+            color: rgba(255,255,255,0.85);
+            font-weight: 500;
+        }
+
+        .cert-type-card.selected {
+            border-color: #D4A853;
+            background: rgba(212,168,83,0.12);
+        }
+
+        /* Status badge on cert-type-card */
+        .cert-type-card .cert-status-badge {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            font-size: 9px;
+            padding: 1px 6px;
+            border-radius: 8px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+        .cert-type-card.status-pending {
+            border-color: rgba(212,136,6,0.5);
+        }
+        .cert-type-card.status-pending .cert-status-badge {
+            background: rgba(212,136,6,0.2);
+            color: #FBBF24;
+        }
+        .cert-type-card.status-approved {
+            border-color: rgba(0,167,85,0.5);
+            background: rgba(0,167,85,0.06);
+        }
+        .cert-type-card.status-approved .cert-status-badge {
+            background: rgba(0,167,85,0.2);
+            color: #34D399;
+        }
+        .cert-type-card.status-rejected {
+            border-color: rgba(239,68,68,0.6);
+            background: rgba(239,68,68,0.06);
+        }
+        .cert-type-card.status-rejected .cert-status-badge {
+            background: rgba(239,68,68,0.2);
+            color: #F87171;
+        }
+        .cert-type-card .cert-rejected-hint {
+            font-size: 10px;
+            color: #F87171;
+            margin-top: 2px;
+        }
+
+        .type-icon-student { color: #60A5FA; }
+        .type-icon-teacher { color: #34D399; }
+        .type-icon-elder { color: #FBBF24; }
+        .type-icon-veteran { color: #F87171; }
+
+        .modal-input {
+            width: 100%;
+            height: 46px;
+            background: rgba(255,255,255,0.06);
+            border: 1.5px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            padding: 0 14px;
+            font-size: 14px;
+            color: #fff;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: #D4A853;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .modal-input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .cert-photo-upload {
+            width: 100%;
+            height: 140px;
+            border: 1.5px dashed rgba(212,168,83,0.5);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.04);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .cert-photo-upload:hover {
+            border-color: #D4A853;
+            background: rgba(212,168,83,0.06);
+        }
+
+        .cert-photo-upload i {
+            font-size: 26px;
+            color: #D4A853;
+        }
+
+        .cert-photo-upload .photo-text {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .cert-photo-upload .photo-hint {
+            font-size: 11px;
+            color: rgba(255,255,255,0.35);
+        }
+
+        .cert-photo-preview {
+            width: 100%;
+            height: 140px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .modal-footer {
+            padding: 14px 20px 20px;
+            display: flex;
+            gap: 12px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .modal-btn {
+            flex: 1;
+            height: 46px;
+            border-radius: 23px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-btn:active {
+            transform: scale(0.98);
+        }
+
+        .modal-btn-cancel {
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+        }
+
+        .modal-btn-confirm {
+            background: linear-gradient(135deg, #D4A853, #E8C97A);
+            color: #1A1A1A;
+            box-shadow: 0 4px 16px rgba(212,168,83,0.35);
+        }
   </style>
 </head>
 <body>
@@ -493,9 +783,78 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
         </div>
     </div>
 
+    <!-- Special Certificates Section (compact one-line entry) -->
+    <div class="section">
+        <div class="section-header" onclick="openCertModal()" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:16px;">
+            <span class="section-title">
+                <i class="fas fa-id-card"></i>
+                特殊证件
+            </span>
+            <div style="display:flex;align-items:center;gap:8px;">
+                <span id="certSummary" style="font-size:12px;color:#8E95A9;">暂未上传</span>
+                <i class="fas fa-chevron-right" style="font-size:12px;color:#8E95A9;"></i>
+            </div>
+        </div>
+    </div>
+
     <!-- Submit Button -->
     <div class="submit-section">
         <button class="submit-btn" onclick="saveProfile()">保存修改</button>
+    </div>
+
+    <!-- Certificate Upload Modal -->
+    <div class="modal-overlay" id="certModalOverlay" onclick="closeCertModal()"></div>
+    <div class="modal" id="certModal">
+        <div class="modal-header">
+            <span class="modal-title">
+                <i class="fas fa-id-card"></i>
+                上传特殊证件
+            </span>
+            <div class="modal-close" onclick="closeCertModal()">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="modal-body">
+            <!-- 编辑/上传表单 -->
+            <div class="modal-field">
+                <label class="modal-field-label">证件类型</label>
+                <div class="cert-type-grid">
+                    <div class="cert-type-card" data-type="student" onclick="selectCertType(this,'student')">
+                        <i class="fas fa-user-graduate type-icon-student"></i>
+                        <span>学生证</span>
+                    </div>
+                    <div class="cert-type-card" data-type="teacher" onclick="selectCertType(this,'teacher')">
+                        <i class="fas fa-chalkboard-teacher type-icon-teacher"></i>
+                        <span>教师证</span>
+                    </div>
+                    <div class="cert-type-card" data-type="elder" onclick="selectCertType(this,'elder')">
+                        <i class="fas fa-blind type-icon-elder"></i>
+                        <span>老年证</span>
+                    </div>
+                    <div class="cert-type-card" data-type="veteran" onclick="selectCertType(this,'veteran')">
+                        <i class="fas fa-shield-alt type-icon-veteran"></i>
+                        <span>退伍军人证</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-field">
+                <label class="modal-field-label">证件号码</label>
+                <input type="text" class="modal-input" id="certNumber" placeholder="请输入证件号码">
+            </div>
+            <div class="modal-field">
+                <label class="modal-field-label">证件照片</label>
+                <div class="cert-photo-upload" id="certPhotoUpload" onclick="document.getElementById('certPhotoInput').click()">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span class="photo-text">点击上传证件照片</span>
+                    <span class="photo-hint">支持 JPG/PNG 格式，大小不超过 5MB</span>
+                </div>
+                <input type="file" id="certPhotoInput" accept="image/jpeg,image/png" style="display:none" onchange="handleCertPhotoUpload(this)">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-btn modal-btn-cancel" onclick="closeCertModal()">取消</button>
+            <button class="modal-btn modal-btn-confirm" onclick="confirmCertUpload()">确认上传</button>
+        </div>
     </div>
 
 </div>
@@ -595,9 +954,193 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
         setTimeout(() => toast.classList.remove('show'), 2000);
     }
 
+    // ========== Special Certificates ==========
+    const CERT_TYPES = {
+        student: { name: '学生证', icon: 'fa-user-graduate', cls: 'cert-type-student' },
+        teacher: { name: '教师证', icon: 'fa-chalkboard-teacher', cls: 'cert-type-teacher' },
+        elder:   { name: '老年证', icon: 'fa-blind', cls: 'cert-type-elder' },
+        veteran: { name: '退伍军人证', icon: 'fa-shield-alt', cls: 'cert-type-veteran' },
+    };
+
+    // 模拟已有数据：包含已上传证件及其审核状态
+    // status: 'pending'（待审核）、'approved'（已通过）、'rejected'（审核失败）
+    let certList = [
+        { type: 'student', number: '2024010001', photo: 'https://picsum.photos/seed/student-cert/480/320', status: 'rejected' },
+        { type: 'teacher', number: 'HN202400123', photo: 'https://picsum.photos/seed/teacher-cert/480/320', status: 'approved' },
+    ];
+    let selectedCertType = null;
+    let certPhotoData = null;
+    let editingCertIndex = -1; // -1=新增, >=0=编辑第几项
+
+    function openCertModal() {
+        document.getElementById('certModalOverlay').classList.add('show');
+        document.getElementById('certModal').classList.add('show');
+        renderCertTypeStatus();
+        resetCertForm();
+    }
+
+    function closeCertModal() {
+        document.getElementById('certModalOverlay').classList.remove('show');
+        document.getElementById('certModal').classList.remove('show');
+    }
+
+    // 在证件类型选择按钮上显示审核状态
+    function renderCertTypeStatus() {
+        var statusMap = {
+            'pending': { text: '待审核', cls: 'status-pending' },
+            'approved': { text: '已通过', cls: 'status-approved' },
+            'rejected': { text: '审核失败', cls: 'status-rejected' }
+        };
+        document.querySelectorAll('.cert-type-card').forEach(function(card) {
+            var type = card.getAttribute('data-type');
+            // 清除旧状态
+            card.classList.remove('status-pending', 'status-approved', 'status-rejected');
+            var oldBadge = card.querySelector('.cert-status-badge');
+            if (oldBadge) oldBadge.remove();
+            var oldHint = card.querySelector('.cert-rejected-hint');
+            if (oldHint) oldHint.remove();
+
+            // 查找该类型是否已上传
+            var cert = certList.find(function(c) { return c.type === type; });
+            if (cert) {
+                var s = statusMap[cert.status] || statusMap['pending'];
+                card.classList.add(s.cls);
+                var badge = document.createElement('span');
+                badge.className = 'cert-status-badge';
+                badge.textContent = s.text;
+                card.appendChild(badge);
+                if (cert.status === 'rejected') {
+                    var hint = document.createElement('div');
+                    hint.className = 'cert-rejected-hint';
+                    hint.textContent = '点击重新上传';
+                    card.appendChild(hint);
+                } else if (cert.status === 'approved') {
+                    var hint = document.createElement('div');
+                    hint.className = 'cert-rejected-hint';
+                    hint.style.color = '#34D399';
+                    hint.textContent = cert.number;
+                    card.appendChild(hint);
+                }
+            }
+        });
+    }
+
+    function editExistingCert(idx) {
+        var c = certList[idx];
+        editingCertIndex = idx;
+        // 回显数据
+        selectedCertType = c.type;
+        certPhotoData = c.photo;
+        document.querySelectorAll('.cert-type-card').forEach(function(card) {
+            card.classList.toggle('selected', card.getAttribute('data-type') === c.type);
+        });
+        document.getElementById('certNumber').value = c.number;
+        var uploadEl = document.getElementById('certPhotoUpload');
+        if (c.photo) {
+            uploadEl.innerHTML = '<img src="' + c.photo + '" class="cert-photo-preview" alt="证件预览">';
+        }
+    }
+
+    function deleteExistingCert(idx) {
+        certList.splice(idx, 1);
+        renderCertTypeStatus();
+        updateCertSummary();
+        showToast('证件已删除');
+    }
+
+    function selectCertType(el, type) {
+        document.querySelectorAll('.cert-type-card').forEach(c => c.classList.remove('selected'));
+        el.classList.add('selected');
+        selectedCertType = type;
+        // 如果该类型已上传且审核失败，自动回显数据供重新编辑
+        var idx = certList.findIndex(function(c) { return c.type === type; });
+        if (idx >= 0 && certList[idx].status === 'rejected') {
+            editExistingCert(idx);
+        }
+    }
+
+    function handleCertPhotoUpload(input) {
+        const file = input.files[0];
+        if (!file) return;
+        if (file.size > 5 * 1024 * 1024) {
+            showToast('图片大小不能超过 5MB');
+            input.value = '';
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            certPhotoData = e.target.result;
+            const uploadEl = document.getElementById('certPhotoUpload');
+            uploadEl.innerHTML = '<img src="' + certPhotoData + '" class="cert-photo-preview" alt="证件预览">';
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function confirmCertUpload() {
+        if (!selectedCertType) {
+            showToast('请选择证件类型');
+            return;
+        }
+        const number = document.getElementById('certNumber').value.trim();
+        if (!number) {
+            showToast('请输入证件号码');
+            return;
+        }
+        if (!certPhotoData) {
+            showToast('请上传证件照片');
+            return;
+        }
+        if (editingCertIndex >= 0) {
+            // 编辑模式：更新已有项
+            certList[editingCertIndex] = { type: selectedCertType, number: number, photo: certPhotoData, status: 'pending' };
+            showToast('证件已重新提交审核');
+        } else {
+            // 新增
+            certList.push({ type: selectedCertType, number: number, photo: certPhotoData, status: 'pending' });
+            showToast('证件上传成功');
+        }
+        renderCertTypeStatus();
+        updateCertSummary();
+        resetCertForm();
+    }
+
+    function resetCertForm() {
+        selectedCertType = null;
+        certPhotoData = null;
+        editingCertIndex = -1;
+        document.querySelectorAll('.cert-type-card').forEach(c => c.classList.remove('selected'));
+        document.getElementById('certNumber').value = '';
+        const input = document.getElementById('certPhotoInput');
+        if (input) input.value = '';
+        const uploadEl = document.getElementById('certPhotoUpload');
+        if (uploadEl) {
+            uploadEl.innerHTML = '<i class="fas fa-cloud-upload-alt"></i>' +
+                '<span class="photo-text">点击上传证件照片</span>' +
+                '<span class="photo-hint">支持 JPG/PNG 格式，大小不超过 5MB</span>';
+        }
+    }
+
+    function updateCertSummary() {
+        var el = document.getElementById('certSummary');
+        if (!el) return;
+        if (certList.length === 0) {
+            el.textContent = '暂未上传';
+            el.style.color = '#8E95A9';
+        } else {
+            var pending = certList.filter(c => c.status === 'pending').length;
+            var rejected = certList.filter(c => c.status === 'rejected').length;
+            var txt = certList.length + '张已上传';
+            if (rejected > 0) txt += '，' + rejected + '张待重传';
+            else if (pending > 0) txt += '，' + pending + '张待审核';
+            el.textContent = txt;
+            el.style.color = rejected > 0 ? '#EF4444' : (pending > 0 ? '#D48806' : '#00A755');
+        }
+    }
+
     // ========== Initialize ==========
     document.addEventListener('DOMContentLoaded', function() {
         initBirthdaySelectors();
+        updateCertSummary();
     });
 </script>
 
