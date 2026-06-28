@@ -1235,6 +1235,15 @@ textarea.form-control {
   border-radius: var(--radius-md);
   padding: 20px;
 }
+.chart-card .chart-wrap {
+  position: relative;
+  width: 100%;
+}
+.chart-card .chart-wrap.h-200 { height: 200px; }
+.chart-card .chart-wrap.h-140 { height: 140px; }
+.chart-card canvas {
+  max-width: 100%;
+}
 
 .chart-card h4 {
   font-size: 14px;
@@ -4118,7 +4127,9 @@ select.form-select-sm,
       <div class="charts-grid">
         <div class="chart-card">
           <h4><i class="fas fa-chart-area"></i> 参与人数趋势（近7天）</h4>
-          <canvas id="trendChart" height="200"></canvas>
+          <div class="chart-wrap h-200">
+            <canvas id="trendChart"></canvas>
+          </div>
         </div>
         <div class="chart-card">
           <h4><i class="fas fa-filter"></i> 转化漏斗</h4>
@@ -4161,7 +4172,9 @@ select.form-select-sm,
       <!-- Page Views Chart -->
       <div class="chart-card">
         <h4><i class="fas fa-eye"></i> 页面浏览量趋势（近7天）</h4>
-        <canvas id="pvChart" height="140"></canvas>
+        <div class="chart-wrap h-140">
+          <canvas id="pvChart"></canvas>
+        </div>
       </div>
     </div>
     <div class="modal-footer">
@@ -4430,7 +4443,12 @@ function openDataModal(name) {
 }
 
 function renderTrendChart() {
-  const ctx = document.getElementById('trendChart').getContext('2d');
+  const canvas = document.getElementById('trendChart');
+  // Reset canvas dimensions to clear any stale inline styles from previous Chart.js renders
+  canvas.removeAttribute('style');
+  canvas.width = canvas.offsetWidth || 300;
+  canvas.height = 200;
+  const ctx = canvas.getContext('2d');
   if (trendChartInstance) trendChartInstance.destroy();
 
   const gradient = ctx.createLinearGradient(0, 0, 0, 200);
@@ -4484,7 +4502,11 @@ function renderTrendChart() {
 }
 
 function renderPVChart() {
-  const ctx = document.getElementById('pvChart').getContext('2d');
+  const canvas = document.getElementById('pvChart');
+  canvas.removeAttribute('style');
+  canvas.width = canvas.offsetWidth || 300;
+  canvas.height = 140;
+  const ctx = canvas.getContext('2d');
   if (pvChartInstance) pvChartInstance.destroy();
 
   pvChartInstance = new Chart(ctx, {
