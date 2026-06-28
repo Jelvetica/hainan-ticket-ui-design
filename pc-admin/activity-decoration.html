@@ -4046,20 +4046,6 @@ select.form-select-sm,
         </div>
       </div>
 
-      <div class="form-section-title"><i class="fas fa-link"></i> 关联演出</div>
-      <div class="form-group">
-        <label>选择关联演出</label>
-        <div class="chip-group">
-          <span class="chip selected"><i class="fas fa-check"></i> 《天涯故事》</span>
-          <span class="chip selected"><i class="fas fa-check"></i> 《海南印象》</span>
-          <span class="chip"><i class="fas fa-plus"></i> 《椰风海韵》</span>
-          <span class="chip"><i class="fas fa-plus"></i> 《黎族风情》</span>
-          <span class="chip"><i class="fas fa-plus"></i> 《南海丝路》</span>
-          <span class="chip"><i class="fas fa-plus"></i> 《琼剧经典》</span>
-        </div>
-        <div class="hint">点击选择或取消关联演出</div>
-      </div>
-
       <div class="form-section-title"><i class="fas fa-paint-brush"></i> 活动页面配置</div>
       <div class="form-group">
         <label>活动封面</label>
@@ -4092,6 +4078,62 @@ select.form-select-sm,
       <button class="btn btn-secondary" onclick="closeModal('modal-new-activity')">取消</button>
       <button class="btn btn-secondary" onclick="closeModal('modal-new-activity');showToast('success','活动已保存为草稿')">存为草稿</button>
       <button class="btn btn-primary" onclick="closeModal('modal-new-activity');showToast('success','活动创建成功并已上架')">创建并上架</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Modal: Edit Activity ==================== -->
+<div class="modal-overlay" id="modal-edit-activity">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <h3><i class="fas fa-edit"></i> 编辑活动</h3>
+      <button class="modal-close" onclick="closeModal('modal-edit-activity')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-section-title"><i class="fas fa-info-circle"></i> 基本信息</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>活动名称 <span class="required">*</span></label>
+          <input type="text" class="form-control" placeholder="请输入活动名称">
+        </div>
+        <div class="form-group">
+          <label>活动类型 <span class="required">*</span></label>
+          <select class="form-control">
+            <option value="">请选择类型</option>
+            <option value="topic">专题活动</option>
+            <option value="promo">促销活动</option>
+            <option value="festival">节日活动</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>开始时间 <span class="required">*</span></label>
+          <input type="datetime-local" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>结束时间 <span class="required">*</span></label>
+          <input type="datetime-local" class="form-control">
+        </div>
+      </div>
+
+      <div class="form-section-title"><i class="fas fa-paint-brush"></i> 活动页面配置</div>
+      <div class="form-group">
+        <label>活动封面</label>
+        <div class="upload-area">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <p>点击或拖拽上传活动封面</p>
+          <p class="upload-hint">建议尺寸 750x420px，支持 JPG/PNG，不超过 2MB</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>活动描述</label>
+        <textarea class="form-control" rows="3" placeholder="请输入活动描述信息..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-edit-activity')">取消</button>
+      <button class="btn btn-primary" onclick="closeModal('modal-edit-activity');showToast('success','活动修改已保存')">保存修改</button>
     </div>
   </div>
 </div>
@@ -4371,7 +4413,7 @@ function renderActivityTable(data) {
         <td><span class="status-badge ${statusClass}"><span class="dot"></span>${a.statusLabel}</span></td>
         <td>
           <div class="actions-cell">
-            <button class="action-btn edit" onclick="showToast('success','进入编辑模式')"><i class="fas fa-edit"></i> 编辑</button>
+            <button class="action-btn edit" onclick="openEditActivity()"><i class="fas fa-edit"></i> 编辑</button>
             ${a.status === 'active'
               ? '<button class="action-btn offline" onclick="showToast(\'warning\',\'活动已下架\')"><i class="fas fa-arrow-down"></i> 下架</button>'
               : a.status === 'ended'
@@ -4416,6 +4458,10 @@ function openModal(id) {
 function closeModal(id) {
   document.getElementById(id).classList.remove('show');
   document.body.style.overflow = '';
+}
+
+function openEditActivity() {
+  openModal('modal-edit-activity');
 }
 
 // Close modal on overlay click
