@@ -1281,7 +1281,7 @@ function showToast(msg) {
 function renderProducts() {
   const grid = document.getElementById('productGrid');
   const search = document.getElementById('searchInput').value.toLowerCase();
-  let filtered = products;
+  let filtered = products.filter(p => !(p.price === 0 && p.points > 0));
   if (currentCategory !== 'all') {
     filtered = filtered.filter(p => p.cat === currentCategory);
   }
