@@ -7910,6 +7910,35 @@ Tab切换交互：
 // entries.page 对应 devDocs 中的页面URL键名
 const changelogData = [
     {
+        date: '2026-06-30',
+        entries: [
+            {
+                page: 'user-miniapp/shop.html',
+                pageName: '周边商城',
+                module: '商品列表',
+                content: '商品卡片增加库存显示（库存充足/仅剩X件，低库存橙色/红色高亮）；商品数据增加stock字段'
+            },
+            {
+                page: 'user-miniapp/shop.html',
+                pageName: '周边商城',
+                module: '商品详情',
+                content: '增加购买数量选择器（+/-按钮+库存提示，超限提示库存不足）；增加服务条款section（7天无理由退货/正品保证/官方客服）；增加购买须知section（发货/自提/退换货说明）；加入购物车使用选择的数量'
+            },
+            {
+                page: 'user-miniapp/shop.html',
+                pageName: '周边商城',
+                module: '购物车',
+                content: '实现编辑模式批量删除：点击"管理"切换编辑模式，底部结算按钮变为红色删除按钮，选中商品后批量删除'
+            },
+            {
+                page: 'user-miniapp/search.html',
+                pageName: '搜索',
+                module: '商品搜索',
+                content: '新增商品搜索tab（演出/场馆/商品三tab切换）；商品搜索结果横向列表卡片（图片+名称+品类标签+价格+销量）；支持按商品名称/品类关键词搜索；热门搜索增加商品关键词；附带实现场馆搜索结果展示'
+            }
+        ]
+    },
+    {
         date: '2026-06-29',
         entries: [
             {

@@ -804,11 +804,106 @@
     color: #FF6B4A;
   }
 
-    
-    
-    
-    
-    
+  /* ===== Stock Info (Product Card) ===== */
+  .product-card .stock-info {
+    font-size: 11px;
+    color: #9CA3AF;
+  }
+  .product-card .stock-info.low {
+    color: #FF6B4A;
+  }
+  .product-card .stock-info.very-low {
+    color: #EF4444;
+    font-weight: 600;
+  }
+  .product-card .sales-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* ===== Quantity Selector (Detail) ===== */
+  .qty-selector-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .qty-btn-detail {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #F5F6FA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #0A1628;
+    cursor: pointer;
+    border: 1px solid #E5E7EB;
+    user-select: none;
+  }
+  .qty-btn-detail:active { background: #E5E7EB; }
+  .qty-btn-detail.disabled { color: #D1D5DB; cursor: not-allowed; }
+  .qty-num-detail {
+    min-width: 40px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #0A1628;
+  }
+  .qty-stock-hint {
+    font-size: 12px;
+    color: #9CA3AF;
+    margin-left: 8px;
+  }
+
+  /* ===== Service Terms & Purchase Notes ===== */
+  .service-terms-list, .purchase-notes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .service-term-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #4B5563;
+  }
+  .service-term-item .term-icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(0,201,167,0.1);
+    color: #00C9A7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+  .purchase-note-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: #4B5563;
+    line-height: 1.6;
+  }
+  .purchase-note-item .note-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #FF6B4A;
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  /* ===== Cart Edit/Delete Mode ===== */
+  .btn-checkout.delete-mode {
+    background: #EF4444;
+  }
+
   </style>
 </head>
 <body>
@@ -900,6 +995,17 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
         <!-- Rendered by JS -->
       </div>
 
+      <!-- Quantity Selection -->
+      <div class="detail-section">
+        <div class="section-title">购买数量</div>
+        <div class="qty-selector-wrap">
+          <div class="qty-btn-detail" onclick="changeDetailQty(-1)">-</div>
+          <div class="qty-num-detail" id="detailQty">1</div>
+          <div class="qty-btn-detail" onclick="changeDetailQty(1)">+</div>
+          <span class="qty-stock-hint" id="detailStockHint">库存128件</span>
+        </div>
+      </div>
+
       <!-- Delivery Options -->
       <div class="detail-section">
         <div class="section-title">配送方式</div>
@@ -914,6 +1020,22 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
             <div class="del-title">全国物流邮寄</div>
             <div class="del-desc">预计3-5个工作日</div>
           </div>
+        </div>
+      </div>
+
+      <!-- Service Terms -->
+      <div class="detail-section">
+        <div class="section-title">服务条款</div>
+        <div class="service-terms-list" id="serviceTermsList">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Purchase Notes -->
+      <div class="detail-section">
+        <div class="section-title">购买须知</div>
+        <div class="purchase-notes-list" id="purchaseNotesList">
+          <!-- Rendered by JS -->
         </div>
       </div>
 
@@ -1004,100 +1126,130 @@ const products = [
     price: 128, points: 0, originalPrice: 199,
     tag: 'hot', tagText: '热卖',
     sales: 2860,
+    stock: 128,
     images: ['hainan-tee1','hainan-tee2','hainan-tee3'],
     specs: { '颜色': ['深海蓝','珊瑚橙','月光白'], '尺码': ['S','M','L','XL','XXL'] },
     desc: '采用100%有机棉面料，舒适透气。正面印有《海之梦》演出主题图案，背面为海南演艺LOGO。限量发售，每件均有独立编号。',
-    desc2: '洗涤建议：30度以下水温，反面洗涤，悬挂晾干。'
+    desc2: '洗涤建议：30度以下水温，反面洗涤，悬挂晾干。',
+    serviceTerms: ['7天无理由退货', '正品保证', '官方客服支持'],
+    purchaseNotes: ['商品将于付款后2个工作日内发货', '自提商品请凭订单号至场馆服务台领取', '积分兑换商品不支持退换货', '如有质量问题请联系客服处理']
   },
   {
     id: 2, name: '海南演艺帆布包 文创设计款', cat: 'cultural',
     price: 0, points: 500, originalPrice: 0,
     tag: 'points', tagText: '积分兑换',
     sales: 1520,
+    stock: 500,
     images: ['hainan-bag1','hainan-bag2','hainan-bag3'],
     specs: { '款式': ['经典蓝','落日橙','椰林绿'] },
     desc: '采用加厚帆布材质，结实耐用。融入海南热带元素设计，椰树、海浪、落日交相辉映。大容量设计，日常出行好伴侣。',
-    desc2: '尺寸：38cm x 42cm，可调节肩带。'
+    desc2: '尺寸：38cm x 42cm，可调节肩带。',
+    serviceTerms: ['7天无理由退货', '正品保证', '官方客服支持'],
+    purchaseNotes: ['商品将于付款后2个工作日内发货', '自提商品请凭订单号至场馆服务台领取', '积分兑换商品不支持退换货', '如有质量问题请联系客服处理']
   },
   {
     id: 3, name: '《天涯共此时》定制明信片套装', cat: 'souvenir',
     price: 29, points: 100, originalPrice: 49,
     tag: 'new', tagText: '新品',
     sales: 980,
+    stock: 2000,
     images: ['hainan-postcard1','hainan-postcard2','hainan-postcard3'],
     specs: { '套装': ['10张装','20张装','30张装'] },
     desc: '精选海南演艺经典剧目场景，由知名插画师手绘创作。采用特种纸印刷，色彩还原度高，适合收藏或寄送好友。',
-    desc2: '含精美礼盒包装，赠送专属信封。'
+    desc2: '含精美礼盒包装，赠送专属信封。',
+    serviceTerms: ['7天无理由退货', '正品保证', '官方客服支持'],
+    purchaseNotes: ['商品将于付款后2个工作日内发货', '自提商品请凭订单号至场馆服务台领取', '积分兑换商品不支持退换货', '如有质量问题请联系客服处理']
   },
   {
     id: 4, name: '演艺之星水晶音乐盒', cat: 'gift',
     price: 268, points: 0, originalPrice: 399,
     tag: 'hot', tagText: '热卖',
     sales: 650,
+    stock: 35,
     images: ['hainan-musicbox1','hainan-musicbox2','hainan-musicbox3'],
     specs: { '款式': ['旋转芭蕾','交响乐团','独唱舞台'] },
     desc: '精密水晶工艺，内置经典旋律芯片。灯光映照下晶莹剔透，是送给艺术爱好者的绝佳礼物。附赠精美礼品袋。',
-    desc2: '材质：K9水晶 + 不锈钢底座。尺寸：10cm x 10cm x 15cm。'
+    desc2: '材质：K9水晶 + 不锈钢底座。尺寸：10cm x 10cm x 15cm。',
+    serviceTerms: ['7天无理由退货', '正品保证', '官方客服支持'],
+    purchaseNotes: ['商品将于付款后2个工作日内发货', '自提商品请凭订单号至场馆服务台领取', '积分兑换商品不支持退换货', '如有质量问题请联系客服处理']
   },
   {
     id: 5, name: '海南风情系列手机壳', cat: 'fashion',
     price: 49, points: 0, originalPrice: 79,
     tag: 'new', tagText: '新品',
     sales: 3200,
+    stock: 860,
     images: ['hainan-case1','hainan-case2','hainan-case3'],
     specs: { '型号': ['iPhone 15','iPhone 15 Pro','iPhone 15 Pro Max','华为 Mate 60'] },
     desc: '全包防摔设计，TPU+PC双材质。海南热带风情彩绘图案，UV打印工艺，色彩持久不褪。手感舒适，按键精准。',
-    desc2: '支持无线充电，镜头全包保护。'
+    desc2: '支持无线充电，镜头全包保护。',
+    serviceTerms: ['7天无理由退货', '正品保证', '官方客服支持'],
+    purchaseNotes: ['商品将于付款后2个工作日内发货', '自提商品请凭订单号至场馆服务台领取', '积分兑换商品不支持退换货', '如有质量问题请联系客服处理']
   },
   {
     id: 6, name: '限量版演出纪念徽章套装', cat: 'souvenir',
     price: 0, points: 800, originalPrice: 0,
     tag: 'points', tagText: '积分兑换',
     sales: 420,
+    stock: 120,
     images: ['hainan-badge1','hainan-badge2','hainan-badge3'],
     specs: { '系列': ['2024年度','经典回顾','特别版'] },
     desc: '珐琅工艺制作，色彩鲜艳饱满。每枚徽章直径3.5cm，配有蝴蝶扣固定。限量发行，收藏价值高。',
-    desc2: '每套含6枚徽章，附收藏册。'
+    desc2: '每套含6枚徽章，附收藏册。',
+    serviceTerms: ['7天无理由退货', '正品保证', '官方客服支持'],
+    purchaseNotes: ['商品将于付款后2个工作日内发货', '自提商品请凭订单号至场馆服务台领取', '积分兑换商品不支持退换货', '如有质量问题请联系客服处理']
   },
   {
     id: 7, name: '椰风海韵香薰蜡烛', cat: 'gift',
     price: 89, points: 200, originalPrice: 129,
     tag: 'new', tagText: '新品',
     sales: 1100,
+    stock: 300,
     images: ['hainan-candle1','hainan-candle2','hainan-candle3'],
     specs: { '香型': ['椰子 vanilla','海盐薄荷','茉莉花香'] },
     desc: '天然大豆蜡 + 精油配方，燃烧时间约40小时。玻璃杯容器，燃尽后可作为装饰杯使用。海南热带气息，让心灵度假。',
-    desc2: '净含量：200g。注意远离儿童和宠物。'
+    desc2: '净含量：200g。注意远离儿童和宠物。',
+    serviceTerms: ['7天无理由退货', '正品保证', '官方客服支持'],
+    purchaseNotes: ['商品将于付款后2个工作日内发货', '自提商品请凭订单号至场馆服务台领取', '积分兑换商品不支持退换货', '如有质量问题请联系客服处理']
   },
   {
     id: 8, name: '《椰林交响》演出原声CD', cat: 'derivative',
     price: 68, points: 0, originalPrice: 98,
     tag: 'hot', tagText: '热卖',
     sales: 760,
+    stock: 450,
     images: ['hainan-cd1','hainan-cd2','hainan-cd3'],
     specs: { '版本': ['标准版','豪华版(含歌词本)'] },
     desc: '海南演艺年度大戏《椰林交响》现场录音。由海南交响乐团倾情演绎，收录12首经典曲目。HQCD高品质压制。',
-    desc2: '豪华版含48页精装歌词本及幕后花絮DVD。'
+    desc2: '豪华版含48页精装歌词本及幕后花絮DVD。',
+    serviceTerms: ['7天无理由退货', '正品保证', '官方客服支持'],
+    purchaseNotes: ['商品将于付款后2个工作日内发货', '自提商品请凭订单号至场馆服务台领取', '积分兑换商品不支持退换货', '如有质量问题请联系客服处理']
   },
   {
     id: 9, name: '演艺主题马克杯 陶瓷杯', cat: 'cultural',
     price: 59, points: 0, originalPrice: 0,
     tag: '', tagText: '',
     sales: 2100,
+    stock: 1500,
     images: ['hainan-mug1','hainan-mug2','hainan-mug3'],
     specs: { '颜色': ['深海蓝','珊瑚粉','翡翠绿'] },
     desc: '高温釉下彩工艺，安全环保。容量350ml，适合日常使用。杯身印有海南演艺经典元素，让每一杯都有仪式感。',
-    desc2: '材质：高温陶瓷。可微波炉加热。'
+    desc2: '材质：高温陶瓷。可微波炉加热。',
+    serviceTerms: ['7天无理由退货', '正品保证', '官方客服支持'],
+    purchaseNotes: ['商品将于付款后2个工作日内发货', '自提商品请凭订单号至场馆服务台领取', '积分兑换商品不支持退换货', '如有质量问题请联系客服处理']
   },
   {
     id: 10, name: '海南演艺丝巾 真丝围巾', cat: 'fashion',
     price: 198, points: 300, originalPrice: 298,
     tag: 'hot', tagText: '热卖',
     sales: 580,
+    stock: 80,
     images: ['hainan-scarf1','hainan-scarf2','hainan-scarf3'],
     specs: { '花色': ['椰风海韵','落日椰林','浪花飞舞'] },
     desc: '100%桑蚕丝材质，轻盈柔软。数码印花工艺，色彩细腻。90cm x 90cm 方巾设计，多种系法，百搭时尚。',
-    desc2: '附赠丝绸收纳袋及系法教程卡。'
+    desc2: '附赠丝绸收纳袋及系法教程卡。',
+    serviceTerms: ['7天无理由退货', '正品保证', '官方客服支持'],
+    purchaseNotes: ['商品将于付款后2个工作日内发货', '自提商品请凭订单号至场馆服务台领取', '积分兑换商品不支持退换货', '如有质量问题请联系客服处理']
   }
 ];
 
@@ -1106,6 +1258,8 @@ let currentProduct = null;
 let currentCategory = 'all';
 let carouselIndex = 0;
 let selectedSpecs = {};
+let detailQty = 1;
+let cartEditMode = false;
 
 // ===== VIEW SWITCHING =====
 function switchView(viewId) {
@@ -1158,7 +1312,10 @@ function renderProducts() {
             ${priceHtml}
             ${origHtml}
           </div>
-          <div class="sales">已售 ${p.sales > 1000 ? (p.sales/1000).toFixed(1)+'k' : p.sales}</div>
+          <div class="sales-row">
+            <div class="sales">已售 ${p.sales > 1000 ? (p.sales/1000).toFixed(1)+'k' : p.sales}</div>
+            <div class="stock-info ${p.stock <= 10 ? 'very-low' : p.stock <= 100 ? 'low' : ''}">${p.stock > 100 ? '库存充足' : '仅剩 ' + p.stock + '件'}</div>
+          </div>
         </div>
       </div>
     `;
@@ -1182,6 +1339,7 @@ function openDetail(id) {
   if (!currentProduct) return;
   selectedSpecs = {};
   carouselIndex = 0;
+  detailQty = 1;
 
   // Carousel
   const track = document.getElementById('carouselTrack');
@@ -1230,6 +1388,23 @@ function openDetail(id) {
   }
   specSection.innerHTML = specHtml;
 
+  // Quantity display
+  document.getElementById('detailQty').textContent = detailQty;
+  document.getElementById('detailStockHint').textContent = `库存${currentProduct.stock}件`;
+  const detailBtns = document.querySelectorAll('.qty-btn-detail');
+  detailBtns[0].classList.toggle('disabled', detailQty <= 1);
+  detailBtns[1].classList.toggle('disabled', detailQty >= currentProduct.stock);
+
+  // Service Terms
+  document.getElementById('serviceTermsList').innerHTML = currentProduct.serviceTerms.map(t =>
+    `<div class="service-term-item"><div class="term-icon"><i class="fas fa-check"></i></div>${t}</div>`
+  ).join('');
+
+  // Purchase Notes
+  document.getElementById('purchaseNotesList').innerHTML = currentProduct.purchaseNotes.map(n =>
+    `<div class="purchase-note-item"><div class="note-dot"></div>${n}</div>`
+  ).join('');
+
   // Content
   document.getElementById('detailContentImg').src = `https://picsum.photos/seed/${currentProduct.images[0]}-detail1/375/400`;
   document.getElementById('detailContentText').textContent = currentProduct.desc;
@@ -1250,6 +1425,20 @@ function selectSpec(el, key, value) {
 function selectDelivery(el) {
   document.querySelectorAll('.delivery-option').forEach(o => o.classList.remove('active'));
   el.classList.add('active');
+}
+
+function changeDetailQty(delta) {
+  detailQty += delta;
+  if (detailQty < 1) detailQty = 1;
+  if (detailQty > currentProduct.stock) {
+    detailQty = currentProduct.stock;
+    showToast('库存不足');
+  }
+  document.getElementById('detailQty').textContent = detailQty;
+  // Update +/- button disabled state
+  const btns = document.querySelectorAll('.qty-btn-detail');
+  btns[0].classList.toggle('disabled', detailQty <= 1);
+  btns[1].classList.toggle('disabled', detailQty >= currentProduct.stock);
 }
 
 // Carousel swipe
@@ -1274,27 +1463,31 @@ function updateCarousel() {
 
 // ===== CART =====
 function addToCart() {
-  if (!currentProduct) return;
-  const specStr = Object.values(selectedSpecs).join(' / ');
-  const existing = cart.find(item =>
-    item.id === currentProduct.id && item.spec === specStr
-  );
-  if (existing) {
-    existing.qty++;
-  } else {
-    cart.push({
-      id: currentProduct.id,
-      name: currentProduct.name,
-      price: currentProduct.price,
-      points: currentProduct.points,
-      image: currentProduct.images[0],
-      spec: specStr,
-      qty: 1,
-      checked: true
-    });
-  }
-  updateCartBadges();
-  showToast('已加入购物车');
+    if (!currentProduct) return;
+    const specStr = Object.values(selectedSpecs).join(' / ');
+    const existing = cart.find(item =>
+        item.id === currentProduct.id && item.spec === specStr
+    );
+    if (existing) {
+        existing.qty += detailQty;
+        if (existing.qty > currentProduct.stock) {
+            existing.qty = currentProduct.stock;
+            showToast('已达库存上限');
+        }
+    } else {
+        cart.push({
+            id: currentProduct.id,
+            name: currentProduct.name,
+            price: currentProduct.price,
+            points: currentProduct.points,
+            image: currentProduct.images[0],
+            spec: specStr,
+            qty: detailQty,
+            checked: true
+        });
+    }
+    updateCartBadges();
+    showToast('已加入购物车');
 }
 
 function buyNow() {
@@ -1358,6 +1551,14 @@ function renderCart() {
     `;
   }).join('');
   updateCartTotal();
+
+  // Maintain edit mode button state and keep bottom bar visible
+  const checkoutBtn = document.getElementById('checkoutBtn');
+  if (cartEditMode) {
+    checkoutBtn.onclick = batchDelete;
+  } else {
+    checkoutBtn.onclick = checkout;
+  }
 }
 
 function toggleItemCheck(idx) {
@@ -1407,6 +1608,14 @@ function updateCartTotal() {
 
   const selectAllBox = document.getElementById('selectAllBox');
   selectAllBox.classList.toggle('checked', cart.length > 0 && cart.every(i => i.checked));
+
+  if (cartEditMode) {
+    btn.textContent = `删除(${count})`;
+    btn.classList.add('delete-mode');
+    btn.classList.toggle('disabled', count === 0);
+  } else {
+    btn.classList.remove('delete-mode');
+  }
 }
 
 function checkout() {
@@ -1416,7 +1625,38 @@ function checkout() {
 }
 
 function toggleEditMode() {
-  showToast('编辑模式');
+  cartEditMode = !cartEditMode;
+  const editBtn = document.getElementById('editBtn');
+  const bottom = document.getElementById('cartBottom');
+  const checkoutBtn = document.getElementById('checkoutBtn');
+
+  if (cartEditMode) {
+    editBtn.textContent = '完成';
+    checkoutBtn.textContent = '删除(0)';
+    checkoutBtn.className = 'btn-checkout delete-mode';
+    checkoutBtn.onclick = batchDelete;
+  } else {
+    editBtn.textContent = '管理';
+    checkoutBtn.onclick = checkout;
+    updateCartTotal();
+  }
+}
+
+function batchDelete() {
+  const checked = cart.filter(i => i.checked);
+  if (checked.length === 0) {
+    showToast('请选择要删除的商品');
+    return;
+  }
+  cart = cart.filter(i => !i.checked);
+  updateCartBadges();
+  if (cart.length === 0) {
+    cartEditMode = false;
+    document.getElementById('editBtn').textContent = '管理';
+    document.getElementById('cartBottom').style.display = 'none';
+  }
+  renderCart();
+  showToast('已删除' + checked.length + '件商品');
 }
 
 // ===== INIT =====

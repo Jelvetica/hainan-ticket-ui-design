@@ -61,17 +61,55 @@ body {
   flex-shrink: 0;
 }
 
-/* ===== Search Nav (sticky) ===== */
-.search-nav {
+/* ===== Search Header (sticky) ===== */
+.search-header {
   position: sticky;
   top: 0;
   z-index: 100;
+  background: var(--nav-bg);
+}
+.search-nav {
   background: var(--nav-bg);
   padding: 10px 12px;
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+/* ===== Search Type Tabs ===== */
+.search-tabs {
+  display: flex;
+  background: var(--nav-bg);
   border-bottom: 1px solid rgba(0,0,0,0.04);
+  padding: 0 16px;
+}
+.search-tabs .tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 10px 0 12px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.2s;
+}
+.search-tabs .tab-item:active { opacity: 0.6; }
+.search-tabs .tab-item.active {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+.search-tabs .tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--orange), var(--gold));
 }
 
 .back-btn {
@@ -154,16 +192,17 @@ body {
 /* ===== Suggestion Dropdown ===== */
 .suggestion-panel {
   position: absolute;
-  top: 0;
+  top: 100%;
   left: 0;
   right: 0;
   background: var(--white);
   border-bottom: 1px solid var(--border);
-  box-shadow: 0 8px 24px rgba(10, 22, 40, 0.1);
+  box-shadow: 0 8px 24px rgba(10, 22, 40, 0.12);
   z-index: 90;
   display: none;
   max-height: 320px;
   overflow-y: auto;
+  border-radius: 0 0 12px 12px;
 }
 .suggestion-panel::-webkit-scrollbar { display: none; }
 .suggestion-panel.visible {
@@ -490,6 +529,216 @@ body {
 .label.member { background: rgba(212, 168, 83, 0.1); color: var(--gold); }
 .label.discount { background: rgba(0, 201, 167, 0.1); color: var(--emerald); }
 
+/* ===== Product Card (horizontal, search results) ===== */
+.product-card-h {
+  display: flex;
+  gap: 12px;
+  background: var(--white);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: var(--card-shadow);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: cardSlideIn 0.35s ease forwards;
+  -webkit-tap-highlight-color: transparent;
+}
+.product-card-h:active {
+  transform: scale(0.98);
+  opacity: 1;
+}
+.product-card-h .cover {
+  width: 96px;
+  height: 96px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+  background: var(--page-bg);
+}
+.product-card-h .cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.product-card-h .cover .tag-badge {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--white);
+}
+.product-card-h .tag-badge.ptag-hot { background: linear-gradient(135deg, var(--gold), #E8C547); }
+.product-card-h .tag-badge.ptag-new { background: linear-gradient(135deg, var(--orange), #FF4757); }
+.product-card-h .tag-badge.ptag-points { background: linear-gradient(135deg, var(--emerald), #00E5BF); }
+
+.product-card-h .info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  padding: 2px 0;
+}
+.product-card-h .info .name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.product-card-h .info .name em {
+  font-style: normal;
+  color: var(--orange);
+  font-weight: 700;
+}
+.product-card-h .info .cat-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  background: rgba(212, 168, 83, 0.12);
+  color: var(--gold);
+  margin-top: 6px;
+  width: fit-content;
+}
+.product-card-h .info .cat-tag i { font-size: 9px; }
+.product-card-h .info .bottom-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: 6px;
+  gap: 8px;
+}
+.product-card-h .info .price-block {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  min-width: 0;
+}
+.product-card-h .info .price {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--orange);
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.product-card-h .info .price .symbol { font-size: 11px; font-weight: 500; }
+.product-card-h .info .points-price {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--emerald);
+}
+.product-card-h .info .points-price .symbol { font-size: 10px; font-weight: 500; }
+.product-card-h .info .original-price {
+  font-size: 11px;
+  color: var(--text-light);
+  text-decoration: line-through;
+}
+.product-card-h .info .sales {
+  font-size: 11px;
+  color: var(--text-light);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ===== Venue Card (search results) ===== */
+.venue-card {
+  display: flex;
+  gap: 12px;
+  background: var(--white);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: var(--card-shadow);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: cardSlideIn 0.35s ease forwards;
+  -webkit-tap-highlight-color: transparent;
+}
+.venue-card:active {
+  transform: scale(0.98);
+  opacity: 1;
+}
+.venue-card .cover {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+  background: linear-gradient(135deg, #0A1628, #1a2d4a);
+}
+.venue-card .cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.85;
+}
+.venue-card .cover .v-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 26px;
+}
+.venue-card .info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding: 2px 0;
+  gap: 4px;
+}
+.venue-card .info .name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.venue-card .info .name em {
+  font-style: normal;
+  color: var(--orange);
+  font-weight: 700;
+}
+.venue-card .info .area {
+  font-size: 12px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.venue-card .info .area i { color: var(--orange); font-size: 10px; }
+.venue-card .info .meta {
+  font-size: 11px;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.venue-card .info .meta .shows-count { color: var(--gold); font-weight: 600; }
+
 /* ===== Empty State ===== */
 .empty-state {
   display: none;
@@ -562,23 +811,30 @@ body {
   <!-- Status Bar -->
   <div class="status-bar"></div>
 
-  <!-- Search Nav -->
-  <div class="search-nav">
-    <div class="back-btn" onclick="goBack('home.html')">
-      <i class="fas fa-chevron-left"></i>
-    </div>
-    <div class="search-input-wrap" id="searchWrap">
-      <i class="fas fa-search search-icon"></i>
-      <input type="text" class="search-input" id="searchInput" placeholder="搜索演出、场馆" autocomplete="off">
-      <div class="clear-btn" id="clearBtn" onclick="clearInput()">
-        <i class="fas fa-times"></i>
+  <!-- Search Header (sticky) -->
+  <div class="search-header">
+    <div class="search-nav">
+      <div class="back-btn" onclick="goBack('home.html')">
+        <i class="fas fa-chevron-left"></i>
       </div>
+      <div class="search-input-wrap" id="searchWrap">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" class="search-input" id="searchInput" placeholder="搜索演出、场馆、商品" autocomplete="off">
+        <div class="clear-btn" id="clearBtn" onclick="clearInput()">
+          <i class="fas fa-times"></i>
+        </div>
+      </div>
+      <div class="cancel-btn" onclick="handleCancel()">取消</div>
     </div>
-    <div class="cancel-btn" onclick="handleCancel()">取消</div>
-  </div>
+    <div class="search-tabs" id="searchTabs">
+      <div class="tab-item active" data-tab="show" onclick="switchTab('show')">演出</div>
+      <div class="tab-item" data-tab="venue" onclick="switchTab('venue')">场馆</div>
+      <div class="tab-item" data-tab="product" onclick="switchTab('product')">商品</div>
+    </div>
 
-  <!-- Suggestion Dropdown -->
-  <div class="suggestion-panel" id="suggestionPanel"></div>
+    <!-- Suggestion Dropdown -->
+    <div class="suggestion-panel" id="suggestionPanel"></div>
+  </div>
 
   <!-- Default Content -->
   <div class="content-area" id="defaultContent">
@@ -645,7 +901,52 @@ const showData = [
   { id:10, name:'年终音乐盛典', type:'演唱会', typeIcon:'fa-music', venue:'海南国际会展中心', date:'12月31日 周二 21:00', price:380, badge:'hot', badgeText:'热卖', labels:[{text:'跨年专场',cls:'soon'}], image:'https://picsum.photos/seed/hainan-concert/160/200' }
 ];
 
-const hotSearchWords = ['音乐节','三亚','演唱会','芭蕾','脱口秀','亲子','冰雪奇缘','爵士','话剧','钢琴'];
+// 场馆数据（由演出数据汇总）
+const venueData = [
+  { name: '三亚海棠湾演艺中心', area: '三亚·海棠湾', shows: 1, image: 'https://picsum.photos/seed/venue-haitang/160/160' },
+  { name: '海口湾演艺中心大剧场', area: '海口·湾区', shows: 2, image: 'https://picsum.photos/seed/venue-haikouwan/160/160' },
+  { name: '海南省歌舞剧院', area: '海口·国兴大道', shows: 2, image: 'https://picsum.photos/seed/venue-hainanopera/160/160' },
+  { name: '海口观澜湖新城剧场', area: '海口·观澜湖', shows: 1, image: 'https://picsum.photos/seed/venue-guanlanhu/160/160' },
+  { name: '三亚亚特兰蒂斯剧场', area: '三亚·亚特兰蒂斯', shows: 1, image: 'https://picsum.photos/seed/venue-atlantis/160/160' },
+  { name: '三亚天涯海角沙滩赛场', area: '三亚·天涯海角', shows: 1, image: 'https://picsum.photos/seed/venue-tianya/160/160' },
+  { name: '三亚大东海沙滩舞台', area: '三亚·大东海', shows: 1, image: 'https://picsum.photos/seed/venue-dadonghai/160/160' },
+  { name: '海南国际会展中心', area: '海口·西海岸', shows: 1, image: 'https://picsum.photos/seed/venue-huizhan/160/160' }
+];
+
+// 商品数据（与 shop.html 同源）
+const productSearchData = [
+  { id: 1, name: '《海之梦》演出限定纪念T恤', cat: 'derivative', catName: '演出衍生品', price: 128, originalPrice: 199, tag: 'hot', tagText: '热卖', image: 'hainan-tee1', sales: 2860 },
+  { id: 2, name: '海南演艺帆布包 文创设计款', cat: 'cultural', catName: '文创周边', price: 0, points: 500, tag: 'points', tagText: '积分兑换', image: 'hainan-bag1', sales: 1520 },
+  { id: 3, name: '《天涯共此时》定制明信片套装', cat: 'souvenir', catName: '纪念品', price: 29, originalPrice: 49, tag: 'new', tagText: '新品', image: 'hainan-postcard1', sales: 890 },
+  { id: 4, name: '演艺之星水晶音乐盒', cat: 'gift', catName: '定制礼品', price: 268, originalPrice: 399, tag: 'hot', tagText: '热卖', image: 'hainan-musicbox1', sales: 650 },
+  { id: 5, name: '海南风情系列手机壳', cat: 'fashion', catName: '服饰配件', price: 49, originalPrice: 79, tag: 'new', tagText: '新品', image: 'hainan-case1', sales: 3200 },
+  { id: 6, name: '限量版演出纪念徽章套装', cat: 'souvenir', catName: '纪念品', price: 0, points: 800, tag: 'points', tagText: '积分兑换', image: 'hainan-badge1', sales: 420 },
+  { id: 7, name: '椰风海韵香薰蜡烛', cat: 'gift', catName: '定制礼品', price: 89, originalPrice: 129, tag: 'new', tagText: '新品', image: 'hainan-candle1', sales: 1100 },
+  { id: 8, name: '《椰林交响》演出原声CD', cat: 'derivative', catName: '演出衍生品', price: 68, originalPrice: 98, tag: 'hot', tagText: '热卖', image: 'hainan-cd1', sales: 760 },
+  { id: 9, name: '演艺主题马克杯 陶瓷杯', cat: 'cultural', catName: '文创周边', price: 59, tag: '', tagText: '', image: 'hainan-mug1', sales: 2100 },
+  { id: 10, name: '海南演艺丝巾 真丝围巾', cat: 'fashion', catName: '服饰配件', price: 198, originalPrice: 298, tag: 'hot', tagText: '热卖', image: 'hainan-scarf1', sales: 580 }
+];
+
+// 各 tab 的热门搜索词
+const hotSearchMap = {
+  show: ['音乐节','三亚','演唱会','芭蕾','脱口秀','亲子','冰雪奇缘','爵士','话剧','钢琴'],
+  venue: ['三亚','海口','海棠湾','演艺中心','歌舞剧院','观澜湖','亚特兰蒂斯','大东海','会展中心','天涯海角'],
+  product: ['T恤','帆布包','明信片','香薰蜡烛','CD','马克杯','丝巾','徽章','手机壳','音乐盒']
+};
+
+// 各 tab 的输入框提示
+const placeholderMap = {
+  show: '搜索演出、场馆、商品',
+  venue: '搜索场馆名称、地区',
+  product: '搜索周边商品、文创好物'
+};
+
+// 各 tab 的空状态文案
+const emptyTextMap = {
+  show: { title: '未找到相关演出', desc: '换个关键词试试吧' },
+  venue: { title: '未找到相关场馆', desc: '换个关键词试试吧' },
+  product: { title: '未找到相关商品', desc: '换个关键词试试吧' }
+};
 
 // ========== DOM ==========
 const searchInput = document.getElementById('searchInput');
@@ -663,6 +964,7 @@ const emptyState = document.getElementById('emptyState');
 const pageWrapper = document.getElementById('pageWrapper');
 
 let currentKeyword = '';
+let currentTab = 'show';
 
 // ========== History ==========
 const HISTORY_KEY = 'search_history';
@@ -709,7 +1011,8 @@ function renderHistory() {
 
 // ========== Hot Search ==========
 function renderHotSearch() {
-  hotList.innerHTML = hotSearchWords.map(function(word, i) {
+  var words = hotSearchMap[currentTab] || hotSearchMap.show;
+  hotList.innerHTML = words.map(function(word, i) {
     var cls = i === 0 ? 'top1' : i === 1 ? 'top2' : i === 2 ? 'top3' : '';
     return '<li class="hot-item" onclick="searchByKeyword(\'' + esc(word) + '\')">' +
       '<span class="hot-rank ' + cls + '">' + (i + 1) + '</span>' +
@@ -730,13 +1033,59 @@ function searchByKeyword(keyword) {
   performSearch(keyword);
 }
 
+function switchTab(tab) {
+  if (currentTab === tab) return;
+  currentTab = tab;
+  hideSuggestions();
+  // 更新 tab 高亮
+  var tabs = document.querySelectorAll('.search-tabs .tab-item');
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].classList.toggle('active', tabs[i].dataset.tab === tab);
+  }
+  // 更新输入框提示
+  searchInput.setAttribute('placeholder', placeholderMap[tab] || '搜索');
+  // 更新热门搜索
+  renderHotSearch();
+  // 更新空状态文案
+  var et = emptyTextMap[tab] || emptyTextMap.show;
+  emptyState.querySelector('.empty-title').textContent = et.title;
+  emptyState.querySelector('.empty-desc').textContent = et.desc;
+  // 切换后：有输入则在新 tab 内重新搜索，否则回到默认页
+  var kw = searchInput.value.trim();
+  if (kw) {
+    currentKeyword = kw;
+    performSearch(kw);
+  } else {
+    currentKeyword = '';
+    resetToDefault();
+  }
+}
+
 function performSearch(keyword) {
   var kw = keyword.toLowerCase();
-  var results = showData.filter(function(s) {
-    return s.name.toLowerCase().indexOf(kw) !== -1 ||
-           s.type.toLowerCase().indexOf(kw) !== -1 ||
-           s.venue.toLowerCase().indexOf(kw) !== -1;
-  });
+  var results = [];
+  var unitText = '个相关演出';
+
+  if (currentTab === 'show') {
+    results = showData.filter(function(s) {
+      return s.name.toLowerCase().indexOf(kw) !== -1 ||
+             s.type.toLowerCase().indexOf(kw) !== -1;
+    });
+    unitText = '个相关演出';
+  } else if (currentTab === 'venue') {
+    results = venueData.filter(function(v) {
+      return v.name.toLowerCase().indexOf(kw) !== -1 ||
+             v.area.toLowerCase().indexOf(kw) !== -1;
+    });
+    unitText = '个相关场馆';
+  } else if (currentTab === 'product') {
+    results = productSearchData.filter(function(p) {
+      return p.name.toLowerCase().indexOf(kw) !== -1 ||
+             p.catName.toLowerCase().indexOf(kw) !== -1 ||
+             p.cat.toLowerCase().indexOf(kw) !== -1;
+    });
+    unitText = '件相关商品';
+  }
 
   defaultContent.style.display = 'none';
   emptyState.classList.remove('visible');
@@ -744,14 +1093,20 @@ function performSearch(keyword) {
 
   if (results.length > 0) {
     searchResults.classList.add('visible');
-    resultsCount.innerHTML = '找到 <strong>' + results.length + '</strong> 个相关演出';
-    renderResults(results);
+    resultsCount.innerHTML = '找到 <strong>' + results.length + '</strong> ' + unitText;
+    if (currentTab === 'show') {
+      renderShowResults(results);
+    } else if (currentTab === 'venue') {
+      renderVenueResults(results);
+    } else {
+      renderProductResults(results);
+    }
   } else {
     emptyState.classList.add('visible');
   }
 }
 
-function renderResults(results) {
+function renderShowResults(results) {
   resultsList.innerHTML = results.map(function(show, idx) {
     var badgeHtml = show.badge ? '<span class="tag-badge ' + show.badge + '">' + show.badgeText + '</span>' : '';
     var labelsHtml = show.labels.map(function(l) {
@@ -780,6 +1135,62 @@ function renderResults(results) {
   }).join('');
 }
 
+function renderProductResults(results) {
+  resultsList.innerHTML = results.map(function(p, idx) {
+    var badgeHtml = p.tag ? '<span class="tag-badge ptag-' + p.tag + '">' + esc(p.tagText) + '</span>' : '';
+    var imgSrc = 'https://picsum.photos/seed/' + p.image + '/200/200';
+
+    // 价格区块：积分+现金 / 纯积分兑换 / 纯现金
+    var priceHtml = '';
+    if (p.points && p.points > 0 && p.price > 0) {
+      priceHtml = '<span class="points-price"><span class="symbol">' + p.points + '积分 +</span>&yen;' + p.price + '</span>';
+    } else if (p.points && p.points > 0) {
+      priceHtml = '<span class="points-price">' + p.points + '<span class="symbol">积分</span></span>';
+    } else {
+      priceHtml = '<span class="price"><span class="symbol">&yen;</span>' + p.price + '</span>';
+    }
+    var origHtml = (p.originalPrice && p.originalPrice > 0 && p.price > 0)
+      ? '<span class="original-price">&yen;' + p.originalPrice + '</span>' : '';
+
+    var salesText = p.sales >= 1000 ? (p.sales / 1000).toFixed(1) + 'k' : p.sales;
+    var delay = idx * 50;
+
+    return '<div class="product-card-h" style="animation-delay:' + delay + 'ms" onclick="location.href=\'shop.html?id=' + p.id + '\'">' +
+      '<div class="cover">' +
+        '<img src="' + imgSrc + '" alt="' + esc(p.name) + '">' +
+        badgeHtml +
+      '</div>' +
+      '<div class="info">' +
+        '<div>' +
+          '<div class="name">' + highlight(p.name, currentKeyword) + '</div>' +
+          '<div class="cat-tag"><i class="fas fa-tag"></i> ' + esc(p.catName) + '</div>' +
+        '</div>' +
+        '<div class="bottom-row">' +
+          '<div class="price-block">' + priceHtml + origHtml + '</div>' +
+          '<div class="sales">已售 ' + salesText + '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function renderVenueResults(results) {
+  resultsList.innerHTML = results.map(function(v, idx) {
+    var delay = idx * 50;
+    return '<div class="venue-card" style="animation-delay:' + delay + 'ms" onclick="location.href=\'theater-list.html?kw=' + encodeURIComponent(v.name) + '\'">' +
+      '<div class="cover">' +
+        '<img src="' + v.image + '" alt="' + esc(v.name) + '">' +
+        '<div class="v-icon"><i class="fas fa-building-columns"></i></div>' +
+      '</div>' +
+      '<div class="info">' +
+        '<div class="name">' + highlight(v.name, currentKeyword) + '</div>' +
+        '<div class="area"><i class="fas fa-map-marker-alt"></i> ' + esc(v.area) + '</div>' +
+        '<div class="meta"><i class="fas fa-theater-masks"></i> 在演 <span class="shows-count">' + v.shows + ' 场演出</span></div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
 function highlight(text, keyword) {
   if (!keyword) return esc(text);
   var safe = esc(text);
@@ -791,17 +1202,39 @@ function highlight(text, keyword) {
 function showSuggestions(keyword) {
   if (!keyword.trim()) { hideSuggestions(); return; }
   var kw = keyword.toLowerCase();
-  var matches = showData.filter(function(s) {
-    return s.name.toLowerCase().indexOf(kw) !== -1;
-  }).slice(0, 5);
+  var matches = [];
+  var subField = '';
+
+  if (currentTab === 'show') {
+    matches = showData.filter(function(s) {
+      return s.name.toLowerCase().indexOf(kw) !== -1;
+    }).slice(0, 5);
+    subField = 'type';
+  } else if (currentTab === 'venue') {
+    matches = venueData.filter(function(v) {
+      return v.name.toLowerCase().indexOf(kw) !== -1 ||
+             v.area.toLowerCase().indexOf(kw) !== -1;
+    }).slice(0, 5);
+    subField = 'area';
+  } else if (currentTab === 'product') {
+    matches = productSearchData.filter(function(p) {
+      return p.name.toLowerCase().indexOf(kw) !== -1 ||
+             p.catName.toLowerCase().indexOf(kw) !== -1;
+    }).slice(0, 5);
+    subField = 'catName';
+  }
 
   if (!matches.length) { hideSuggestions(); return; }
 
-  suggestionPanel.innerHTML = matches.map(function(show) {
-    return '<div class="suggestion-item" onclick="searchByKeyword(\'' + esc(show.name) + '\')">' +
+  suggestionPanel.innerHTML = matches.map(function(item) {
+    var subText = '';
+    if (subField === 'type') subText = item.type;
+    else if (subField === 'area') subText = item.area;
+    else if (subField === 'catName') subText = item.catName;
+    return '<div class="suggestion-item" onclick="searchByKeyword(\'' + esc(item.name) + '\')">' +
       '<i class="fas fa-search"></i>' +
-      '<span class="suggestion-text">' + highlight(show.name, keyword) + '</span>' +
-      '<span class="suggestion-type">' + show.type + '</span>' +
+      '<span class="suggestion-text">' + highlight(item.name, keyword) + '</span>' +
+      '<span class="suggestion-type">' + esc(subText) + '</span>' +
     '</div>';
   }).join('');
   suggestionPanel.classList.add('visible');
