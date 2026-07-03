@@ -1479,6 +1479,26 @@ html {
       accent-color: var(--accent);
       cursor: pointer;
     }
+    .session-option.session-option-disabled {
+      color: var(--text-muted);
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    .session-option.session-option-disabled:hover {
+      background: transparent;
+    }
+    .session-option.session-option-disabled input[type="checkbox"] {
+      cursor: not-allowed;
+    }
+    .session-disabled-reason {
+      margin-left: auto;
+      font-size: 11px;
+      color: var(--danger);
+      background: rgba(220, 38, 38, 0.08);
+      padding: 1px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
     .session-select-text-placeholder {
       color: var(--text-muted);
     }
@@ -3760,6 +3780,7 @@ select.form-select-sm,
                       <button class="action-btn edit" onclick="openDiscountEdit(1)"><i class="fas fa-pen"></i> 编辑</button>
                       <button class="action-btn view" onclick="openDiscountData(1)"><i class="fas fa-chart-bar"></i> 数据</button>
                       <button class="action-btn offline" style="color:#dc2626" onclick="pauseDiscountActivity(this)"><i class="fas fa-pause-circle"></i> 暂停</button>
+                      <button class="action-btn" style="color:#dc2626" onclick="deleteDiscountActivity(1)"><i class="fas fa-trash"></i> 删除</button>
                     </div>
                   </td>
                 </tr>
@@ -3776,6 +3797,7 @@ select.form-select-sm,
                       <button class="action-btn edit" onclick="openDiscountEdit(2)"><i class="fas fa-pen"></i> 编辑</button>
                       <button class="action-btn view" onclick="openDiscountData(2)"><i class="fas fa-chart-bar"></i> 数据</button>
                       <button class="action-btn offline" style="color:#dc2626" onclick="pauseDiscountActivity(this)"><i class="fas fa-pause-circle"></i> 暂停</button>
+                      <button class="action-btn" style="color:#dc2626" onclick="deleteDiscountActivity(2)"><i class="fas fa-trash"></i> 删除</button>
                     </div>
                   </td>
                 </tr>
@@ -3792,6 +3814,7 @@ select.form-select-sm,
                       <button class="action-btn view" onclick="openDiscountData(3)"><i class="fas fa-eye"></i> 查看</button>
                       <button class="action-btn view" onclick="openDiscountData(3)"><i class="fas fa-chart-bar"></i> 数据</button>
                       <button class="action-btn edit" onclick="copyDiscountActivity(3)"><i class="fas fa-copy"></i> 复制</button>
+                      <button class="action-btn" style="color:#dc2626" onclick="deleteDiscountActivity(3)"><i class="fas fa-trash"></i> 删除</button>
                     </div>
                   </td>
                 </tr>
@@ -3808,6 +3831,7 @@ select.form-select-sm,
                       <button class="action-btn edit" onclick="openDiscountEdit(4)"><i class="fas fa-pen"></i> 编辑</button>
                       <button class="action-btn view" onclick="openDiscountData(4)"><i class="fas fa-chart-bar"></i> 数据</button>
                       <button class="action-btn offline" style="color:#dc2626" onclick="pauseDiscountActivity(this)"><i class="fas fa-pause-circle"></i> 暂停</button>
+                      <button class="action-btn" style="color:#dc2626" onclick="deleteDiscountActivity(4)"><i class="fas fa-trash"></i> 删除</button>
                     </div>
                   </td>
                 </tr>
@@ -3824,6 +3848,7 @@ select.form-select-sm,
                       <button class="action-btn edit" onclick="openDiscountEdit(5)"><i class="fas fa-pen"></i> 编辑</button>
                       <button class="action-btn view" onclick="openDiscountData(5)"><i class="fas fa-chart-bar"></i> 数据</button>
                       <button class="action-btn offline" style="color:#dc2626" onclick="pauseDiscountActivity(this)"><i class="fas fa-pause-circle"></i> 暂停</button>
+                      <button class="action-btn" style="color:#dc2626" onclick="deleteDiscountActivity(5)"><i class="fas fa-trash"></i> 删除</button>
                     </div>
                   </td>
                 </tr>
@@ -6398,14 +6423,14 @@ select.form-select-sm,
   const showSessions = {
     show1: [
       { value: 'session1', label: '4月15日 19:30' },
-      { value: 'session2', label: '4月16日 14:00' },
+      { value: 'session2', label: '4月16日 14:00', disabled: true, disabledReason: '已售罄' },
       { value: 'session3', label: '4月16日 19:30' },
-      { value: 'session4', label: '4月17日 19:30' }
+      { value: 'session4', label: '4月17日 19:30', disabled: true, disabledReason: '已被其他折扣占用' }
     ],
     show2: [
       { value: 'session1', label: '4月20日 20:00' },
       { value: 'session2', label: '4月21日 20:00' },
-      { value: 'session3', label: '4月22日 15:00' }
+      { value: 'session3', label: '4月22日 15:00', disabled: true, disabledReason: '已售罄' }
     ],
     show3: [
       { value: 'session1', label: '4月25日 10:00' },
@@ -6413,7 +6438,7 @@ select.form-select-sm,
     ],
     show4: [
       { value: 'session1', label: '5月1日 19:30' },
-      { value: 'session2', label: '5月2日 19:30' },
+      { value: 'session2', label: '5月2日 19:30', disabled: true, disabledReason: '已被其他折扣占用' },
       { value: 'session3', label: '5月3日 14:00' }
     ]
   };
@@ -6446,11 +6471,17 @@ select.form-select-sm,
       hiddenInput.value = '';
     } else {
       const sessions = showSessions[showId] || [];
-      optionsList.innerHTML = sessions.map((s, i) =>
-        '<label class="session-option">' +
+      optionsList.innerHTML = sessions.map((s, i) => {
+        if (s.disabled) {
+          return '<label class="session-option session-option-disabled">' +
+            '<input type="checkbox" value="' + s.value + '" data-label="' + s.label + '" disabled> ' + s.label +
+            '<span class="session-disabled-reason">' + s.disabledReason + '</span>' +
+            '</label>';
+        }
+        return '<label class="session-option">' +
         '<input type="checkbox" value="' + s.value + '" data-label="' + s.label + '" onchange="updateSessionSelect()"> ' + s.label +
-        '</label>'
-      ).join('');
+        '</label>';
+      }).join('');
       checkAll.disabled = false;
       checkAll.checked = false;
       sessionText.textContent = '请选择场次';
@@ -6468,7 +6499,7 @@ select.form-select-sm,
   }
 
   function toggleAllSessions(checkbox) {
-    const options = document.querySelectorAll('#session-options-list input[type="checkbox"]');
+    const options = document.querySelectorAll('#session-options-list input[type="checkbox"]:not(:disabled)');
     options.forEach(opt => opt.checked = checkbox.checked);
     updateSessionSelect();
   }
@@ -6478,7 +6509,7 @@ select.form-select-sm,
     const sessionText = document.getElementById('session-select-text');
     const hiddenInput = document.getElementById('discount-session');
     const checkAll = document.getElementById('session-check-all');
-    const totalOptions = document.querySelectorAll('#session-options-list input[type="checkbox"]').length;
+    const totalOptions = document.querySelectorAll('#session-options-list input[type="checkbox"]:not(:disabled)').length;
 
     if (options.length === 0) {
       sessionText.textContent = '请选择场次';
@@ -6616,6 +6647,21 @@ select.form-select-sm,
     }
 
     openModal('modal-discount-new');
+  }
+
+  function deleteDiscountActivity(id) {
+    var data = discountDataMap[id];
+    var name = data ? data.name : '';
+    if (confirm('确认删除折扣活动"' + name + '"？\n删除后不可恢复，进行中的活动将立即失效。')) {
+      var row = document.querySelector('tr[data-discount-id="' + id + '"]');
+      if (row) {
+        row.style.transition = 'opacity 0.3s';
+        row.style.opacity = '0';
+        setTimeout(function() { row.remove(); }, 300);
+      }
+      delete discountDataMap[id];
+      showToast('success', '折扣活动"' + name + '"已删除');
+    }
   }
 
   function openDiscountData(id) {
