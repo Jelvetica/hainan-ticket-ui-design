@@ -2596,11 +2596,10 @@ window.paymentFlowchartMD = document.getElementById('paymentFlowchartMDSrc')?.te
 |------|------|------|------|
 | 层级标识 | 1位 | T = 门票级 | T |
 | 日期 | 6位 | 出票日期 YYMMDD | 260410 |
-| 渠道ID | 2位 | 关联 sales_channels 表，01-99 | 01 |
 | 订单流水 | 4位 | 同订单号的4位流水号 | 0001 |
 | 订单内序号 | 3位 | 同一订单内第几张（001-999） | 001 |
 | 校验位 | 2位 | 前述所有位Luhn校验 | 37 |
-| 合计 | 18位 | T+YYMMDD+渠道ID+订单流水+序号+校验 | T26041001000100137 |
+| 合计 | 16位 | T+YYMMDD+订单流水+序号+校验 | T260410000100137 |
 
 从核销码可直接还原订单号：取 `日期+订单流水` → `HN` + `20` + `26` + `04` + `10` + `0001` = `HN202604100001`，无需查库。
 
@@ -2610,12 +2609,12 @@ window.paymentFlowchartMD = document.getElementById('paymentFlowchartMDSrc')?.te
 
 | 字段 | 类型 | 说明 | 示例 |
 |------|------|------|------|
-| channel_id | Integer | 自增主键，核销码中引用 | 1 |
+| channel_id | Integer | 自增主键，订单中引用 | 1 |
 | channel_name | String | 渠道显示名称 | 小程序 |
 | channel_type | Enum | self(本系统)/window(窗口)/external(外部渠道) | self |
 | status | Enum | active(启用)/inactive(停用) | active |
 
-渠道可随时新增或停用（不可删除，保留历史引用）。核销码中使用 channel_id（2位，01-99）标识渠道。
+渠道可随时新增或停用（不可删除，保留历史引用）。渠道信息存储在订单表中，不嵌入核销码。
 
 ## 二、码的关联关系
 
@@ -2628,9 +2627,9 @@ window.paymentFlowchartMD = document.getElementById('paymentFlowchartMDSrc')?.te
   │     └── 管理员扫码 → 选择性核销
   │
   └── tickets[]:
-        ├── ticket[1].ticket_verify_code: T26041001000100137  ← 每张一个
-        ├── ticket[2].ticket_verify_code: T26041001000100245
-        └── ticket[3].ticket_verify_code: T26041001000100352
+        ├── ticket[1].ticket_verify_code: T260410000100137  ← 每张一个
+        ├── ticket[2].ticket_verify_code: T260410000100258
+        └── ticket[3].ticket_verify_code: T260410000100341
               ├── 纸质票票面QR
               ├── 下载电子门票图片QR
               └── 管理员扫门票级码 → 单张核销
@@ -2644,7 +2643,7 @@ window.paymentFlowchartMD = document.getElementById('paymentFlowchartMDSrc')?.te
 用户下单 → 支付成功
   │
   ├── 生成 pickup_code（8位随机数字）
-  ├── 为每张门票生成 ticket_verify_code（T+18位）
+  ├── 为每张门票生成 ticket_verify_code（T+16位）
   ├── 门票状态: not_issued → issued（已出票）
   │
   └── 推送至用户电子票夹:
@@ -2698,7 +2697,7 @@ window.paymentFlowchartMD = document.getElementById('paymentFlowchartMDSrc')?.te
 ```
 管理员用小程序扫纸质票票面QR
   │
-  ├── 识别内容 = T26041001000100137（核销码）
+  ├── 识别内容 = T260410000100137（核销码）
   ├── 查 ticket_verify_code → 定位单张门票
   ├── 展示门票详情（演出名称/场次/座位号/票档）
   │
@@ -2726,7 +2725,7 @@ window.paymentFlowchartMD = document.getElementById('paymentFlowchartMDSrc')?.te
 ```
 观众持纸质票通过闸机
   │
-  ├── 闸机扫票面QR = T26041001000100137（核销码）
+  ├── 闸机扫票面QR = T260410000100137（核销码）
   ├── 查 ticket_verify_code → 验证有效性
   ├── 检查: 未退票 / 未核销 / 未过期
   │
