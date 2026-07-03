@@ -758,6 +758,12 @@
     color: #fff;
   }
 
+  /* 非激活状态（灰显） */
+  .policy-banner.inactive {
+    opacity: 0.5;
+    filter: grayscale(0.3);
+  }
+
   /* ========== Divider ========== */
   .section-divider {
     height: 1px;
@@ -2015,13 +2021,13 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
       endDate: '2026-07-31'
     },
     reduce: {
-      enabled: false,
+      enabled: true,
       threshold: 300,        // 满300
       reduceAmount: 50,      // 减50
       limitPerUser: 6
     },
     percent: {
-      enabled: false,
+      enabled: true,
       percent: 95,           // 9.5折
       maxAmount: 200,        // 最高减200元
       limitPerUser: 6
@@ -2074,20 +2080,17 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
     if (!container) return;
 
     const policy = TICKET_POLICY;
-    if (!policy.activeType) {
-      container.style.display = 'none';
-      return;
-    }
-
     let html = '';
 
-    if (policy.activeType === 'earlybird' && policy.earlybird.enabled) {
+    // 早鸟票卡片
+    if (policy.earlybird.enabled) {
       const eb = policy.earlybird;
+      const isActive = policy.activeType === 'earlybird';
       const now = new Date();
       const end = new Date(eb.endDate);
       const daysLeft = Math.max(0, Math.ceil((end - now) / (1000 * 60 * 60 * 24)));
       const discountPercent = (100 - eb.percent);
-      html = `<div class="policy-banner early-bird">
+      html += `<div class="policy-banner early-bird${isActive ? '' : ' inactive'}">
         <div class="policy-icon">🐦</div>
         <div class="policy-content">
           <div class="policy-title">早鸟特惠 ${eb.percent / 10}折</div>
@@ -2095,9 +2098,13 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
         </div>
         <div class="policy-badge">-${discountPercent}%</div>
       </div>`;
-    } else if (policy.activeType === 'reduce' && policy.reduce.enabled) {
+    }
+
+    // 满减卡片
+    if (policy.reduce.enabled) {
       const rd = policy.reduce;
-      html = `<div class="policy-banner reduce">
+      const isActive = policy.activeType === 'reduce';
+      html += `<div class="policy-banner reduce${isActive ? '' : ' inactive'}">
         <div class="policy-icon">💰</div>
         <div class="policy-content">
           <div class="policy-title">满减优惠 满${rd.threshold}减${rd.reduceAmount}</div>
@@ -2105,10 +2112,14 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
         </div>
         <div class="policy-badge">-¥${rd.reduceAmount}</div>
       </div>`;
-    } else if (policy.activeType === 'percent' && policy.percent.enabled) {
+    }
+
+    // 折扣卡片
+    if (policy.percent.enabled) {
       const pc = policy.percent;
+      const isActive = policy.activeType === 'percent';
       const discountPercent = (100 - pc.percent);
-      html = `<div class="policy-banner percent">
+      html += `<div class="policy-banner percent${isActive ? '' : ' inactive'}">
         <div class="policy-icon">🎫</div>
         <div class="policy-content">
           <div class="policy-title">折扣特惠 ${pc.percent / 10}折</div>
