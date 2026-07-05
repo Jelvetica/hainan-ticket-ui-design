@@ -4808,19 +4808,38 @@ select.form-select-sm,
                             </div>
                             <div class="gc-body">
                                 <div class="gc-desc">邀请好友充值达标后，双方各获成长值奖励</div>
-                                <div class="gc-setting" style="margin-bottom:16px;">
+                                <div class="gc-setting" style="margin-bottom:12px;">
                                     <span class="gc-label">邀请者奖励（每成功邀请1人充值）</span>
                                     <input type="number" class="gc-input gc-input--md" value="1000">
                                     <span class="gc-unit">成长值</span>
                                 </div>
-                                <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:8px;padding:12px 14px;">
-                                    <div style="font-size:13px;font-weight:600;color:#9A3412;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
-                                        <i class="fas fa-info-circle"></i> 被邀请者权益（系统固定，不可配置）
+                                <div class="gc-setting" style="margin-bottom:16px;">
+                                    <span class="gc-label">被邀请者赠送成长值</span>
+                                    <input type="number" class="gc-input gc-input--md" id="inviteBonusGrowth" value="200" oninput="updateInvitePreview()">
+                                    <span class="gc-unit">成长值</span>
+                                </div>
+                                <div class="gc-setting" style="margin-bottom:12px;">
+                                    <span class="gc-label">每人限邀次数</span>
+                                    <input type="number" class="gc-input gc-input--sm" value="3" min="1" max="20">
+                                    <span class="gc-unit">人</span>
+                                </div>
+                                <div class="gc-setting" style="margin-bottom:16px;">
+                                    <span class="gc-label">活动预算上限</span>
+                                    <input type="number" class="gc-input gc-input--md" value="100000" min="0">
+                                    <span class="gc-unit">成长值</span>
+                                </div>
+                                <div id="invitePreviewBox" style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:14px 16px;">
+                                    <div style="font-size:13px;font-weight:600;color:#166534;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+                                        <i class="fas fa-check-circle"></i> 实时预览（被邀请者视角）
                                     </div>
-                                    <div style="font-size:12px;color:#9A3412;line-height:1.8;">
-                                        被邀请者充值达银卡门槛 <strong>80%</strong>，系统额外赠送 <strong>20%</strong> 成长值，充值后立即达标开通银卡会员<br>
-                                        <span style="color:#C2410C;">当前配置下：充值 <strong>¥800</strong> → 得800成长值 + 额外赠200成长值 = <strong>1000成长值</strong> 直达银卡</span><br>
-                                        <span style="color:#A8A29E;font-size:11px;">※ 充值金额与赠送成长值根据等级门槛和充值比例自动推导</span>
+                                    <div id="invitePreviewContent" style="font-size:13px;color:#166534;line-height:2;">
+                                        被邀请者充值 <strong style="font-size:15px;color:#15803D;">¥800</strong> → 得 800 成长值<br>
+                                        <span style="color:#E85D3A;">额外赠送 <strong style="font-size:15px;">200</strong> 成长值</span><br>
+                                        合计 <strong style="font-size:16px;color:#15803D;">1000</strong> 成长值 → 直达银卡会员
+                                    </div>
+                                    <div style="margin-top:8px;padding-top:8px;border-top:1px dashed #BBF7D0;font-size:11px;color:#65A30D;">
+                                        ※ 充值金额 = (银卡门槛1000 − 赠送200) ÷ 充值比例1 = ¥800<br>
+                                        ※ 赠送成长值不可超过银卡门槛的50%，确保充值金额≥门槛50%
                                     </div>
                                 </div>
                             </div>
@@ -6145,6 +6164,44 @@ select.form-select-sm,
         }
 
         // Growth Activity Toggle
+        // Invite Preview - real-time derivation
+        function updateInvitePreview() {
+            var bonus = parseInt(document.getElementById('inviteBonusGrowth').value) || 0;
+            var threshold = 1000;   // 银卡门槛成长值（从等级配置读取）
+            var ratio = 1;          // 充值比例（从充值成长值比例读取）
+            var maxBonus = Math.floor(threshold * 0.5);  // 上限50%
+
+            var box = document.getElementById('invitePreviewBox');
+            var content = document.getElementById('invitePreviewContent');
+
+            if (bonus > maxBonus) {
+                box.style.background = '#FEF2F2';
+                box.style.borderColor = '#FECACA';
+                content.innerHTML = '<span style="color:#DC2626;font-weight:600;">⚠ 赠送成长值超过上限（' + maxBonus + '），请调整</span><br><span style="color:#991B1B;font-size:11px;">赠送成长值不可超过银卡门槛的50%，确保充值金额≥门槛50%</span>';
+                box.querySelector('div:first-child').style.color = '#991B1B';
+                box.querySelector('div:first-child i').className = 'fas fa-exclamation-circle';
+                return;
+            }
+
+            var rechargeAmount = (threshold - bonus) / ratio;
+            var rechargeGrowth = threshold - bonus;
+
+            box.style.background = '#F0FDF4';
+            box.style.borderColor = '#BBF7D0';
+            box.querySelector('div:first-child').style.color = '#166534';
+            box.querySelector('div:first-child i').className = 'fas fa-check-circle';
+
+            content.innerHTML =
+                '被邀请者充值 <strong style="font-size:15px;color:#15803D;">¥' + rechargeAmount + '</strong> → 得 ' + rechargeGrowth + ' 成长值<br>' +
+                '<span style="color:#E85D3A;">额外赠送 <strong style="font-size:15px;">' + bonus + '</strong> 成长值</span><br>' +
+                '合计 <strong style="font-size:16px;color:#15803D;">' + threshold + '</strong> 成长值 → 直达银卡会员';
+
+            var hint = box.querySelector('div:last-child');
+            hint.innerHTML =
+                '※ 充值金额 = (银卡门槛' + threshold + ' − 赠送' + bonus + ') ÷ 充值比例' + ratio + ' = ¥' + rechargeAmount + '<br>' +
+                '※ 赠送成长值不可超过银卡门槛的50%，确保充值金额≥门槛50%';
+        }
+
         function toggleGrowthActivity(checkbox) {
             var form = document.getElementById('growthActivityForm');
             if (checkbox.checked) {
