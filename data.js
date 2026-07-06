@@ -817,7 +817,7 @@ const devDocs = {
                             </li>
                             <li>支付组合总览条：支付方式卡片顶部展示彩色标签，实时显示各启用支付方式及金额，右侧显示匹配状态（已全额抵扣/待补足金额）；选了微信支付时不显示待补足；未选微信时仅计算钱包+充值卡差额</li>
                             <li>组合支付按钮：同时启用2种及以上支付方式时，底部按钮文字从"确认支付"变为"组合支付"</li>
-                            <li>钱包密码验证：只要使用了钱包支付（无论是否混合微信支付），点击确认支付按钮先弹出钱包密码输入弹窗（6位密码），验证通过后进入微信支付环节；预扣模式下创建订单时已预扣钱包/充值卡/积分，无需检查待支付订单</li>
+                            <li>钱包密码验证：只要使用了钱包支付（无论是否混合微信支付），点击确认支付按钮先弹出钱包密码输入弹窗（6位密码），验证通过后进入微信支付环节；预扣模式下创建订单时已预扣钱包/充值卡/积分</li>
                             <li>支付方式禁用：其他支付方式已全额抵扣时，未启用的支付选项变为灰色禁用状态</li>
                             <li>底栏应付金额：始终与费用明细的应付金额一致（currentPayable - 优惠券 - 积分），不受支付方式选择影响</li>
                             <li>"已优惠"统计：仅包含折扣+优惠券+积分+观演券，不含钱包和充值卡支付金额</li>
@@ -7998,7 +7998,7 @@ const changelogData = [
                 pageName: '确认订单',
                 module: '支付流程',
                 time: '10:00',
-                content: '混合支付流程重构+预扣机制：修复混合支付（钱包+微信）时跳过钱包密码验证的安全漏洞，新流程为"钱包密码验证→微信支付（指纹/面容）→订单完成"两步串行；submitOrder()直接调用proceedToPayment()（预扣模式下无需检查待支付订单）；新增showWechatPayModal()微信支付模拟弹窗（指纹→支付中→成功三态）；新增cancelWechatPay()取消时提示钱包扣款已回滚；新增completeOrder()统一跳转；新增wechatSpin动画'
+                content: '混合支付流程重构：修复混合支付（钱包+微信）时跳过钱包密码验证的安全漏洞，新流程为"钱包密码验证→微信支付（指纹/面容）→订单完成"两步串行；submitOrder()调用proceedToPayment()；新增showWechatPayModal()微信支付模拟弹窗（指纹→支付中→成功三态）；新增cancelWechatPay()取消时提示钱包扣款已回滚；新增completeOrder()统一跳转；新增wechatSpin动画'
             },
             {
                 page: 'user-miniapp/order-success.html',
@@ -8012,14 +8012,14 @@ const changelogData = [
                 pageName: '订单详情',
                 module: '待支付订单支付',
                 time: '12:00',
-                content: '待支付订单支付流程重构+预扣机制：不再重新选择支付方式和额度，改为按已选组合支付额度直接支付；待支付状态显示"已选支付方式"并自动展开（微信¥500+钱包¥300+充值卡¥200）；payNow()直接调用showPreselectedPayConfirm()确认弹窗（预扣模式下无需检查待支付订单）；确认弹窗中钱包支付和充值卡支付显示"已预扣 ¥XXX"文案；新增startPreselectedPay()→proceedDetailToWechatPay()→showDetailWechatPayModal()串行支付链路；新增completeDetailOrder()跳转成功页；新增wechatSpin动画'
+                content: '待支付订单支付流程重构：不再重新选择支付方式和额度，改为按已选组合支付额度直接支付；待支付状态显示"已选支付方式"并自动展开（微信¥500+钱包¥300+充值卡¥200）；payNow()调用showPreselectedPayConfirm()确认弹窗；确认弹窗中钱包支付和充值卡支付显示"已预扣 ¥XXX"文案；新增startPreselectedPay()→proceedDetailToWechatPay()→showDetailWechatPayModal()串行支付链路；新增completeDetailOrder()跳转成功页；新增wechatSpin动画'
             },
             {
                 page: 'index.html',
                 pageName: '设计总览',
                 module: '组合支付流程',
                 time: '14:00',
-                content: '组合支付超时控制流程全面重写为预扣机制：标题从"外部支付5分钟超时控制流程"改为"组合支付超时控制流程"；新增"二、预扣机制"章节（预扣vs冻结对比表）；流程图从TCC-Try/Confirm/Cancel改为预扣/退回预扣；删除场景F（重新支付检测旧订单）和freeze_id概念；场景从6个简化为5个（A-E）；新增"预扣 vs 冻结"对比表'
+                content: '组合支付超时控制流程重写为预扣机制：标题改为"组合支付超时控制流程"；新增"二、预扣机制"章节（预扣vs冻结对比表）；流程图改为预扣/退回预扣；场景A-E共5个；新增"预扣 vs 冻结"对比表'
             },
             {
                 page: 'user-miniapp/transaction-record.html',
