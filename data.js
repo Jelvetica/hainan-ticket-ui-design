@@ -817,7 +817,7 @@ const devDocs = {
                             </li>
                             <li>支付组合总览条：支付方式卡片顶部展示彩色标签，实时显示各启用支付方式及金额，右侧显示匹配状态（已全额抵扣/待补足金额）；选了微信支付时不显示待补足；未选微信时仅计算钱包+充值卡差额</li>
                             <li>组合支付按钮：同时启用2种及以上支付方式时，底部按钮文字从"确认支付"变为"组合支付"</li>
-                            <li>钱包密码验证：未选微信支付且选了钱包支付时，点击确认支付按钮弹出钱包密码输入弹窗（6位密码），验证通过后提交订单</li>
+                            <li>钱包密码验证：只要使用了钱包支付（无论是否混合微信支付），点击确认支付按钮先弹出钱包密码输入弹窗（6位密码），验证通过后进入微信支付环节；预扣模式下创建订单时已预扣钱包/充值卡/积分，无需检查待支付订单</li>
                             <li>支付方式禁用：其他支付方式已全额抵扣时，未启用的支付选项变为灰色禁用状态</li>
                             <li>底栏应付金额：始终与费用明细的应付金额一致（currentPayable - 优惠券 - 积分），不受支付方式选择影响</li>
                             <li>"已优惠"统计：仅包含折扣+优惠券+积分+观演券，不含钱包和充值卡支付金额</li>
@@ -2395,10 +2395,10 @@ const devDocs = {
                       <li>待支付状态显示倒计时（30分钟），超时自动取消</li>
                       <li>已退款状态额外显示退款金额、退款方式、退款时间</li>
                       <li>订单编号支持点击复制到剪贴板</li>
-                      <li>费用明细区：在"实付金额"上方增加"支付明细"折叠区，默认折叠，点击展开显示各支付方式（微信/钱包/充值卡）及金额，带对应颜色图标；积分抵扣作为费用明细行显示在优惠券抵扣下方（与优惠券相同样式）；待支付订单不显示支付明细</li>
+                      <li>费用明细区：在"实付金额"上方增加"支付明细"折叠区，默认折叠，点击展开显示各支付方式（微信/钱包/充值卡）及金额，带对应颜色图标；积分抵扣作为费用明细行显示在优惠券抵扣下方（与优惠券相同样式）；待支付订单显示"已选支付方式"并自动展开（预扣模式下创建订单时已预扣内部资产）</li>
                       <li>座位信息：使用观演券抵扣的座位显示"观演券抵扣"金色标签，价格显示为划线原价+¥0</li>
                       <li>组合支付订单的支付方式显示为"组合支付"</li>
-                      <li>待支付订单支付方式弹窗：点击"立即支付"弹出底部支付方式选择弹窗，支持微信支付（默认勾选可取消）/钱包支付（可输入金额+全部使用）/充值卡支付（单选一张），弹窗为卡片式设计（顶部渐变装饰条/应付金额卡片/独立白色选项卡片/彩色选中边框/sticky悬浮按钮）</li>
+                      <li>待支付订单支付确认弹窗：点击"立即支付"弹出已选支付方式确认弹窗，按订单创建时已选的组合支付额度直接支付（不再重新选择支付方式和额度）；确认弹窗展示各支付方式图标+额度，钱包支付和充值卡支付显示"已预扣 ¥XXX"文案；支付流程为"钱包密码验证→微信支付（指纹/面容）→完成"两步串行</li>
                     </ul>
                   </li>
                   <li><strong>权限控制：</strong>仅可查看自己的订单</li>
@@ -2422,17 +2422,17 @@ const devDocs = {
                 <p><strong>立即支付（待支付订单）</strong></p>
                 <ul>
                   <li><strong>触发：</strong>点击底部"立即支付"按钮</li>
-                  <li><strong>执行中：</strong>弹出支付方式选择弹窗，展示应付金额和三种支付方式（微信/钱包/充值卡）</li>
-                  <li><strong>成功：</strong>选择支付方式后点击确认，调起对应支付流程；多选时显示"组合支付"</li>
-                  <li><strong>边界条件：</strong>未选微信支付且选了钱包支付时，确认后弹出钱包密码验证弹窗；倒计时归零后按钮置灰</li>
+                  <li><strong>执行中：</strong>弹出已选支付方式确认弹窗，展示各支付方式图标+额度（钱包/充值卡显示"已预扣"文案）+流程提示</li>
+                  <li><strong>成功：</strong>点击确认支付后，按"钱包密码验证→微信支付→完成"串行流程执行</li>
+                  <li><strong>边界条件：</strong>只要使用了钱包支付就先弹密码验证（无论是否混合微信）；倒计时归零后按钮置灰</li>
                 </ul>
-                <p><strong>支付方式选择弹窗</strong></p>
+                <p><strong>已选支付方式确认弹窗</strong></p>
                 <ul>
                   <li><strong>触发：</strong>待支付订单点击"立即支付"</li>
-                  <li><strong>执行中：</strong>底部弹出弹窗，顶部显示应付金额卡片，下方为三个支付方式选项卡片（微信支付默认勾选）</li>
-                  <li><strong>钱包支付：</strong>勾选后展开金额输入区域（带¥前缀输入框+全部使用按钮），输入金额自动限制不超过余额和剩余应付</li>
-                  <li><strong>充值卡支付：</strong>勾选后展开充值卡列表，单选一张卡（选中其他卡自动切换），显示卡名/卡号/余额</li>
-                  <li><strong>成功：</strong>点击确认支付后关闭弹窗并调起支付；至少选择一种支付方式</li>
+                  <li><strong>执行中：</strong>底部弹出确认弹窗，展示应付总额+已选支付方式明细（微信/钱包/充值卡各自金额）+支付流程提示</li>
+                  <li><strong>钱包支付：</strong>显示已预扣金额（橙色文案），验证钱包密码后进入微信支付</li>
+                  <li><strong>充值卡支付：</strong>显示卡名+已预扣金额（金色文案）</li>
+                  <li><strong>成功：</strong>点击确认支付后按串行流程执行（钱包密码→微信支付→完成）</li>
                 </ul>`
             },
             {
@@ -3148,6 +3148,7 @@ const devDocs = {
                       <li>支持分页加载，滚动到底部自动加载更多</li>
                       <li>充值卡充值（recharge_card_charge）：用户绑定充值卡后，卡面金额充值到钱包余额</li>
                       <li>充值卡消费（recharge_card_consume）：使用充值卡余额进行消费支付</li>
+                      <li>预扣退回（prededuct）：订单超时取消或手动取消后，创建订单时预扣的钱包/充值卡/积分金额退回，记录为正向流水</li>
                     </ul>
                   </li>
                   <li><strong>权限控制：</strong>仅登录用户可查看自己的交易记录</li>
@@ -7997,7 +7998,7 @@ const changelogData = [
                 pageName: '确认订单',
                 module: '支付流程',
                 time: '10:00',
-                content: '混合支付流程重构：修复混合支付（钱包+微信）时跳过钱包密码验证的安全漏洞；新流程为"钱包密码验证→微信支付（指纹/面容）→订单完成"两步串行；submitOrder()改为只要使用了钱包就先弹密码弹窗；新增proceedToWechatPay()判断是否需要微信支付；新增showWechatPayModal()微信支付模拟弹窗（含指纹支付按钮+支付中动画+支付成功状态三态切换）；新增cancelWechatPay()取消支付时提示钱包扣款已回滚；新增completeOrder()统一订单完成跳转；confirmWalletPassword()密码通过后调用proceedToWechatPay()而非直接跳成功页；新增wechatSpin关键帧动画'
+                content: '混合支付流程重构+预扣机制：修复混合支付（钱包+微信）时跳过钱包密码验证的安全漏洞，新流程为"钱包密码验证→微信支付（指纹/面容）→订单完成"两步串行；submitOrder()直接调用proceedToPayment()（预扣模式下无需检查待支付订单）；新增showWechatPayModal()微信支付模拟弹窗（指纹→支付中→成功三态）；新增cancelWechatPay()取消时提示钱包扣款已回滚；新增completeOrder()统一跳转；新增wechatSpin动画'
             },
             {
                 page: 'user-miniapp/order-success.html',
@@ -8007,53 +8008,25 @@ const changelogData = [
                 content: '修复按钮链接指向不存在的页面：查看订单从order-list.html改为order-detail.html并附带orderNo参数；返回首页从index.html改为home.html'
             },
             {
-                page: 'user-miniapp/order-confirm.html',
-                pageName: '确认订单',
-                module: '待支付订单检查',
-                time: '11:00',
-                content: '新增待支付订单模拟检查：submitOrder()前加_simHasPendingOrder开关（默认true），有待支付订单时弹窗提示"检测到待支付订单"，提供"继续支付旧订单"（跳转order-detail.html?orderNo=HN20260706001&sim=pending）和"关闭旧订单，创建新订单"（关闭后_proceedToPayment继续支付）两个选项；弹窗标注"模拟"标签，提示关闭后才能创建新订单；原submitOrder支付逻辑提取为proceedToPayment()；无待支付订单时直接进入支付环节'
-            },
-            {
-                page: 'user-miniapp/order-detail.html',
-                pageName: '订单详情',
-                module: '待支付订单检查',
-                time: '11:00',
-                content: 'payNow()前加同样的待支付订单模拟检查：_simHasPendingOrder开关（默认true），有待支付订单时弹窗提示，提供"继续支付此订单"（进入showPaymentModal支付流程）和"关闭此订单"（调用cancelOrder取消并释放冻结资产）两个选项；弹窗样式与确认订单页一致，标注"模拟"标签'
-            },
-            {
                 page: 'user-miniapp/order-detail.html',
                 pageName: '订单详情',
                 module: '待支付订单支付',
                 time: '12:00',
-                content: '待支付订单支付流程重构：不再重新选择支付方式和额度，改为按已选组合支付额度直接支付。待支付状态不再隐藏支付明细区域，改为显示"已选支付方式"并自动展开（微信¥500+钱包¥300+充值卡¥200），实付金额修正为¥1000；continuePayThisOrder改为调用showPreselectedPayConfirm()确认弹窗（展示各支付方式图标+额度+流程提示"钱包密码验证→微信支付→完成"）；新增startPreselectedPay()→proceedDetailToWechatPay()→showDetailWechatPayModal()串行支付链路；confirmWalletPassword()改为调用proceedDetailToWechatPay()继续微信支付环节；新增completeDetailOrder()跳转成功页；新增wechatSpin动画'
-            },
-            {
-                page: 'user-miniapp/order-confirm.html',
-                pageName: '确认订单',
-                module: '预扣机制',
-                time: '14:00',
-                content: '组合支付从冻结改为预扣机制：移除待支付订单检查弹窗及相关函数（_simHasPendingOrder/showPendingOrderModal/continueOldOrder/closeOldOrderAndProceed），submitOrder()直接调用proceedToPayment()进入支付环节'
-            },
-            {
-                page: 'user-miniapp/order-detail.html',
-                pageName: '订单详情',
-                module: '预扣机制',
-                time: '14:00',
-                content: '移除待支付订单检查（_simHasPendingOrder开关），payNow()直接调用showPreselectedPayConfirm()；确认弹窗中钱包支付和充值卡支付增加"已预扣 ¥XXX"文案（橙色标注），让用户明确知道创建订单时已预扣内部资产'
+                content: '待支付订单支付流程重构+预扣机制：不再重新选择支付方式和额度，改为按已选组合支付额度直接支付；待支付状态显示"已选支付方式"并自动展开（微信¥500+钱包¥300+充值卡¥200）；payNow()直接调用showPreselectedPayConfirm()确认弹窗（预扣模式下无需检查待支付订单）；确认弹窗中钱包支付和充值卡支付显示"已预扣 ¥XXX"文案；新增startPreselectedPay()→proceedDetailToWechatPay()→showDetailWechatPayModal()串行支付链路；新增completeDetailOrder()跳转成功页；新增wechatSpin动画'
             },
             {
                 page: 'index.html',
                 pageName: '设计总览',
                 module: '组合支付流程',
                 time: '14:00',
-                content: '组合支付超时控制流程全面重写为预扣机制：标题从"外部支付5分钟超时控制流程"改为"组合支付超时控制流程"；新增"二、预扣机制"章节（预扣vs冻结对比表）；流程图从TCC-Try/Confirm/Cancel改为预扣/退回预扣；删除场景F（重新支付检测旧订单）和场景F相关的待支付订单检测逻辑；删除freeze_id概念和TCC术语；场景从6个简化为5个（A-E）；新增"预扣 vs 冻结"对比表说明选择预扣的原因'
+                content: '组合支付超时控制流程全面重写为预扣机制：标题从"外部支付5分钟超时控制流程"改为"组合支付超时控制流程"；新增"二、预扣机制"章节（预扣vs冻结对比表）；流程图从TCC-Try/Confirm/Cancel改为预扣/退回预扣；删除场景F（重新支付检测旧订单）和freeze_id概念；场景从6个简化为5个（A-E）；新增"预扣 vs 冻结"对比表'
             },
             {
                 page: 'user-miniapp/transaction-record.html',
                 pageName: '交易记录',
                 module: '预扣退回',
                 time: '14:00',
-                content: '新增"预扣退回"交易类型：新增prededuct图标样式（橙色#F59E0B），在4月记录中新增1条"订单超时取消 - 预扣退回"记录（+¥300.00），展示订单超时取消后预扣金额退回的流水'
+                content: '新增"预扣退回"交易类型：新增prededuct图标样式（橙色#F59E0B），在4月记录中新增1条"预扣退回 - 《红色娘子军》"记录（+¥300.00），展示订单超时取消后预扣金额退回的流水'
             },
             {
                 page: 'user-miniapp/show-list-detail.html',
