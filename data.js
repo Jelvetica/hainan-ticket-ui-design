@@ -8076,6 +8076,20 @@ const changelogData = [
                 module: '海报图标',
                 time: '18:00',
                 content: '海报权益图标从emoji改为Font Awesome扁平化图标：🎫→fa-ticket-alt、🏷️→fa-tag、⚡→fa-bolt、🎟️→fa-calendar-check、🎁→fa-birthday-cake，与邀请弹窗图标保持一致'
+            },
+            {
+                page: 'pc-admin/member-management.html',
+                pageName: '会员管理',
+                module: '会员政策-邀请有礼',
+                time: '19:00',
+                content: '邀请有礼配置重构：1."被邀请者赠送成长值"从固定数值改为百分比配置（占银卡门槛比例，1%~50%），赠送成长值=门槛×百分比向下取整，充值金额=门槛−赠送；2.明确邀请目标为L2银卡会员（描述文案、预览标题、预览结果均标注"L2银卡"）；3.updateInvitePreview()函数重写为百分比计算逻辑'
+            },
+            {
+                page: 'pc-admin/member-management.html',
+                pageName: '会员管理',
+                module: '会员政策-等级配置',
+                time: '19:00',
+                content: '普通会员（L1）和银卡会员（L2）不可删除：移除这两个等级卡片的删除按钮，替换为"基础等级"标签；deleteLevel()函数增加data-level保护，normal和silver等级删除时提示"基础等级不可删除"'
             }
         ]
     },
