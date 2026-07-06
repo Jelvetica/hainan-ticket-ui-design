@@ -691,6 +691,11 @@
       transition: all 0.2s;
     }
     .coupon-sheet .sheet-empty:active { background: var(--bg-input); }
+
+    @keyframes wechatSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
@@ -1799,17 +1804,115 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
   }
 
   function submitOrder() {
-    // 未选微信支付且选了钱包支付时，弹出钱包密码弹窗
-    if (!wechatEnabled && walletEnabled && walletUsed > 0) {
+    // 使用了钱包支付时，先验证钱包密码（无论是否混合微信支付）
+    if (walletEnabled && walletUsed > 0) {
       showWalletPasswordModal();
       return;
     }
+    // 未使用钱包，直接走微信支付
+    proceedToWechatPay();
+  }
 
-    // 模拟生成订单号
+  // 钱包密码验证通过后 / 无需钱包密码时，进入微信支付环节
+  function proceedToWechatPay() {
+    const wechatAmount = Math.max(0, currentPayable - couponDeduction - pointsDeduction - walletUsed - getRechargeCardDeduct());
+    if (wechatEnabled && wechatAmount > 0) {
+      // 需要微信支付，调起微信支付弹窗
+      showWechatPayModal(wechatAmount);
+      return;
+    }
+    // 不需要微信支付（纯钱包/充值卡抵扣），直接完成订单
+    completeOrder();
+  }
+
+  // 微信支付模拟弹窗（指纹/面容支付）
+  function showWechatPayModal(amount) {
+    const overlay = document.createElement('div');
+    overlay.className = 'coupon-overlay';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(10,22,40,0.5);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:200;opacity:0;transition:opacity 0.3s ease;';
+
+    const sheet = document.createElement('div');
+    sheet.style.cssText = 'position:fixed;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);width:100%;max-width:375px;background:#fff;border-radius:20px 20px 0 0;z-index:201;transition:transform 0.35s cubic-bezier(0.32,0.72,0,1);padding:28px 24px calc(28px + env(safe-area-inset-bottom));box-shadow:0 -8px 40px rgba(10,22,40,0.12);';
+
+    let html = '<div style="text-align:center;margin-bottom:24px;">';
+    html += '<div style="width:48px;height:48px;border-radius:12px;background:#07C160;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="fab fa-weixin" style="font-size:26px;color:#fff;"></i></div>';
+    html += '<div style="font-size:16px;font-weight:600;color:#0A1628;">微信支付</div>';
+    html += '<div style="font-size:28px;font-weight:700;color:#0A1628;margin-top:8px;">¥' + amount.toFixed(2) + '</div>';
+    html += '</div>';
+
+    // 指纹支付区域
+    html += '<div id="wechatFingerprintArea" style="text-align:center;padding:20px 0;">';
+    html += '<div id="wechatFingerprintBtn" style="width:64px;height:64px;border-radius:50%;background:#F5F6FA;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;cursor:pointer;transition:all 0.2s;" onclick="confirmWechatPay()">';
+    html += '<i class="fas fa-fingerprint" style="font-size:32px;color:#07C160;"></i>';
+    html += '</div>';
+    html += '<div style="font-size:13px;color:#8E95A9;">轻触指纹支付</div>';
+    html += '</div>';
+
+    // 支付中状态（默认隐藏）
+    html += '<div id="wechatPayingArea" style="display:none;text-align:center;padding:20px 0;">';
+    html += '<div style="width:48px;height:48px;margin:0 auto 16px;"><svg viewBox="0 0 50 50" style="width:48px;height:48px;animation:wechatSpin 0.8s linear infinite;"><circle cx="25" cy="25" r="20" fill="none" stroke="#E8E9ED" stroke-width="4"/><circle cx="25" cy="25" r="20" fill="none" stroke="#07C160" stroke-width="4" stroke-linecap="round" stroke-dasharray="31.4 125.6"/></svg></div>';
+    html += '<div style="font-size:13px;color:#8E95A9;">支付处理中...</div>';
+    html += '</div>';
+
+    // 支付成功状态（默认隐藏）
+    html += '<div id="wechatPaidArea" style="display:none;text-align:center;padding:20px 0;">';
+    html += '<div style="width:56px;height:56px;border-radius:50%;background:#07C160;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="fas fa-check" style="font-size:24px;color:#fff;"></i></div>';
+    html += '<div style="font-size:15px;font-weight:600;color:#07C160;">支付成功</div>';
+    html += '</div>';
+
+    html += '<div style="margin-top:20px;padding-top:16px;border-top:1px solid #F0F1F5;text-align:center;">';
+    html += '<span style="font-size:12px;color:#B8BCCE;cursor:pointer;" onclick="cancelWechatPay()">取消支付</span>';
+    html += '</div>';
+
+    sheet.innerHTML = html;
+    document.body.appendChild(overlay);
+    document.body.appendChild(sheet);
+
+    window._wechatPayOverlay = overlay;
+    window._wechatPaySheet = sheet;
+
+    requestAnimationFrame(() => {
+      overlay.style.opacity = '1';
+      sheet.style.transform = 'translateX(-50%) translateY(0)';
+    });
+    overlay.onclick = cancelWechatPay;
+  }
+
+  // 确认微信支付（指纹验证模拟）
+  window.confirmWechatPay = function() {
+    const btn = document.getElementById('wechatFingerprintBtn');
+    if (btn) btn.style.transform = 'scale(0.92)';
+    // 切换到支付中状态
+    document.getElementById('wechatFingerprintArea').style.display = 'none';
+    document.getElementById('wechatPayingArea').style.display = 'block';
+    // 模拟支付处理延迟
+    setTimeout(() => {
+      document.getElementById('wechatPayingArea').style.display = 'none';
+      document.getElementById('wechatPaidArea').style.display = 'block';
+      // 1秒后完成订单
+      setTimeout(() => {
+        if (window._wechatPayOverlay) window._wechatPayOverlay.remove();
+        if (window._wechatPaySheet) window._wechatPaySheet.remove();
+        completeOrder();
+      }, 800);
+    }, 1200);
+  };
+
+  // 取消微信支付（钱包扣款自动回滚）
+  window.cancelWechatPay = function() {
+    if (window._wechatPayOverlay) window._wechatPayOverlay.remove();
+    if (window._wechatPaySheet) window._wechatPaySheet.remove();
+    if (walletEnabled && walletUsed > 0) {
+      showToast('支付已取消，钱包扣款已回滚');
+    } else {
+      showToast('支付已取消');
+    }
+  };
+
+  // 完成订单，跳转成功页
+  function completeOrder() {
     const orderNo = 'HN' + Date.now().toString().slice(-10) + Math.floor(Math.random() * 100).toString().padStart(2, '0');
-    // 计算最终支付金额
     const finalTotal = Math.max(0, currentPayable - couponDeduction - pointsDeduction - walletUsed - getRechargeCardDeduct());
-    // 跳转到订单成功页面
     const seatInfo = seatsData.map(s => s.row + '排' + s.col + '座').join('、');
     const params = new URLSearchParams({
       orderNo: orderNo,
@@ -1871,19 +1974,8 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
       return;
     }
     closeWalletPasswordModal();
-    // 密码验证通过后继续提交订单
-    const orderNo = 'HN' + Date.now().toString().slice(-10) + Math.floor(Math.random() * 100).toString().padStart(2, '0');
-    const finalTotal = Math.max(0, currentPayable - couponDeduction - pointsDeduction - walletUsed - getRechargeCardDeduct());
-    const seatInfo = seatsData.map(s => s.row + '排' + s.col + '座').join('、');
-    const params = new URLSearchParams({
-      orderNo: orderNo,
-      show: showName,
-      date: showDate,
-      venue: showVenue,
-      seats: seatInfo,
-      amount: finalTotal.toFixed(2)
-    });
-    window.location.href = 'order-success.html?' + params.toString();
+    // 钱包密码验证通过，继续微信支付环节
+    proceedToWechatPay();
   };
 
   // 钱包密码弹窗键盘监听

@@ -7990,6 +7990,18 @@ Tab切换交互：
 // entries.page 对应 devDocs 中的页面URL键名
 const changelogData = [
     {
+        date: '2026-07-06',
+        entries: [
+            {
+                page: 'user-miniapp/order-confirm.html',
+                pageName: '确认订单',
+                module: '支付流程',
+                time: '10:00',
+                content: '混合支付流程重构：修复混合支付（钱包+微信）时跳过钱包密码验证的安全漏洞；新流程为"钱包密码验证→微信支付（指纹/面容）→订单完成"两步串行；submitOrder()改为只要使用了钱包就先弹密码弹窗；新增proceedToWechatPay()判断是否需要微信支付；新增showWechatPayModal()微信支付模拟弹窗（含指纹支付按钮+支付中动画+支付成功状态三态切换）；新增cancelWechatPay()取消支付时提示钱包扣款已回滚；新增completeOrder()统一订单完成跳转；confirmWalletPassword()密码通过后调用proceedToWechatPay()而非直接跳成功页；新增wechatSpin关键帧动画'
+            }
+        ]
+    },
+    {
         date: '2026-07-05',
         entries: [
             {
