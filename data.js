@@ -8054,6 +8054,20 @@ const changelogData = [
                 module: '预扣退回',
                 time: '14:00',
                 content: '新增"预扣退回"交易类型：新增prededuct图标样式（橙色#F59E0B），在4月记录中新增1条"订单超时取消 - 预扣退回"记录（+¥300.00），展示订单超时取消后预扣金额退回的流水'
+            },
+            {
+                page: 'user-miniapp/show-list-detail.html',
+                pageName: '演出列表',
+                module: '时间格式',
+                time: '15:00',
+                content: '演出列表卡片时间从"07月25日 周六 20:00"改为日期范围"07月25日 - 07月27日"，7条演出全部更新'
+            },
+            {
+                page: 'user-miniapp/home.html',
+                pageName: '首页',
+                module: '热门推荐',
+                time: '15:00',
+                content: '热门推荐卡片时间从"2026.07.15 20:00"改为日期范围"2026.07.15 - 07.16"，4张卡片全部更新；价格从"¥280 + 划线价480"改为"¥280起"，移除original划线价'
             }
         ]
     },
