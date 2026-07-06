@@ -162,6 +162,7 @@
     .tx-icon.income { background: #E8F9F5; color: #00C9A7; }
     .tx-icon.expense { background: #FFF0EB; color: #FF6B4A; }
     .tx-icon.refund { background: #EBF0FF; color: #4A7AFF; }
+    .tx-icon.prededuct { background: #FFF7ED; color: #F59E0B; }
     .tx-icon.withdraw { background: #FFF8E7; color: #D4A853; }
 
     .tx-info { flex: 1; min-width: 0; }
@@ -277,6 +278,18 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
         <div class="tx-right">
           <div class="tx-amount negative">-380.00</div>
           <div class="tx-balance">余额 1,800.00</div>
+        </div>
+      </div>
+
+      <div class="tx-item">
+        <div class="tx-icon prededuct"><i class="fas fa-rotate-left"></i></div>
+        <div class="tx-info">
+          <div class="tx-title">订单超时取消 - 预扣退回</div>
+          <div class="tx-time">2026-04-24 09:15</div>
+        </div>
+        <div class="tx-right">
+          <div class="tx-amount positive">+300.00</div>
+          <div class="tx-balance">余额 2,180.00</div>
         </div>
       </div>
 

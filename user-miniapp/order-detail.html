@@ -1301,16 +1301,8 @@ function cancelOrder() {
   showToast('订单已取消');
 }
 
-// [模拟] 待支付订单开关 — true=有待支付订单, false=无
-var _simHasPendingOrder = true;
-
 function payNow() {
-  // [模拟] 检查是否存在待支付订单（即当前订单）
-  if (_simHasPendingOrder) {
-    showPendingOrderModal();
-    return;
-  }
-  showPaymentModal();
+  showPreselectedPayConfirm();
 }
 
 // [模拟] 待支付订单冲突弹窗
@@ -1375,7 +1367,6 @@ function closePendingOrderModal() {
 // 继续支付此订单 — 展示已选支付方式确认弹窗
 function continuePayThisOrder() {
   closePendingOrderModal();
-  _simHasPendingOrder = false;
   showPreselectedPayConfirm();
 }
 
@@ -1428,7 +1419,7 @@ function showPreselectedPayConfirm() {
     html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F0F1F5;">';
     html += '<div style="display:flex;align-items:center;gap:10px;">';
     html += '<div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#FF6B4A,#FF8A6E);display:flex;align-items:center;justify-content:center;"><i class="fas fa-wallet" style="font-size:14px;color:#fff;"></i></div>';
-    html += '<span style="font-size:14px;font-weight:500;color:#1A1A2E;">钱包支付</span>';
+    html += '<div><span style="font-size:14px;font-weight:500;color:#1A1A2E;">钱包支付</span><br><span style="font-size:11px;color:#FF6B4A;">已预扣 ¥' + PRESELECT_PAY.wallet.toFixed(2) + '</span></div>';
     html += '</div>';
     html += '<span style="font-size:15px;font-weight:600;color:#1A1A2E;">¥' + PRESELECT_PAY.wallet.toFixed(2) + '</span>';
     html += '</div>';
@@ -1439,7 +1430,7 @@ function showPreselectedPayConfirm() {
     html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;">';
     html += '<div style="display:flex;align-items:center;gap:10px;">';
     html += '<div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#D4A853,#E8C878);display:flex;align-items:center;justify-content:center;"><i class="fas fa-credit-card" style="font-size:14px;color:#fff;"></i></div>';
-    html += '<div><span style="font-size:14px;font-weight:500;color:#1A1A2E;">充值卡支付</span><br><span style="font-size:11px;color:#8E95A9;">' + PRESELECT_PAY.cardName + '</span></div>';
+    html += '<div><span style="font-size:14px;font-weight:500;color:#1A1A2E;">充值卡支付</span><br><span style="font-size:11px;color:#D4A853;">' + PRESELECT_PAY.cardName + ' · 已预扣 ¥' + PRESELECT_PAY.card.toFixed(2) + '</span></div>';
     html += '</div>';
     html += '<span style="font-size:15px;font-weight:600;color:#1A1A2E;">¥' + PRESELECT_PAY.card.toFixed(2) + '</span>';
     html += '</div>';
@@ -2013,7 +2004,6 @@ function confirmWalletPassword() {
 // 关闭此订单（待支付订单取消）
 function closeThisPendingOrder() {
   closePendingOrderModal();
-  _simHasPendingOrder = false;
   cancelOrder();
 }
 
