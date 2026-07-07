@@ -4045,8 +4045,8 @@ table { border-collapse: collapse; width: 100%; }
 .status-tag.sold-out .dot { background: #EF4444; }
 .status-tag.ended { background: rgba(107,114,128,0.1); color: #6B7280; }
 .status-tag.ended .dot { background: #9CA3AF; }
-.status-tag.off-shelf { background: rgba(107,114,128,0.1); color: #6B7280; }
-.status-tag.off-shelf .dot { background: #9CA3AF; }
+.status-tag.off-shelf { background: rgba(212,168,83,0.1); color: #B8922F; }
+.status-tag.off-shelf .dot { background: #D4A853; }
 .status-tag.draft { background: rgba(156,163,175,0.1); color: #6B7280; }
 .status-tag.draft .dot { background: #9CA3AF; }
 
@@ -6847,7 +6847,7 @@ select.form-select-sm,
           <div class="show-stat-card">
             <div class="show-stat-icon draft" style="background:rgba(156,163,175,0.1);color:#9CA3AF;"><i class="fas fa-file-pen"></i></div>
             <div class="show-stat-info">
-              <div class="stat-value" style="color:#9CA3AF;">2</div>
+              <div class="stat-value" style="color:#9CA3AF;">1</div>
               <div class="stat-label">待发布</div>
             </div>
           </div>
@@ -6856,6 +6856,13 @@ select.form-select-sm,
             <div class="show-stat-info">
               <div class="stat-value" style="color:var(--emerald);">5</div>
               <div class="stat-label">售票中</div>
+            </div>
+          </div>
+          <div class="show-stat-card">
+            <div class="show-stat-icon" style="background:rgba(212,168,83,0.1);color:#B8922F;"><i class="fas fa-pause-circle"></i></div>
+            <div class="show-stat-info">
+              <div class="stat-value" style="color:#B8922F;">1</div>
+              <div class="stat-label">已下架</div>
             </div>
           </div>
           <div class="show-stat-card">
@@ -6889,6 +6896,7 @@ select.form-select-sm,
             <button class="status-filter-btn">待发布</button>
             <button class="status-filter-btn">未开票</button>
             <button class="status-filter-btn">售票中</button>
+            <button class="status-filter-btn">已下架</button>
             <button class="status-filter-btn">已结束</button>
           </div>
           <div class="filter-dropdown-wrap">
@@ -6942,14 +6950,6 @@ select.form-select-sm,
                   <span>至</span>
                   <input type="date" class="form-input" value="2026-06-30">
                 </div>
-              </div>
-              <div class="filter-dropdown-item">
-                <label>上下架状态</label>
-                <select class="form-select">
-                  <option value="">全部</option>
-                  <option value="on">已上架</option>
-                  <option value="off">已下架</option>
-                </select>
               </div>
               <div class="filter-dropdown-footer">
                 <a href="javascript:void(0)" class="filter-reset">重置筛选</a>
@@ -7209,12 +7209,12 @@ select.form-select-sm,
                   <div class="revenue-section-label">开票时间</div>
                   <div class="revenue-sub">2026-07-01 10:00</div>
                 </td>
-                <td><span class="status-tag draft"><span class="dot"></span>待发布</span></td>
+                <td><span class="status-tag not-opened"><span class="dot"></span>未开票</span></td>
                 <td>
                   <div class="action-btns">
                     <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-edit"></i> 编辑</button>
                     <button class="action-btn view" onclick="switchToSessions('《不老的东坡》诗舞乐')"><i class="fas fa-calendar-days"></i> 场次</button>
-                    <button class="action-btn publish" onclick="openPublishShowModal(this)"><i class="fas fa-rocket"></i> 发布</button>
+                    <button class="action-btn published" disabled title="开票时间：2026-07-10 10:00"><i class="fas fa-ticket"></i> 7-10开票</button>
                     <button class="action-btn tag" onclick="openTagModal(this)"><i class="fas fa-tag"></i> 标签</button>
                     <button class="action-btn delete" onclick="openDeleteShowModal(this)"><i class="fas fa-trash"></i> 删除</button>
                   </div>
@@ -7280,7 +7280,7 @@ select.form-select-sm,
                       <div class="show-name" title="《寻光》琼剧歌舞">《寻光》琼剧歌舞</div>
                       <span class="type-tag" style="margin-top:4px;">琼剧</span>
                       <div class="show-venue"><i class="fas fa-location-dot"></i>海南省歌舞剧院 · 小剧场</div>
-                      <div class="show-date-range"><i class="fas fa-calendar"></i>2026-06-01 至 2026-06-15</div>
+                      <div class="show-date-range"><i class="fas fa-calendar"></i>2026-07-10 至 2026-07-20</div>
                     </div>
                   </div>
                 </td>
@@ -7292,28 +7292,29 @@ select.form-select-sm,
                 </td>
                 <td>
                   <div class="revenue-section-label">累计</div>
-                  <div class="revenue-main">¥86,400</div>
+                  <div class="revenue-main">¥57,600</div>
                   <div class="ticket-detail">
-                    <span class="ticket-sold">已售 360</span>
+                    <span class="ticket-sold">已售 240</span>
                     <span class="ticket-total">/ 600</span>
-                    <span class="ticket-pct">60%</span>
+                    <span class="ticket-pct">40%</span>
                   </div>
                   <div class="progress-bar-inline-wrap" style="margin-top:4px;">
                     <div class="progress-bar-inline">
-                      <div class="progress-bar-fill" style="width:60%;height:6px;"></div>
+                      <div class="progress-bar-fill" style="width:40%;height:6px;"></div>
                     </div>
                   </div>
                   <hr class="revenue-divider">
-                  <div class="revenue-section-label">最近场次 06-15</div>
-                  <div class="revenue-sub">¥28,800 / 已售 120</div>
+                  <div class="revenue-section-label">已下架 · 暂停售票</div>
+                  <div class="revenue-sub">下架前已售 240 / 600</div>
                 </td>
-                <td><span class="status-tag off-shelf"><span class="dot"></span>已结束</span></td>
+                <td><span class="status-tag off-shelf"><span class="dot"></span>已下架</span></td>
                 <td>
                   <div class="action-btns">
                     <button class="action-btn edit" onclick="openEditShow(this)"><i class="fas fa-eye"></i> 查看</button>
                     <button class="action-btn view" onclick="switchToSessions('《寻光》琼剧歌舞')"><i class="fas fa-calendar-days"></i> 场次</button>
-                    <button class="action-btn published" disabled title="开票时间：2026-02-20 10:00"><i class="fas fa-ticket"></i> 2-20开票</button>
+                    <button class="action-btn published" disabled title="开票时间：2026-06-20 10:00"><i class="fas fa-ticket"></i> 6-20开票</button>
                     <button class="action-btn tag" onclick="openTagModal(this)"><i class="fas fa-tag"></i> 标签</button>
+                    <button class="action-btn off-shelf" data-sold="240" onclick="toggleShowStatus(this)"><i class="fas fa-toggle-off"></i> 上架</button>
                     <button class="action-btn delete" onclick="openDeleteShowModal(this)"><i class="fas fa-trash"></i> 删除</button>
                   </div>
                 </td>
@@ -10814,27 +10815,58 @@ function confirmPublishShow() {
   var row = window._pendingPublishRow;
   if (row) {
     var statusTag = row.querySelector('.status-tag');
-    if (statusTag) {
-      statusTag.className = 'status-tag selling';
-      statusTag.innerHTML = '<span class="dot"></span>售票中';
+    var openTimeVal = document.getElementById('publishOpenTime').value;
+    var dateLabel = '';
+    var isFutureOpen = false;
+
+    if (openTimeVal) {
+      var parts = openTimeVal.split('T')[0].split('-');
+      if (parts.length === 3) {
+        dateLabel = parseInt(parts[1], 10) + '-' + parseInt(parts[2], 10) + '开票';
+      }
+      // 判断开票时间是否在未来
+      var openDate = new Date(openTimeVal.replace('T', ' '));
+      isFutureOpen = openDate > new Date();
     }
+
+    if (statusTag) {
+      if (isFutureOpen) {
+        // 开票时间在未来 → 未开票
+        statusTag.className = 'status-tag not-opened';
+        statusTag.innerHTML = '<span class="dot"></span>未开票';
+      } else {
+        // 立即开票 → 售票中
+        statusTag.className = 'status-tag selling';
+        statusTag.innerHTML = '<span class="dot"></span>售票中';
+      }
+    }
+
     var publishBtn = row.querySelector('.action-btn.publish');
     if (publishBtn) {
-      var openTimeVal = document.getElementById('publishOpenTime').value;
-      var dateLabel = '';
-      if (openTimeVal) {
-        var parts = openTimeVal.split('T')[0].split('-');
-        if (parts.length === 3) {
-          dateLabel = parseInt(parts[1], 10) + '-' + parseInt(parts[2], 10) + '开票';
-        }
-      }
       publishBtn.className = 'action-btn published';
-      publishBtn.disabled = false;
-      publishBtn.title = '开票时间：' + (openTimeVal || '');
-      publishBtn.innerHTML = '<i class="fas fa-check-circle"></i> 已发布' + (dateLabel ? ' ' + dateLabel : '');
+      publishBtn.disabled = true;
+      publishBtn.title = '开票时间：' + (openTimeVal || '立即');
+      publishBtn.innerHTML = '<i class="fas fa-ticket"></i> ' + (dateLabel || '已开票');
       publishBtn.onclick = null;
     }
-    showToast('演出已发布');
+
+    // 未开票状态：无下架按钮
+    // 售票中状态：添加下架按钮
+    if (!isFutureOpen) {
+      var actionDiv = row.querySelector('.action-btns');
+      var existingShelf = actionDiv.querySelector('.on-shelf, .off-shelf');
+      if (!existingShelf) {
+        var shelfBtn = document.createElement('button');
+        shelfBtn.className = 'action-btn on-shelf';
+        shelfBtn.setAttribute('data-sold', '0');
+        shelfBtn.setAttribute('onclick', 'toggleShowStatus(this)');
+        shelfBtn.innerHTML = '<i class="fas fa-toggle-on"></i> 下架';
+        var deleteBtn = actionDiv.querySelector('.action-btn.delete');
+        actionDiv.insertBefore(shelfBtn, deleteBtn);
+      }
+    }
+
+    showToast(isFutureOpen ? '演出已发布，等待开票' : '演出已发布，正在售票');
   }
   closeModal('modalPublishShow');
   window._pendingPublishRow = null;
@@ -10851,9 +10883,8 @@ function confirmForceOffShelf() {
     btn.classList.remove('on-shelf');
     btn.classList.add('off-shelf');
     var statusTag = btn.closest('tr').querySelector('.status-tag');
-    if (statusTag) { statusTag.className = 'status-tag off-shelf'; statusTag.innerHTML = '<span class="dot"></span>已结束'; }
-    btn.setAttribute('data-sold', '0');
-    showToast('演出已下架');
+    if (statusTag) { statusTag.className = 'status-tag off-shelf'; statusTag.innerHTML = '<span class="dot"></span>已下架'; }
+    showToast('演出已下架，暂停售票');
   }
   closeModal('modalConfirmOffShelf');
   window._pendingToggleBtn = null;

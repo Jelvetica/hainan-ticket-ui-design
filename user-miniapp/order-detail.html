@@ -1438,19 +1438,6 @@ function showPreselectedPayConfirm() {
 
   html += '</div>';
 
-  // 支付流程提示
-  html += '<div style="font-size:11px;color:#B8BCCE;text-align:center;margin-bottom:20px;line-height:1.6;">';
-  if (PRESELECT_PAY.wallet > 0 && PRESELECT_PAY.wechat > 0) {
-    html += '支付流程：钱包密码验证 → 微信支付 → 完成';
-  } else if (PRESELECT_PAY.wallet > 0) {
-    html += '支付流程：钱包密码验证 → 完成';
-  } else if (PRESELECT_PAY.wechat > 0) {
-    html += '支付流程：微信支付 → 完成';
-  } else {
-    html += '充值卡已全额抵扣，确认即可完成';
-  }
-  html += '</div>';
-
   // 确认支付按钮
   html += '<button style="width:100%;height:50px;background:linear-gradient(135deg,#FF6B4A,#FF8A6A);color:#fff;border:none;border-radius:25px;font-size:16px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:0 4px 16px rgba(255,107,74,0.3);" onclick="startPreselectedPay()">确认支付</button>';
 
