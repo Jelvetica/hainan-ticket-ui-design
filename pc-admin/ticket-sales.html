@@ -2871,7 +2871,7 @@ select.form-select-sm,
           </div>
         </div>
         <div class="st-right-panel">
-          <div class="st-panel-card">
+          <div class="st-panel-card st-selected-seats-card" style="height:500px;">
             <div class="st-panel-card-header">
               <i class="fas fa-check-circle"></i> 已选座位
               <span style="margin-left:auto;font-size:11px;color:#94A3B8;font-weight:400;" id="chSelectedCount">0 个</span>
@@ -4984,6 +4984,7 @@ function chRenderChannelList() {
     html += '  <div style="width:12px;height:12px;border-radius:3px;background:' + ch.color + ';flex-shrink:0;"></div>';
     html += '  <span style="flex:1;font-size:12.5px;font-weight:' + (isActive ? '600' : '400') + ';color:' + (isActive ? ch.color : '#2D3748') + ';">' + ch.name + '</span>';
     html += '  <span style="font-size:11px;color:#94A3B8;">' + ch.count + '座</span>';
+    html += '  <button onclick="event.stopPropagation();chDeleteChannel(\'' + ch.name + '\')" title="删除渠道" style="flex-shrink:0;width:22px;height:22px;border:none;background:transparent;color:#94A3B8;cursor:pointer;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;" onmouseover="this.style.color=\'#EF4444\';this.style.background=\'#FEF2F2\';" onmouseout="this.style.color=\'#94A3B8\';this.style.background=\'transparent\';"><i class="fas fa-trash-alt"></i></button>';
     html += '</div>';
   });
   container.innerHTML = html;
@@ -4993,6 +4994,23 @@ function chSelectChannel(name) {
   chState.activeChannel = name;
   chRenderChannelList();
   chUpdateUI();
+}
+
+function chDeleteChannel(name) {
+  var ch = chState.channels.find(function(c) { return c.name === name; });
+  if (!ch) return;
+  if (ch.count > 0) {
+    showToast('warning', '渠道"' + name + '"仍有 ' + ch.count + ' 个已分配座位，请先清空再删除');
+    return;
+  }
+  chState.channels = chState.channels.filter(function(c) { return c.name !== name; });
+  delete chChannelColors[name];
+  if (chState.activeChannel === name) {
+    chState.activeChannel = chState.channels.length > 0 ? chState.channels[0].name : null;
+  }
+  chRenderChannelList();
+  chRenderSeatMap();
+  showToast('success', '已删除渠道: ' + name);
 }
 
 var chSelectedColor = '#FF6B35';
