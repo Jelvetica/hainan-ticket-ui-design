@@ -4748,21 +4748,19 @@ select.form-select-sm,
                                 <div class="gc-current">当前比例：<strong>1:1</strong></div>
                             </div>
                         </div>
-                        <div class="growth-config-card">
+                        <div class="growth-config-card" id="growthActivityCard">
                             <div class="gc-header">
                                 <div class="gc-icon gc-icon--accent"><i class="fas fa-bolt"></i></div>
                                 <div class="gc-title">充值成长值活动</div>
+                                <label class="benefit-toggle" style="margin-left:auto;">
+                                    <input type="checkbox" id="growthActivityToggle" onchange="toggleGrowthActivity(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span id="growthActivityStatus" style="font-size:12px;color:var(--text-light);font-weight:600;width:32px;">已关闭</span>
                             </div>
-                            <div class="gc-body">
+                            <div class="gc-body" id="growthActivityBody" style="opacity:0.4;pointer-events:none;">
                                 <div class="gc-desc">设置限时活动，活动期间充值可获得额外成长值加成</div>
-                                <div class="gc-activity-toggle">
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" id="growthActivityToggle" onchange="toggleGrowthActivity(this)">
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                    <span class="gc-toggle-label">开启活动</span>
-                                </div>
-                                <div class="gc-activity-form" id="growthActivityForm" style="display:none;">
+                                <div class="gc-activity-form" id="growthActivityForm">
                                     <div class="gc-form-row">
                                         <label class="gc-form-label">活动名称</label>
                                         <input type="text" class="gc-form-input" placeholder="例如：五一充值狂欢" value="">
@@ -4799,43 +4797,43 @@ select.form-select-sm,
                                 <span id="inviteRewardStatus" style="font-size:12px;color:var(--emerald);font-weight:600;width:32px;">已开启</span>
                             </div>
                             <div class="gc-body" id="inviteRewardBody">
-                                <div class="gc-desc">邀请好友充值达标后，双方各获成长值奖励 · 目标等级为 <strong style="color:#8B6F3C;">L2 银卡会员</strong></div>
+                                <div class="gc-desc">邀请好友充值达标开通 L2 银卡，双方各获成长值奖励</div>
 
-                                <!-- 银卡门槛提示 -->
-                                <div style="background:rgba(212,168,83,0.06);border:1px solid rgba(212,168,83,0.25);border-radius:8px;padding:10px 14px;margin-bottom:16px;display:flex;align-items:center;gap:8px;">
-                                    <i class="fas fa-info-circle" style="color:#D4A853;font-size:14px;"></i>
-                                    <span style="font-size:12px;color:#8B6F3C;">当前 L2 银卡会员成长值门槛：<strong style="font-size:15px;color:#D4A853;">1,000</strong>，请据此合理配置以下参数</span>
+                                <!-- 参考信息 -->
+                                <div style="display:flex;gap:8px;margin-bottom:16px;">
+                                    <div style="flex:1;background:rgba(212,168,83,0.06);border:1px solid rgba(212,168,83,0.2);border-radius:8px;padding:8px 12px;text-align:center;">
+                                        <div style="font-size:11px;color:#8B6F3C;">银卡门槛</div>
+                                        <div style="font-size:16px;font-weight:700;color:#D4A853;">1,000</div>
+                                    </div>
+                                    <div style="flex:1;background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.2);border-radius:8px;padding:8px 12px;text-align:center;">
+                                        <div style="font-size:11px;color:#6366F1;">充值比例</div>
+                                        <div style="font-size:16px;font-weight:700;color:#6366F1;">1元=1</div>
+                                    </div>
+                                    <div style="flex:1;background:rgba(255,107,74,0.06);border:1px solid rgba(255,107,74,0.2);border-radius:8px;padding:8px 12px;text-align:center;">
+                                        <div style="font-size:11px;color:#FF6B4A;">活动比例</div>
+                                        <div style="font-size:16px;font-weight:700;color:#FF6B4A;">1元=2</div>
+                                    </div>
                                 </div>
 
                                 <div class="gc-setting" style="margin-bottom:12px;">
                                     <span class="gc-label">邀请奖励</span>
                                     <input type="number" class="gc-input gc-input--md" id="inviteRewardGrowth" value="1000">
                                     <span class="gc-unit">成长值</span>
-                                    <span style="font-size:11px;color:var(--text-light);margin-left:8px;">（每成功邀请1人充值，邀请者获得的成长值）</span>
                                 </div>
                                 <div class="gc-setting" style="margin-bottom:12px;">
                                     <span class="gc-label">被邀请者充值</span>
                                     <input type="number" class="gc-input gc-input--md" id="inviteRechargeAmount" value="800">
                                     <span class="gc-unit">元</span>
-                                    <span style="font-size:11px;color:var(--text-light);margin-left:8px;">（被邀请者需充值的金额）</span>
                                 </div>
-                                <div class="gc-setting" style="margin-bottom:16px;">
+                                <div class="gc-setting" style="margin-bottom:12px;">
                                     <span class="gc-label">赠送</span>
                                     <input type="number" class="gc-input gc-input--md" id="inviteBonusGrowth" value="200">
                                     <span class="gc-unit">成长值</span>
-                                    <span style="font-size:11px;color:var(--text-light);margin-left:8px;">（被邀请者充值后额外赠送的成长值）</span>
                                 </div>
 
-                                <!-- 配置提示 -->
-                                <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:14px 16px;">
-                                    <div style="font-size:13px;font-weight:600;color:#475569;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
-                                        <i class="fas fa-lightbulb" style="color:#D4A853;"></i> 配置提示
-                                    </div>
-                                    <div style="font-size:12px;color:#64748B;line-height:1.9;">
-                                        以上三项参数均由管理员手动配置，系统不做自动运算。<br>
-                                        配置时请确保：充值成长值 + 赠送成长值 ≥ 银卡门槛（1,000），<br>
-                                        被邀请者才能通过充值达标开通银卡会员。
-                                    </div>
+                                <div style="font-size:11px;color:var(--text-light);line-height:1.6;">
+                                    ※ 按当前充值比例，充 <strong>¥800</strong> 得 <strong>800</strong> 成长值 + 赠送 <strong>200</strong> = 合计 <strong>1,000</strong> 达银卡门槛<br>
+                                    ※ 活动期间充值比例 1元=2成长值，可降低充值金额或赠送成长值
                                 </div>
                             </div>
                         </div>
@@ -6180,11 +6178,19 @@ select.form-select-sm,
         }
 
         function toggleGrowthActivity(checkbox) {
-            var form = document.getElementById('growthActivityForm');
+            var body = document.getElementById('growthActivityBody');
+            var status = document.getElementById('growthActivityStatus');
             if (checkbox.checked) {
-                form.style.display = 'block';
+                body.style.opacity = '1';
+                body.style.pointerEvents = 'auto';
+                status.textContent = '已开启';
+                status.style.color = 'var(--emerald)';
+                body.querySelectorAll('input').forEach(function(input) { input.disabled = false; });
             } else {
-                form.style.display = 'none';
+                body.style.opacity = '0.4';
+                body.style.pointerEvents = 'none';
+                status.textContent = '已关闭';
+                status.style.color = 'var(--text-light)';
             }
         }
 
