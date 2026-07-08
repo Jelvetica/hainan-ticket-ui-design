@@ -947,6 +947,8 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
   let packageDeduction = 0; // 套票观演券抵扣
   let couponDeduction = 0; // 优惠券抵扣
   let pointsDeduction = 0; // 积分抵扣金额
+  let isWalletPasswordSet = false; // 用户是否已设置钱包支付密码
+  let walletPasswordValue = ''; // 临时存储新密码输入
 
   // 计算基础金额
   seatsData.forEach(function(s) {
@@ -1807,10 +1809,14 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
     proceedToPayment();
   }
 
-  // 进入支付环节（钱包密码 → 微信支付 → 完成）
+  // 进入支付环节（检查密码设置 → 钱包密码 → 微信支付 → 完成）
   function proceedToPayment() {
-    // 使用了钱包支付时，先验证钱包密码（无论是否混合微信支付）
+    // 使用了钱包支付时，先检查是否已设置支付密码
     if (walletEnabled && walletUsed > 0) {
+      if (!isWalletPasswordSet) {
+        showWalletPasswordSetupModal();
+        return;
+      }
       showWalletPasswordModal();
       return;
     }
@@ -1929,6 +1935,99 @@ function goBack(f){var m=location.search.match(/[?&]from=([^&]+)/);if(m)location
     });
     window.location.href = 'order-success.html?' + params.toString();
   }
+
+  // ========== Wallet Password Setup Modal ==========
+  function showWalletPasswordSetupModal() {
+    const overlay = document.createElement('div');
+    overlay.className = 'coupon-overlay';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(10,22,40,0.5);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:200;opacity:0;transition:opacity 0.3s ease;';
+
+    const sheet = document.createElement('div');
+    sheet.style.cssText = 'position:fixed;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);width:100%;max-width:375px;background:#fff;border-radius:20px 20px 0 0;z-index:201;transition:transform 0.35s cubic-bezier(0.32,0.72,0,1);max-height:78vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:24px 20px calc(24px + env(safe-area-inset-bottom));box-shadow:0 -8px 40px rgba(10,22,40,0.12);';
+
+    let html = '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">' +
+      '<span style="font-size:17px;font-weight:700;color:#0A1628;">设置支付密码</span>' +
+      '<span style="width:28px;height:28px;border-radius:50%;background:#F5F6FA;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#8E95A9;font-size:14px;" onclick="closeWalletPasswordSetupModal()"><i class="fas fa-times"></i></span>' +
+      '</div>';
+    html += '<div style="font-size:12px;color:#FF6B4A;background:#FFF5F2;padding:8px 12px;border-radius:8px;margin-bottom:16px;display:flex;align-items:center;gap:6px;"><i class="fas fa-exclamation-circle"></i>请先设置支付密码，再使用钱包支付</div>';
+    html += '<div style="font-size:13px;color:#8E95A9;text-align:center;margin-bottom:16px;">请设置6位数字支付密码</div>';
+    html += '<div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:24px;">';
+    for (let i = 0; i < 6; i++) {
+      html += '<div class="wallet-pwd-dot" data-idx="' + i + '" style="width:40px;height:40px;border:1.5px solid #E8E9ED;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#0A1628;background:#fff;transition:border-color 0.2s;"></div>';
+    }
+    html += '</div>';
+    html += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;">';
+    for (let i = 1; i <= 9; i++) {
+      html += '<button style="height:48px;border:none;border-radius:12px;background:#F5F6FA;font-size:20px;font-weight:600;color:#0A1628;cursor:pointer;font-family:inherit;" onclick="setupPwdKeyPress(' + i + ')">' + i + '</button>';
+    }
+    html += '<button style="height:48px;border:none;border-radius:12px;background:transparent;cursor:default;pointer-events:none;"></button>';
+    html += '<button style="height:48px;border:none;border-radius:12px;background:#F5F6FA;font-size:20px;font-weight:600;color:#0A1628;cursor:pointer;font-family:inherit;" onclick="setupPwdKeyPress(0)">0</button>';
+    html += '<button style="height:48px;border:none;border-radius:12px;background:transparent;font-size:14px;color:#8E95A9;cursor:pointer;font-family:inherit;" onclick="setupPwdDelete()"><i class="fas fa-delete-left"></i></button>';
+    html += '</div>';
+    html += '<button style="width:100%;height:48px;background:linear-gradient(135deg,#FF6B4A,#FF8A6A);color:#fff;border:none;border-radius:24px;font-size:16px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:0 4px 16px rgba(255,107,74,0.3);" onclick="confirmWalletPasswordSetup()">确认设置</button>';
+
+    sheet.innerHTML = html;
+    document.body.appendChild(overlay);
+    document.body.appendChild(sheet);
+
+    window._setupPwdValue = '';
+    window._setupPwdOverlay = overlay;
+    window._setupPwdSheet = sheet;
+
+    requestAnimationFrame(() => {
+      overlay.style.opacity = '1';
+      sheet.style.transform = 'translateX(-50%) translateY(0)';
+    });
+    overlay.onclick = closeWalletPasswordSetupModal;
+  }
+
+  window.closeWalletPasswordSetupModal = function() {
+    if (window._setupPwdOverlay) window._setupPwdOverlay.remove();
+    if (window._setupPwdSheet) window._setupPwdSheet.remove();
+    window._setupPwdValue = '';
+  };
+
+  window.setupPwdKeyPress = function(num) {
+    if (window._setupPwdValue.length >= 6) return;
+    window._setupPwdValue += num;
+    updateSetupPwdDots();
+  };
+
+  window.setupPwdDelete = function() {
+    if (window._setupPwdValue.length <= 0) return;
+    window._setupPwdValue = window._setupPwdValue.slice(0, -1);
+    updateSetupPwdDots();
+  };
+
+  function updateSetupPwdDots() {
+    var dots = document.querySelectorAll('.wallet-pwd-dot');
+    var val = window._setupPwdValue || '';
+    dots.forEach(function(dot, i) {
+      if (i < val.length) {
+        dot.style.borderColor = '#FF6B4A';
+        dot.style.background = '#FFF5F2';
+        dot.textContent = '●';
+        dot.style.fontSize = '14px';
+      } else {
+        dot.style.borderColor = '#E8E9ED';
+        dot.style.background = '#fff';
+        dot.textContent = '';
+      }
+    });
+  }
+
+  window.confirmWalletPasswordSetup = function() {
+    if (!window._setupPwdValue || window._setupPwdValue.length < 6) {
+      showToast('请输入完整的6位密码');
+      return;
+    }
+    // 设置成功
+    isWalletPasswordSet = true;
+    walletPasswordValue = window._setupPwdValue;
+    closeWalletPasswordSetupModal();
+    // 关闭设置弹窗后，继续弹出钱包密码验证弹窗
+    showWalletPasswordModal();
+  };
 
   // ========== Wallet Password Modal ==========
   function showWalletPasswordModal() {
