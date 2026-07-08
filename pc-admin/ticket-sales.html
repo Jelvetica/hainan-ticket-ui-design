@@ -2886,7 +2886,13 @@ select.form-select-sm,
             </div>
           </div>
           <div class="st-panel-card">
-            <div class="st-panel-card-header"><i class="fas fa-share-alt"></i> 渠道管理</div>
+            <div class="st-panel-card-header">
+              <i class="fas fa-share-alt"></i> 渠道管理
+              <label class="benefit-toggle" style="margin-left:auto;" title="显示已停用渠道">
+                <input type="checkbox" id="chShowInactive" onchange="chRenderChannelList()">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
             <div class="st-panel-card-body">
               <div id="chChannelList">
                 <!-- 由JS渲染渠道列表 -->
@@ -4603,10 +4609,10 @@ var chState = {
   seatData: {},
   zones: [],
   channels: [
-    { code: 'DAMAI', name: '大麦', color: '#FF6B35', count: 0 },
-    { code: 'MAOYAN', name: '猫眼', color: '#E4393C', count: 0 },
-    { code: 'DOUYIN', name: '抖音', color: '#111', count: 0 },
-    { code: 'MEITUAN', name: '美团', color: '#FFD100', count: 0 }
+    { code: 'DAMAI', name: '大麦', color: '#FF6B35', count: 0, status: 'active' },
+    { code: 'MAOYAN', name: '猫眼', color: '#E4393C', count: 0, status: 'active' },
+    { code: 'DOUYIN', name: '抖音', color: '#111', count: 0, status: 'active' },
+    { code: 'MEITUAN', name: '美团', color: '#FFD100', count: 0, status: 'active' }
   ],
   activeChannel: null,
   selectedShow: null,
@@ -4980,16 +4986,31 @@ function chHideTip() {
 function chRenderChannelList() {
   var container = document.getElementById('chChannelList');
   if (!container) return;
+  var showInactive = document.getElementById('chShowInactive') && document.getElementById('chShowInactive').checked;
   var html = '';
   chState.channels.forEach(function(ch) {
+    if (ch.status === 'inactive' && !showInactive) return;
     var isActive = chState.activeChannel === ch.name;
+    var isInactive = ch.status === 'inactive';
+    var opacity = isInactive ? '0.5' : '1';
     html += '<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:all 0.2s;margin-bottom:4px;border:1.5px solid '
-      + (isActive ? ch.color : '#E2E8F0') + ';background:' + (isActive ? ch.color + '15' : '#fff') + ';" onclick="chSelectChannel(\'' + ch.name + '\')">';
+      + (isActive ? ch.color : '#E2E8F0') + ';background:' + (isActive ? ch.color + '15' : '#fff') + ';opacity:' + opacity + ';" onclick="chSelectChannel(\'' + ch.name + '\')">';
     html += '  <div style="width:12px;height:12px;border-radius:3px;background:' + ch.color + ';flex-shrink:0;"></div>';
     html += '  <span style="flex:1;font-size:12.5px;font-weight:' + (isActive ? '600' : '400') + ';color:' + (isActive ? ch.color : '#2D3748') + ';">' + ch.name + '</span>';
-    html += '  <span style="font-size:11px;color:#94A3B8;">' + ch.count + '座</span>';
+    if (isInactive) {
+      html += '  <span style="font-size:10px;color:#94A3B8;background:#F1F5F9;padding:1px 5px;border-radius:3px;flex-shrink:0;">已停用</span>';
+    }
+    html += '  <span style="font-size:11px;color:#94A3B8;flex-shrink:0;">' + ch.count + '座</span>';
     html += '  <button onclick="event.stopPropagation();chEditChannel(\'' + ch.name + '\')" title="编辑渠道" style="flex-shrink:0;width:22px;height:22px;border:none;background:transparent;color:#94A3B8;cursor:pointer;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;" onmouseover="this.style.color=\'#3B82F6\';this.style.background=\'#EFF6FF\';" onmouseout="this.style.color=\'#94A3B8\';this.style.background=\'transparent\';"><i class="fas fa-pen"></i></button>';
-    html += '  <button onclick="event.stopPropagation();chDeleteChannel(\'' + ch.name + '\')" title="删除渠道" style="flex-shrink:0;width:22px;height:22px;border:none;background:transparent;color:#94A3B8;cursor:pointer;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;" onmouseover="this.style.color=\'#EF4444\';this.style.background=\'#FEF2F2\';" onmouseout="this.style.color=\'#94A3B8\';this.style.background=\'transparent\';"><i class="fas fa-trash-alt"></i></button>';
+    if (isInactive) {
+      html += '  <button onclick="event.stopPropagation();chToggleChannelStatus(\'' + ch.name + '\', \'active\')" title="启用渠道" style="flex-shrink:0;width:22px;height:22px;border:none;background:transparent;color:#94A3B8;cursor:pointer;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;" onmouseover="this.style.color=\'#10B981\';this.style.background=\'#ECFDF5\';" onmouseout="this.style.color=\'#94A3B8\';this.style.background=\'transparent\';"><i class="fas fa-toggle-off"></i></button>';
+    } else {
+      html += '  <button onclick="event.stopPropagation();chToggleChannelStatus(\'' + ch.name + '\', \'inactive\')" title="停用渠道" style="flex-shrink:0;width:22px;height:22px;border:none;background:transparent;color:#94A3B8;cursor:pointer;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;" onmouseover="this.style.color=\'#F59E0B\';this.style.background=\'#FFFBEB\';" onmouseout="this.style.color=\'#94A3B8\';this.style.background=\'transparent\';"><i class="fas fa-toggle-on"></i></button>';
+    }
+    // 删除按钮：仅无数据时显示
+    if (ch.count === 0) {
+      html += '  <button onclick="event.stopPropagation();chDeleteChannel(\'' + ch.name + '\')" title="删除渠道" style="flex-shrink:0;width:22px;height:22px;border:none;background:transparent;color:#94A3B8;cursor:pointer;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;" onmouseover="this.style.color=\'#EF4444\';this.style.background=\'#FEF2F2\';" onmouseout="this.style.color=\'#94A3B8\';this.style.background=\'transparent\';"><i class="fas fa-trash-alt"></i></button>';
+    }
     html += '</div>';
   });
   container.innerHTML = html;
@@ -5001,11 +5022,32 @@ function chSelectChannel(name) {
   chUpdateUI();
 }
 
+function chToggleChannelStatus(name, newStatus) {
+  var ch = chState.channels.find(function(c) { return c.name === name; });
+  if (!ch) return;
+  if (newStatus === 'inactive') {
+    if (ch.count > 0) {
+      showToast('warning', '渠道"' + name + '"仍有 ' + ch.count + ' 个已分配座位，请先清空再停用');
+      return;
+    }
+  }
+  ch.status = newStatus;
+  if (newStatus === 'inactive' && chState.activeChannel === name) {
+    // 自动切换到下一个启用渠道
+    var nextActive = chState.channels.find(function(c) { return c.status === 'active'; });
+    chState.activeChannel = nextActive ? nextActive.name : null;
+  }
+  chRenderChannelList();
+  chUpdateUI();
+  showToast('success', newStatus === 'active' ? '已启用渠道: ' + name : '已停用渠道: ' + name);
+}
+
 function chDeleteChannel(name) {
   var ch = chState.channels.find(function(c) { return c.name === name; });
   if (!ch) return;
+  // 严格限制：仅无数据可删
   if (ch.count > 0) {
-    showToast('warning', '渠道"' + name + '"仍有 ' + ch.count + ' 个已分配座位，请先清空再删除');
+    showToast('warning', '渠道"' + name + '"仍有 ' + ch.count + ' 个已分配座位，不可删除');
     return;
   }
   chState.channels = chState.channels.filter(function(c) { return c.name !== name; });
@@ -5111,6 +5153,12 @@ function chAssignChannel() {
   var selectedKeys = Object.keys(chState.selectedSeats);
   if (selectedKeys.length === 0) { showToast('warning', '请先选择座位'); return; }
   if (!chState.activeChannel) { showToast('warning', '请先选择目标渠道'); return; }
+
+  var activeCh = chState.channels.find(function(c) { return c.name === chState.activeChannel; });
+  if (activeCh && activeCh.status === 'inactive') {
+    showToast('warning', '渠道"' + chState.activeChannel + '"已停用，无法分配座位');
+    return;
+  }
 
   var channelName = chState.activeChannel;
   selectedKeys.forEach(function(sid) {
