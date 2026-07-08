@@ -2888,10 +2888,13 @@ select.form-select-sm,
           <div class="st-panel-card">
             <div class="st-panel-card-header">
               <i class="fas fa-share-alt"></i> 渠道管理
-              <label class="benefit-toggle" style="margin-left:auto;" title="显示已停用渠道">
-                <input type="checkbox" id="chShowInactive" onchange="chRenderChannelList()">
-                <span class="toggle-slider"></span>
-              </label>
+              <div style="margin-left:auto;display:flex;align-items:center;gap:6px;white-space:nowrap;">
+                <span style="font-size:11px;color:#94A3B8;">显示停用渠道</span>
+                <label class="benefit-toggle">
+                  <input type="checkbox" id="chShowInactive" onchange="chRenderChannelList()">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
             </div>
             <div class="st-panel-card-body">
               <div id="chChannelList">
@@ -5007,10 +5010,6 @@ function chRenderChannelList() {
     } else {
       html += '  <button onclick="event.stopPropagation();chToggleChannelStatus(\'' + ch.name + '\', \'inactive\')" title="停用渠道" style="flex-shrink:0;width:22px;height:22px;border:none;background:transparent;color:#94A3B8;cursor:pointer;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;" onmouseover="this.style.color=\'#F59E0B\';this.style.background=\'#FFFBEB\';" onmouseout="this.style.color=\'#94A3B8\';this.style.background=\'transparent\';"><i class="fas fa-toggle-on"></i></button>';
     }
-    // 删除按钮：仅无数据时显示
-    if (ch.count === 0) {
-      html += '  <button onclick="event.stopPropagation();chDeleteChannel(\'' + ch.name + '\')" title="删除渠道" style="flex-shrink:0;width:22px;height:22px;border:none;background:transparent;color:#94A3B8;cursor:pointer;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;" onmouseover="this.style.color=\'#EF4444\';this.style.background=\'#FEF2F2\';" onmouseout="this.style.color=\'#94A3B8\';this.style.background=\'transparent\';"><i class="fas fa-trash-alt"></i></button>';
-    }
     html += '</div>';
   });
   container.innerHTML = html;
@@ -5040,24 +5039,6 @@ function chToggleChannelStatus(name, newStatus) {
   chRenderChannelList();
   chUpdateUI();
   showToast('success', newStatus === 'active' ? '已启用渠道: ' + name : '已停用渠道: ' + name);
-}
-
-function chDeleteChannel(name) {
-  var ch = chState.channels.find(function(c) { return c.name === name; });
-  if (!ch) return;
-  // 严格限制：仅无数据可删
-  if (ch.count > 0) {
-    showToast('warning', '渠道"' + name + '"仍有 ' + ch.count + ' 个已分配座位，不可删除');
-    return;
-  }
-  chState.channels = chState.channels.filter(function(c) { return c.name !== name; });
-  delete chChannelColors[name];
-  if (chState.activeChannel === name) {
-    chState.activeChannel = chState.channels.length > 0 ? chState.channels[0].name : null;
-  }
-  chRenderChannelList();
-  chRenderSeatMap();
-  showToast('success', '已删除渠道: ' + name);
 }
 
 var chSelectedColor = '#FF6B35';
