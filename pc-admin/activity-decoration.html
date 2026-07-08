@@ -1535,6 +1535,12 @@ textarea.form-control {
   font-size: 12px;
 }
 
+.component-item.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
 /* --- Center Preview --- */
 .deco-preview {
   flex: 1;
@@ -5071,6 +5077,7 @@ function renderPreview() {
       ${componentTemplates[comp.type]()}
     </div>`;
   }).join('');
+  updateComponentPanelState();
 }
 
 // Select component
@@ -5102,8 +5109,26 @@ function removeComponent(index) {
 }
 
 // Drag from component panel
+function updateComponentPanelState() {
+  document.querySelectorAll('.component-item').forEach(item => {
+    var type = item.dataset.type;
+    var exists = previewComponents.some(function(c) { return c.type === type; });
+    if (exists) {
+      item.classList.add('disabled');
+      item.setAttribute('draggable', 'false');
+    } else {
+      item.classList.remove('disabled');
+      item.setAttribute('draggable', 'true');
+    }
+  });
+}
+
 document.querySelectorAll('.component-item').forEach(item => {
   item.addEventListener('dragstart', (e) => {
+    if (item.classList.contains('disabled')) {
+      e.preventDefault();
+      return;
+    }
     e.dataTransfer.setData('component-type', item.dataset.type);
     item.classList.add('dragging');
   });
