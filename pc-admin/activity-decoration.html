@@ -5682,7 +5682,6 @@ function openArchivedVersions() {
       html += '    <div class="version-time">' + v.time + ' · ' + compCount + ' 个组件</div>';
       html += '  </div>';
       html += '  <div class="version-actions">';
-      html += '    <button class="btn-restore" onclick="restoreVersion(' + v.id + ')" title="恢复到此版本"><i class="fas fa-rotate-left"></i></button>';
       html += '    <button class="btn-archive" onclick="unarchiveVersion(' + v.id + ')" title="取消归档"><i class="fas fa-box-open"></i></button>';
       html += '  </div>';
       html += '</div>';
@@ -5702,20 +5701,15 @@ function renderVersionList() {
   var latestId = sorted.length > 0 ? sorted[0].id : null;
 
   sorted.forEach(function(v) {
+    if (v.status === 'archived') return;
     var isCurrent = v.status === 'current';
-    var isArchived = v.status === 'archived';
     var compCount = v.components ? v.components.length : 0;
     html += '<div class="version-item" style="' + (isCurrent ? 'border:1.5px solid var(--gold);' : '') + '">';
-    if (isArchived) {
-      html += '  <div class="version-overlay"></div>';
-    }
     html += '  <div class="version-dot ' + v.status + '"></div>';
     html += '  <div class="version-info">';
     html += '    <div class="version-name">' + v.name;
     if (isCurrent) {
       html += '      <span class="version-badge current">当前</span>';
-    } else if (isArchived) {
-      html += '      <span class="version-badge" style="color:#94A3B8;">已归档</span>';
     }
     html += '    </div>';
     html += '    <div class="version-time">' + v.time + ' · ' + compCount + ' 个组件</div>';
@@ -5723,12 +5717,7 @@ function renderVersionList() {
     html += '  <div class="version-actions">';
     if (!isCurrent) {
       html += '    <button class="btn-restore" onclick="restoreVersion(' + v.id + ')" title="恢复到此版本"><i class="fas fa-rotate-left"></i></button>';
-    }
-    if (!isArchived && !isCurrent) {
       html += '    <button class="btn-archive" onclick="archiveVersion(' + v.id + ')" title="归档"><i class="fas fa-archive"></i></button>';
-    }
-    if (isArchived) {
-      html += '    <button class="btn-archive" onclick="unarchiveVersion(' + v.id + ')" title="取消归档"><i class="fas fa-box-open"></i></button>';
     }
     html += '  </div>';
     html += '</div>';
