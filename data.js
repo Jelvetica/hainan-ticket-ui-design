@@ -7991,6 +7991,53 @@ Tab切换交互：
 // entries.page 对应 devDocs 中的页面URL键名
 const changelogData = [
     {
+        date: '2026-07-09',
+        entries: [
+            {
+                page: 'pc-admin/marketing-center.html',
+                pageName: '营销中心',
+                module: '优惠券管理',
+                time: '18:30',
+                content: '优惠券列表新增已停用状态展示（元旦满减优惠券），已停用条目操作按钮"停用"改为绿色"启用"（fa-play图标）；新增status-stopped灰色样式'
+            },
+            {
+                page: 'pc-admin/member-management.html',
+                pageName: '会员管理',
+                module: '会员政策',
+                time: '18:30',
+                content: '充值成长值活动比例改为"1元=**成长值"格式（1元固定不可修改），与基础消费/充值成长值比例样式统一'
+            },
+            {
+                page: 'pc-admin/order-management.html',
+                pageName: '票务订单',
+                module: '订单详情',
+                time: '09:00',
+                content: '订单详情弹窗观演人信息改为仅姓名+身份证两个字段（移除手机号），12条订单数据attendeePhone统一替换为attendeeIdCard'
+            },
+            {
+                page: 'index.html',
+                pageName: '流程图文档',
+                module: '流程图',
+                time: '03:00',
+                content: '流程图弹窗新增"售票员操作流程/异常流程/渠道售票流程"（6章节：窗口售票3步流程+选座预约流程+待支付异常处理+渠道售票+系统拓扑图+关键数据流）；硬件设备用🔧emoji标识；明确收款成功即售票成功'
+            },
+            {
+                page: 'pc-admin/marketing-center.html',
+                pageName: '营销中心',
+                module: '优惠券管理',
+                time: '12:00',
+                content: '优惠券未开始状态的操作按钮从红色"停用"改为橙色"发布"（fa-play图标）'
+            },
+            {
+                page: 'presentation.html',
+                pageName: '演示页面',
+                module: '页面标题',
+                time: '15:00',
+                content: '"四大核心场景演示"改为"五大核心场景演示"'
+            }
+        ]
+    },
+    {
         date: '2026-07-08',
         entries: [
             {
