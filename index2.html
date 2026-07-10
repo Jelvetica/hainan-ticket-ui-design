@@ -1,0 +1,3678 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>艺术演出院线数字服务系统 - UI/UX 设计总览</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root {
+            --primary: #0A1628;
+            --accent: #FF6B4A;
+            --gold: #D4A853;
+            --green: #00C9A7;
+            --purple: #6366F1;
+            --bg: #F0F2F5;
+            --card: #FFFFFF;
+            --text: #1A202C;
+            --text-secondary: #64748B;
+            --border: #E2E8F0;
+            --shadow: 0 4px 24px rgba(10, 22, 40, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* ===== Top Navigation ===== */
+        .top-nav {
+            background: var(--primary);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+        }
+
+        .top-nav-inner {
+            max-width: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            height: 56px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 15px;
+            white-space: nowrap;
+            margin-right: 20px;
+        }
+
+        .nav-logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 2px;
+            flex: 1;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .nav-tabs::-webkit-scrollbar { display: none; }
+
+        .nav-tab {
+            padding: 8px 16px;
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 6px;
+            white-space: nowrap;
+            transition: all 0.2s;
+            border: none;
+            background: transparent;
+        }
+
+        .nav-tab:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .nav-tab.active {
+            color: #fff;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .nav-tab.pc { border-left: 3px solid var(--green); }
+        .nav-tab.user { border-left: 3px solid var(--accent); }
+        .nav-tab.admin { border-left: 3px solid var(--gold); }
+        .nav-tab.kiosk { border-left: 3px solid #8B5CF6; }
+
+        .nav-mode-toggle {
+            display: flex;
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            padding: 3px;
+            margin-left: 16px;
+        }
+
+        .mode-btn {
+            padding: 6px 12px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .mode-btn.active {
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+        }
+
+        /* ===== Page Dropdown ===== */
+        .page-dropdown {
+            position: relative;
+            margin-left: 12px;
+        }
+
+        /* ===== Scenario Dropdown ===== */
+        .scenario-dropdown {
+            position: relative;
+            margin-left: 12px;
+        }
+
+        .scenario-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            min-width: 280px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+        .scenario-dropdown-menu.show {
+            display: block;
+        }
+        .scenario-menu-header {
+            padding: 12px 16px 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent);
+            border-bottom: 1px solid #f0f0f0;
+            letter-spacing: 1px;
+        }
+        .scenario-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-bottom: 1px solid #f8f8f8;
+        }
+        .scenario-menu-item:last-child { border-bottom: none; }
+        .scenario-menu-item:hover {
+            background: #FFF5F0;
+        }
+        .scenario-menu-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .scenario-menu-item:nth-child(2) .scenario-menu-icon { background: rgba(255,107,74,0.15); color: #FF6B4A; }
+        .scenario-menu-item:nth-child(3) .scenario-menu-icon { background: rgba(0,201,167,0.15); color: #00C9A7; }
+        .scenario-menu-item:nth-child(4) .scenario-menu-icon { background: rgba(212,168,83,0.15); color: #D4A853; }
+        .scenario-menu-item:nth-child(5) .scenario-menu-icon { background: rgba(108,142,239,0.15); color: #6C8EEF; }
+        .scenario-menu-item:nth-child(6) .scenario-menu-icon { background: rgba(197,98,232,0.15); color: #C562E8; }
+        .scenario-menu-text {
+            flex: 1;
+        }
+        .scenario-menu-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1A202C;
+            margin-bottom: 2px;
+        }
+        .scenario-menu-desc {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .dropdown-btn {
+            padding: 8px 14px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dropdown-btn:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            min-width: 380px;
+            max-height: 70vh;
+            overflow: hidden;
+            display: none;
+            z-index: 1001;
+        }
+
+        .dropdown-menu.show {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Dropdown Tabs */
+        .dropdown-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            background: #F8FAFC;
+            border-radius: 12px 12px 0 0;
+            padding: 4px;
+            gap: 2px;
+        }
+
+        .dropdown-tab {
+            flex: 1;
+            padding: 8px 4px;
+            border: none;
+            background: transparent;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+
+        .dropdown-tab:hover {
+            background: rgba(0,0,0,0.04);
+        }
+
+        .dropdown-tab.active {
+            background: #fff;
+            color: var(--text);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .dropdown-tab .tab-icon {
+            margin-right: 4px;
+        }
+
+        /* Dropdown Content */
+        .dropdown-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 4px 0;
+        }
+
+        .dropdown-panel {
+            display: none;
+        }
+
+        .dropdown-panel.active {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 13px;
+            transition: background 0.15s;
+            cursor: pointer;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 13px;
+            transition: background 0.15s;
+            cursor: pointer;
+        }
+
+        .dropdown-item:hover {
+            background: var(--bg);
+        }
+
+        .dropdown-item-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .dropdown-item-icon.pc { background: rgba(0, 201, 167, 0.15); }
+        .dropdown-item-icon.user { background: rgba(255, 107, 74, 0.15); }
+        .dropdown-item-icon.admin { background: rgba(212, 168, 83, 0.15); }
+        .dropdown-item-icon.kiosk { background: rgba(139, 92, 246, 0.15); }
+
+        .dropdown-item-text {
+            flex: 1;
+        }
+
+        .dropdown-item-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        /* ===== Main Content ===== */
+        .main-content {
+            min-height: calc(100vh - 56px);
+        }
+
+        /* ===== Card View ===== */
+        .card-view {
+            padding: 40px;
+        }
+
+        /* Hero Header */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #162544 50%, #1E3A5F 100%);
+            padding: 50px 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 107, 74, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 107, 74, 0.15);
+            border: 1px solid rgba(255, 107, 74, 0.3);
+            color: var(--accent);
+            padding: 5px 14px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', 'Noto Sans SC', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 10px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .hero-stat-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .section-icon.user { background: linear-gradient(135deg, var(--accent), #FF8A6A); }
+        .section-icon.admin { background: linear-gradient(135deg, var(--gold), #E8C06A); }
+        .section-icon.pc { background: linear-gradient(135deg, var(--green), #3DD9B6); }
+        .section-icon.kiosk { background: linear-gradient(135deg, #8B5CF6, #A78BFA); }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .section-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .section-count {
+            margin-left: auto;
+            background: var(--card);
+            padding: 4px 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        /* Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+            border-color: transparent;
+        }
+
+        .card-preview {
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary), #162544);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-preview.user-preview { background: linear-gradient(135deg, #0A1628 0%, #1A2D4A 50%, #0F2035 100%); }
+        .card-preview.admin-preview { background: linear-gradient(135deg, #1A1408 0%, #2A2010 50%, #1A1408 100%); }
+        .card-preview.pc-preview { background: linear-gradient(135deg, #081A16 0%, #0A2A22 50%, #081A16 100%); }
+        .card-preview.kiosk-preview { background: linear-gradient(135deg, #12082A 0%, #1A0F3A 50%, #12082A 100%); }
+
+        .card-preview-icon { font-size: 36px; opacity: 0.3; }
+
+        .card-preview-label {
+            position: absolute;
+            bottom: 8px;
+            left: 12px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .card-body { padding: 14px 16px; }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .card-desc {
+            font-size: 11px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .card-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+
+        .card-tag {
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .card-tag.orange { background: rgba(255, 107, 74, 0.1); color: var(--accent); }
+        .card-tag.blue { background: rgba(10, 22, 40, 0.08); color: var(--primary); }
+        .card-tag.green { background: rgba(0, 201, 167, 0.1); color: var(--green); }
+        .card-tag.gold { background: rgba(212, 168, 83, 0.1); color: var(--gold); }
+        .card-tag.purple { background: rgba(99, 102, 241, 0.1); color: var(--purple); }
+
+        /* ===== Frame View ===== */
+        .frame-view {
+            display: none;
+            height: calc(100vh - 56px);
+        }
+
+        .frame-view.active {
+            display: flex;
+        }
+
+        .frame-container {
+            flex: 1;
+            height: 100%;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            margin: 8px;
+            background: #fff;
+        }
+
+        /* ===== Right Sidebar ===== */
+        .right-sidebar {
+            width: 400px;
+            height: 100%;
+            background: #fff;
+            border-left: 1px solid var(--border);
+            overflow-y: auto;
+            display: block;
+            position: relative;
+            transition: width 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .right-sidebar.collapsed {
+            width: 40px;
+            overflow: hidden;
+        }
+
+        .right-sidebar.collapsed .sidebar-header,
+        .right-sidebar.collapsed .sidebar-tab-bar,
+        .right-sidebar.collapsed .sidebar-tab-content {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .sidebar-toggle-btn {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 60px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 0 6px 6px 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            z-index: 10;
+            transition: all 0.2s;
+            padding: 0;
+        }
+
+        .sidebar-toggle-btn:hover {
+            background: var(--accent);
+        }
+
+        .right-sidebar.collapsed .sidebar-toggle-btn {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, var(--primary) 0%, #162544 100%);
+            color: #fff;
+        }
+
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-subtitle {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .sidebar-section {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sidebar-section-title::before {
+            content: '';
+            width: 3px;
+            height: 14px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .sidebar-content {
+            font-size: 12px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .sidebar-content p {
+            margin-bottom: 8px;
+        }
+
+        .sidebar-content code {
+            background: rgba(10, 22, 40, 0.06);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'SF Mono', 'Monaco', monospace;
+            font-size: 11px;
+            color: var(--primary);
+        }
+
+        .sidebar-content ul {
+            margin: 0;
+            padding-left: 16px;
+        }
+
+        .sidebar-content li {
+            margin-bottom: 6px;
+        }
+
+        .sidebar-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+
+        .sidebar-tag.api { background: rgba(99, 102, 241, 0.1); color: var(--purple); }
+        .sidebar-tag.component { background: rgba(0, 201, 167, 0.1); color: var(--green); }
+        .sidebar-tag.event { background: rgba(255, 107, 74, 0.1); color: var(--accent); }
+        .sidebar-tag.data { background: rgba(212, 168, 83, 0.1); color: var(--gold); }
+
+        /* ===== Sidebar Tab Bar ===== */
+        .sidebar-tab-bar {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            background: #FAFBFC;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .sidebar-tab-btn {
+            padding: 6px 14px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: #fff;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sidebar-tab-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .sidebar-tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        /* 二级子标签样式 */
+        .sidebar-sub-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 10px;
+            background: #F0F2F5;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-sub-tab-btn {
+            padding: 5px 12px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            background: #fff;
+            color: var(--text-secondary);
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sidebar-sub-tab-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .sidebar-sub-tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .sidebar-sub-content {
+            overflow-y: auto;
+            flex: 1;
+            padding: 16px;
+        }
+
+        .sidebar-sub-panel {
+            display: none;
+        }
+
+        .sidebar-sub-panel.active {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        /* ===== Sidebar Tab Content ===== */
+        .sidebar-tab-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        .sidebar-tab-panel {
+            display: none;
+            padding: 16px;
+        }
+
+        .sidebar-tab-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== PRD Content Styles ===== */
+        .prd-section {
+            margin-bottom: 16px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .prd-section-header {
+            padding: 14px 18px;
+            background: linear-gradient(135deg, #FAFBFC 0%, #F0F2F5 100%);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .prd-section-header::before {
+            content: '';
+            width: 4px;
+            height: 16px;
+            background: linear-gradient(180deg, var(--accent), var(--gold));
+            border-radius: 2px;
+        }
+
+        .prd-section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: 0.3px;
+        }
+
+        /* 无包裹表格标题 */
+        .table-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 16px 0 8px 0;
+            padding-left: 10px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .prd-section-body,
+        .sidebar-tab-panel,
+        .sidebar-sub-content {
+            font-size: 13px;
+            line-height: 2;
+            color: #334155;
+        }
+
+        .prd-section-body p,
+        .sidebar-tab-panel p,
+        .sidebar-sub-content p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        .prd-section-body p:last-child,
+        .sidebar-tab-panel p:last-child,
+        .sidebar-sub-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .prd-section-body strong,
+        .sidebar-tab-panel strong,
+        .sidebar-sub-content strong {
+            color: var(--primary);
+            font-weight: 700;
+            background: linear-gradient(180deg, transparent 60%, rgba(255, 107, 74, 0.15) 60%);
+            padding: 0 2px;
+        }
+
+        .prd-section-body b,
+        .sidebar-tab-panel b,
+        .sidebar-sub-content b {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .prd-section-body ul,
+        .sidebar-tab-panel ul,
+        .sidebar-sub-content ul {
+            margin: 12px 0;
+            padding-left: 24px;
+        }
+
+        .prd-section-body li,
+        .sidebar-tab-panel li,
+        .sidebar-sub-content li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .prd-section-body li::marker,
+        .sidebar-tab-panel li::marker,
+        .sidebar-sub-content li::marker {
+            color: var(--accent);
+            font-size: 14px;
+        }
+
+        .prd-section-body li:last-child,
+        .sidebar-tab-panel li:last-child,
+        .sidebar-sub-content li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 层次化标题样式 */
+        .prd-section-body h4,
+        .sidebar-tab-panel h4,
+        .sidebar-sub-content h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 16px 0 10px 0;
+            padding-left: 12px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .prd-section-body h5,
+        .sidebar-tab-panel h5,
+        .sidebar-sub-content h5 {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text);
+            margin: 12px 0 8px 0;
+            display: inline-block;
+            background: rgba(255, 107, 74, 0.08);
+            padding: 2px 10px;
+            border-radius: 4px;
+        }
+
+        /* 流程步骤样式 */
+        .prd-section-body .step-item,
+        .sidebar-tab-panel .step-item,
+        .sidebar-sub-content .step-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 10px;
+            padding: 10px 14px;
+            background: #FAFBFC;
+            border-radius: 8px;
+            border-left: 3px solid var(--green);
+        }
+
+        .prd-section-body .step-num,
+        .sidebar-tab-panel .step-num,
+        .sidebar-sub-content .step-num {
+            width: 24px;
+            height: 24px;
+            background: var(--green);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .prd-section-body .step-content,
+        .sidebar-tab-panel .step-content,
+        .sidebar-sub-content .step-content {
+            flex: 1;
+        }
+
+        /* 高亮块 */
+        .prd-section-body .highlight-box,
+        .sidebar-tab-panel .highlight-box,
+        .sidebar-sub-content .highlight-box {
+            background: linear-gradient(135deg, rgba(255, 107, 74, 0.06), rgba(212, 168, 83, 0.06));
+            border: 1px solid rgba(255, 107, 74, 0.15);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 12px 0;
+        }
+
+        /* 标签样式 */
+        .prd-section-body .field-tag,
+        .sidebar-tab-panel .field-tag,
+        .sidebar-sub-content .field-tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-right: 6px;
+            margin-bottom: 6px;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--purple);
+        }
+
+        .prd-section-body .field-tag.required,
+        .sidebar-tab-panel .field-tag.required,
+        .sidebar-sub-content .field-tag.required {
+            background: rgba(255, 107, 74, 0.1);
+            color: var(--accent);
+        }
+
+        /* ===== Table Styles ===== */
+        .prd-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-top: 8px;
+            table-layout: fixed;
+        }
+
+        .prd-table th {
+            background: linear-gradient(135deg, var(--primary) 0%, #162544 100%);
+            color: #fff;
+            padding: 10px 10px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        /* 5列表格: 字段名/中文名/类型/必填/说明 */
+        .prd-table th:first-child {
+            border-radius: 6px 0 0 0;
+            width: 22%;
+        }
+
+        .prd-table th:nth-child(2) {
+            width: 16%;
+        }
+
+        .prd-table th:nth-child(3) {
+            width: 12%;
+        }
+
+        .prd-table th:nth-child(4) {
+            width: 10%;
+        }
+
+        .prd-table th:last-child {
+            border-radius: 0 6px 0 0;
+            width: 40%;
+        }
+
+        .prd-table td {
+            padding: 10px 10px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            line-height: 1.6;
+            vertical-align: top;
+            word-wrap: break-word;
+        }
+
+        .prd-table tr:nth-child(even) {
+            background: #FAFBFC;
+        }
+
+        .prd-table tr:hover {
+            background: rgba(255, 107, 74, 0.04);
+        }
+
+        .prd-table tr:last-child td:first-child {
+            border-radius: 0 0 0 6px;
+        }
+
+        .prd-table tr:last-child td:last-child {
+            border-radius: 0 0 6px 0;
+        }
+
+        .prd-table .cell-name {
+            font-weight: 600;
+            color: var(--text);
+            word-break: break-all;
+        }
+
+        .prd-table .cell-cn-name {
+            font-weight: 500;
+            color: var(--primary);
+            font-size: 12px;
+        }
+
+        .prd-table .cell-type {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .prd-table .cell-type.string { background: rgba(99, 102, 241, 0.1); color: var(--purple); }
+        .prd-table .cell-type.number { background: rgba(0, 201, 167, 0.1); color: var(--green); }
+        .prd-table .cell-type.boolean { background: rgba(255, 107, 74, 0.1); color: var(--accent); }
+        .prd-table .cell-type.array { background: rgba(212, 168, 83, 0.1); color: var(--gold); }
+        .prd-table .cell-type.object { background: rgba(10, 22, 40, 0.08); color: var(--primary); }
+        .prd-table .cell-type.enum { background: rgba(236, 72, 153, 0.1); color: #EC4899; }
+
+        .prd-table .cell-required {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .prd-table .cell-optional {
+            color: var(--text-secondary);
+        }
+
+        .prd-table .cell-desc {
+            font-size: 11px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* ===== Status Badge ===== */
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .status-badge.success { background: rgba(0, 201, 167, 0.1); color: var(--green); }
+        .status-badge.warning { background: rgba(255, 107, 74, 0.1); color: var(--accent); }
+        .status-badge.info { background: rgba(99, 102, 241, 0.1); color: var(--purple); }
+        .status-badge.default { background: rgba(10, 22, 40, 0.06); color: var(--text-secondary); }
+
+        /* ===== Code Block ===== */
+        .code-block {
+            background: #1E293B;
+            border-radius: 6px;
+            padding: 12px;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-size: 11px;
+            line-height: 1.6;
+            color: #E2E8F0;
+            overflow-x: auto;
+            margin: 8px 0;
+        }
+
+        .code-block .code-comment { color: #64748B; }
+        .code-block .code-keyword { color: #C084FC; }
+        .code-block .code-string { color: #4ADE80; }
+        .code-block .code-number { color: #FBBF24; }
+
+        /* ===== Info Card Grid ===== */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .info-card {
+            background: #FAFBFC;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 10px;
+        }
+
+        .info-card-label {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .info-card-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .frame-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-secondary);
+        }
+
+        .frame-placeholder-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .frame-placeholder-text {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .frame-placeholder-hint {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 1200px) {
+            .right-sidebar {
+                width: 320px;
+            }
+            .right-sidebar.collapsed {
+                width: 40px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .right-sidebar {
+                width: 280px;
+            }
+            .right-sidebar.collapsed {
+                width: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-nav-inner { padding: 0 12px; }
+            .nav-logo span { display: none; }
+            .nav-tab { padding: 8px 12px; font-size: 12px; }
+            .card-view { padding: 20px; }
+            .hero { padding: 30px 20px; border-radius: 12px; }
+            .hero h1 { font-size: 26px; }
+            .card-grid { grid-template-columns: 1fr; }
+            .section-header { flex-wrap: wrap; gap: 10px; }
+            .section-count { margin-left: 0; }
+            .right-sidebar {
+                display: none;
+            }
+        }
+/* ===== 更新日志弹窗 ===== */
+.changelog-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10, 22, 40, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+.changelog-overlay.active { display: flex; }
+.changelog-modal {
+    background: var(--card);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+    overflow: hidden;
+}
+.changelog-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--primary);
+    color: #fff;
+}
+.changelog-modal-header h3 { font-size: 16px; font-weight: 600; }
+.changelog-close-btn {
+    width: 32px; height: 32px;
+    border: none; background: rgba(255,255,255,0.15);
+    border-radius: 8px; color: #fff; font-size: 18px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+}
+.changelog-close-btn:hover { background: rgba(255,255,255,0.25); }
+.changelog-modal-body {
+    padding: 20px 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+.changelog-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+.changelog-table th {
+    background: #F8FAFC;
+    padding: 10px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--border);
+    position: sticky;
+    top: 0;
+}
+.changelog-table th:first-child { width: 110px; }
+.changelog-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+}
+.changelog-table tr:last-child td { border-bottom: none; }
+.changelog-table tr:hover td { background: #FAFBFC; }
+.changelog-date {
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+    font-size: 13px;
+}
+.changelog-entry {
+    margin-bottom: 6px;
+    line-height: 1.6;
+}
+.changelog-entry:last-child { margin-bottom: 0; }
+.changelog-page-tag {
+    display: inline-block;
+    background: rgba(255, 107, 74, 0.1);
+    color: var(--accent);
+    padding: 1px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-right: 6px;
+}
+.changelog-empty {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* 导航栏更新日志按钮 */
+.nav-changelog-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: all 0.2s;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: transparent;
+    margin-left: 8px;
+}
+.nav-changelog-btn:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.3);
+}
+.nav-changelog-btn .changelog-dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: none;
+}
+.nav-changelog-btn .changelog-dot.visible { display: block; }
+
+/* 流程图按钮 */
+.nav-flowchart-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: all 0.2s;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: transparent;
+    margin-left: 8px;
+}
+.nav-flowchart-btn:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.3);
+}
+
+/* ===== 流程图弹窗 ===== */
+.flowchart-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10, 22, 40, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+.flowchart-overlay.active { display: flex; }
+.flowchart-modal {
+    background: var(--card);
+    border-radius: 16px;
+    width: 95%;
+    max-width: 1400px;
+    height: 90vh;
+    display: flex;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+    overflow: hidden;
+}
+.flowchart-sidebar {
+    width: 260px;
+    background: #F8FAFC;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+}
+.flowchart-sidebar-header {
+    padding: 20px 20px 12px;
+    border-bottom: 1px solid var(--border);
+}
+.flowchart-sidebar-header h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+}
+.flowchart-sidebar-header p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+.flowchart-nav-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+}
+.flowchart-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: 4px;
+}
+.flowchart-nav-item:hover {
+    background: #EDF2F7;
+}
+.flowchart-nav-item.active {
+    background: var(--primary);
+    color: #fff;
+}
+.flowchart-nav-item.active .flowchart-nav-desc {
+    color: rgba(255,255,255,0.7);
+}
+.flowchart-nav-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    background: rgba(99, 102, 241, 0.1);
+    flex-shrink: 0;
+}
+.flowchart-nav-item.active .flowchart-nav-icon {
+    background: rgba(255,255,255,0.15);
+}
+.flowchart-nav-info {
+    flex: 1;
+    min-width: 0;
+}
+.flowchart-nav-title {
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.flowchart-nav-desc {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.flowchart-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+.flowchart-content-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--primary);
+    color: #fff;
+}
+.flowchart-content-header h3 {
+    font-size: 15px;
+    font-weight: 600;
+}
+.flowchart-content-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.flowchart-zoom-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 4px;
+}
+.flowchart-zoom-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+}
+.flowchart-zoom-btn:hover {
+    background: rgba(255,255,255,0.15);
+}
+.flowchart-zoom-value {
+    min-width: 50px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+}
+.flowchart-close-btn {
+    width: 32px; height: 32px;
+    border: none; background: rgba(255,255,255,0.15);
+    border-radius: 8px; color: #fff; font-size: 18px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+}
+.flowchart-close-btn:hover { background: rgba(255,255,255,0.25); }
+.flowchart-viewport {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    background: #E2E8F0;
+    cursor: grab;
+}
+.flowchart-viewport:active {
+    cursor: grabbing;
+}
+.flowchart-viewport.dragging {
+    cursor: grabbing;
+}
+.flowchart-image-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease-out;
+    will-change: transform;
+}
+.flowchart-image-wrapper img {
+    max-width: none;
+    max-height: none;
+    display: block;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    border-radius: 4px;
+    image-rendering: auto;
+    image-rendering: crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+}
+.flowchart-empty-state {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: var(--text-secondary);
+}
+.flowchart-empty-state-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    opacity: 0.5;
+}
+.flowchart-empty-state-text {
+    font-size: 14px;
+}
+
+/* ===== Markdown 流程图渲染 ===== */
+.flowchart-markdown-viewer {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px 40px;
+    background: #fff;
+    font-family: 'Noto Sans SC', sans-serif;
+    color: #1A202C;
+    line-height: 1.7;
+    display: none;
+}
+.flowchart-markdown-viewer.active { display: block; }
+.flowchart-markdown-viewer h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--accent);
+}
+.flowchart-markdown-viewer h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-top: 28px;
+    margin-bottom: 14px;
+    padding-left: 12px;
+    border-left: 4px solid var(--accent);
+}
+.flowchart-markdown-viewer h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2D3748;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.flowchart-markdown-viewer p {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #2D3748;
+}
+.flowchart-markdown-viewer table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 20px;
+    font-size: 13px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-radius: 8px;
+    overflow: hidden;
+}
+.flowchart-markdown-viewer th {
+    background: var(--primary);
+    color: #fff;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+}
+.flowchart-markdown-viewer td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #E2E8F0;
+    color: #2D3748;
+}
+.flowchart-markdown-viewer tr:nth-child(even) td {
+    background: #F8FAFC;
+}
+.flowchart-markdown-viewer tr:hover td {
+    background: #FFF5F0;
+}
+.flowchart-markdown-viewer code {
+    background: #EDF2F7;
+    color: #E53E3E;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: 'Fira Code', 'Consolas', monospace;
+}
+.flowchart-markdown-viewer pre {
+    background: #1A202C;
+    color: #E2E8F0;
+    padding: 20px 24px;
+    border-radius: 10px;
+    overflow-x: auto;
+    margin: 12px 0 20px;
+    font-size: 13px;
+    line-height: 1.5;
+    font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
+}
+.flowchart-markdown-viewer pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: 13px;
+}
+.flowchart-markdown-viewer strong {
+    color: var(--accent);
+    font-weight: 600;
+}
+.flowchart-markdown-viewer hr {
+    border: none;
+    border-top: 2px solid #E2E8F0;
+    margin: 24px 0;
+}
+.flowchart-markdown-viewer ul {
+    padding-left: 24px;
+    margin-bottom: 12px;
+}
+.flowchart-markdown-viewer li {
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #2D3748;
+}
+
+/* 侧边栏更新日志样式 */
+.sidebar-changelog-list { padding: 8px 0; }
+.sidebar-changelog-item {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+}
+.sidebar-changelog-item:last-child { border-bottom: none; }
+.sidebar-changelog-date {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 4px;
+}
+.sidebar-changelog-content {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+}
+.sidebar-changelog-empty {
+    padding: 24px 16px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+    </style>
+</head>
+<body>
+
+<!-- Top Navigation -->
+<nav class="top-nav">
+    <div class="top-nav-inner">
+        <div class="nav-logo">
+            <div class="nav-logo-icon">🎭</div>
+            <span>艺术演出院线数字服务系统</span>
+        </div>
+
+        <div class="nav-tabs" id="navTabs">
+            <button class="nav-tab pc active" data-category="pc" onclick="filterCategory('pc')">🖥️ PC管理后台</button>
+            <button class="nav-tab user" data-category="user" onclick="filterCategory('user')">📱 用户小程序</button>
+            <button class="nav-tab admin" data-category="admin" onclick="filterCategory('admin')">🔧 管理员小程序</button>
+            <button class="nav-tab kiosk" data-category="kiosk" onclick="filterCategory('kiosk')">🎫 自助机</button>
+        </div>
+
+        <div class="scenario-dropdown">
+            <button class="dropdown-btn" onclick="toggleScenarioDropdown(event)">
+                <span>🎬 核心场景</span>
+                <span>▼</span>
+            </button>
+            <div class="scenario-dropdown-menu" id="scenarioDropdownMenu">
+                <div class="scenario-menu-header">五大核心演示场景</div>
+                <div class="scenario-menu-item" onclick="loadScenarioPage('user-miniapp/home.html')">
+                    <div class="scenario-menu-icon"><i class="fas fa-ticket-alt"></i></div>
+                    <div class="scenario-menu-text">
+                        <div class="scenario-menu-title">用户购票</div>
+                        <div class="scenario-menu-desc">演出列表·选座·混合支付</div>
+                    </div>
+                </div>
+                <div class="scenario-menu-item" onclick="loadScenarioPage('pc-admin/show-management.html')">
+                    <div class="scenario-menu-icon"><i class="fas fa-music"></i></div>
+                    <div class="scenario-menu-text">
+                        <div class="scenario-menu-title">演出/售票管理</div>
+                        <div class="scenario-menu-desc">演出项目·窗口售票·渠道库存</div>
+                    </div>
+                </div>
+                <div class="scenario-menu-item" onclick="loadScenarioPage('pc-admin/member-management.html')">
+                    <div class="scenario-menu-icon"><i class="fas fa-user-tie"></i></div>
+                    <div class="scenario-menu-text">
+                        <div class="scenario-menu-title">会员服务</div>
+                        <div class="scenario-menu-desc">等级权益·实体卡·储值管理</div>
+                    </div>
+                </div>
+                <div class="scenario-menu-item" onclick="loadScenarioPage('pc-admin/marketing-center.html')">
+                    <div class="scenario-menu-icon"><i class="fas fa-bullhorn"></i></div>
+                    <div class="scenario-menu-text">
+                        <div class="scenario-menu-title">营销工具</div>
+                        <div class="scenario-menu-desc">充值卡·折扣·优惠券·券包</div>
+                    </div>
+                </div>
+                <div class="scenario-menu-item" onclick="loadScenarioPage('pc-admin/dashboard.html')">
+                    <div class="scenario-menu-icon"><i class="fas fa-chart-bar"></i></div>
+                    <div class="scenario-menu-text">
+                        <div class="scenario-menu-title">数据统计分析</div>
+                        <div class="scenario-menu-desc">数据看板·会员分析·财务报表</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown()">
+                <span>📄 页面导航</span>
+                <span>▼</span>
+            </button>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <!-- 动态填充 -->
+            </div>
+        </div>
+
+        <button class="nav-changelog-btn" onclick="openChangelogModal()" title="更新日志">
+            📋 更新日志 <span class="changelog-dot" id="changelogDot"></span>
+        </button>
+        <div class="nav-mode-toggle">
+            <button class="mode-btn active" onclick="switchMode('card')">卡片</button>
+            <button class="mode-btn" onclick="switchMode('frame')">预览</button>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Card View -->
+    <div class="card-view" id="cardView">
+        <!-- Hero -->
+        <div class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">UI/UX DESIGN v6.0</div>
+                <h1>艺术演出院线数字服务系统<br><span>全端界面设计总览</span></h1>
+                <p>涵盖用户端小程序、代理端小程序、管理员端小程序、PC端管理后台、自助服务终端五大端的完整UI/UX设计方案</p>
+                <div class="hero-stats">
+                    <div class="hero-stat"><div class="hero-stat-num">59</div><div class="hero-stat-label">设计页面</div></div>
+                    <div class="hero-stat"><div class="hero-stat-num">5</div><div class="hero-stat-label">终端平台</div></div>
+                    <div class="hero-stat"><div class="hero-stat-num">5</div><div class="hero-stat-label">色彩规范</div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PC Admin Section -->
+        <div class="section" data-section="pc">
+            <div class="section-header">
+                <div class="section-icon pc">🖥️</div>
+                <div><div class="section-title">PC端管理后台</div><div class="section-desc">面向平台运营团队</div></div>
+                <div class="section-count">14 个页面</div>
+            </div>
+            <div class="card-grid" id="pcGrid"></div>
+        </div>
+
+        <!-- User Mini App Section -->
+        <div class="section" data-section="user">
+            <div class="section-header">
+                <div class="section-icon user">📱</div>
+                <div><div class="section-title">用户端小程序</div><div class="section-desc">面向C端购票用户</div></div>
+                <div class="section-count">41 个页面</div>
+            </div>
+            <div class="card-grid" id="userGrid"></div>
+        </div>
+
+        <!-- Admin Mini App Section -->
+        <div class="section" data-section="admin">
+            <div class="section-header">
+                <div class="section-icon admin">🔧</div>
+                <div><div class="section-title">管理员端小程序</div><div class="section-desc">面向场馆管理人员</div></div>
+                <div class="section-count">2 个页面</div>
+            </div>
+            <div class="card-grid" id="adminGrid"></div>
+        </div>
+
+        <!-- Kiosk Section -->
+        <div class="section" data-section="kiosk">
+            <div class="section-header">
+                <div class="section-icon kiosk">🎫</div>
+                <div><div class="section-title">自助服务终端</div><div class="section-desc">面向现场取票用户（23寸触摸屏）</div></div>
+                <div class="section-count">2 个页面</div>
+            </div>
+            <div class="card-grid" id="kioskGrid"></div>
+        </div>
+
+        <footer class="footer">
+            艺术演出院线数字服务系统 UI/UX 设计方案 v6.0 · 深海蓝 #0A1628 · 珊瑚橙 #FF6B4A · 金色 #D4A853 · 翡翠绿 #00C9A7
+        </footer>
+    </div>
+
+    <!-- Frame View -->
+    <div class="frame-view" id="frameView">
+        <iframe id="previewFrame" class="frame-container"></iframe>
+        <div class="frame-placeholder" id="framePlaceholder">
+            <div class="frame-placeholder-icon">🎭</div>
+            <div class="frame-placeholder-text">选择页面进行预览</div>
+            <div class="frame-placeholder-hint">点击顶部"页面导航"选择页面</div>
+        </div>
+        
+    </div>
+</div>
+
+<script type="text/markdown" id="paymentFlowchartMDSrc">
+# 组合支付待支付订单控制流程
+
+## 一、待支付订单机制
+
+| 项目 | 说明 |
+|------|------|
+| 待支付时长 | **15分钟**（内部订单计时，从创建订单开始） |
+| 15分钟内 | 用户可主动取消订单，取消后请求关闭外部支付订单并退回预扣资产 |
+| 15分钟超时 | 系统自动取消订单，请求关闭外部支付订单并退回预扣资产 |
+| 外部渠道超时 | 不与内部同步，使用渠道默认超时；内部取消时主动调用关单接口 |
+
+> 外部渠道（微信/支付宝）不设同步超时，内部15分钟计时到期后由系统主动调用关单接口关闭外部订单。
+
+> 预扣模式下，创建订单时钱包/充值卡/积分已直接扣减；取消或超时后退回，记录"预扣退回"流水。
+
+---
+
+## 二、预扣机制
+
+钱包余额、充值卡余额、积分采用**预扣**方式（非冻结）：
+
+| 阶段 | 动作 | 余额变化 |
+|------|------|---------|
+| 创建订单 | 预扣内部资产 | 余额直接减少 |
+| 支付成功 | 无操作（已扣过） | 不变 |
+| 主动取消/超时 | 退回预扣金额 | 余额恢复，记录"预扣退回"流水 |
+
+优惠券采用**锁定**方式（不预扣，锁定使用状态）。
+
+> 预扣模式下，窗口或小程序查询到的余额即为真实可用余额，无需额外计算冻结额度。
+
+---
+
+## 三、流程图
+
+```
+                    用户发起组合支付
+                           │
+                           ▼
+           ┌───────────────────────────────┐
+           │  ① 预扣内部资产                  │
+           │     · 钱包余额直接扣减           │
+           │     · 充值卡余额直接扣减         │
+           │     · 积分直接扣减              │
+           │     · 优惠券锁定使用状态        │
+           │     · 锁定座位                  │
+           └──────────────┬────────────────┘
+                          │
+                          ▼
+           ┌───────────────────────────────┐
+           │  ② 创建待支付订单（内部15分钟）  │
+           │     · 外部渠道下单（默认超时）   │
+           │     · 不设 time_expire/timeout │
+           └──────────────┬────────────────┘
+                          │
+                          ▼
+           ┌───────────────────────────────┐
+           │  ③ 调起外部收银台               │
+           └──────────────┬────────────────┘
+                          │
+          ┌───────────────┼───────────────┐
+          │               │               │
+          ▼               ▼               ▼
+   ╔════════════╗  ╔════════════════╗  ╔════════════════╗
+   ║ 场景A       ║  ║ 场景B           ║  ║ 场景C           ║
+   ║ 支付成功    ║  ║ 用户主动取消    ║  ║ 15分钟超时       ║
+   ╚════════╤═══╝  ╚════════╤════════╝  ╚════════╤═══════╝
+          │                │                    │
+          ▼                ▼                    ▼
+     查询订单确认      查询外部订单状态      定时任务扫描
+          │                │                    │
+          ▼           ┌────┴────┐          ┌────┴────┐
+     订单完成 ✓     未支付    已支付      未支付    已支付
+                     │         │           │         │
+                     ▼         ▼           ▼         ▼
+                  关闭外部   订单完成✓   关闭外部   订单完成✓
+                  支付订单              支付订单
+                  退回预扣               退回预扣
+                  释放座位               释放座位
+                  订单取消               订单取消
+```
+
+---
+
+## 四、场景说明
+
+### 场景A：15分钟内支付成功
+
+```
+T0         调起收银台 → 用户完成支付
+  │
+  ▼
+收到支付成功回调 → 查询接口确认（防伪造）
+  │
+  ▼
+预扣资产无需操作（创建时已扣减）
+  │
+  ▼
+订单状态 → 已支付 → 后续出票流程
+```
+
+### 场景B：用户15分钟内主动取消
+
+```
+T0         调起收银台
+  │
+  │  用户点击"取消订单"或"取消支付"
+  │
+  ▼
+查询外部订单状态
+  │
+  ├── 未支付 ──→ 关闭外部支付订单（调用关单接口）
+  │                 │
+  │                 ▼
+  │              退回预扣资产（钱包/充值卡/积分）
+  │              优惠券解锁
+  │              释放座位
+  │                 │
+  │                 ▼
+  │              订单状态 → 已取消
+  │
+  └── 已支付 ──→ 转场景A
+```
+
+### 场景C：15分钟超时，用户未支付
+
+```
+T0         调起收银台
+  │
+  │  用户未完成支付
+  │
+  ▼
+T0+15min   内部订单超时
+  │
+  ▼
+定时任务扫描（每1分钟）
+  · 查找 T0+15min ≤ 当前时间 且 状态=待支付 的订单
+  │
+  ▼
+查询外部订单状态
+  │
+  ├── 未支付 ──→ 关闭外部支付订单（调用关单接口）
+  │                 │
+  │                 ▼
+  │              退回预扣资产
+  │              释放座位
+  │                 │
+  │                 ▼
+  │              订单状态 → 已取消
+  │
+  └── 已支付 ──→ 转场景A
+```
+
+### 场景D：临界竞态（超时瞬间支付）
+
+```
+T0+14m59s   用户在输入密码中...
+  │
+  ▼
+T0+15min    定时任务查询 → 未支付 → 调用关单
+  │
+  ├── 关单成功 → 用户提交被拒 → 退回预扣 → 订单取消 ✓
+  │
+  └── 关单失败（刚被支付）→ 查询确认 → 订单完成 ✓
+```
+
+---
+
+## 五、关单策略
+
+| 场景 | 触发时机 | 微信支付 | 支付宝 |
+|------|---------|---------|--------|
+| B-用户主动取消 | `onCancel` | 满5min→关单；未满→标记，定时任务关 | 立即关单 |
+| C-15分钟超时 | T0+15min | 可关单（已满5min） | 关单 |
+| D-临界竞态 | T0+15min | 尝试关单，失败则查询确认 | 同左 |
+
+**关单前必须先查询**：防止关掉已支付订单。
+
+> 外部渠道不设同步超时，由内部15分钟计时触发关单。微信关单需满足创建后满5分钟，15分钟已满足此限制。
+
+---
+
+## 六、关键设计要点
+
+### 1. 超时时间分层
+
+```
+内部订单超时：15分钟（系统计时）
+外部渠道超时：不设同步超时，使用渠道默认值
+定时任务扫描：每1分钟一次
+```
+
+内部取消时主动调用关单接口关闭外部订单。
+
+### 2. 预扣 vs 冻结
+
+| 维度 | 预扣（当前方案） | 冻结（旧方案） |
+|------|----------------|--------------|
+| 余额变化 | 创建时直接扣减 | 总余额不变，可用余额减少 |
+| 窗口查询 | 直接读余额，准确 | 需算 总余额−冻结额度 |
+| 取消回滚 | 退回，产生"预扣退回"流水 | 解冻，用户无感 |
+| 并发安全 | 天然安全（扣了就是扣了） | 需锁机制防超额冻结 |
+| 用户心智 | 简单（看到的就是能花的） | 需理解"冻结"概念 |
+
+### 3. 重新支付用新订单号
+
+```
+❌ 复用旧订单号 → 延迟回调可能导致状态错乱
+✅ 生成新订单号 → 旧订单由定时任务清理
+```
+
+### 4. 支付回调延迟处理
+
+```
+收到回调 → 查询订单确认（防伪造/重复/延迟）→ 订单完成
+```
+
+### 5. 资金安全兜底
+
+```
+每日对账：扫描所有"已取消"订单 → 查询外部渠道 → 发现已支付但内部已取消 → 人工审核
+```
+
+---
+
+## 七、完整时序图
+
+```
+用户        小程序后端        外部渠道        定时任务
+ │              │               │              │
+ │──发起支付──→ │               │              │
+ │              │──预扣资产     │              │
+ │              │  (钱包/充值卡 │              │
+ │              │   /积分直接扣)│              │
+ │              │──下单(默认)─→ │              │
+ │              │←──prepay_id──│              │
+ │←调起收银台── │               │              │
+ │              │               │              │
+ │  [若支付]    │               │              │
+ │              │←──支付回调────│              │
+ │              │──查询确认──→ │              │
+ │              │←──已支付─────│              │
+ │              │  (预扣无需    │              │
+ │              │   再操作)     │              │
+ │←──支付成功──│               │              │
+ │              │               │              │
+ │  [若主动取消] │               │              │
+ │──取消订单──→│               │              │
+ │              │──查询订单──→ │              │
+ │              │←──未支付─────│              │
+ │              │──关闭支付单─→ │              │
+ │              │──退回预扣资产 │              │
+ │              │──释放座位     │              │
+ │←──已取消────│               │              │
+ │              │               │              │
+ │  [若超时]    │               │   ┌──扫描──→ │
+ │              │               │   │   查询──→│
+ │              │               │   │←─未支付──│
+ │              │               │   │   关单──→│
+ │              │←──超时通知────│   │          │
+ │              │──关闭支付单─→ │←──扫描完成───│
+ │              │──退回预扣资产  │              │
+ │              │──释放座位     │              │
+```
+</script>
+<script>
+window.paymentFlowchartMD = document.getElementById('paymentFlowchartMDSrc')?.textContent.trim() || '';
+</script>
+<script type="text/markdown" id="ticketVerifyFlowchartMDSrc">
+# 门票规则
+
+## 一、编码规则
+
+### 1.1 订单号（order_id）
+
+| 组成 | 长度 | 说明 | 示例 |
+|------|------|------|------|
+| 系统前缀 | 2位 | HN = 海南演艺 | HN |
+| 日期 | 8位 | YYYYMMDD | 20260410 |
+| 流水号 | 4位 | 当日递增 | 0001 |
+| 合计 | 14位 | 格式: HN+YYYYMMDD+4位流水 | HN202604100001 |
+
+### 1.2 取票码（pickup_code）
+
+一个订单一个取票码，扫码和手动输入是同一个值。用于自助机取票、管理员扫码选择性核销。
+
+| 属性 | 值 |
+|------|-----|
+| 格式 | 8位纯数字 |
+| 范围 | 10000000 ~ 99999999（约9000万组合） |
+| 生成方式 | 随机生成，全局查重，碰撞则重新生成 |
+| 生成时机 | 支付完成时 |
+| QR内容 | 取票码本身（如 `87362910`） |
+| 展示 | 4+4分组显示，如 `8736 2910` |
+| 有效期 | 与订单一致，演出结束后失效 |
+| 安全性 | 8位+自助机每日限试10次，命中概率极低 |
+
+取票码与核销码完全独立，通过订单号关联。取票码只负责取票和订单级核销入口，不参与单张核销。
+
+### 1.3 核销码（ticket_verify_code）
+
+每张门票一个核销码，用于单张门票核销、纸质票票面QR、下载电子门票图片。
+
+| 组成 | 长度 | 说明 | 示例 |
+|------|------|------|------|
+| 层级标识 | 1位 | T = 门票级 | T |
+| 日期 | 6位 | 出票日期 YYMMDD | 260410 |
+| 订单流水 | 4位 | 同订单号的4位流水号 | 0001 |
+| 订单内序号 | 3位 | 同一订单内第几张（001-999） | 001 |
+| 校验位 | 2位 | 双Luhn校验（见下方算法） | 38 |
+| 合计 | 16位 | T+YYMMDD+订单流水+序号+校验 | T260410000100138 |
+
+从核销码可直接还原订单号：取 `日期+订单流水` → `HN` + `20` + `26` + `04` + `10` + `0001` = `HN202604100001`，无需查库。
+
+#### 校验位算法（双Luhn）
+
+校验位共2位（D1D2），采用双Luhn算法，T字母不参与计算，仅对13位数字部分校验。
+
+**D1 = Luhn(前13位数字)**，**D2 = Luhn(前14位数字, 即含D1)**
+
+Luhn算法步骤（以 `2604100001001` 为例）：
+
+```
+数字:  2  6  0  4  1  0  0  0  0  1  0  0  1
+位置: 13 12 11 10  9  8  7  6  5  4  3  2  1（从右往左）
+
+步骤1: 奇数位(第1,3,5...位)保持不变: 1, 0, 0, 0, 1, 0, 2 → 求和 = 4
+步骤2: 偶数位(第2,4,6...位)乘2, 若>9则减9:
+       0×2=0, 0×2=0, 0×2=0, 4×2=8, 6×2=12→3, 1×2=2 → 求和 = 13
+步骤3: 总和 = 4 + 13 = 17
+步骤4: D1 = (10 - 17 mod 10) mod 10 = (10 - 7) mod 10 = 3
+
+前14位变为: 2 6 0 4 1 0 0 0 0 1 0 0 1 3
+重复步骤1-4（从右往左数）:
+       奇数位: 3, 0, 1, 0, 0, 4, 6 → 求和 = 14
+       偶数位: 1×2=2, 0×2=0, 0×2=0, 0×2=0, 1×2=2, 0×2=0, 2×2=4 → 求和 = 8
+       总和 = 14 + 8 = 22
+       D2 = (10 - 22 mod 10) mod 10 = (10 - 2) mod 10 = 8
+```
+
+> D1=3, D2=8 → 校验位=38 → 完整码=T260410000100138
+
+## 二、订单与门票状态机制
+
+### 2.1 订单状态（7种）
+
+| 状态值 | 中文名 | 类型 | 触发条件 |
+|--------|--------|------|----------|
+| reserved | 预约 | 写入态 | 窗口锁座，待用户回窗口付款 |
+| pending | 待支付 | 写入态 | 小程序下单未完成支付 |
+| paid | 已支付 | 活跃 | 支付成功，至少1张活跃门票 |
+| partial_refunded | 部分退款 | 计算态 | 有已退款票 + 有活跃票 |
+| refunded | 已退款 | 终态 | 全部门票已退款 |
+| completed | 已完成 | 计算态 | 全部门票已终结（核销/退款/过期），无活跃票 |
+| cancelled | 已取消 | 终态 | 未支付时取消，释放座位 |
+
+> **设计原则**：核销是门票级的事，订单不记录核销进度。订单只管"这笔交易结束了吗"。
+> **计算态**：partial_refunded 和 completed 不单独写入，由门票状态实时推导。
+
+### 2.2 门票状态（5种）
+
+| 状态值 | 中文名 | 触发条件 |
+|--------|--------|----------|
+| not_issued | 待出票 | 已支付，暂不出票 |
+| issued | 已出票 | 核销码已生成，可核销 |
+| verified | 已核销 | 入场扫描完成 |
+| expired | 已过期 | 演出结束24h后未核销，自动触发，不可核销 |
+| refunded | 已退款 | 管理员退款操作完成 |
+
+> **已过期规则**：演出结束后24小时，门票仍为 issued 则系统批量置为 expired。expired 不可逆，不可核销，但管理员可手动退款（expired → refunded）。
+
+### 2.3 订单状态推导规则
+
+```
+全部门票 ∈ {verified, refunded, expired}     → completed
+有已退款票 + 有活跃票(not_issued/issued)       → partial_refunded
+有活跃票 + 无已退款票                         → paid
+全部门票 = refunded                           → refunded
+```
+
+### 2.4 订单状态流转
+
+```
+  ┌──────────┐     ┌──────────┐
+  │ reserved │     │ pending  │
+  │  预约    │     │ 待支付   │
+  │窗口锁座  │     │小程序下单│
+  └────┬─────┘     └────┬─────┘
+       │                │
+       │   ┌────────────┤
+       │   │            │
+       ▼   ▼            │
+  ┌──────────┐          │
+  │cancelled │          │ 超时/取消
+  │ 已取消   │          │
+  └──────────┘          ▼
+                 ┌──────────┐
+                 │   paid   │ ← 窗口付款 / 小程序付款
+                 │  已支付  │
+                 └────┬─────┘
+                      │
+          ┌───────────┼───────────┐
+          │           │           │
+          ▼           ▼           ▼
+     全部核销    管理员退部分  管理员退全部
+          │           │           │
+          │           ▼           ▼
+          │   ┌────────────┐ ┌──────────┐
+          │   │partial_ref │ │ refunded │
+          │   │ 部分退款   │ │ 已退款   │
+          │   └─────┬──────┘ └──────────┘
+          │         │
+          │    剩余核销  剩余退完
+          │    ──┴──      ──┴──
+          │      │             │
+          ▼      ▼             ▼
+       ┌──────────────────────────┐
+       │       completed          │
+       │       已完成             │
+       │ （全部门票已终结）        │
+       └──────────────────────────┘
+```
+
+> reserved 和 pending 都可 → cancelled；paid → completed 的路径包括全部核销、部分退款后剩余核销；partial_refunded 也可 → refunded（剩余门票全部退完）。
+
+### 2.5 门票状态流转
+
+```
+┌────────────┐     出票      ┌────────────┐     核销      ┌────────────┐
+│ not_issued │ ──────────→ │   issued   │ ──────────→ │  verified  │
+│  待出票    │              │  已出票    │              │  已核销    │
+└────────────┘              └─────┬──────┘              └────────────┘
+                                  │
+                    ┌─────────────┼─────────────┐
+                    │                           │
+                    ▼                           ▼
+              演出结束+24h                   管理员退款
+                    │                           │
+                    ▼                           ▼
+              ┌──────────┐              ┌──────────┐
+              │ expired  │ ──退款──→   │ refunded │
+              │ 已过期   │              │ 已退款   │
+              └──────────┘              └──────────┘
+```
+
+> issued 有三条出路：核销→verified、过期→expired、退款→refunded。expired 不可逆，但管理员可手动退款（expired→refunded）。
+
+### 2.6 出票方式
+
+| 状态值 | 中文名 | 说明 |
+|--------|--------|------|
+| electronic | 电子票 | 生成QR推送至电子票夹 |
+| paper | 纸质票 | 打印纸质票或自助机取票 |
+| none | 暂不出票 | 已支付但暂不出票，后续可补出 |
+| mixed | 组合出票 | 同一订单部分电子票+部分纸质票 |
+
+## 三、码的关联关系
+
+```
+订单 HN202604100001
+  ├── pickup_code: 87362910                    ← 8位取票码（一个）
+  │     ├── QR内容 = 87362910
+  │     ├── 自助机扫码 → 取票
+  │     ├── 自助机手动输入 → 取票
+  │     └── 管理员扫码 → 选择性核销
+  │
+  └── tickets[]:
+        ├── ticket[1].ticket_verify_code: T260410000100138  ← 每张一个
+        ├── ticket[2].ticket_verify_code: T260410000100227
+        └── ticket[3].ticket_verify_code: T260410000100316
+              ├── 纸质票票面QR
+              ├── 下载电子门票图片QR
+              └── 管理员扫门票级码 → 单张核销
+```
+
+## 四、使用场景
+
+### 4.1 线上购票（小程序）
+
+```
+用户下单 → 支付成功
+  │
+  ├── 生成 pickup_code（8位随机数字）
+  ├── 为每张门票生成 ticket_verify_code（T+16位）
+  ├── 门票状态: not_issued → issued（已出票）
+  │
+  └── 推送至用户电子票夹:
+        · 展示取票码QR（内容=87362910）
+        · 展示取票码文本: 8736 2910
+        · 可下载电子门票（每张含T码QR）
+```
+
+### 4.2 自助机扫码取票
+
+```
+用户在自助机扫电子票夹中的QR
+  │
+  ├── 识别内容 = 87362910
+  ├── 查 pickup_code → 找到订单
+  ├── 检查订单状态（已支付/部分退款 → 允许取票）
+  │
+  └── 批量打印全部门票
+        · 每张纸质票票面印 ticket_verify_code 的QR
+        · 门票状态: not_issued → issued
+        · 若已issued → 提示"已打印X次，是否重新打印？"
+```
+
+### 4.3 自助机手动输入取票
+
+```
+用户在自助机输入 87362910
+  │
+  └── 与扫码完全相同的处理逻辑
+      （扫码和手动输入是同一个值，后端统一处理）
+```
+
+### 4.4 管理员扫码选择性核销
+
+```
+管理员用小程序扫电子票夹QR
+  │
+  ├── 识别内容 = 87362910（取票码）
+  ├── 查 pickup_code → 找到订单
+  ├── 展示订单内所有门票列表（座位号/票档/核销状态）
+  │
+  └── 管理员勾选要核销的门票
+        · 可单张或多张
+        · 核销成功 → 门票状态 issued → verified
+        · 全部核销 → 订单状态 paid → completed
+        · 部分核销 → 订单状态仍为 paid（核销进度看门票明细）
+```
+
+### 4.5 管理员扫门票级码单张核销
+
+```
+管理员用小程序扫纸质票票面QR
+  │
+  ├── 识别内容 = T260410000100138（核销码）
+  ├── 查 ticket_verify_code → 定位单张门票
+  ├── 展示门票详情（演出名称/场次/座位号/票档）
+  │
+  └── 确认核销
+        · 门票状态 issued → verified
+        · Toast: "核销成功"
+```
+
+### 4.6 窗口购票暂不出票
+
+```
+窗口售票 → 用户支付 → 选择"暂不出票"
+  │
+  ├── 生成 pickup_code（8位随机数字）
+  ├── 不生成 ticket_verify_code
+  ├── 门票状态: not_issued（待出票）
+  │
+  └── 给用户取票码文本: 8736 2910
+        · 用户后续到自助机扫码/输入取票
+        · 取票时生成 ticket_verify_code，状态 → issued
+```
+
+### 4.7 闸机扫纸质票入场
+
+```
+观众持纸质票通过闸机
+  │
+  ├── 闸机扫票面QR = T260410000100138（核销码）
+  ├── 查 ticket_verify_code → 验证有效性
+  ├── 检查: 未退票 / 未核销 / 未过期
+  │
+  └── 开闸放行
+        · 门票状态 issued → verified
+        · 1.5秒通过（参考大麦亚运会标准）
+```
+
+## 五、二维码尺寸规格
+
+统一以 512×512px 为基准画布生成，按场景缩放展示。
+
+| 使用场景 | 展示尺寸 | 容错级别 | 说明 |
+|---------|---------|---------|------|
+| 电子票夹取票码QR | 200×200px | M(15%) | 手机屏幕展示 |
+| 纸质门票票面核销码QR | 150×150px | H(30%) | 打印需高容错 |
+| 下载电子门票图片 | 400×400px | M(15%) | 保存到相册 |
+| 管理员小程序核验 | 200×200px | M(15%) | 扫码核销 |
+| 自助取票机扫码 | 实物40×40mm | H(30%) | 摄像头扫描 |
+</script>
+<script>
+window.ticketVerifyFlowchartMD = document.getElementById('ticketVerifyFlowchartMDSrc')?.textContent.trim() || '';
+</script>
+<script type="text/markdown" id="showStatusFlowchartMDSrc">
+# 演出项目状态与流转路径
+
+## 一、5 种状态定义
+
+| 状态 | 标签样式 | 含义 | 可购票 |
+|------|---------|------|--------|
+| **待发布** | 灰色 `draft` | 草稿状态，尚未设置开票时间 | ❌ 不可 |
+| **未开票** | 蓝色 `not-opened` | 已设置开票时间，但开票时间在未来 | ❌ 不可 |
+| **售票中** | 绿色 `selling` | 已发布且开票时间已到，正在售票 | ✅ 可购 |
+| **已下架** | 金色 `off-shelf` | 暂停售票，已购票用户仍可使用 | ❌ 不可 |
+| **已结束** | 灰色 `ended` | 演出日期已过，自动结束 | ❌ 不可 |
+
+## 二、状态流转路径
+
+```
+┌─────────┐   发布（未设开票时间）   ┌─────────┐
+│  草稿   │ ─────────────────────→ │ 待发布  │
+│ (新建)  │                        │         │
+└─────────┘                        └─────────┘
+       │                              │
+       │ 发布（设未来开票时间）         │ 设置开票时间
+       ↓                              ↓
+┌─────────┐   开票时间到达             ┌─────────┐   下架    ┌─────────┐
+│ 未开票  │ ─────────────────────→ │ 售票中  │ ←────→ │ 已下架  │
+│         │                        │         │   上架   │         │
+└─────────┘                        └─────────┘        └─────────┘
+                                          │
+                                          │ 演出日期到达
+                                          ↓
+                                    ┌─────────┐
+                                    │ 已结束  │
+                                    │(不可操作)│
+                                    └─────────┘
+```
+
+## 三、流转规则说明
+
+### 1. 发布时分支判断
+- **未设置开票时间** → 进入 **待发布**
+- **设置未来开票时间** → 进入 **未开票**（按钮显示"M-D 开票"）
+- **设置当前/过去开票时间** → 进入 **售票中**（立即开售）
+
+### 2. 未开票 → 售票中
+- 由系统定时任务自动检测，到达开票时间自动转换状态
+- 转换后操作栏自动添加"下架"按钮
+
+### 3. 售票中 ↔ 已下架
+- 管理员可随时手动上下架切换
+- **已售出门票的下架**：需二次确认，提示"已有 N 张票售出，下架后已购票用户仍可使用"
+- **已结束演出**：不显示上架/下架按钮
+
+### 4. 已结束
+- 演出最后场次日期到达后，系统自动标记为已结束
+- 已结束演出不可上架/下架/删除，仅可查看
+
+## 四、各状态操作权限
+
+| 操作 | 待发布 | 未开票 | 售票中 | 已下架 | 已结束 |
+|------|--------|--------|--------|--------|--------|
+| 编辑基础信息 | ✅ | ✅ | ⚠️ 部分 | ⚠️ 部分 | ❌ |
+| 编辑场次/票价 | ✅ | ✅ | ❌ | ❌ | ❌ |
+| 发布/设置开票 | ✅ | — | — | — | — |
+| 上架 | — | — | — | ✅ | ❌ |
+| 下架 | — | — | ✅ | — | ❌ |
+| 标签管理 | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 删除 | ✅ | ✅ | ❌ | ❌ | ❌ |
+
+> **编辑限制说明**：售票中/已下架/已结束状态下，Step2（票价与场次）只读，提示"如需修改请前往场次管理"
+</script>
+<script>
+window.showStatusFlowchartMD = document.getElementById('showStatusFlowchartMDSrc')?.textContent.trim() || '';
+</script>
+<script type="text/markdown" id="ticketSellerFlowchartMDSrc">
+# 售票员操作流程 / 异常流程 / 渠道售票流程
+
+## 一、售票员操作流程（窗口售票 3步流程）
+
+### 流程总览
+
+```
+选演出/场次/座位 → 确认售票 → Step1收款 → Step2出票 → Step3完成
+                                    ↑________↓
+                              （收款取消进入待支付）
+```
+
+### Step 1: 收款（5种支付方式）
+
+| 支付方式 | 交互方式 | 涉及硬件 |
+|---------|---------|---------|
+| 微信支付 | 扫码枪扫描顾客微信付款码 | 🔧 扫码枪 |
+| 支付宝 | 扫码枪扫描顾客支付宝付款码 | 🔧 扫码枪 |
+| 现金 | 售票员输入实收金额，系统计算找零 | 🔧 钱箱 |
+| 充值卡（IC卡） | 读卡器感应读取IC卡芯片余额 | 🔧 读卡器 |
+| 充值卡（二维码） | 扫码枪扫描充值卡二维码 | 🔧 扫码枪 |
+| 钱包（会员卡） | 读卡器读取IC会员卡信息，扣除余额 | 🔧 读卡器 |
+
+> **混合支付**: 充值卡/钱包余额不足时，先扣除卡内全部余额，剩余金额需选择其他支付方式补齐。
+>
+> **收款成功即售票成功**: 支付完成后，订单创建、库存扣减、座位锁定释放均已完成。
+
+### Step 2: 出票（3种出票方式）
+
+> 收款成功后代为交付票据，不影响已完成的售票结果。
+
+| 出票方式 | 处理逻辑 | 涉及硬件/服务 |
+|---------|---------|-------------|
+| 纸质票 | 调用打印机驱动，输出纸质演出票 | 🔧 热敏打印机 |
+| 电子票 | 调用短信网关，向指定手机号发送电子票 | 🔧 短信网关 |
+| 暂不出票 | 标记为待出票，后续补打即可 | — |
+
+### Step 3: 完成
+
+- 展示售票结果（订单号、座位、金额）
+- 流程结束，返回售票主界面
+
+---
+
+## 二、选座预约流程
+
+### 预约场景
+
+售票员为顾客锁定座位，顾客在约定时间内到店完成支付。
+
+### 预约流程
+
+```
+售票员选座 → 点击"预约售票" → 输入顾客手机号查找用户 → 设置预约到期时间 → 确定预约 → 座位标记为"预约"状态
+                                                                                              ↓
+                                                                                    顾客到店支付 → 转为正常订单
+                                                                                              ↓
+                                                                                    到期未支付 → 自动取消释放座位
+```
+
+### 预约弹窗信息
+
+| 字段 | 说明 |
+|------|------|
+| 预约金额 | 自动计算所选座位总价 |
+| 用户手机号 | 输入手机号查找系统用户 |
+| 用户信息 | 展示昵称、姓名、身份证、会员等级 |
+| 预约到期时间 | 默认24小时后，到期自动取消 |
+
+### 预约后处理
+
+| 状态 | 说明 |
+|------|------|
+| 顾客到店支付 | 在订单管理中找到预约订单，点击"完成支付"，进入正常收款流程（Step 1） |
+| 到期自动取消 | 超过预约到期时间未支付，系统自动释放座位 |
+| 手动取消 | 售票员可在订单管理中手动取消预约 |
+
+### 预约订单 vs 正常订单
+
+| 维度 | 预约订单 | 正常订单 |
+|------|---------|---------|
+| 创建方式 | 窗口售票-预约售票 | 窗口售票-确认售票 |
+| 支付时机 | 稍后到店支付 | 立即支付 |
+| 座位状态 | 预约（紫色标记） | 已售 |
+| 订单状态 | 待支付-预约 | 已支付 |
+| 有效期 | 到预约到期时间 | 即时生效 |
+
+---
+
+## 三、异常流程：待支付订单
+
+### 触发条件
+
+收款过程中点击"取消"或关闭弹窗，订单进入待支付状态。
+
+### 待支付订单处理
+
+| 状态 | 说明 |
+|------|------|
+| 倒计时 | 15分钟支付倒计时，剩余<2分钟时红色预警 |
+| 继续支付 | 重新打开售票流程，从Step 1开始，保留已选座位 |
+| 取消订单 | 释放锁座，座位恢复可售状态 |
+| 超时自动取消 | 15分钟未支付，系统自动取消订单并释放锁座 |
+
+---
+
+## 四、渠道售票流程
+
+### 流程步骤
+
+```
+① 选演出/场次 → ② 批量框选座位 → ③ 锁定座位 → ④ 选择渠道 → ⑤ 分配到渠道 → ⑥ 更新渠道库存
+```
+
+### 渠道管理
+
+- 启用/停用渠道
+- 编辑渠道信息（名称、编码、联系人等）
+- 取消分配/清空座位
+
+### 窗口售票 vs 渠道售票对比
+
+| 维度 | 窗口售票 | 渠道售票 |
+|------|---------|---------|
+| 面向对象 | 散客（现场顾客） | 渠道商（旅行社/OTA/企业） |
+| 支付方式 | 微信/支付宝/现金/充值卡/钱包 | 线下结算（与渠道商对账） |
+| 出票方式 | 纸质票/电子票/暂不出票 | 批量分配，渠道自行分发 |
+| 硬件依赖 | 扫码枪、读卡器、打印机、钱箱 | 无特殊硬件 |
+| 操作流程 | 3步流程（收款→出票→完成） | 1步分配 |
+| 异常处理 | 待支付订单（15分钟倒计时） | 无 |
+
+---
+
+## 五、系统和终端业务拓扑图
+
+```
+┌────────────────────────────────────────┐
+│           服务端系统层                  │
+│  ┌────────┐ ┌────────┐ ┌────────┐    │
+│  │订单服务 │ │支付服务 │ │座位服务 │    │
+│  └────┬───┘ └────┬───┘ └────┬───┘    │
+│       │          │          │         │
+│  ┌────┴──────────┴──────────┴────┐   │
+│  │           业务中台              │   │
+│  └────────────────────────────────┘   │
+└───────────────┬────────────────────────┘
+                │ HTTP/API
+┌───────────────▼────────────────────────┐
+│           管理端应用层                  │
+│  ┌─────────────────┐ ┌─────────────┐  │
+│  │  窗口售票终端    │ │ 渠道售票终端 │  │
+│  │                 │ │             │  │
+│  │ 外接设备:        │ │             │  │
+│  │ • 🔧 扫码枪      │ │             │  │
+│  │ • 🔧 读卡器      │ │             │  │
+│  │ • 🔧 热敏打印机  │ │             │  │
+│  │ • 🔧 钱箱        │ │             │  │
+│  └─────────────────┘ └─────────────┘  │
+└───────────────┬────────────────────────┘
+                │
+┌───────────────▼────────────────────────┐
+│           用户端应用层                  │
+│  ┌─────────────┐   ┌─────────────┐    │
+│  │ 小程序(用户) │◄─►│ 🔧 短信网关  │    │
+│  └─────────────┘   └─────────────┘    │
+└────────────────────────────────────────┘
+```
+
+> **🔧 标识**: 表示涉及外接硬件设备或服务网关
+
+---
+
+## 六、关键数据流
+
+| 数据流 | 方向 | 内容 |
+|--------|------|------|
+| 座位锁定 | 终端 → 服务端 | 座位ID、场次ID、锁定时长(15分钟) |
+| 订单创建 | 终端 → 服务端 | 演出ID、场次ID、座位列表、价格、渠道ID |
+| 支付请求 | 终端 → 支付终端 → 服务端 | 支付方式、金额、订单号 |
+| 支付回调 | 服务端 → 终端 | 支付结果、交易流水号 |
+| 出票指令 | 终端 → 🔧打印机/短信网关 | 票面信息、手机号 |
+| 库存同步 | 服务端 → 终端 | 座位状态更新、可售数量 |
+</script>
+<script>
+window.ticketSellerFlowchartMD = document.getElementById('ticketSellerFlowchartMDSrc')?.textContent.trim() || '';
+</script>
+<script src="data.js"></script>
+<script>
+const pagesData = {
+    pc: [
+        { name: '数据看板', url: 'pc-admin/dashboard.html', icon: '📈', desc: '核心指标、销售趋势、会员分析', tags: ['数据可视化', '趋势分析'] },
+        { name: '演出管理', url: 'pc-admin/show-management.html', icon: '🎭', desc: '演出项目、场次管理、座位配置', tags: ['演出项目', '座位配置', '分区管理'] },
+        { name: '售票管理', url: 'pc-admin/ticket-sales.html', icon: '🎫', desc: '窗口售票（订单确认→收款→出票）、待支付订单、渠道分配', tags: ['窗口售票', '订单确认', '待支付', '选座售票'] },
+        { name: '订单管理', url: 'pc-admin/order-management.html', icon: '📋', desc: '票务/充值/券包/商城订单', tags: ['票务订单', '退款审核'] },
+        { name: '会员管理', url: 'pc-admin/member-management.html', icon: '👥', desc: '会员列表、积分任务、会员政策', tags: ['会员政策', '积分管理'] },
+        { name: '营销中心', url: 'pc-admin/marketing-center.html', icon: '🎁', desc: '充值卡、优惠券、抽奖活动', tags: ['优惠券', '抽奖管理'] },
+        { name: 'AI智能营销', url: 'pc-admin/ai-marketing.html', icon: '🤖', desc: 'AI营销策略、智能推荐', tags: ['AI能力', '智能推荐'] },
+        { name: '商品管理', url: 'pc-admin/product-service.html', icon: '🛒', desc: '商品CRUD、分类管理', tags: ['商品管理', 'AI客服'] },
+        { name: '运营活动', url: 'pc-admin/activity-decoration.html', icon: '🎨', desc: '活动管理、首页装修', tags: ['活动管理', '拖拽装修'] },
+        { name: '代理管理', url: 'pc-admin/agent-management.html', icon: '🤝', desc: '代理列表、佣金配置', tags: ['代理体系', '佣金管理'] },
+        { name: '报表中心', url: 'pc-admin/statistics.html', icon: '📊', desc: '多维图表、报表导出', tags: ['多维图表', '报表导出'] },
+        { name: '登录页 v1', url: 'pc-admin/login.html', icon: '🔐', desc: '账号密码登录', tags: ['登录'] },
+        { name: '登录页 v2', url: 'pc-admin/login-v2.html', icon: '🔐', desc: '升级版登录页', tags: ['登录', 'v2'] }
+    ],
+    user: [
+        { name: '登录', url: 'user-miniapp/login.html', icon: '🔐', desc: '微信一键登录、手机号授权', tags: ['微信登录', '手机号授权'] },
+        { name: '首页', url: 'user-miniapp/home.html', icon: '🏠', desc: '轮播图、热门推荐、剧院导航', tags: ['轮播图', '热门推荐'] },
+        { name: '搜索', url: 'user-miniapp/search.html', icon: '🔍', desc: '演出搜索、历史记录', tags: ['搜索'] },
+        { name: '演出列表', url: 'user-miniapp/show-list-detail.html', icon: '🎭', desc: '分类筛选、智能搜索', tags: ['分类筛选', '演出详情'] },
+        { name: '演出详情', url: 'user-miniapp/show-detail.html', icon: '🎫', desc: '演出信息、场次选择', tags: ['演出详情', '评论'] },
+        { name: '选座购票', url: 'user-miniapp/seat-selection.html', icon: '💺', desc: '座位矩阵、早鸟票/优先购', tags: ['座位选择', '早鸟票', '混合支付'] },
+        { name: '确认订单', url: 'user-miniapp/order-confirm.html', icon: '📝', desc: '演出信息、已选座位、费用明细、混合支付', tags: ['确认订单', '混合支付'] },
+        { name: '票务订单', url: 'user-miniapp/order-ticket.html', icon: '🎫', desc: '订单列表、电子票夹、评论', tags: ['订单', '电子票', '评论'] },
+        { name: '订单详情', url: 'user-miniapp/order-detail.html', icon: '📋', desc: '订单状态、费用明细、座位信息', tags: ['订单详情', '支付'] },
+        { name: '订单成功', url: 'user-miniapp/order-success.html', icon: '✅', desc: '下单成功、查看电子票', tags: ['订单成功', '电子票'] },
+        { name: '地址管理', url: 'user-miniapp/address-manage.html', icon: '📍', desc: '收货地址增删改查', tags: ['地址', '配送'] },
+        { name: '剧院列表', url: 'user-miniapp/theater-list.html', icon: '🏛️', desc: '剧院搜索、详情查看', tags: ['剧院'] },
+        { name: '剧院详情', url: 'user-miniapp/theater-detail.html', icon: '🎭', desc: '剧院信息、演出厅、当前演出', tags: ['剧院详情', '演出厅'] },
+        { name: '会员中心', url: 'user-miniapp/member-center.html', icon: '👑', desc: '会员卡、等级权益、积分', tags: ['会员等级', '优先购'] },
+        { name: '个人中心', url: 'user-miniapp/profile.html', icon: '👤', desc: '用户信息、资产概览', tags: ['资产概览', '订单管理'] },
+        { name: '编辑资料', url: 'user-miniapp/profile-edit.html', icon: '✏️', desc: '修改个人信息、特殊证件', tags: ['个人资料', '特殊证件'] },
+        { name: '心愿单', url: 'user-miniapp/wishlist.html', icon: '💝', desc: '收藏想看的演出', tags: ['心愿单', '收藏'] },
+        { name: '钱包', url: 'user-miniapp/wallet.html', icon: '💰', desc: '余额管理、充值', tags: ['钱包', '交易记录'] },
+        { name: '支付安全', url: 'user-miniapp/password-settings.html', icon: '🔐', desc: '支付密码、实体卡开关', tags: ['支付密码', '安全'] },
+        { name: '交易记录', url: 'user-miniapp/transaction-record.html', icon: '📊', desc: '收支明细', tags: ['交易'] },
+        { name: '积分中心', url: 'user-miniapp/points.html', icon: '⭐', desc: '积分余额、任务、兑换', tags: ['积分'] },
+        { name: '积分明细', url: 'user-miniapp/points-flow.html', icon: '📋', desc: '积分收支流水', tags: ['积分', '明细'] },
+        { name: '优惠券', url: 'user-miniapp/coupons.html', icon: '🎟️', desc: '优惠券列表、领取', tags: ['优惠券'] },
+        { name: '领取优惠券', url: 'user-miniapp/coupon-receive.html', icon: '🎁', desc: '扫码领取优惠券、查看券详情', tags: ['优惠券', '扫码领取'] },
+        { name: '券包详情', url: 'user-miniapp/coupon-package.html', icon: '📦', desc: '演出券包、套票', tags: ['券包'] },
+        { name: '我的券包', url: 'user-miniapp/my-packages.html', icon: '📋', desc: '已购券包管理', tags: ['券包'] },
+        { name: '周边商城', url: 'user-miniapp/shop.html', icon: '🛍️', desc: '分类导航、商品列表、详情、购物车', tags: ['商品', '积分兑换', '购物车', '配送方式'] },
+        { name: '商品订单', url: 'user-miniapp/product-order.html', icon: '🛒', desc: '商城订单管理', tags: ['订单'] },
+        { name: '充值卡绑定', url: 'user-miniapp/recharge-card-bind.html', icon: '🎴', desc: '实体充值卡绑定', tags: ['充值卡'] },
+        { name: '实体卡申请', url: 'user-miniapp/physical-card-apply.html', icon: '💳', desc: '会员实体卡申请', tags: ['会员卡'] },
+        { name: '实名认证', url: 'user-miniapp/real-name-auth.html', icon: '🆔', desc: '身份证验证', tags: ['实名'] },
+        { name: '消息通知', url: 'user-miniapp/message-service.html', icon: '💬', desc: '消息列表、AI客服', tags: ['消息', 'AI客服'] },
+        { name: '抽奖', url: 'user-miniapp/lottery.html', icon: '🎰', desc: '抽奖活动', tags: ['抽奖'] },
+        { name: '偏好设置', url: 'user-miniapp/preference-settings.html', icon: '⚙️', desc: '演出偏好、通知偏好', tags: ['设置'] },
+        { name: '隐私设置', url: 'user-miniapp/privacy-settings.html', icon: '🔒', desc: '隐私权限管理', tags: ['隐私'] },
+        { name: '代理首页', url: 'user-miniapp/agent-miniapp.html', icon: '🤝', desc: '代理端首页', tags: ['代理'] },
+        { name: '代理统计', url: 'user-miniapp/agent-miniapp-stats.html', icon: '📊', desc: '代理销售统计', tags: ['代理', '统计'] },
+        { name: '佣金明细', url: 'user-miniapp/agent-miniapp-commission.html', icon: '💰', desc: '代理佣金明细', tags: ['代理', '佣金'] },
+        { name: '代理提现', url: 'user-miniapp/agent-miniapp-withdraw.html', icon: '💳', desc: '佣金提现', tags: ['代理', '提现'] },
+        { name: '推广海报', url: 'user-miniapp/agent-miniapp-poster.html', icon: '🖼️', desc: '代理推广海报', tags: ['代理', '海报'] },
+        { name: '代理二维码', url: 'user-miniapp/agent-miniapp-qrcode.html', icon: '📱', desc: '代理推广二维码', tags: ['代理', '二维码'] },
+        { name: '代理规则', url: 'user-miniapp/agent-miniapp-rules.html', icon: '📜', desc: '代理规则说明', tags: ['代理', '规则'] }
+    ],
+    admin: [
+        { name: '管理员登录', url: 'admin-miniapp/login.html', icon: '🔐', desc: '账号密码登录、图形验证码', tags: ['登录', '验证码'] },
+        { name: '数据看板 & 扫码验票', url: 'admin-miniapp/admin-home-verify.html', icon: '📊', desc: '场馆数据、扫码验票', tags: ['数据看板', '扫码验票'] }
+    ],
+    kiosk: [
+        { name: '自助出票首页', url: 'kiosk/index.html', icon: '🎫', desc: '功能选择、品牌展示、屏保模式', tags: ['自助出票', '触摸屏'] },
+        { name: '扫码出票', url: 'kiosk/scan.html', icon: '📷', desc: '二维码扫描、手动输入取票码、出票结果', tags: ['扫码', '取票码', '出票结果'] }
+    ]
+};
+
+let currentMode = 'card';
+let currentCategory = 'pc';
+
+// 初始化
+function init() {
+    renderAllCards();
+    renderDropdown();
+    initIframeListener();
+    // 不自动弹出更新日志，演示时手动打开
+}
+
+// 渲染所有卡片
+function renderAllCards() {
+    renderCards('pc', 'pcGrid');
+    renderCards('user', 'userGrid');
+    renderCards('admin', 'adminGrid');
+    renderCards('kiosk', 'kioskGrid');
+}
+
+// 渲染卡片
+function renderCards(category, containerId) {
+    const container = document.getElementById(containerId);
+    const pages = pagesData[category];
+    const previewClass = category === 'pc' ? 'pc-preview' : (category === 'user' ? 'user-preview' : (category === 'admin' ? 'admin-preview' : 'kiosk-preview'));
+    const label = category === 'pc' ? '1440 × 900' : (category === 'kiosk' ? '1920 × 1080' : '375 × 812');
+
+    container.innerHTML = pages.map(page => `
+        <div class="card" data-url="${page.url}" onclick="handleCardClick('${page.url}')">
+            <div class="card-preview ${previewClass}">
+                <div class="card-preview-icon">${page.icon}</div>
+                <div class="card-preview-label">${label}</div>
+            </div>
+            <div class="card-body">
+                <div class="card-title">${page.name}</div>
+                <div class="card-desc">${page.desc}</div>
+                <div class="card-tags">
+                    ${page.tags.map(tag => `<span class="card-tag ${getTagColor(tag)}">${tag}</span>`).join('')}
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// 处理卡片点击 - 统一使用预览模式打开
+function handleCardClick(url) {
+    loadPage(url);
+}
+
+function getTagColor(tag) {
+    if (tag.includes('代理')) return 'purple';
+    if (tag.includes('会员') || tag.includes('积分') || tag.includes('佣金') || tag.includes('早鸟')) return 'gold';
+    if (tag.includes('座位') || tag.includes('订单') || tag.includes('优惠券') || tag.includes('抽奖') || tag.includes('活动') || tag.includes('海报')) return 'orange';
+    return 'blue';
+}
+
+// 渲染下拉菜单
+function renderDropdown() {
+    const container = document.getElementById('dropdownMenu');
+    const categories = [
+        { key: 'pc', name: 'PC管理后台', icon: '🖥️' },
+        { key: 'user', name: '用户小程序', icon: '📱' },
+        { key: 'admin', name: '管理员小程序', icon: '🔧' },
+        { key: 'kiosk', name: '自助机', icon: '🎫' }
+    ];
+
+    container.innerHTML = `
+        <div class="dropdown-tabs">
+            ${categories.map((cat, idx) => `
+                <button class="dropdown-tab ${idx === 0 ? 'active' : ''}" data-tab="${cat.key}" onclick="switchDropdownTab('${cat.key}')">
+                    <span class="tab-icon">${cat.icon}</span>${cat.name}
+                </button>
+            `).join('')}
+        </div>
+        <div class="dropdown-content">
+            ${categories.map((cat, idx) => `
+                <div class="dropdown-panel ${idx === 0 ? 'active' : ''}" data-panel="${cat.key}">
+                    ${pagesData[cat.key].map(page => `
+                        <div class="dropdown-item" onclick="loadPage('${page.url}')">
+                            <div class="dropdown-item-icon ${cat.key}">${page.icon}</div>
+                            <div class="dropdown-item-text">
+                                <div>${page.name}</div>
+                                <div class="dropdown-item-label">${page.desc}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+// 切换下拉菜单Tab
+function switchDropdownTab(key) {
+    document.querySelectorAll('.dropdown-tab').forEach(tab => tab.classList.remove('active'));
+    document.querySelector(`.dropdown-tab[data-tab="${key}"]`).classList.add('active');
+    document.querySelectorAll('.dropdown-panel').forEach(panel => panel.classList.remove('active'));
+    document.querySelector(`.dropdown-panel[data-panel="${key}"]`).classList.add('active');
+}
+
+// 切换下拉菜单
+function toggleDropdown() {
+    const menu = document.getElementById('dropdownMenu');
+    menu.classList.toggle('show');
+}
+
+// ===== 核心场景下拉 =====
+function toggleScenarioDropdown(e) {
+    e.stopPropagation();
+    const menu = document.getElementById('scenarioDropdownMenu');
+    menu.classList.toggle('show');
+    // 关闭另一个下拉
+    document.getElementById('dropdownMenu').classList.remove('show');
+}
+
+function loadScenarioPage(url) {
+    document.getElementById('scenarioDropdownMenu').classList.remove('show');
+    loadPage(url);
+}
+
+// 点击外部关闭下拉
+document.addEventListener('click', function(e) {
+    const dropdown = document.querySelector('.page-dropdown');
+    if (!dropdown.contains(e.target)) {
+        document.getElementById('dropdownMenu').classList.remove('show');
+    }
+    const scenarioDropdown = document.querySelector('.scenario-dropdown');
+    if (!scenarioDropdown.contains(e.target)) {
+        document.getElementById('scenarioDropdownMenu')?.classList.remove('show');
+    }
+});
+
+// 切换模式
+function switchMode(mode) {
+    currentMode = mode;
+    document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`.mode-btn:${mode === 'card' ? 'first-child' : 'last-child'}`).classList.add('active');
+
+    document.getElementById('cardView').style.display = mode === 'card' ? 'block' : 'none';
+    document.getElementById('frameView').classList.toggle('active', mode === 'frame');
+
+    // Hide category buttons in frame (preview) mode, keep the container visible
+    document.querySelectorAll('#navTabs .nav-tab').forEach(btn => {
+        btn.style.display = mode === 'frame' ? 'none' : '';
+    });
+}
+
+// 切换右侧栏收起/展开
+function toggleSidebar() {
+    const sidebar = document.getElementById('rightSidebar');
+    const btn = document.getElementById('sidebarToggleBtn');
+    sidebar.classList.toggle('collapsed');
+    const isCollapsed = sidebar.classList.contains('collapsed');
+    btn.innerHTML = isCollapsed ? '▶' : '◀';
+    btn.title = isCollapsed ? '展开' : '收起';
+}
+
+// 加载页面
+function loadPage(url) {
+    document.getElementById('dropdownMenu').classList.remove('show');
+    switchMode('frame');
+    updateDropdownButton(url);
+
+    const frame = document.getElementById('previewFrame');
+    const placeholder = document.getElementById('framePlaceholder');
+    const sidebar = document.getElementById('rightSidebar');
+
+    // 获取当前 iframe 中的页面名作为来源
+    var currentSrc = frame.src || '';
+    var currentPage = currentSrc.split('/').pop().split('?')[0].split('#')[0] || '';
+    if (currentPage && currentPage !== url.split('/').pop().split('?')[0]) {
+        // 给目标 URL 添加 from 参数
+        var separator = url.indexOf('?') > -1 ? '&' : '?';
+        url = url + separator + 'from=' + encodeURIComponent(currentPage);
+    }
+
+    // 重置 lastIframeUrl，确保 iframe 加载后能检测到变化
+    lastIframeUrl = '';
+    
+    frame.src = url;
+    frame.style.display = 'block';
+    placeholder.style.display = 'none';
+
+    // 立即更新右侧栏（首次加载）
+    updateSidebar(url);
+}
+
+// 监听 iframe 内部页面切换
+function initIframeListener() {
+    const frame = document.getElementById('previewFrame');
+    let lastUrl = '';
+    let checkCount = 0;
+    
+    // 轮询检测 iframe URL 变化
+    setInterval(function() {
+        checkCount++;
+        try {
+            // 检查 iframe 是否有内容
+            if (!frame.contentWindow || !frame.contentWindow.location) {
+                if (checkCount % 20 === 0) {
+                    console.log('[poll] check #' + checkCount + ': no contentWindow');
+                }
+                return;
+            }
+            
+            const href = frame.contentWindow.location.href;
+            
+            if (checkCount <= 5 || href !== lastUrl) {
+                console.log('[poll] #' + checkCount + ' href=' + href + ' last=' + lastUrl);
+            }
+            
+            if (href === lastUrl) return;
+            lastUrl = href;
+            
+            // 提取相对路径
+            let key = href;
+            const origin = window.location.origin;
+            if (key.startsWith(origin)) key = key.substring(origin.length);
+            if (key.startsWith('/')) key = key.substring(1);
+            key = key.split('?')[0].split('#')[0];
+            
+            // 兼容各种路径前缀（ui-design/、__virtual_fs__/xxx/ 等）
+            const knownPrefixes = ['user-miniapp/', 'pc-admin/', 'admin-miniapp/', 'kiosk/'];
+            let matched = false;
+            for (const prefix of knownPrefixes) {
+                const idx = key.indexOf(prefix);
+                if (idx > 0) {
+                    key = key.substring(idx);
+                    matched = true;
+                    break;
+                }
+            }
+            // 如果没匹配到已知前缀，尝试去掉 ui-design/
+            if (!matched && key.startsWith('ui-design/')) {
+                key = key.substring('ui-design/'.length);
+            }
+            
+            console.log('[poll] URL changed -> key=' + key + ' hasDoc=' + !!devDocs[key]);
+            
+            // 匹配到文档就更新
+            if (devDocs[key]) {
+                updateSidebar(key);
+                updateDropdownButton(key);
+            }
+        } catch (e) {
+            if (checkCount <= 3) {
+                console.log('[poll] error (expected for cross-origin):', e.message);
+            }
+        }
+    }, 300);
+}
+
+// 更新右侧栏
+function updateSidebar(url) {
+    console.log('updateSidebar called with:', url);
+
+    const doc = devDocs[url] || defaultDevDoc;
+    console.log('using doc:', doc.title);
+
+    const titleEl = document.getElementById('sidebarTitle');
+    const subtitleEl = document.getElementById('sidebarSubtitle');
+    const tabBarEl = document.getElementById('sidebarTabBar');
+    const tabContentEl = document.getElementById('sidebarTabContent');
+
+    if (!titleEl || !subtitleEl || !tabBarEl || !tabContentEl) {
+        console.error('sidebar elements not found!');
+        return;
+    }
+
+    titleEl.textContent = doc.title || '页面开发说明';
+    subtitleEl.textContent = doc.subtitle || '';
+    window.currentSidebarUrl = url;
+
+    if (!doc.sections || doc.sections.length === 0) {
+        tabBarEl.innerHTML = '';
+        tabContentEl.innerHTML = '<div class="sidebar-tab-panel active"><div class="prd-section"><div class="prd-section-body"><p>暂无内容</p></div></div></div>';
+        return;
+    }
+
+    // 检测是否为二级标签结构（section含有sections子数组）
+    const hasSubSections = doc.sections.some(s => s.sections && s.sections.length > 0);
+
+    if (hasSubSections) {
+        // 二级标签模式：一级标签为分类，点击展开二级子标签
+        const tabsHtml = doc.sections.map((section, index) => `
+            <button class="sidebar-tab-btn ${index === 0 ? 'active' : ''}" data-tab="${index}" onclick="switchSidebarTab(${index})">
+                ${section.title}
+            </button>
+        `).join('');
+
+        // 二级内容面板：每个一级标签下显示二级子标签 + 对应内容
+        const panelsHtml = doc.sections.map((section, index) => {
+            const subSections = section.sections || [];
+            const subTabsHtml = subSections.map((sub, subIdx) => `
+                <button class="sidebar-sub-tab-btn ${subIdx === 0 ? 'active' : ''}" data-subtab="${index}-${subIdx}" onclick="switchSubTab(${index}, ${subIdx})">
+                    ${sub.title}
+                </button>
+            `).join('') + `
+                <button class="sidebar-sub-tab-btn" data-subtab="${index}-changelog" onclick="switchSubTab(${index}, ${subSections.length})" style="margin-left:auto; opacity:0.7;">
+                    📋 更新日志
+                </button>`;
+            const subPanelsHtml = subSections.map((sub, subIdx) => `
+                <div class="sidebar-sub-panel ${subIdx === 0 ? 'active' : ''}" data-subpanel="${index}-${subIdx}">
+                    ${renderSectionContent(sub)}
+                </div>
+            `).join('') + `
+                <div class="sidebar-sub-panel" data-subpanel="${index}-changelog">
+                    ${renderSidebarChangelog(currentSidebarUrl, section.title)}
+                </div>`;
+            return `
+                <div class="sidebar-tab-panel ${index === 0 ? 'active' : ''}" data-panel="${index}">
+                    <div class="sidebar-sub-tabs">${subTabsHtml}</div>
+                    <div class="sidebar-sub-content">${subPanelsHtml}</div>
+                </div>
+            `;
+        }).join('');
+
+        tabBarEl.innerHTML = tabsHtml;
+        tabContentEl.innerHTML = panelsHtml;
+    } else {
+        // 普通一级标签模式
+        const tabsHtml = doc.sections.map((section, index) => `
+            <button class="sidebar-tab-btn ${index === 0 ? 'active' : ''}" data-tab="${index}" onclick="switchSidebarTab(${index})">
+                ${section.title}
+            </button>
+        `).join('') + `
+            <button class="sidebar-tab-btn" data-tab="${doc.sections.length}" onclick="switchSidebarTab(${doc.sections.length})" style="margin-left:auto; opacity:0.7;">
+                📋 更新日志
+            </button>`;
+
+        const panelsHtml = doc.sections.map((section, index) => `
+            <div class="sidebar-tab-panel ${index === 0 ? 'active' : ''}" data-panel="${index}">
+                ${renderSectionContent(section)}
+            </div>
+        `).join('') + `
+            <div class="sidebar-tab-panel" data-panel="${doc.sections.length}">
+                ${renderSidebarChangelog(url)}
+            </div>`;
+
+        tabBarEl.innerHTML = tabsHtml;
+        tabContentEl.innerHTML = panelsHtml;
+    }
+    console.log('sidebar updated successfully with tabs');
+}
+
+// 切换侧边栏标签页
+function switchSidebarTab(index) {
+    document.querySelectorAll('.sidebar-tab-btn').forEach((btn, i) => {
+        btn.classList.toggle('active', i === index);
+    });
+    document.querySelectorAll('.sidebar-tab-panel').forEach((panel, i) => {
+        panel.classList.toggle('active', i === index);
+    });
+}
+
+// 切换二级子标签
+function switchSubTab(parentIdx, subIdx) {
+    // 更新二级按钮状态
+    document.querySelectorAll(`.sidebar-sub-tab-btn[data-subtab^="${parentIdx}-"]`).forEach((btn, i) => {
+        btn.classList.toggle('active', i === subIdx);
+    });
+    // 更新二级面板显示
+    document.querySelectorAll(`.sidebar-sub-panel[data-subpanel^="${parentIdx}-"]`).forEach((panel, i) => {
+        panel.classList.toggle('active', i === subIdx);
+    });
+}
+
+// 渲染章节内容
+function renderSectionContent(section) {
+    let html = '';
+
+    // 如果内容包含表格数据，渲染表格
+    if (section.tables && section.tables.length > 0) {
+        html += section.tables.map(table => renderTable(table, section.noTableWrap)).join('');
+    }
+
+    // 如果内容包含信息卡片，渲染卡片
+    if (section.infoCards && section.infoCards.length > 0) {
+        html += renderInfoCards(section.infoCards);
+    }
+
+    // 渲染主要内容
+    if (section.content) {
+        html += section.content;
+    }
+
+    return html;
+}
+
+// 渲染表格
+function renderTable(table, noWrap) {
+    // 支持4列(旧)或5列(新: 字段名/中文名/类型/必填/说明)
+    const is5Col = table.headers.length >= 5;
+    const headersHtml = table.headers.map(h => `<th>${h}</th>`).join('');
+    const rowsHtml = table.rows.map(row => {
+        const cellsHtml = row.map((cell, i) => {
+            // 5列: 0=字段名 1=中文名 2=类型 3=必填 4=说明
+            // 4列: 0=字段名 1=类型 2=必填 3=说明
+            if (i === 0) return `<td><span class="cell-name">${cell}</span></td>`;
+            if (is5Col && i === 1) return `<td><span class="cell-cn-name">${cell}</span></td>`;
+            const typeIdx = is5Col ? 2 : 1;
+            const reqIdx = is5Col ? 3 : 2;
+            const descIdx = is5Col ? 4 : 3;
+            if (i === typeIdx) return `<td><span class="cell-type ${cell.toLowerCase()}">${cell}</span></td>`;
+            if (i === reqIdx) return `<td><span class="${cell === '是' || cell === '必填' ? 'cell-required' : 'cell-optional'}">${cell}</span></td>`;
+            if (i === descIdx) return `<td class="cell-desc">${cell}</td>`;
+            return `<td>${cell}</td>`;
+        }).join('');
+        return `<tr>${cellsHtml}</tr>`;
+    }).join('');
+
+    const tableHtml = `<table class="prd-table">
+        <thead><tr>${headersHtml}</tr></thead>
+        <tbody>${rowsHtml}</tbody>
+    </table>`;
+
+    // noWrap 模式：只渲染表格标题 + 表格本身，不包裹 prd-section div
+    if (noWrap) {
+        return `<div class="table-title">${table.title || '数据表格'}</div>${tableHtml}`;
+    }
+
+    return `
+        <div class="prd-section">
+            <div class="prd-section-header">
+                <div class="prd-section-title">${table.title || '数据表格'}</div>
+            </div>
+            <div class="prd-section-body">
+                ${tableHtml}
+            </div>
+        </div>
+    `;
+}
+
+// 渲染信息卡片
+function renderInfoCards(cards) {
+    const cardsHtml = cards.map(card => `
+        <div class="info-card">
+            <div class="info-card-label">${card.label}</div>
+            <div class="info-card-value">${card.value}</div>
+        </div>
+    `).join('');
+
+    return `<div class="info-grid">${cardsHtml}</div>`;
+}
+
+// 更新下拉按钮显示当前页面
+function updateDropdownButton(url) {
+    // 查找当前页面信息
+    let currentPage = null;
+    let currentCategory = null;
+
+    for (const [cat, pages] of Object.entries(pagesData)) {
+        const page = pages.find(p => p.url === url);
+        if (page) {
+            currentPage = page;
+            currentCategory = cat;
+            break;
+        }
+    }
+
+    const btn = document.querySelector('.dropdown-btn span:first-child');
+    if (currentPage) {
+        const catIcon = currentCategory === 'pc' ? '🖥️' : (currentCategory === 'user' ? '📱' : (currentCategory === 'admin' ? '🔧' : '🎫'));
+        btn.textContent = `${catIcon} ${currentPage.name}`;
+    } else {
+        btn.textContent = '📄 页面导航';
+    }
+
+    // 高亮当前选中的下拉项
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.style.background = '';
+        item.style.fontWeight = '';
+    });
+
+    const items = document.querySelectorAll('.dropdown-item');
+    items.forEach(item => {
+        if (item.getAttribute('onclick').includes(url)) {
+            item.style.background = 'rgba(255, 107, 74, 0.1)';
+            item.style.fontWeight = '600';
+        }
+    });
+}
+
+// 筛选分类
+function filterCategory(category) {
+    currentCategory = category;
+    document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+    document.querySelector(`.nav-tab[data-category="${category}"]`).classList.add('active');
+    
+    // 滚动到对应section
+    const section = document.querySelector(`.section[data-section="${category}"]`);
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+// ===== 更新日志功能 =====
+
+// 渲染全局更新日志弹窗内容
+function renderChangelogModal() {
+    const body = document.getElementById('changelogModalBody');
+    if (!body) return;
+    
+    if (!changelogData || changelogData.length === 0) {
+        body.innerHTML = '<div class="changelog-empty">暂无更新记录</div>';
+        return;
+    }
+    
+    // 按日期分组，组内按时间倒序
+    const grouped = {};
+    changelogData.forEach(item => {
+        if (!grouped[item.date]) grouped[item.date] = [];
+        item.entries.forEach(entry => grouped[item.date].push(entry));
+    });
+
+    const dates = Object.keys(grouped).sort((a, b) => b.localeCompare(a));
+
+    let html = '<table class="changelog-table"><thead><tr><th style="width:110px;">日期</th><th style="width:60px;">时间</th><th>更新内容</th></tr></thead><tbody>';
+    dates.forEach(date => {
+        // 组内按 time 倒序
+        const entries = grouped[date].sort((a, b) => (b.time || '').localeCompare(a.time || ''));
+        entries.forEach((entry, idx) => {
+            const platformPrefix = entry.page.startsWith('pc-admin/') ? '后台' : entry.page.startsWith('user-miniapp/') ? '小程序' : entry.page.startsWith('admin-miniapp/') ? '管理端' : entry.page.startsWith('kiosk/') ? '自助机' : '';
+            const platformTag = platformPrefix ? `${platformPrefix}-` : '';
+            const dateCell = idx === 0 ? `<td rowspan="${entries.length}" class="changelog-date">${date}</td>` : '';
+            html += `<tr>${dateCell}<td class="changelog-time">${entry.time || '-'}</td><td><div class="changelog-entry"><span class="changelog-page-tag">${platformTag}${entry.pageName}</span>${entry.content}</div></td></tr>`;
+        });
+    });
+    html += '</tbody></table>';
+    body.innerHTML = html;
+}
+
+// 渲染侧边栏中当前页面的更新日志
+function renderSidebarChangelog(pageUrl, moduleName) {
+    if (!changelogData || changelogData.length === 0) {
+        return '<div class="sidebar-changelog-empty">该页面暂无更新记录</div>';
+    }
+    
+    // 过滤当前页面 + 当前模块的日志
+    const pageLogs = [];
+    changelogData.forEach(item => {
+        item.entries.forEach(entry => {
+            if (entry.page === pageUrl) {
+                // 如果传了 moduleName，则按 module 过滤；否则展示该页面所有日志
+                if (moduleName && entry.module && entry.module !== moduleName) {
+                    return;
+                }
+                pageLogs.push({ date: item.date, content: entry.content });
+            }
+        });
+    });
+    
+    if (pageLogs.length === 0) {
+        return '<div class="sidebar-changelog-empty">该模块暂无更新记录</div>';
+    }
+    
+    let html = '<div class="sidebar-changelog-list">';
+    pageLogs.forEach(log => {
+        html += `<div class="sidebar-changelog-item">
+            <div class="sidebar-changelog-date">${log.date}</div>
+            <div class="sidebar-changelog-content">${log.content}</div>
+        </div>`;
+    });
+    html += '</div>';
+    return html;
+}
+
+// 打开更新日志弹窗
+function openChangelogModal() {
+    renderChangelogModal();
+    document.getElementById('changelogOverlay').classList.add('active');
+    // 标记已读
+    sessionStorage.setItem('changelog_viewed', 'true');
+    const dot = document.getElementById('changelogDot');
+    if (dot) dot.classList.remove('visible');
+}
+
+// 关闭更新日志弹窗
+function closeChangelogModal() {
+    document.getElementById('changelogOverlay').classList.remove('active');
+}
+
+// 点击遮罩关闭
+function closeChangelogOnOverlay(event) {
+    if (event.target === event.currentTarget) {
+        closeChangelogModal();
+    }
+}
+
+// 页面加载时自动弹出更新日志
+function checkAutoShowChangelog() {
+    if (changelogData && changelogData.length > 0) {
+        setTimeout(() => {
+            openChangelogModal();
+        }, 500);
+    }
+}
+
+// ===== 流程图弹窗 =====
+const flowchartData = [
+    {
+        id: 'ticket-fulfillment',
+        title: '售票到履约完整流程',
+        desc: '小程序 + 窗口售票 + 优惠计算 + 锁座释放',
+        icon: '🎫',
+        type: 'image',
+        image: 'ticket-fulfillment-flow.png'
+    },
+    {
+        id: 'growth-points-flowchart',
+        title: '成长值与积分获取及退款扣除流程',
+        desc: '购票核销发放 + 退款按比例扣除 + 线上线下区分 + 等级升降级',
+        icon: '⭐',
+        type: 'image',
+        image: 'growth-points-flowchart.png'
+    },
+    {
+        id: 'payment-timeout',
+        title: '组合支付待支付订单控制流程',
+        desc: '预扣机制 + 15分钟待支付 + 主动取消 + 超时自动取消',
+        icon: '💳',
+        type: 'markdown',
+        content: 'paymentFlowchartMD'
+    },
+    {
+        id: 'ticket-verify',
+        title: '门票规则',
+        desc: '订单号/取票码/核销码规则 + 7个使用场景 + 状态枚举 + 二维码规格',
+        icon: '🎟️',
+        type: 'markdown',
+        content: 'ticketVerifyFlowchartMD'
+    },
+    {
+        id: 'show-status-flow',
+        title: '演出项目状态与流转路径',
+        desc: '5种状态定义 + 状态流转路径 + 流转规则 + 各状态操作权限',
+        icon: '🎭',
+        type: 'markdown',
+        content: 'showStatusFlowchartMD'
+    },
+    {
+        id: 'ticket-seller-flow',
+        title: '售票员操作流程 / 异常流程 / 渠道售票流程',
+        desc: '窗口售票3步流程 + 选座预约流程 + 待支付异常处理 + 渠道批量分配 + 系统拓扑图 + 硬件设备（🔧标识）',
+        icon: '🖥️',
+        type: 'markdown',
+        content: 'ticketSellerFlowchartMD'
+    }
+];
+
+let currentFlowchart = null;
+let flowchartZoom = 1;
+let flowchartOffsetX = 0;
+let flowchartOffsetY = 0;
+let isDragging = false;
+let dragStartX = 0;
+let dragStartY = 0;
+
+function openFlowchartModal() {
+    renderFlowchartSidebar();
+    document.getElementById('flowchartOverlay').classList.add('active');
+    // 默认选中第一个
+    if (flowchartData.length > 0) {
+        selectFlowchart(flowchartData[0].id);
+    }
+}
+
+function closeFlowchartModal() {
+    document.getElementById('flowchartOverlay').classList.remove('active');
+    // 重置 markdown viewer 状态
+    const mdViewer = document.getElementById('flowchartMarkdownViewer');
+    if (mdViewer) mdViewer.classList.remove('active');
+}
+
+function closeFlowchartOnOverlay(event) {
+    if (event.target === event.currentTarget) {
+        closeFlowchartModal();
+    }
+}
+
+function renderFlowchartSidebar() {
+    const listEl = document.getElementById('flowchartNavList');
+    listEl.innerHTML = flowchartData.map(item => `
+        <div class="flowchart-nav-item" data-id="${item.id}" onclick="selectFlowchart('${item.id}')">
+            <div class="flowchart-nav-icon">${item.icon}</div>
+            <div class="flowchart-nav-info">
+                <div class="flowchart-nav-title">${item.title}</div>
+                <div class="flowchart-nav-desc">${item.desc}</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function selectFlowchart(id) {
+    currentFlowchart = flowchartData.find(f => f.id === id);
+    if (!currentFlowchart) return;
+
+    // 更新左侧选中状态
+    document.querySelectorAll('.flowchart-nav-item').forEach(item => {
+        item.classList.toggle('active', item.dataset.id === id);
+    });
+
+    // 更新标题
+    document.getElementById('flowchartTitle').textContent = currentFlowchart.title;
+
+    // 重置缩放和位置
+    flowchartZoom = 1;
+    flowchartOffsetX = 0;
+    flowchartOffsetY = 0;
+    updateFlowchartTransform();
+
+    // 根据类型切换显示
+    const viewport = document.getElementById('flowchartViewport');
+    const mdViewer = document.getElementById('flowchartMarkdownViewer');
+    const zoomControls = document.querySelector('.flowchart-zoom-controls');
+
+    if (currentFlowchart.type === 'markdown') {
+        // Markdown 渲染模式
+        viewport.style.display = 'none';
+        mdViewer.classList.add('active');
+        if (zoomControls) zoomControls.style.display = 'none';
+
+        // 获取 markdown 内容并渲染
+        let mdContent = '';
+        if (typeof currentFlowchart.content === 'string' && window[currentFlowchart.content]) {
+            mdContent = window[currentFlowchart.content];
+        } else if (typeof currentFlowchart.content === 'string') {
+            mdContent = currentFlowchart.content;
+        }
+        mdViewer.innerHTML = marked.parse(mdContent);
+    } else {
+        // 图片模式（原有逻辑）
+        viewport.style.display = '';
+        mdViewer.classList.remove('active');
+        if (zoomControls) zoomControls.style.display = '';
+
+        // 加载图片（加时间戳参数防止缓存，图片不压缩）
+        const wrapper = document.getElementById('flowchartImageWrapper');
+        const ts = Date.now();
+        wrapper.innerHTML = `<img src="${currentFlowchart.image}?t=${ts}" alt="${currentFlowchart.title}" style="image-rendering: auto; image-rendering: crisp-edges; image-rendering: -webkit-optimize-contrast;" onload="onFlowchartImageLoad()" onerror="onFlowchartImageError()">`;
+    }
+}
+
+function onFlowchartImageLoad() {
+    document.getElementById('flowchartEmptyState').style.display = 'none';
+}
+
+function onFlowchartImageError() {
+    const wrapper = document.getElementById('flowchartImageWrapper');
+    wrapper.innerHTML = '';
+    document.getElementById('flowchartEmptyState').style.display = 'block';
+    document.getElementById('flowchartEmptyState').innerHTML = `
+        <div class="flowchart-empty-state-icon">⚠️</div>
+        <div class="flowchart-empty-state-text">图片加载失败<br>请检查图片文件是否存在</div>
+    `;
+}
+
+function updateFlowchartTransform() {
+    const wrapper = document.getElementById('flowchartImageWrapper');
+    wrapper.style.transform = `translate(calc(-50% + ${flowchartOffsetX}px), calc(-50% + ${flowchartOffsetY}px)) scale(${flowchartZoom})`;
+    document.getElementById('flowchartZoomValue').textContent = Math.round(flowchartZoom * 100) + '%';
+}
+
+function zoomFlowchart(delta) {
+    const newZoom = Math.max(0.2, Math.min(5, flowchartZoom + delta));
+    flowchartZoom = newZoom;
+    updateFlowchartTransform();
+}
+
+function resetFlowchartZoom() {
+    flowchartZoom = 1;
+    flowchartOffsetX = 0;
+    flowchartOffsetY = 0;
+    updateFlowchartTransform();
+}
+
+// 拖拽功能
+function initFlowchartDrag() {
+    const viewport = document.getElementById('flowchartViewport');
+
+    viewport.addEventListener('mousedown', function(e) {
+        if (e.button !== 0) return; // 只响应左键
+        isDragging = true;
+        dragStartX = e.clientX - flowchartOffsetX;
+        dragStartY = e.clientY - flowchartOffsetY;
+        viewport.classList.add('dragging');
+        e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', function(e) {
+        if (!isDragging) return;
+        flowchartOffsetX = e.clientX - dragStartX;
+        flowchartOffsetY = e.clientY - dragStartY;
+        updateFlowchartTransform();
+    });
+
+    document.addEventListener('mouseup', function() {
+        isDragging = false;
+        viewport.classList.remove('dragging');
+    });
+
+    // 滚轮缩放
+    viewport.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? -0.1 : 0.1;
+        zoomFlowchart(delta);
+    }, { passive: false });
+}
+
+// 初始化
+init();
+</script>
+
+<!-- 更新日志弹窗 -->
+<div class="changelog-overlay" id="changelogOverlay" onclick="closeChangelogOnOverlay(event)">
+    <div class="changelog-modal">
+        <div class="changelog-modal-header">
+            <h3>📋 原型更新日志</h3>
+            <button class="changelog-close-btn" onclick="closeChangelogModal()">&times;</button>
+        </div>
+        <div class="changelog-modal-body" id="changelogModalBody">
+            <!-- 动态渲染 -->
+        </div>
+    </div>
+</div>
+
+<script>
+// index2: 已移除流程图弹窗和右侧栏
+</script>
+</body>
+</html>
