@@ -8519,34 +8519,30 @@ select.form-select-sm,
         <table class="tier-table" id="tierTable">
           <thead>
             <tr>
-              <th style="width:25%;">票档名称</th>
-              <th style="width:25%;">票价（元）</th>
-              <th style="width:25%;">限购数量</th>
-              <th style="width:25%;">分区座位数</th>
+              <th style="width:33%;">票档名称</th>
+              <th style="width:34%;">票价（元）</th>
+              <th style="width:33%;">分区座位数</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><div style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:2px;background:#D4A853;"></span>VIP区</div></td>
               <td><input type="number" class="form-input" placeholder="0.00" value="1280"></td>
-              <td><input type="number" class="form-input" placeholder="0" value="4"></td>
               <td style="color:var(--text-muted);font-size:12px;">200座</td>
             </tr>
             <tr>
               <td><div style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:2px;background:#3B82F6;"></span>A区</div></td>
               <td><input type="number" class="form-input" placeholder="0.00" value="680"></td>
-              <td><input type="number" class="form-input" placeholder="0" value="6"></td>
               <td style="color:var(--text-muted);font-size:12px;">400座</td>
             </tr>
             <tr>
               <td><div style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:2px;background:#6B7280;"></span>B区</div></td>
               <td><input type="number" class="form-input" placeholder="0.00" value="380"></td>
-              <td><input type="number" class="form-input" placeholder="0" value="8"></td>
               <td style="color:var(--text-muted);font-size:12px;">600座</td>
             </tr>
           </tbody>
         </table>
-        <div style="font-size:11px;color:var(--text-muted);margin-top:8px;"><i class="fas fa-info-circle" style="margin-right:4px;"></i>票档名称和库存由场馆座位分区决定，仅可设置票价和限购数量。演出创建后票价不可修改。</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:8px;"><i class="fas fa-info-circle" style="margin-right:4px;"></i>票档名称和库存由场馆座位分区决定，仅可设置票价。演出创建后票价不可修改。</div>
 
         <div class="form-section-title" style="margin-top:24px;"><i class="fas fa-calendar-days"></i>场次配置</div>
         <div class="session-list" id="sessionList">
@@ -8626,14 +8622,6 @@ select.form-select-sm,
                   <span class="input-unit">天</span>
                 </div>
                 <div class="form-hint">开票前多少天会员可提前购买</div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">限购数量</label>
-                <div class="input-with-unit">
-                  <input type="number" class="form-input" placeholder="0" value="6" min="1" max="10">
-                  <span class="input-unit">张/人</span>
-                </div>
-                <div class="form-hint">每会员最多可购买的优先购票数量</div>
               </div>
             </div>
           </div>
@@ -8851,29 +8839,25 @@ select.form-select-sm,
         <table class="tier-table" id="editTierTable">
           <thead>
             <tr>
-              <th style="width:25%;">票档名称</th>
-              <th style="width:25%;">票价（元）</th>
-              <th style="width:25%;">限购数量</th>
-              <th style="width:25%;">分区座位数</th>
+              <th style="width:33%;">票档名称</th>
+              <th style="width:34%;">票价（元）</th>
+              <th style="width:33%;">分区座位数</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><div style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:2px;background:#D4A853;"></span>VIP区</div></td>
               <td style="color:var(--text-primary);font-weight:600;">¥1,280</td>
-              <td><input type="number" class="form-input" placeholder="0" value="4"></td>
               <td style="color:var(--text-muted);font-size:12px;">200座</td>
             </tr>
             <tr>
               <td><div style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:2px;background:#3B82F6;"></span>A区</div></td>
               <td style="color:var(--text-primary);font-weight:600;">¥680</td>
-              <td><input type="number" class="form-input" placeholder="0" value="6"></td>
               <td style="color:var(--text-muted);font-size:12px;">400座</td>
             </tr>
             <tr>
               <td><div style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:2px;background:#6B7280;"></span>B区</div></td>
               <td style="color:var(--text-primary);font-weight:600;">¥380</td>
-              <td><input type="number" class="form-input" placeholder="0" value="8"></td>
               <td style="color:var(--text-muted);font-size:12px;">600座</td>
             </tr>
           </tbody>
@@ -8953,14 +8937,6 @@ select.form-select-sm,
                   <span class="input-unit">天</span>
                 </div>
                 <div class="form-hint">会员可提前多少天购票</div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">限购数量</label>
-                <div class="input-with-unit">
-                  <input type="number" class="form-input" id="editMemberPriorityLimit" placeholder="0" value="6" min="1" max="10">
-                  <span class="input-unit">张/人</span>
-                </div>
-                <div class="form-hint">每会员最多可购买的优先购票数量</div>
               </div>
             </div>
           </div>
