@@ -7989,6 +7989,18 @@ Tab切换交互：
 // entries.page 对应 devDocs 中的页面URL键名
 const changelogData = [
     {
+        date: '2026-07-14',
+        entries: [
+            {
+                page: 'pc-admin/show-management.html',
+                pageName: '演出管理',
+                module: '演出项目',
+                time: '16:10',
+                content: '新建/编辑步骤2票档表格移除限购数量列（仅保留票档名称/票价/分区座位数三列）；会员优先购配置移除限购数量表单项；同步更新功能描述、交互说明和核心字段文档'
+            }
+        ]
+    },
+    {
         date: '2026-07-09',
         entries: [
             {
